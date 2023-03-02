@@ -8,6 +8,6 @@ export class AppController {
   @Get()
   @Render('index')
   async view() {
-    return { name: '6-Galic', number: 5, job: 'software engineer'};
+    return { title : '공사중', name: '6-Galic', number: 5, job: 'software engineer'};
   }
 }
