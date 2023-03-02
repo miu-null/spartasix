@@ -3,19 +3,14 @@
 }
 
 header {
-    background-color:rgb(242, 228, 212) ; 
+    background-color:rgb(239, 231, 231) ; 
     font-size: x-large;
 }
 
 footer {
-    background-color:rgb(128, 125, 113) ;
+    background-color:rgb(141, 37, 98) ;
     /* background-color:rgb(72, 25, 25) ; */  
     text-align: center;
     color: rgb(212, 202, 202);
     font-size: large;
 }
-
-body {
-    background-image: url("../img/foods.svg");
-    background-color: rgb(243, 243, 243);
-  }
