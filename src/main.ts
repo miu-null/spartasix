@@ -9,14 +9,19 @@ async function bootstrap() {
     AppModule
     );
 
-  
   app.useGlobalPipes(new ValidationPipe({transform: true}));
-  
+
+
   //ejs 셋팅
-  app.useStaticAssets(join(__dirname, '..','public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.useStaticAssets(join(__dirname, '..', 'views', 'public')); //static폴더를 현재폴더(dirname)에서 한칸 상위('..')에 있는 views폴더 내 public으로 지정
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));  //view폴더를 현재폴더(dirname)에서 한칸 상위('..')에 있는 views폴더로 지정
   app.setViewEngine("ejs");
 
-  await app.listen(3000);
+
+  const PORT = process.env.PORT;
+
+  await app.listen(PORT, function (){
+    console.log(`서버가 ${PORT} 포트로 열렸습니다. http://localhost:${PORT}`);
+  });
 }
 bootstrap();
