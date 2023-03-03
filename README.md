@@ -2,7 +2,41 @@
 
 ## sparta community club
 
-Git flow
+### 1. 기본
+
+1. **브랜치 방식 Trunk-Based**
+
+- main - develop - 개인 branch
+
+2. Commit, **push 사용시,**
+
+- commit 전 ctrl + s 로 코드 컨벤션 후 커밋
+- 파일 자동 추적(터미널 자동 재실행): `npm run start:dev`
+
+3. **pull 및 실행 문제시**
+
+- develop 브랜치에서 pull 후, 정상적으로 실행이 안 되는 경우: `npm install` (패키지 설치)
+
+### 2. **커밋 메시지 컨벤션**
+
+-m “[추가] 로그인 및 로그아웃 기능“
+
+-m “[수정] 페이지네이션 작동 오류 수정”
+
+-m “[삭제] 좋아요 기능 삭제”
+
+### 3. **코드 변수명 컨벤션**
+
+- Camel case
+
+[코드 컨벤션 세부사항 (1)](https://www.notion.so/1-796cc944130846ad96a55f75d64e2b43)
+
+### 4. **파일명 생성 규칙**
+
+- 띄어쓰기 ‘.’ 으로 구분 → user.controller.ts / main.controller.ts 등등
+- 가급적 클래스와 파일을 동일한 이름으로 명명
+
+### 5. **Git flow**
 
 1. 로컬에서 작업 브랜치를 생성한다 -> git branch -m "브랜치 이름"
 2. 현재 작업중인 사항을 작업 브랜치에 커밋한다. -> git commit -m"커밋 메시지"
