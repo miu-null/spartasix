@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { typeOrmConfigService } from './config/typeorm.config.service';
+import { SearcherModule } from './searcher/searcher.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { typeOrmConfigService } from './config/typeorm.config.service';
     TypeOrmModule.forRootAsync({
       useClass: typeOrmConfigService,
     }),
+    SearcherModule,
   ],
   controllers: [AppController],
   providers: [AppService],
