@@ -1,14 +1,17 @@
 import {
+  BaseEntity,
+  Entity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
-  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
+import { Clubs } from "src/club/club.entity";
 
 @Entity({ schema: "Users", name: "Users" })
-export class Users {
+export class Users extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", name: "userId" })
   userId: number;
 
@@ -44,4 +47,8 @@ export class Users {
 
   @DeleteDateColumn()
   deletedAt: Date | null;
+
+  // 데이터베이스 관계설정
+  @OneToMany(() => Clubs, (club) => club.users)
+  clubs: Clubs[];
 }

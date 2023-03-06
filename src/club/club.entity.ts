@@ -1,35 +1,47 @@
-// import {
-//     Column,
-//     CreateDateColumn,
-//     DeleteDateColumn,
-//     Entity,
-//     PrimaryGeneratedColumn,
-//     UpdateDateColumn,
-// } from "typeorm";
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from "typeorm";
+import { ClubMembers } from "src/userpage/entity/clubmembers.entity";
+import { Users } from "../user/entity/user.entity";
+@Entity({ schema: "Clubs", name: "Clubs" })
+export class Clubs extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: "int", name: "clubId" })
+  clubId: number;
 
-// @Entity({ schema: "club", name: "club" })
-// export class Article {
-//     @PrimaryGeneratedColumn({ type: "int", name: "id" })
-//     id: number;
+  @Column("int")
+  authorId: number;
 
-//     @Column("varchar", { length: 10 })
-//     author: string;
+  @Column("int")
+  userId: number;
 
-//     @Column("varchar", { length: 50 })
-//     title: string;
+  @Column("varchar", { length: 50 })
+  title: string;
 
-//     @Column("varchar", { length: 1000 })
-//     content: string;
+  @Column("varchar", { length: 1000 })
+  content: string;
 
-//     @Column("varchar", { select: false })
-//     password: string;
+  @Column("int")
+  maxMembers: number;
 
-//     @CreateDateColumn()
-//     createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-//     @UpdateDateColumn()
-//     updatedAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-//     @DeleteDateColumn()
-//     deletedAt: Date | null;
-// }
+  @DeleteDateColumn()
+  deletedAt: Date | null;
+
+  @ManyToOne(() => Users, (users) => users.clubs)
+  users: Users;
+
+  @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
+  clubMembers: ClubMembers;
+}
