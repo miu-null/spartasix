@@ -6,9 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { typeOrmConfigService } from './config/typeorm.config.service';
 import { SearcherModule } from './searcher/searcher.module';
-// import { ClubModule } from './club/club.module';
-// import { UserModule } from './user/user.module';
-// import { UserpageModule } from "./userpage/userpage.module";
+import { UserModule } from './user/user.module';
 
 
 @Module({
@@ -18,8 +16,8 @@ import { SearcherModule } from './searcher/searcher.module';
       useClass: typeOrmConfigService,
     }),
 
-    // UserModule,
-    // UserpageModule,
+    UserModule,
+    SearcherModule   //김재광 검색기능 테스트
 
   ],
   controllers: [AppController],
