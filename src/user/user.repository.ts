@@ -23,6 +23,9 @@ export class UserRepository {
       name,
       nickName,
       phone,
+      type: "user",
     });
   }
+
+  async login(email: string, password: string) {}
 }
