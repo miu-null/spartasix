@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from "typeorm";
-import { ClubMembers } from "src/userpage/entity/clubmembers.entity";
+import { ClubMembers } from "../userpage/entity/clubmembers.entity";
 import { Users } from "../user/entity/user.entity";
 @Entity({ schema: "Clubs", name: "Clubs" })
 export class Clubs extends BaseEntity {
