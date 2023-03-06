@@ -7,6 +7,8 @@ import { AppService } from './app.service';
 import { typeOrmConfigService } from './config/typeorm.config.service';
 import { SearcherModule } from './searcher/searcher.module';
 import { UserModule } from './user/user.module';
+// import { ClubModule } from './club/club.module';
+// import { UserpageModule } from "./userpage/userpage.module";
 
 
 @Module({
@@ -17,7 +19,9 @@ import { UserModule } from './user/user.module';
     }),
 
     UserModule,
-    SearcherModule   //김재광 검색기능 테스트
+    SearcherModule,  //김재광 검색기능 테스트
+    // ClubModule,
+    // UserpageModule,
 
   ],
   controllers: [AppController],
