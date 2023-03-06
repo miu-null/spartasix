@@ -1,8 +1,16 @@
-import { Module } from "@nestjs/common";
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { AuthMiddleware } from "./auth/auth.middleware";
+import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
@@ -16,6 +24,11 @@ import { UserModule } from "./user/user.module";
       useClass: typeOrmConfigService,
       inject: [ConfigService],
     }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useClass: JwtConfigService,
+      inject: [ConfigService],
+    }),
 
     // ClubModule,
     UserModule,
@@ -24,4 +37,10 @@ import { UserModule } from "./user/user.module";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: "user/update", method: RequestMethod.PATCH });
+  }
+}
