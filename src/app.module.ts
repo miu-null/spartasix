@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { typeOrmConfigService } from './config/typeorm.config.service';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { typeOrmConfigService } from "./config/typeorm.config.service";
+import { UserpageModule } from "./userpage/userpage.module";
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { typeOrmConfigService } from './config/typeorm.config.service';
     TypeOrmModule.forRootAsync({
       useClass: typeOrmConfigService,
     }),
+    UserpageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
