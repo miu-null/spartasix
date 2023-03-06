@@ -1,0 +1,16 @@
+:root {
+    --bs-font-sans-serif: 'Rubik', sans-serif;
+}
+
+header {
+    background-color:rgb(239, 231, 231) ; 
+    font-size: x-large;
+}
+
+footer {
+    background-color:rgb(141, 37, 98) ;
+    /* background-color:rgb(72, 25, 25) ; */  
+    text-align: center;
+    color: rgb(212, 202, 202);
+    font-size: large;
+}
