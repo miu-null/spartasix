@@ -5,7 +5,7 @@ import { join } from "path";
 
 @Injectable()
 export class typeOrmConfigService implements TypeOrmOptionsFactory {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) { }
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: "mysql",
