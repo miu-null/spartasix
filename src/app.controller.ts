@@ -8,6 +8,6 @@ export class AppController {
 
   @Get()
     root(@Res() res: Response) {
-      return res.render('main.ejs', {title : '공사중', name: '6-Galic', number: 5, job: 'software engineer'})
+      return res.render('index.ejs', {title : '공사중', name: '6-Galic', number: 5, job: 'software engineer'})
     }
 }
