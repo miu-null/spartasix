@@ -19,14 +19,12 @@ export class UserRepository {
   async createUser(
     email: string,
     password: string,
-    name: string,
     nickName: string,
     phone: string,
   ) {
     this.userRepository.insert({
       email,
       password,
-      name,
       nickName,
       phone,
       type: "user",

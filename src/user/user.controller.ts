@@ -12,7 +12,7 @@ export class UserController {
     return this.userService.createUser(
       data.email,
       data.password,
-      data.name,
+      data.confirmpassword,
       data.nickName,
       data.phone,
     );

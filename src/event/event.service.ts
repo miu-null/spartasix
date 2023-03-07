@@ -13,11 +13,11 @@ export class EventService {
         date: Date,
         viewCount: number,
       ) {
-        await this.userRepository.createEvent(
-            userId,
-            title,
-            content,
-            date,
-        );
+        // await this.userRepository.createEvent(
+        //     userId,
+        //     title,
+        //     content,
+        //     date,
+        // );
       }
 }
