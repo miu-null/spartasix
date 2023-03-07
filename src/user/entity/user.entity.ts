@@ -33,6 +33,9 @@ export class Users {
   @Column()
   userIMG: string | null;
 
+  @Column()
+  type: string | null;
+
   @CreateDateColumn()
   createdAt: Date;
 
