@@ -1,4 +1,3 @@
-
 import {
   MiddlewareConsumer,
   Module,
@@ -13,7 +12,7 @@ import { AppService } from "./app.service";
 import { AuthMiddleware } from "./auth/auth.middleware";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
-import { SearcherModule } from './searcher/searcher.module';
+import { SearcherModule } from "./searcher/searcher.module";
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
 // import { UserpageModule } from "./userpage/userpage.module";
@@ -33,11 +32,9 @@ import { UserModule } from "./user/user.module";
     }),
 
     UserModule,
-    SearcherModule,  //김재광 검색기능 테스트
+    SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
     // UserpageModule,
-
-
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -46,6 +43,8 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes({ path: "user/update", method: RequestMethod.PATCH });
+      .forRoutes(
+        { path: "user/test", method: RequestMethod.POST },
+        );  // 이곳에 middleware 적용 시킬 path 와 htpp 메소드 작성. {}, {}, {} 로 구분
   }
 }
