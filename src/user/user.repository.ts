@@ -24,9 +24,9 @@ export class UserRepository {
   ) {
 
     const nickname = await this.checkNickname(nickName);
-    console.log(nickname)
+
     if(nickname === null) {
-      this.userRepository.insert({
+      return this.userRepository.insert({
         email,
         password,
         nickName,
@@ -64,12 +64,8 @@ export class UserRepository {
     if (nickname === null) {
       return null;
     }
-
-
+    
     return nickname
   }
 
-  valiableNickname() {
-
-  }
 }

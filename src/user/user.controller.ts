@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import { checkNicknameDto } from "./dto/ckecknickname.dto";
 import { CreateUserDto } from "./dto/createuser.dto";
 import { loginDto } from "./dto/login.dto";
