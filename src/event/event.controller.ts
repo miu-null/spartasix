@@ -1,3 +1,4 @@
+
 import { Body, Controller, Post, Param ,Get, Put,Delete} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EventService } from "./event.service";
@@ -9,6 +10,7 @@ import { DeleteEventDto } from "./dto/deleteevent.dto";
 export class EventController {
         constructor(private eventService: EventService) {}
     
+
         @Post("/events")
         async createUser(@Body() data: CreateEventDto) {
           return this.eventService.createEvent(
@@ -19,6 +21,7 @@ export class EventController {
             data.viewCount,
           );
         }
+        
         @Get('/articles/:id')
         getArticleById(@Param('id') articleId: number) {
           return this.eventService.getEventById(articleId);
@@ -44,6 +47,7 @@ export class EventController {
         ) {
           return this.eventService.deleteEvente(articleId, data.password);
         }
+
 
     
 }

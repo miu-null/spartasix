@@ -4,7 +4,9 @@ import { EventRepository } from "./event.repository";
 @Injectable()
 export class EventService {
 
+
     constructor(private EventRepository: EventRepository) {}
+
     
     async createEvent(
         userId: string,
@@ -14,6 +16,7 @@ export class EventService {
         viewCount: number,
       ) {
         await this.EventRepository.createEvent(
+
             userId,
             title,
             content,
