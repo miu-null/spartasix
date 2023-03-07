@@ -22,10 +22,9 @@ export class UserRepository {
     nickName: string,
     phone: string,
   ) {
-
     const nickname = await this.checkNickname(nickName);
 
-    if(nickname === null) {
+    if (nickname === null) {
       return this.userRepository.insert({
         email,
         password,
@@ -52,20 +51,34 @@ export class UserRepository {
 
     const payload = { id: user.userId };
     const accessToken = await this.jwtService.signAsync(payload);
-    
+
     return accessToken;
+  }
+
+  async checkThisUser(userId: number) {
+    const thisUser = await this.userRepository.findOne({
+      where: { userId },
+      select: ["email", "nickName", "snsURL", "userIMG"],
+    });
+    return thisUser;
+  }
+  async checkMyInfo(userId: number) {
+    const myInfo = await this.userRepository.findOne({
+      where: { userId },
+      select: ["email", "name", "phone", "nickName", "snsURL", "userIMG"],
+    });
+    return myInfo;
   }
 
   async checkNickname(nickName: string) {
     let nickname = await this.userRepository.findOne({
-      where: { nickName, deletedAt: null},
-    })
+      where: { nickName, deletedAt: null },
+    });
 
     if (nickname === null) {
       return null;
     }
-    
-    return nickname
-  }
 
+    return nickname;
+  }
 }
