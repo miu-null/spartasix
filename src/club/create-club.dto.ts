@@ -1,12 +1,12 @@
-import { IsNumber, IsString } from 'class-validator';
+// import { IsNumber, IsString } from 'class-validator';
 
-export class CreateArticleDto {
-    @IsString()
-    readonly title: string;
+// export class CreateArticleDto {
+//     @IsString()
+//     readonly title: string;
 
-    @IsString()
-    readonly content: string;
+//     @IsString()
+//     readonly content: string;
 
-    @IsNumber()
-    readonly password: number;
-}
+//     @IsNumber()
+//     readonly password: number;
+// }
