@@ -1,30 +1,30 @@
 
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { typeOrmConfigService } from './config/typeorm.config.service';
-import { SearcherModule } from './searcher/searcher.module';
-import { UserModule } from './user/user.module';
-// import { ClubModule } from './club/club.module';
-// import { UserpageModule } from "./userpage/userpage.module";
+// import { Module } from '@nestjs/common';
+// import { ConfigModule } from '@nestjs/config';
+// import { TypeOrmModule } from '@nestjs/typeorm';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
+// import { typeOrmConfigService } from './config/typeorm.config.service';
+// import { SearcherModule } from './searcher/searcher.module';
+// import { UserModule } from './user/user.module';
+// // import { ClubModule } from './club/club.module';
+// // import { UserpageModule } from "./userpage/userpage.module";
 
 
-@Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({
-      useClass: typeOrmConfigService,
-    }),
+// @Module({
+//   imports: [
+//     ConfigModule.forRoot({ isGlobal: true }),
+//     TypeOrmModule.forRootAsync({
+//       useClass: typeOrmConfigService,
+//     }),
 
-    UserModule,
-    SearcherModule,  //김재광 검색기능 테스트
-    // ClubModule,
-    // UserpageModule,
+//     UserModule,
+//     SearcherModule,  //김재광 검색기능 테스트
+//     // ClubModule,
+//     // UserpageModule,
 
-  ],
-  controllers: [AppController],
-  providers: [AppService],
-})
-export class AppModule { }
+//   ],
+//   controllers: [AppController],
+//   providers: [AppService],
+// })
+// export class AppModule { }
