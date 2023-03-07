@@ -20,4 +20,8 @@ export class UserService {
       phone,
     );
   }
+
+  async login(email: string, password: string) {
+    return this.userRepository.login(email, password);
+  }
 }
