@@ -23,12 +23,13 @@ export class EventController {
         }
         
         @Get('/articles/:id')
+        @Get('/events/:id')
         getArticleById(@Param('id') articleId: number) {
           return this.eventService.getEventById(articleId);
         }
       
       
-        @Put('/articles/:id')
+        @Put('/events/:id')
         updateArticle(
           @Param('id') articleId: number,
           @Body() data: UpdateEventDto,
@@ -40,7 +41,7 @@ export class EventController {
           );
         }
       
-        @Delete('/articles/:id')
+        @Delete('/events/:id')
         deleteArticle(
           @Param('id') articleId: number,
           @Body() data: DeleteEventDto,
