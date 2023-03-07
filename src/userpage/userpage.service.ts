@@ -18,7 +18,7 @@ export class UserpageService {
     @InjectRepository(Users) private userRepository: Repository<Users>,
     @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
     @InjectRepository(Clubs) private eventRepository: Repository<EventPosts>,
-  ) {}
+  ) { }
 
   async getMyPosts(userId: number) {
     // 회원이 쓴 글 조회 테이블2개에서 정보 가져와서 뿌려주기
@@ -74,6 +74,7 @@ export class UserpageService {
 
 
 
+<<<<<<< HEAD
   //   async getClubApps(userId: number) {
   //     return await this.clubRepository.find({
   //       where: { userId },
@@ -93,4 +94,7 @@ export class UserpageService {
   //   }
 
   //   async deleteApps(userId: number, clubMemberId: number) {}
+=======
+  async deleteApps(userId: number, clubMemberId: number) { }
+>>>>>>> 38f9123 ([수정]게시판 api db관련 코드 기타 외 수정)
 }
