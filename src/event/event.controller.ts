@@ -1,5 +1,4 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 @Controller('event')

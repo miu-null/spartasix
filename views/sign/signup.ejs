@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../css/sign/signup.css">
+<script type="text/javascript" src="../js/sign/signup.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<body>
+  <div class="main_container">
+    <div class="container" id="join_form">
+      <div class="signup_title">
+        <h2 class="title">가 입 하 기</h2><br>
+        <h3 class="subtitle">새로운 회원님을 환영합니다.</h3>
+      </div>
+      <div>
+        <input type="text" placeholder="이메일" id="email" class="form-control" /><br>
+            <!-- <button type="button" class="btn sign_btn" id="user_id_check_btn" onclick="emailCheck()">중복 확인</button> -->
+        <input type="text" placeholder="닉네임" id="nickname" class="form-control" /><br>
+          <!-- <button class="btn sign_btn" type="button" id="check_button" onclick="check_nickname()">중복 확인</button> -->
+        <input type="password" placeholder="비밀번호" id="password" class="form-control" /><br>
+        <input type="password" placeholder="비밀번호 확인" id="password_chk" class="form-control" /><br>
+        <input type="tel" placeholder="휴대폰 번호( - 제외 )" id="phone" class="form-control" oninput="hypenTel(this)" maxlength="13"/><br>
+      </div>
+      <div class="register_container">
+        <button class="btn sign_btn" type="button" id="register_button" onclick="signup()">회원 가입</button>
+      </div>
+    </div>
+  </div>
+</body>
