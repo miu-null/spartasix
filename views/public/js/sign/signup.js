@@ -23,12 +23,32 @@ function signup() {
       phone: phone,
     }),
     success: function (response) {
-      console.log(response)
+      console.log(response);
     },
     error: function (request, status, error) {
-      console.log(request.status);  // 스테이터스 코드
-      console.log(request.responseText) // 에러 메시지
-      console.log(error)
-    }
+      alert("닉네임 또는 비밀번호가 올바르지 않습니다.")
+    },
+  });
+}
+
+function check_nickname() {
+  const nickname = $("#nickname").val();
+
+  $.ajax({
+    type: "POST",
+    url: "user/check-nickname",
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      nickName: nickname,
+    }),
+    success: function (response) {
+      if (response) {
+        alert("이미 존재하는 닉네임 입니다.");
+      }
+    },
+    error: function () {
+      alert("사용 가능한 닉네임 입니다.");
+    },
   });
 }
