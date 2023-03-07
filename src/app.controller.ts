@@ -11,9 +11,7 @@ export class AppController {
       return res.render('index.ejs', {title : '공사중', name: '6-Galic', number: 5, job: 'software engineer'})
     }
   
-  @Get('search')
-    hello(@Res() res: Response) {
-      // return { id : terms.name, age : terms.age}
-    return res.render('search.ejs', {name: '김바다', age: 5})
-    }
+
+
+
   }  
