@@ -32,4 +32,8 @@ export class UserService {
   async login(email: string, password: string) {
     return this.userRepository.login(email, password);
   }
+
+  async checkNickname(nickName: string) {
+    return this.userRepository.checkNickname(nickName);
+  }
 }
