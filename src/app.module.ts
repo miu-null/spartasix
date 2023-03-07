@@ -1,3 +1,4 @@
+
 import {
   MiddlewareConsumer,
   Module,
@@ -12,6 +13,7 @@ import { AppService } from "./app.service";
 import { AuthMiddleware } from "./auth/auth.middleware";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
+import { SearcherModule } from './searcher/searcher.module';
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
 // import { UserpageModule } from "./userpage/userpage.module";
@@ -30,9 +32,12 @@ import { UserModule } from "./user/user.module";
       inject: [ConfigService],
     }),
 
-    // ClubModule,
     UserModule,
+    SearcherModule,  //김재광 검색기능 테스트
+    // ClubModule,
     // UserpageModule,
+
+
   ],
   controllers: [AppController],
   providers: [AppService],
