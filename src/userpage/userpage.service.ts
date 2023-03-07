@@ -59,7 +59,6 @@
 //       select: ["title", "content"],
 //     });
 //   } //운영중인 모임 전체 보기
-
 //   async getClubApps(userId: number) {
 //     return await this.clubRepository.find({
 //       where: { userId },
