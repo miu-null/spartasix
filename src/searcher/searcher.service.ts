@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Searcher } from './interface/searcher.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Searcher} from './entity/searcher.entity';
 
 @Injectable()
 export class SearcherService {
-    private readonly searcher: Searcher[] = [];
+    constructor(
+        @InjectRepository(Searcher)
+        private SearchserRepository: Repository<Searcher>, //Searcher 라는 엔티티를 레파지토리로 사용할 수 있게 됨
+    ) {}
 
-    create(search : Searcher) {
-        this.searcher.push(search);
+    findAll() : Promise<Searcher[]> {
+        return this.SearchserRepository.find();
     }
 
-    findAll() : Searcher[] {
-        return this.searcher;
+    async create(search : Searcher) : Promise<void> {
+        await this.SearchserRepository.save(search);
+    }
+
+    async remove(id: number) : Promise<void> {
+        await this.SearchserRepository.delete(id);
     }
 }

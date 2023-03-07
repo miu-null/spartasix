@@ -7,14 +7,14 @@ import { SearcherService } from './searcher.service';
 export class SearcherController {
     constructor(private searchService: SearcherService){};
     @Get()
-    findAll() : Searcher[] {
+    findAll() : Promise<Searcher[]> {
         return this.searchService.findAll();
     }
 
-    @Post()
-    create(@Body() createSearchDto: CreateSearchDto){
-        return this.searchService.create(createSearchDto);
-    }
+    // @Post()
+    // create(@Body() createSearchDto: CreateSearchDto){
+    //     return this.searchService.create(createSearchDto);
+    // }
 
 }
 
