@@ -21,12 +21,6 @@ export class EventController {
             data.viewCount,
           );
         }
-        
-        @Get('/articles/:id')
-        @Get('/events/:id')
-        getArticleById(@Param('id') articleId: number) {
-          return this.eventService.getEventById(articleId);
-        }
       
       
         @Put('/events/:id')
@@ -35,7 +29,7 @@ export class EventController {
           @Body() data: UpdateEventDto,
         ) {
           return this.eventService.updateEvent(
-            articleId,
+            eventId,
             data.title,
             data.content
           );
