@@ -30,7 +30,7 @@ export class Users {
   @Column("varchar", { length: 50 })
   email: string;
 
-  @Column("varchar", { length: 200 })
+  @Column("varchar")
   password: string;
 
   @Column("varchar", { length: 10 })
