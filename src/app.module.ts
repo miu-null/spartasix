@@ -17,6 +17,7 @@ import { SearcherModule } from "./searcher/searcher.module";
 import { UserModule } from "./user/user.module";
 import { EventModule } from "./event/event.module";
 import { UserpageModule } from "./userpage/userpage.module";
+// import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { UserpageModule } from "./userpage/userpage.module";
     SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
     UserpageModule,
+    // AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -48,6 +50,7 @@ export class AppModule implements NestModule {
       .forRoutes(
         { path: "user/update", method: RequestMethod.PATCH },
         { path: "userpage/info/:userId", method: RequestMethod.GET },
+        { path: "userpage/info/:userId", method: RequestMethod.PATCH },
       );
   }
 }
