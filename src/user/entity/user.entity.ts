@@ -12,7 +12,7 @@ import { Clubs } from "src/club/club.entity";
 
 @Entity({ schema: "Users", name: "Users" })
 export class Users extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: "int", name: "userId" })
+  @PrimaryGeneratedColumn()
   userId: number;
 
   @Column("varchar", { length: 50 })
@@ -20,9 +20,6 @@ export class Users extends BaseEntity {
 
   @Column("varchar", { length: 200 })
   password: string;
-
-  @Column("varchar", { length: 10 })
-  name: string;
 
   @Column("varchar", { length: 10 })
   nickName: string;
@@ -37,7 +34,7 @@ export class Users extends BaseEntity {
   userIMG: string | null;
 
   @Column()
-  type: string | null;
+  type: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -49,6 +46,6 @@ export class Users extends BaseEntity {
   deletedAt: Date | null;
 
   // 데이터베이스 관계설정
-  @OneToMany(() => Clubs, (club) => club.users)
-  clubs: Clubs[];
+  // @OneToMany((type) => Clubs, (club) => club.user)
+  // clubs: Clubs[];
 }

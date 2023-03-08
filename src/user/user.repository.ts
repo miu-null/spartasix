@@ -19,18 +19,21 @@ export class UserRepository {
   async createUser(
     email: string,
     password: string,
-    name: string,
     nickName: string,
     phone: string,
   ) {
-    this.userRepository.insert({
-      email,
-      password,
-      name,
-      nickName,
-      phone,
-      type: "user",
-    });
+
+    const nickname = await this.checkNickname(nickName);
+
+    if(nickname === null) {
+      return this.userRepository.insert({
+        email,
+        password,
+        nickName,
+        phone,
+        type: "user",
+      });
+    }
   }
 
   async login(email: string, password: string) {
@@ -51,6 +54,18 @@ export class UserRepository {
     const accessToken = await this.jwtService.signAsync(payload);
     
     return accessToken;
-
   }
+
+  async checkNickname(nickName: string) {
+    let nickname = await this.userRepository.findOne({
+      where: { nickName, deletedAt: null},
+    })
+
+    if (nickname === null) {
+      return null;
+    }
+    
+    return nickname
+  }
+
 }

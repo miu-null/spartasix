@@ -1,4 +1,3 @@
-
 import { Body, Controller, Post, Param ,Get, Put,Delete} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EventService } from "./event.service";

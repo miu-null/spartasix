@@ -24,6 +24,6 @@ export class ClubMembers {
   @Column("boolean")
   isAccepted: boolean;
 
-  @OneToMany(() => Clubs, (club) => club.clubMembers)
-  clubs: Clubs[];
+  // @OneToMany(() => Clubs, (club) => club.clubMembers)
+  // clubs: Clubs[];
 }
