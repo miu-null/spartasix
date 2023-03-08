@@ -35,9 +35,11 @@ export class SearcherController {
   //   }
 
   @Post() 
-  async create(@Body() CreateSearchDto: CreateSearchDto): Promise<void> {
-    console.log(CreateSearchDto, '컨트롤러');
-    return await this.searchService.create(CreateSearchDto);
+  async create(
+    @Body('title') createSearchDto: CreateSearchDto
+    ) {
+    console.log(createSearchDto, '컨트롤러');
+    return await this.searchService.createArticle(createSearchDto);
   }
 }
 
