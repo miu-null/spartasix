@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import _ from "lodash";
 import { Repository } from "typeorm";
-import { Users } from "../user/entity/user.entity";
-import { Clubs } from "../club/club.entity";
+import { Users } from "src/user/entity/user.entity";
+import { Clubs } from "src/club/entity/club.entity";
 import { EventPosts } from "../event/entity/event.entity";
 // import { UserUpdateDto } from "./dto/userpage.update.dto";
 import { title } from "process";
@@ -17,8 +17,9 @@ export class UserpageService {
   constructor(
     @InjectRepository(Users) private userRepository: Repository<Users>,
     @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
-    @InjectRepository(Clubs) private eventRepository: Repository<EventPosts>,
-  ) { }
+    @InjectRepository(EventPosts)
+    private eventRepository: Repository<EventPosts>,
+  ) {}
 
   async getMyPosts(userId: number) {
     // 회원이 쓴 글 조회 테이블2개에서 정보 가져와서 뿌려주기
@@ -57,11 +58,10 @@ export class UserpageService {
     });
   }
 
-
-  // async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
-  //   console.log(updateUserInfo);
-  //   //   await this.userRepository.update(userId, { updateUserInfo });
-  // } // 회원정보 수정
+  async updateUser(userId: number, UserUpdateDto) {
+    console.log(UserUpdateDto);
+    return await this.userRepository.update(userId, UserUpdateDto);
+  } // 회원정보 수정
 
   //   async getMyClubs(userId: number) {
   //     return await this.clubRepository.findOne({
@@ -70,10 +70,6 @@ export class UserpageService {
   //     });
   //   } //운영중인 모임 전체 보기
 
-
-
-
-<<<<<<< HEAD
   //   async getClubApps(userId: number) {
   //     return await this.clubRepository.find({
   //       where: { userId },
@@ -91,9 +87,5 @@ export class UserpageService {
   //   async getThisMember(userId: number, clubMemberId: number) {
   //     return await this.clubRepository.find();
   //   }
-
-  //   async deleteApps(userId: number, clubMemberId: number) {}
-=======
-  async deleteApps(userId: number, clubMemberId: number) { }
->>>>>>> 38f9123 ([수정]게시판 api db관련 코드 기타 외 수정)
+  // async deleteApps(userId: number, clubMemberId: number) { }
 }

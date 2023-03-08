@@ -71,7 +71,7 @@ export class UserRepository {
   }
 
   async checkNickname(nickName: string) {
-    let nickname = await this.userRepository.findOne({
+    const nickname = await this.userRepository.findOne({
       where: { nickName, deletedAt: null },
     });
 

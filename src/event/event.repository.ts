@@ -5,8 +5,7 @@ import { EventPosts } from "./entity/event.entity";
 
 @Injectable()
 export class EventRepository {
-  
-    constructor(
+  constructor(
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
   ) {}
@@ -18,9 +17,9 @@ export class EventRepository {
     date: string,
   ) {
     this.eventRepository.insert({
-        title,
-        content,
-        date,
+      title,
+      content,
+      date,
     });
   }
 

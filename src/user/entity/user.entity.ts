@@ -45,6 +45,6 @@ export class Users {
   deletedAt: Date | null;
 
   // 데이터베이스 관계설정
-  // @OneToMany((type) => Clubs, (club) => club.user)
-  // clubs: Clubs[];
+  @OneToMany(() => Clubs, (club) => club.user)
+  clubs: Clubs[];
 }
