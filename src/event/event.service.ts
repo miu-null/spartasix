@@ -23,14 +23,13 @@ export class EventService {
             date,
         );
       }
-
       async updateEvent(
         id: number,
         title: string,
         content: string,
-       
+        password: number
       ) {
-        this.EventRepository.updateEvent(id, { title, content });
+        this.EventRepository.update(id, { title, content });
       }
     
       async deleteEvente(id: number) {
