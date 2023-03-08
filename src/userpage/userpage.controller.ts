@@ -6,49 +6,48 @@ import {
   Patch,
   Delete,
   Request,
-  // Request,
 } from "@nestjs/common";
 import { UserpageService } from "./userpage.service";
-import { UserUpdateDto } from "./dto/userpage.update.dto";
+// import { UserUpdateDto } from "./dto/userpage.update.dto";
 
-@Controller("userpage")
-export class UserpageController {
-  constructor(private readonly userPageService: UserpageService) {}
+// @Controller("userpage")
+// export class UserpageController {
+//   constructor(private readonly userPageService: UserpageService) {}
 
-  @Get("/:userId") // 회원이 쓴 글 조회 - 시간순 내림차정렬 추가+ 게시판 글 섞어보는 로직
-  async getMyPosts(@Param("userId") userId: number) {
-    return await this.userPageService.getMyPosts(userId);
-  }
+  // @Get("/:userId") // 회원이 쓴 글 조회 - 시간순 내림차정렬 추가+ 게시판 글 섞어보는 로직
+  // async getMyPosts(@Param("userId") userId: number) {
+  //   return await this.userPageService.getMyPosts(userId);
+  // }
 
-  @Get("/info/:userId") // 내 정보 조회하기: 위의 유저정보 확인
-  async getMyInfo(
-    @Param("userId") userId: number,
-    @Request() req, // @Body() data: UserUpdateDto,
-  ) {
-    const user: any = req.user;
-    const data = await this.userPageService.getMyInfo(userId);
-    const password = data.password.length;
+  // @Get("/info/:userId") // 내 정보 조회하기: 위의 유저정보 확인
+  // async getMyInfo(
+  //   @Param("userId") userId: number,
+  //   @Request() req, // @Body() data: UserUpdateDto,
+  // ) {
+  //   const user: any = req.user;
+  //   const data = await this.userPageService.getMyInfo(userId);
+  //   const password = data.password.length;
 
-    if (userId !== user.id) {
-      return {
-        userIMG: data.userIMG,
-        nickName: data.nickName,
-        email: data.email,
-        snsURL: data.snsURL,
-      };
-    }
-    if (userId === user.id) {
-      return {
-        name: data.name,
-        email: data.email,
-        password,
-        phone: data.phone,
-        nickName: data.nickName,
-        snsURL: data.snsURL,
-        userIMG: data.userIMG,
-      };
-    }
-  }
+  //   if (userId !== user.id) {
+  //     return {
+  //       userIMG: data.userIMG,
+  //       nickName: data.nickName,
+  //       email: data.email,
+  //       snsURL: data.snsURL,
+  //     };
+  //   }
+  //   if (userId === user.id) {
+  //     return {
+  //       name: data.name,
+  //       email: data.email,
+  //       password,
+  //       phone: data.phone,
+  //       nickName: data.nickName,
+  //       snsURL: data.snsURL,
+  //       userIMG: data.userIMG,
+  //     };
+  //   }
+  // }
 
   //   @Patch("/:userId") // 내 정보 수정하기, 본인검증로직 추가할 것
   //   async updateUser(
@@ -107,4 +106,4 @@ export class UserpageController {
   //   ) {
   //     return this.userPageService.deleteApps(userId, clubMemberId);
   //   }
-}
+
