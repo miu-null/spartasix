@@ -49,4 +49,4 @@ export class EventController {
         //   return this.eventService.deleteEvente(articleId, data.password);
         // }
     
-// }
+}

@@ -10,13 +10,17 @@ export class UserController {
 
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto) {
-    return this.userService.createUser(
+    const user = await this.userService.createUser(
       data.email,
       data.password,
       data.confirmpassword,
       data.nickName,
       data.phone,
     );
+
+    if (user === undefined) {
+      return true;
+    }
   }
 
   @Post("/sign-in")
