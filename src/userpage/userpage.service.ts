@@ -7,7 +7,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import _ from "lodash";
 import { Repository } from "typeorm";
 import { Users } from "../user/entity/user.entity";
-import { Clubs } from "../club/club.entity";
+import { Clubs } from "../club/entity/club.entity";
 import { EventPosts } from "../event/entity/event.entity";
 // import { UserUpdateDto } from "./dto/userpage.update.dto";
 import { title } from "process";
@@ -73,7 +73,6 @@ export class UserpageService {
 
 
 
-<<<<<<< HEAD
   //   async getClubApps(userId: number) {
   //     return await this.clubRepository.find({
   //       where: { userId },
@@ -93,7 +92,5 @@ export class UserpageService {
   //   }
 
   //   async deleteApps(userId: number, clubMemberId: number) {}
-=======
   async deleteApps(userId: number, clubMemberId: number) { }
->>>>>>> 38f9123 ([수정]게시판 api db관련 코드 기타 외 수정)
 }

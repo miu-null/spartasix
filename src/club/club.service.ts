@@ -18,14 +18,14 @@ export class ClubService {
     return await this.clubRepository.find({
       where: { deletedAt: null },
       // 조회수가 필요할경우 컬럼 추가 필요?
-      select: ["userId", "title", "createdAt"],
+      // select: ["userId", "title", "createdAt"],
     });
   }
 
   async getClubById(clubId: number) {
     return await this.clubRepository.findOne({
       where: { clubId, deletedAt: null },
-      select: ["userId", "title", "content", "createdAt", "updatedAt"],
+      // select: ["userId", "title", "content", "createdAt", "updatedAt"],
     });
   }
 
