@@ -65,7 +65,7 @@ export class UserRepository {
   async checkMyInfo(userId: number) {
     const myInfo = await this.userRepository.findOne({
       where: { userId },
-      select: ["email", "name", "phone", "nickName", "snsURL", "userIMG"],
+      select: ["email", "phone", "nickName", "snsURL", "userIMG"],
     });
     return myInfo;
   }
