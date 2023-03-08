@@ -25,7 +25,11 @@ export class UserController {
 
   @Post("/sign-in")
   async login(@Body() data: loginDto) {
-    return this.userService.login(data.email, data.password);
+    await this.userService.login(data.email, data.password);
+
+
+    return true;
+
   }
 
   @Post("/check-nickname")

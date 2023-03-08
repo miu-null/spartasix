@@ -20,4 +20,9 @@ export class AppController {
   signup(@Res() res: Response) {
     return res.render("./sign/signup.ejs");
   }
+
+  @Get("signin")
+  signin(@Res() res: Response) {
+    return res.render("./sign/signin.ejs")
+  }
 }

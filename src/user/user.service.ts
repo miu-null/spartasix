@@ -38,7 +38,7 @@ export class UserService {
     if (validatePassword === false) {
       throw new UnauthorizedException("비밀번호가 올바르지 않습니다.");
     }
-
+    console.log(user.accessToken);
     return user.accessToken;
   }
 
