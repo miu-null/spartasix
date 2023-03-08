@@ -1,25 +1,21 @@
 <body>
   <div class="main_container">
     <div class="container" id="join_form">
-        <form class="form">
-          <div class="signup_title">
-            <h2 class="form_title">회원 가입</h2><br>
-          </div>
-          <div class="check_email">
-              <input type="text" name="user_email" id="user_email" class="form-control" style="display: inline-block" placeholder="이메일"/>
-              <button type="button" class="btn sign_btn" id="user_id_check_btn" onclick="emailCheck()">중복 확인</button>
-          </div><br>
-          <div class="check_box">
-            <input type="text" placeholder="닉네임" id="user_nickname" class="form-control" />
-            <button class="btn sign_btn" type="button" id="check_button" onclick="check_nickname()">중복 확인</button>
-          </div><br>
-          <input type="password" placeholder="비밀번호" name="password" id="password" class="form-control" /><br>
-          <input type="password" placeholder="비밀번호 확인" id="password_chk" class="form-control" /><br>
-          <input type="tel" placeholder="휴대폰 번호(- 빼고 입력해주세요.)" name="user_phone" id="user_phone" class="form-control" oninput="hypenTel(this)" maxlength="13"/><br>
-        </form>
-        <div class="register_container">
-          <button class="btn sign_btn" type="button" id="register_button" onclick="signup()">회원 가입</button>
-        </div>
+      <div class="signup_title">
+        <h2 class="title">로 그 인</h2><br>
+      </div>
+      <div>
+        <div class="signin_container">        
+          <span>이메일</span>
+          <input type="text" placeholder="이메일" id="email" class="form-control" />
+        </div><br>
+        <div class="signin_container">  
+          <span>비밀번호</span>
+          <input type="password" placeholder="비밀번호" id="password" class="form-control" />
+        </div><br>
+      <div class="register_container">
+        <button class="btn sign_btn" type="button" id="register_button" onclick="signin()">로그인</button>
+      </div>
     </div>
   </div>
 </body>

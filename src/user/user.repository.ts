@@ -41,6 +41,7 @@ export class UserRepository {
   }
 
   async login(email: string) {
+    console.log(email)
     const user = await this.userRepository.findOne({
       where: { email, deletedAt: null },
       select: ["userId", "email", "password"],

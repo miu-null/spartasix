@@ -23,7 +23,7 @@ function signup() {
       phone: phone,
     }),
     success: function (response) {
-      console.log(response);
+      window.location.replace("/")
     },
   });
 }
