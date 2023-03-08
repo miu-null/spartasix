@@ -41,6 +41,6 @@ export class Clubs {
   // @ManyToOne((type) => Users, (user) => user.clubs)
   // user: Users;
 
-  @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
+  // @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
   clubMembers: ClubMembers[]; // []이 끝에 붙어있으면 ClubMembers를 배열타입으로 정의함.
 }

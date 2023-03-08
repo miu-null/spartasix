@@ -9,7 +9,7 @@ import { Repository } from "typeorm";
 import { Users } from "../user/entity/user.entity";
 import { Clubs } from "../club/club.entity";
 import { EventPosts } from "../event/entity/event.entity";
-import { UserUpdateDto } from "./dto/userpage.update.dto";
+// import { UserUpdateDto } from "./dto/userpage.update.dto";
 import { title } from "process";
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UserpageService {
   async getMyPosts(userId: number) {
     // 회원이 쓴 글 조회 테이블2개에서 정보 가져와서 뿌려주기
     const clubPosts = await this.clubRepository.find({
-      where: { userId },
+      // where: { userId },
       select: ["title", "content"],
     });
     const eventPosts = await this.eventRepository.find({
@@ -47,7 +47,6 @@ export class UserpageService {
       where: { userId },
       select: [
         "email",
-        "name",
         "password",
         "phone",
         "nickName",
@@ -59,10 +58,10 @@ export class UserpageService {
   }
 
 
-  async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
-    console.log(updateUserInfo);
-    //   await this.userRepository.update(userId, { updateUserInfo });
-  } // 회원정보 수정
+  // async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
+  //   console.log(updateUserInfo);
+  //   //   await this.userRepository.update(userId, { updateUserInfo });
+  // } // 회원정보 수정
 
   //   async getMyClubs(userId: number) {
   //     return await this.clubRepository.findOne({
