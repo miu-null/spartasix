@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Entity,
   Column,
   CreateDateColumn,
@@ -11,8 +10,8 @@ import {
 import { Clubs } from "src/club/club.entity";
 
 @Entity({ schema: "Users", name: "Users" })
-export class Users extends BaseEntity {
-  @PrimaryGeneratedColumn()
+export class Users {
+  @PrimaryGeneratedColumn({ type: "int", name: "userId" })
   userId: number;
 
   @Column("varchar", { length: 50 })

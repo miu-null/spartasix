@@ -1,6 +1,5 @@
 import {
   Entity,
-  BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -11,8 +10,8 @@ import {
 import { ClubMembers } from "../userpage/entity/clubmembers.entity";
 import { Users } from "../user/entity/user.entity";
 @Entity({ schema: "Clubs", name: "Clubs" })
-export class Clubs extends BaseEntity {
-  @PrimaryGeneratedColumn()
+export class Clubs {
+  @PrimaryGeneratedColumn({ type: "int", name: "clubId" })
   clubId: number;
 
   @Column("int")
@@ -42,6 +41,6 @@ export class Clubs extends BaseEntity {
   // @ManyToOne((type) => Users, (user) => user.clubs)
   // user: Users;
 
-  // @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
-  // clubMembers: ClubMembers;
+  @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
+  clubMembers: ClubMembers[]; // []이 끝에 붙어있으면 ClubMembers를 배열타입으로 정의함.
 }
