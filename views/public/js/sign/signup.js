@@ -25,9 +25,6 @@ function signup() {
     success: function (response) {
       console.log(response);
     },
-    error: function (request, status, error) {
-      alert("닉네임 또는 비밀번호가 올바르지 않습니다.")
-    },
   });
 }
 

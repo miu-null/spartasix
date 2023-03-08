@@ -36,7 +36,7 @@ export class ClubService {
       maxMembers,
     });
   }
-}
+
 // 자신이 쓴 글을 수정,삭제 기능 -> Users 테이블에서 어떻게 비교?
 //   async updateClub(
 //     clubId: number,
@@ -57,12 +57,50 @@ export class ClubService {
 //       where: { clubId, deletedAt: null },
 //       select: ["password"],
 //     });
-//     if (_.isNil(club)) {
-//       throw new NotFoundException(`not found. id: ${clubId}`);
-//     }
+//   }
 
-//     if (club.password !== password.toString()) {
-//       throw new UnauthorizedException(`password is not correct. id: ${clubId}`);
-//     }
+//   async getClubById(clubId: number) {
+//     return await this.clubRepository.findOne({
+//       where: { clubId, deletedAt: null },
+//       select: ["userId", "title", "content", "createdAt", "updatedAt"],
+//     });
+//   }
+
+//   createClub(title: string, content: string, maxMembers: number) {
+//     this.clubRepository.insert({
+//       title,
+//       content,
+//       maxMembers,
+//     });
 //   }
 // }
+// // 자신이 쓴 글을 수정,삭제 기능 -> Users 테이블에서 어떻게 비교?
+// //   async updateClub(
+// //     clubId: number,
+// //     title: string,
+// //     content: string,
+// //     password: number,
+// //   ) {
+// //     await this.checkPassword(clubId, password);
+// //     this.clubRepository.update(clubId, { title, content });
+// //   }
+
+// //   async deleteClub(clubId: number, password: number) {
+// //     await this.checkPassword(clubId, password);
+// //     this.clubRepository.softDelete(clubId);
+// //   }
+
+// //   private async checkPassword(clubId: number, password: number) {
+// //     const club = await this.clubRepository.findOne({
+// //       where: { clubId, deletedAt: null },
+// //       select: ["password"],
+// //     });
+// //     if (_.isNil(club)) {
+// //       throw new NotFoundException(`not found. id: ${clubId}`);
+// //     }
+
+// //     if (club.password !== password.toString()) {
+// //       throw new UnauthorizedException(`password is not correct. id: ${clubId}`);
+// //     }
+// //   }
+}

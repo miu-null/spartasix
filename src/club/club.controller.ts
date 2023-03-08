@@ -9,12 +9,11 @@ import {
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/create-club.dto";
-// import { DeleteClubDto } from "./dto/delete-club.dto";
-// import { UpdateClubDto } from "./dto/update-club.dto";
+import { DeleteClubDto } from "./dto/delete-club.dto";
+import { UpdateClubDto } from "./dto/update-club.dto";
 
 @Controller("club")
 export class ClubController {
-  // eslint-disable-next-line prettier/prettier
   constructor(private readonly clubService: ClubService) {}
 
   @Get("/clubs")
@@ -36,7 +35,6 @@ export class ClubController {
       data.maxMembers,
     );
   }
-}
 // 자신이 쓴 글을 수정,삭제 기능 -> Users 테이블에서 어떻게 비교?
 //   @Put("/clubs/:clubid")
 //   async updateClubs(
@@ -60,4 +58,4 @@ export class ClubController {
 //     // 수정필요 위와 동일
 //     return await this.clubService.deleteClub(clubId, data.);
 //   }
-// }
+}

@@ -6,7 +6,7 @@ import {
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Users } from "./entity/user.entity";
+import { Users } from "../entities/users.entity";
 
 @Injectable()
 export class UserRepository {
@@ -25,13 +25,17 @@ export class UserRepository {
     const nickname = await this.checkNickname(nickName);
 
     if (nickname === null) {
-      return this.userRepository.insert({
+      return await this.userRepository.insert({
         email,
         password,
         nickName,
         phone,
         type: "user",
       });
+    } else {
+      throw new UnauthorizedException(
+        "닉네임 또는 비밀번호가 올바르지 않습니다.",
+      );
     }
   }
 
@@ -42,11 +46,11 @@ export class UserRepository {
     });
 
     if (!user) {
-      throw new NotFoundException(`회원이 존재하지 않습니다.`);
+      throw new NotFoundException("회원이 존재하지 않습니다.");
     }
 
     if (user.password !== password) {
-      throw new UnauthorizedException(`비밀번호가 올바르지 않습니다.`);
+      throw new UnauthorizedException("비밀번호가 올바르지 않습니다.");
     }
 
     const payload = { id: user.userId };
@@ -62,6 +66,7 @@ export class UserRepository {
     });
     return thisUser;
   }
+
   async checkMyInfo(userId: number) {
     const myInfo = await this.userRepository.findOne({
       where: { userId },
