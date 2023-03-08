@@ -1,13 +1,7 @@
-import {
-  BaseEntity,
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Clubs } from "src/club/club.entity";
 
-@Entity({ schema: "Users", name: "Users" })
+@Entity({ schema: "ClubMembers", name: "ClubMembers" })
 export class ClubMembers {
   @PrimaryGeneratedColumn({ type: "int", name: "clubMemberId" })
   clubMemberId: number;
@@ -24,6 +18,6 @@ export class ClubMembers {
   @Column("boolean")
   isAccepted: boolean;
 
-  @OneToMany(() => Clubs, (club) => club.clubMembers)
-  clubs: Clubs[];
+  // @OneToMany(() => Clubs, (club) => club.clubMembers)
+  // clubs: Clubs[];
 }
