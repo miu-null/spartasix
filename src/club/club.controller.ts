@@ -15,7 +15,7 @@ import { CreateClubDto } from "./dto/create-club.dto";
 @Controller("club")
 export class ClubController {
   // eslint-disable-next-line prettier/prettier
-  constructor(private readonly clubService: ClubService) { }
+  constructor(private readonly clubService: ClubService) {}
 
   @Get("/clubs")
   async getClubs() {

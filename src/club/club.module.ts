@@ -10,4 +10,4 @@ import { Clubs } from "./entity/club.entity";
   providers: [ClubService],
 })
 // eslint-disable-next-line prettier/prettier
-export class ClubModule { }
+export class ClubModule {}

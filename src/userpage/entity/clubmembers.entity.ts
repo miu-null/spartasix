@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Clubs } from "src/club/club.entity";
+import { Clubs } from "src/club/entity/club.entity";
 
 @Entity({ schema: "ClubMembers", name: "ClubMembers" })
 export class ClubMembers {
@@ -18,6 +18,6 @@ export class ClubMembers {
   @Column("boolean")
   isAccepted: boolean;
 
-  // @OneToMany(() => Clubs, (club) => club.clubMembers)
-  // clubs: Clubs[];
+  @OneToMany(() => Clubs, (club) => club.clubMembers)
+  clubs: Clubs[];
 }
