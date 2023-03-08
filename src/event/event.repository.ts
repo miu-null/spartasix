@@ -24,27 +24,25 @@ export class EventRepository {
     });
   }
 
-  async updateEvent(
-    id: string,
-    title: string,
-    content: string,
-    date: string,
-  ) {
-    this.eventRepository.update({
-      id,
-        title,
-        content,
-        date,
-    });
-  }
+  // async updateEvent(
+  //   id: string,
+  //   title: string,
+  //   content: string,
+  //   date: string,
+  // ) {
+  //   this.eventRepository.update({
+  //     id,
+  //       title,
+  //       content,
+  //       date,
+  //   });
+  // }
 
-  async softDeleteEvent(
-    id: string,
-  ) {
-    this.eventRepository.softDelete({
-      id,
-    });
-  }
-
-
+  // async softDeleteEvent(
+  //   id: string,
+  // ) {
+  //   this.eventRepository.softDelete({
+  //     id,
+  //   });
+  // }
 }
