@@ -1,16 +1,22 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-// import { CustomRepository } from "src/typeorm-ex.decorator";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { Searcher } from "./entity/searcher.entity";
 
-// @CustomRepository(Searcher)
-// export class SearcherRepository extends Repository<Searcher> {
-//     // constructor(
-//     //     @InjectRepository(Searcher)
-//     //     private searchjrepository: Repository<Searcher>
-//     // ) {}
-// };
+@Injectable()
+export class SearcherRepository extends Repository<Searcher> {
+  constructor(private dataSource: DataSource) {
+    super(Searcher, dataSource.createEntityManager());
+  }
+
+  async findEventposts() {
+    const result = await this.createQueryBuilder()
+      .select("search")
+      .from(Searcher, "search")
+      .orderBy("search.view", "DESC")
+      .getMany();
+    return result;
+  }
+}
 
 //         findByEventPosts(results : string): Promise<Searcher>{
 //             const results = this.searchjrepository.findOne({results});
