@@ -15,8 +15,8 @@ import { typeOrmConfigService } from "./config/typeorm.config.service";
 import { SearcherModule } from "./searcher/searcher.module";
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
-// import { UserpageModule } from "./userpage/userpage.module";
-import { EventModule } from './event/event.module';
+import { EventModule } from "./event/event.module";
+import { UserpageModule } from "./userpage/userpage.module";
 
 @Module({
   imports: [
@@ -36,8 +36,7 @@ import { EventModule } from './event/event.module';
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
-    // UserpageModule,
-
+    UserpageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -47,7 +46,8 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .forRoutes(
-        { path: "user/test", method: RequestMethod.POST },
-        );  // 이곳에 middleware 적용 시킬 path 와 htpp 메소드 작성. {}, {}, {} 로 구분
+        { path: "user/update", method: RequestMethod.PATCH },
+        { path: "userpage/info/:userId", method: RequestMethod.GET },
+      );
   }
 }
