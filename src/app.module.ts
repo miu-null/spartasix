@@ -16,6 +16,7 @@ import { SearcherModule } from "./searcher/searcher.module";
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
 // import { UserpageModule } from "./userpage/userpage.module";
+import { EventModule } from './event/event.module';
 
 @Module({
   imports: [
@@ -31,10 +32,12 @@ import { UserModule } from "./user/user.module";
       inject: [ConfigService],
     }),
 
+    EventModule,
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
     // UserpageModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
