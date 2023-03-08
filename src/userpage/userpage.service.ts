@@ -58,6 +58,7 @@ export class UserpageService {
     });
   }
 
+
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     console.log(updateUserInfo);
     //   await this.userRepository.update(userId, { updateUserInfo });
@@ -69,6 +70,9 @@ export class UserpageService {
   //       select: ["title", "content"],
   //     });
   //   } //운영중인 모임 전체 보기
+
+
+
 
   //   async getClubApps(userId: number) {
   //     return await this.clubRepository.find({
