@@ -1,4 +1,4 @@
 export class CreateSearchDto {
-    name: string;
-    age: string;
+    title: string;
+    content: string;
 }

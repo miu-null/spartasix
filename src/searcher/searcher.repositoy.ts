@@ -3,6 +3,7 @@ import { getRepositoryToken, InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Searcher } from "./entity/searcher.entity";
 import { Like } from "typeorm";
+import { CreateSearchDto } from "./dto/create.search.dto";
 
 @Injectable()
 export class SearcherRepository {
@@ -17,7 +18,7 @@ export class SearcherRepository {
     .find({
       where : {
         // name : Like(`%baby%`)}})
-        name: Like(`%${data.term}%`)}})
+        content: Like(`%${data.term}%`)}})
     
     // createQueryBuilder("name")
     // .where("searcher.name LIKE: s", {s : `%${name}%`})
@@ -49,12 +50,14 @@ export class SearcherRepository {
   // }}
 
 
-  async ArticleCreate(createSearchDto) : Promise<Searcher>{
+  async ArticleCreate(createSearchDto : CreateSearchDto) : Promise<Searcher> {
     console.log(createSearchDto, '리포지토리 진입')
-    const {name, age} = createSearchDto
-    const results = await this.searcherRepository.create()
-    console.log(results, '리포지토리 통과')
-    return results
+    const {title, content} = createSearchDto
+    const article = this.searcherRepository.create(createSearchDto)
+    console.log('리포지토리 통과')
+
+    await this.searcherRepository.save(article);
+    return article
   }
 
 }

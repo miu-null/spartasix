@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { Searcher} from './entity/searcher.entity';
 import { SearcherRepository } from './searcher.repositoy';
+import { IsUUID } from 'class-validator';
 
 
 @Injectable()
@@ -20,9 +21,16 @@ export class SearcherService {
     //     return this.SearcherRepository.find(id);
     // }
 
-    async create(createSearchDto : CreateSearchDto )  {
-        console.log('크리에이트 서비스');
-        const articles = await this.SearcherRepository.ArticleCreate(createSearchDto)
+    async createArticle(createSearchDto:CreateSearchDto) {
+        const {title, content} = createSearchDto
+        const article = {
+            title,
+            content,
+            createdAt : new Date(),
+        }
+        console.log('크리에이트, 서비스');
+        return await this.SearcherRepository.ArticleCreate(createSearchDto)}
+
         
     //     await this.SearcherRepository.save(articles);
     //     return articles;
@@ -44,11 +52,9 @@ export class SearcherService {
 //         return this.SearchserRepository.find();
 //     }
 
-//     async create(search : Searcher) : Promise<void> {
-//         await this.SearchserRepository.save(search);
-//     }
+
 
 //     async remove(id: number) : Promise<void> {
 //         await this.SearchserRepository.delete(id);
 //     }
-}
+

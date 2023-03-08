@@ -6,8 +6,12 @@ export class Searcher {
     id: number;
 
     @Column()
-    name: string;
+    title: string;
 
     @Column()
-    age: string;
+    content: string;
+
+    @Column()
+    createdAt: Date;
+
 }
