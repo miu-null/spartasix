@@ -9,5 +9,5 @@ export class Searcher {
     name: string;
 
     @Column()
-    age: number;
+    age: string;
 }

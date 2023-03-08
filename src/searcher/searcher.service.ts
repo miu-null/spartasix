@@ -4,38 +4,33 @@ import { CreateSearchDto } from './dto/create.search.dto';
 import { Searcher} from './entity/searcher.entity';
 import { SearcherRepository } from './searcher.repositoy';
 
+
 @Injectable()
 export class SearcherService {
-    constructor(
-        @InjectRepository(SearcherRepository)
-        private SearcherRepository: SearcherRepository,
-    ) {}  //리포지토리를 서비스에 inject넣어줌 
+    constructor(private SearcherRepository: SearcherRepository) {}  
 
-    findEventPosts(term : any) : Promise<Searcher[]> {
+    findEventPosts(term : any) {
         console.log(term, '서비스')
-        const results = this.SearcherRepository.find(term);
+        const results = this.SearcherRepository.findEventposts(term);
+        console.log(term, '리포리토지 통과')
         return results
     }
 
-    findOne(id) : Promise<Searcher[]> {
-        return this.SearcherRepository.find(id);
-    }
+    // findOne(id) : Promise<Searcher[]> {
+    //     return this.SearcherRepository.find(id);
+    // }
 
-    async create(createSearchDto : CreateSearchDto ) : Promise<Searcher> {
-        const { name, age   } = createSearchDto;
-        console.log('서비스');
-        const articles = await this.SearcherRepository.create({
-            name, age
-        })
+    async create(createSearchDto : CreateSearchDto )  {
+        console.log('크리에이트 서비스');
+        const articles = await this.SearcherRepository.ArticleCreate(createSearchDto)
         
-        await this.SearcherRepository.save(articles);
-        
-        return articles;
-    }
+    //     await this.SearcherRepository.save(articles);
+    //     return articles;
+    // }
 
-    async remove(id: number) : Promise<void> {
-        await this.SearcherRepository.delete(id);
-    }
+    // async remove(id: number) : Promise<void> {
+    //     await this.SearcherRepository.delete(id);
+    // }
 }
 
 // @Injectable()
@@ -56,4 +51,4 @@ export class SearcherService {
 //     async remove(id: number) : Promise<void> {
 //         await this.SearchserRepository.delete(id);
 //     }
-// }
+}

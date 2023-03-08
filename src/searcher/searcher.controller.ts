@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Render, Query, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response} from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
-import { Searcher } from './interface/searcher.interface';
+import { Searcher } from './entity/searcher.entity';
 import { SearcherService } from './searcher.service';
 
 
@@ -14,10 +14,12 @@ export class SearcherController {
   async searchEventPosts(@Query() term, @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findEventPosts(term);
+      console.log(terms, '컨트롤러 반환중')
       return res.render("search.ejs", {
         title: "검색결과",
         terms,
       });
+      
     } catch (err) {
       console.error(err.message);
     }
@@ -33,7 +35,7 @@ export class SearcherController {
   //   }
 
   @Post() 
-  async create(@Body() CreateSearchDto: CreateSearchDto): Promise<Searcher> {
+  async create(@Body() CreateSearchDto: CreateSearchDto): Promise<void> {
     console.log(CreateSearchDto, '컨트롤러');
     return await this.searchService.create(CreateSearchDto);
   }
