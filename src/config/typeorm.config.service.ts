@@ -4,7 +4,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { join } from "path";
 import { Searcher } from "src/searcher/entity/searcher.entity";
 import { Users } from "src/user/entity/user.entity";
-import { Clubs } from "src/club/club.entity";
+import { Clubs } from "src/club/entity/club.entity";
 import { ClubMembers } from "src/userpage/entity/clubmembers.entity";
 
 @Injectable()
