@@ -23,7 +23,11 @@ function signup() {
       phone: phone,
     }),
     success: function (response) {
-      window.location.replace("/")
+      alert("회원가입 성공 !");
+      window.location.replace("signin");
+    },
+    error: function (error) {
+      alert("모든 정보를 입력해 주세요.");
     },
   });
 }

@@ -25,4 +25,9 @@ export class AppController {
   signin(@Res() res: Response) {
     return res.render("./sign/signin.ejs")
   }
+
+  @Get("findpassword")
+  findpassword(@Res() res: Response) {
+    return res.render("./sign/findpassword.ejs")
+  }
 }
