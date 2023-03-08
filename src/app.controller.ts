@@ -16,4 +16,9 @@ export class AppController {
       // return { id : terms.name, age : terms.age}
     return res.render('search.ejs', {name: '김바다', age: 5})
     }
+
+  @Get('signup')
+    signup(@Res() res: Response) {
+      return res.render('./sign/signup.ejs')
+    }
   }  

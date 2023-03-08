@@ -12,14 +12,14 @@ import { ClubMembers } from "../userpage/entity/clubmembers.entity";
 import { Users } from "../user/entity/user.entity";
 @Entity({ schema: "Clubs", name: "Clubs" })
 export class Clubs extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: "int", name: "clubId" })
+  @PrimaryGeneratedColumn()
   clubId: number;
 
   @Column("int")
   authorId: number;
 
-  @Column("int")
-  userId: number;
+  // @Column("int")
+  // userId: number;
 
   @Column("varchar", { length: 50 })
   title: string;
@@ -39,9 +39,9 @@ export class Clubs extends BaseEntity {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @ManyToOne(() => Users, (users) => users.clubs)
-  users: Users;
+  // @ManyToOne((type) => Users, (user) => user.clubs)
+  // user: Users;
 
-  @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
-  clubMembers: ClubMembers;
+  // @ManyToOne(() => ClubMembers, (clubMembers) => clubMembers.clubs)
+  // clubMembers: ClubMembers;
 }
