@@ -7,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get() // 메인페이지 바디
-  root(@Res() res: Response) {
+  mainpage(@Res() res: Response) {
     return res.render("index.ejs", {
       title: "공사중",
       name: "6-Galic",
