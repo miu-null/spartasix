@@ -1,11 +1,3 @@
-
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { typeOrmConfigService } from './config/typeorm.config.service';
-import { EventModule } from './event/event.module';
 import {
   MiddlewareConsumer,
   Module,
@@ -20,11 +12,11 @@ import { AppService } from "./app.service";
 import { AuthMiddleware } from "./auth/auth.middleware";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
-import { SearcherModule } from './searcher/searcher.module';
+import { SearcherModule } from "./searcher/searcher.module";
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
-// import { UserpageModule } from "./userpage/userpage.module";
-
+import { EventModule } from "./event/event.module";
+import { UserpageModule } from "./userpage/userpage.module";
 
 @Module({
   imports: [
@@ -42,10 +34,9 @@ import { UserModule } from "./user/user.module";
 
     EventModule,
     UserModule,
-    SearcherModule,  //김재광 검색기능 테스트
+    SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
-    // UserpageModule,
-
+    UserpageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -54,6 +45,9 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes({ path: "user/update", method: RequestMethod.PATCH });
+      .forRoutes(
+        { path: "user/update", method: RequestMethod.PATCH },
+        { path: "userpage/info/:userId", method: RequestMethod.GET },
+      );
   }
 }

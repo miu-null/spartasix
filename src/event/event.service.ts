@@ -23,18 +23,21 @@ export class EventService {
             date,
         );
       }
-      async updateEvent(
-        id: number,
-        title: string,
-        content: string,
-        password: number
-      ) {
-        this.EventRepository.update(id, { title, content });
-      }
+
+
+      // async updateEvent(
+      //   id: number,
+      //   title: string,
+      //   content: string,
+       
+      // ) {
+      //   this.EventRepository.updateEvent(id, { title, content });
+      // }
+
     
-      async deleteEvente(id: number) {
-        this.EventRepository.softDeleteEvent(id);
-      }
+      // async deleteEvente(id: number) {
+      //   this.EventRepository.softDeleteEvent(id);
+      // }
       
 
 }
