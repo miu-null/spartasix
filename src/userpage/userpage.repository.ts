@@ -5,10 +5,10 @@ import {
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClubMembers } from "src/entities/clubmembers.entity";
-import { Clubs } from "src/entities/clubs.entity";
-import { EventPosts } from "src/entities/eventposts.entity";
-import { Users } from "src/entities/users.entity";
+import { ClubMembers } from "../entities/clubmembers.entity";
+import { Clubs } from "../entities/clubs.entity";
+import { EventPosts } from "../entities/eventposts.entity";
+import { Users } from "../entities/users.entity";
 import { Repository } from "typeorm";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
@@ -40,7 +40,7 @@ export class UserPageRepository {
   // }
 
   // 회원정보 확인
-  async getUsersInfo(userId: number) {
+  async getUserInfo(userId: number) {
     return await this.userRepository.findOne({
       where: { userId },
       select: [
@@ -80,17 +80,47 @@ export class UserPageRepository {
     });
   }
 
-  // 신청서 전체보기
+  // 클럽 신청서 전체보기
   async getClubApps(userId: number) {
-    return await this.clubMembersRepository.find({
-      where: { userId },
-      select: ["isAccepted", "application"],
-    });
+    const members = await this.clubMembersRepository
+      .createQueryBuilder("members")
+      .where("members.userId = :userId", { userId })
+      // .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
+      .getMany();
+
+    return members;
+
+    //   where: { userId },
+    //   select: ["isAccepted", "application"],
+    // });
   }
 
-  // // 신청서 수락
-  // async getThisMember(userId: number, clubMemberId) {}
+  // 특정 신청서 조회
+  async getThisApp(userId: number, clubMemberId: number) {
+    const members = await this.clubMembersRepository
+      .createQueryBuilder("members")
+      .where("members.userId = :userId", { userId })
+      .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
+      .getOne();
+    return members;
+  }
 
-  // // 신청서 거절
-  // async rejectApps(userId: number) {}
+  // 신청서 수락
+  async getThisMember(userId: number, clubMemberId: number) {
+    const thisApp = await this.getThisApp(userId, clubMemberId);
+    if (thisApp) {
+      thisApp.isAccepted = true;
+      await this.clubMembersRepository.save(thisApp);
+    }
+  }
+
+  // 신청서 거절
+  async rejectApp(userId: number, clubMemberId: number) {
+    await this.clubMembersRepository
+      .createQueryBuilder("apps")
+      .softDelete()
+      .where("apps.userId = :userId", { userId })
+      .andWhere("apps.clubMemberId = :clubMemberId", { clubMemberId })
+      .execute();
+  }
 }
