@@ -19,7 +19,7 @@ export class SearcherController {
     try {
       const terms = await this.searchService.findEventPosts(term);
       console.log(terms, '컨트롤러 반환중')
-      return res.render("search.ejs", {
+      return res.render("postSearchTest.ejs", {
         title: "검색결과",
         terms,
       });

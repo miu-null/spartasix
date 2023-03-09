@@ -1,13 +1,16 @@
 <h3> search 페이지- 회원 검색</h3>
 
 <h3> <%- title %> </h3>
-<div class="row row-cols-1 row-cols-md-3 g-4">
+
+<div class="searchPosts_container">
     <div>
         <% for(let i=0; i < terms.length; i++) {%>
             <p class="articles">
-                <h5>회원번호 : <%= terms[i].id %></h5>
-                <p>회원명 : <%= terms[i].nickName %> // 연락처 : <%= terms[i].phone %></p>
+            <h5>회원번호 : <%= terms[i].userId %>
+            </h5>
+            <p>회원명 : <%= terms[i].nickName %> // 연락처 : <%= terms[i].phone %> // 이메일 : <%= terms[i].email %>
             </p>
-                    <% } %>
+            </p>
+            <% } %>
     </div>
 </div>
