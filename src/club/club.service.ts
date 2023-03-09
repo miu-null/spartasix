@@ -12,7 +12,7 @@ import { Clubs } from "./entity/club.entity";
 export class ClubService {
   constructor(
     @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
-  ) { }
+  ) {}
 
   async getClubs() {
     return await this.clubRepository.find({

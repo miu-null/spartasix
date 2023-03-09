@@ -13,10 +13,12 @@ import { AuthMiddleware } from "./auth/auth.middleware";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
 import { SearcherModule } from "./searcher/searcher.module";
-// import { ClubModule } from './club/club.module';
+// import { ClubModule } from "./club/club.module";
 import { UserModule } from "./user/user.module";
-// import { EventModule } from "./event/event.module";
-// import { UserpageModule } from "./userpage/userpage.module";
+import { EventModule } from "./event/event.module";
+import { UserpageModule } from "./userpage/userpage.module";
+// import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [
@@ -36,7 +38,10 @@ import { UserModule } from "./user/user.module";
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
-    // UserpageModule,
+
+    UserpageModule,
+    // AuthModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -48,6 +53,7 @@ export class AppModule implements NestModule {
       .forRoutes(
         { path: "user/update", method: RequestMethod.PATCH },
         { path: "userpage/info/:userId", method: RequestMethod.GET },
+        { path: "userpage/info/:userId", method: RequestMethod.PATCH },
       );
   }
 }

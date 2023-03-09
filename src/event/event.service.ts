@@ -4,9 +4,7 @@ import { EventRepository } from "./event.repository";
 @Injectable()
 export class EventService {
 
-
     constructor(private EventRepository: EventRepository) {}
-
     
     async createEvent(
         userId: string,
@@ -16,7 +14,6 @@ export class EventService {
         viewCount: number,
       ) {
         await this.EventRepository.createEvent(
-
             userId,
             title,
             content,
@@ -24,19 +21,18 @@ export class EventService {
         );
       }
 
-      // async updateEvent(
-      //   id: number,
-      //   title: string,
-      //   content: string,
+      async updateEvent(
+        id: number,
+        title: string,
+        content: string,
        
-      // ) {
-      //   this.EventRepository.updateEvent(id, { title, content });
-      // }
-
-
-//       async deleteEvente(id: number) {
-//         this.EventRepository.softDeleteEvent(id);
-//       }
+      ) {
+        this.EventRepository.updateEvent(id, { title, content });
+      }
+    
+      async deleteEvente(id: number) {
+        this.EventRepository.softDeleteEvent(id);
+      }
       
 
-// }
+}

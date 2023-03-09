@@ -30,3 +30,4 @@ import {
     @UpdateDateColumn()
     updateAt: Date | null;
   }
+
