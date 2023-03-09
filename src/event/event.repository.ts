@@ -7,7 +7,7 @@ import { EventPosts } from "./entity/event.entity";
 export class EventRepository {
   constructor(
     @InjectRepository(EventPosts)
-    private readonly eventRepository: Repository<EventPosts>,
+    private readonly eventRepository: Repository<EventPosts>
   ) {}
 
   async createEvent(
@@ -22,7 +22,7 @@ export class EventRepository {
       date,
     });
   }
-
+  
   // async updateEvent(
   //   id: string,
   //   title: string,
@@ -36,7 +36,6 @@ export class EventRepository {
   //       date,
   //   });
   // }
-
   // async softDeleteEvent(
   //   id: string,
   // ) {
@@ -44,4 +43,4 @@ export class EventRepository {
   //     id,
   //   });
   // }
-}
+// }

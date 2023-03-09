@@ -1,3 +1,4 @@
+
 import {
   Body,
   Param,
@@ -10,14 +11,16 @@ import {
 import { UserpageService } from "./userpage.service";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
+
 @Controller("userpage")
 export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
 
-  // @Get("/:userId") // 회원이 쓴 글 조회 - 시간순 내림차정렬 추가+ 게시판 글 섞어보는 로직
-  // async getMyPosts(@Param("userId") userId: number) {
-  //   return await this.userPageService.getMyPosts(userId);
-  // }
+//   @Get("/:userId") // 회원이 쓴 글 조회 - 시간순 내림차정렬 추가+ 게시판 글 섞어보는 로직
+//   async getMyPosts(@Param("userId") userId: number) {
+//     return await this.userPageService.getMyPosts(userId);
+//   }
+
 
   @Get("/info/:userId") // 유저정보 조회
   async getUserInfo(
@@ -128,3 +131,4 @@ export class UserpageController {
   //   }
   // }
 }
+

@@ -4,8 +4,13 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import _ from "lodash";
+
 import { UserPageRepository } from "./userpage.repository";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
+import { Users } from "../user/entity/user.entity";
+import { Clubs } from "../club/entity/club.entity";
+import { EventPosts } from "../event/entity/event.entity";
+// import { UserUpdateDto } from "./dto/userpage.update.dto";
 
 @Injectable()
 export class UserpageService {
@@ -34,10 +39,12 @@ export class UserpageService {
     return await this.userPageRepository.getMyClubs(userId);
   }
 
+
   // 클럽 신청서 조회
   async getClubApps(userId: number) {
     return await this.userPageRepository.getClubApps(userId);
   }
+
 
   // // 신청서 수락
   // async getThisMember(userId: number, clubMemberId: number) {
@@ -51,4 +58,5 @@ export class UserpageService {
   //     return await this.clubRepository.find();
   //   }
   // async deleteApps(userId: number, clubMemberId: number) { }
+
 }

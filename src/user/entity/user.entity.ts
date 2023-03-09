@@ -43,6 +43,7 @@ export class Users {
 
   @DeleteDateColumn()
   deletedAt: Date | null;
+  clubs: any;
 
   // 데이터베이스 관계설정
   @OneToMany(() => Clubs, (club) => club.user)
