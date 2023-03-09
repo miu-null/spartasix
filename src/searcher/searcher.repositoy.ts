@@ -60,31 +60,3 @@ export class UserSearchRepository {
   }
 
 }
-
-  
-
-
-
-
-
-
-
-
-
-
-// 'MATCH(name) AGAINST (:name IN BOOLEAN MODE)', 
-
-
-//   async findEventposts(data): Promise<Searcher[]> {{
-//     console.log(data.term, '리포지토리 진입')
-//     const results = await this.searcherRepository
-//     .find({
-//       where : {
-//         // title : Like OR
-//         content: Like(`%${data.term}%`)}})
-    
-//     // createQueryBuilder("name")
-//     // .where("searcher.name LIKE: s", {s : `%${name}%`})
-//     return results
-//   }
-// }
