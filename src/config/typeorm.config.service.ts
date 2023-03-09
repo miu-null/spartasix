@@ -9,7 +9,7 @@ import { ClubMembers } from "src/userpage/entity/clubmembers.entity";
 
 @Injectable()
 export class typeOrmConfigService implements TypeOrmOptionsFactory {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) { }
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: "mysql",

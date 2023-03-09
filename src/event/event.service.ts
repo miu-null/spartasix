@@ -25,14 +25,14 @@ export class EventService {
         id: number,
         title: string,
         content: string,
-       
+
       ) {
         this.EventRepository.updateEvent(id, { title, content });
       }
-    
+
       async deleteEvente(id: number) {
         this.EventRepository.softDeleteEvent(id);
       }
-      
+
 
 }
