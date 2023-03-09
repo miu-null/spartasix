@@ -12,29 +12,35 @@ export class SearcherRepository {
     private readonly searcherRepository: Repository<Searcher>,
   ) {}
 
-  async findEventposts(data): Promise<Searcher[]> {{
-    console.log(data.term, '리포지토리 진입')
-    const results = await this.searcherRepository
-    .find({
-      where : {
-        // name : Like(`%baby%`)}})
-        content: Like(`%${data.term}%`)}})
+//   async findEventposts(data): Promise<Searcher[]> {{
+//     console.log(data.term, '리포지토리 진입')
+//     const results = await this.searcherRepository
+//     .find({
+//       where : {
+//         // title : Like OR
+//         content: Like(`%${data.term}%`)}})
     
-    // createQueryBuilder("name")
-    // .where("searcher.name LIKE: s", {s : `%${name}%`})
-    return results
-  }
-}
+//     // createQueryBuilder("name")
+//     // .where("searcher.name LIKE: s", {s : `%${name}%`})
+//     return results
+//   }
+// }
 
-  // async findEventposts(data: any): Promise<Searcher[]> {
-  //   {
-  //     console.log(`%${data.term}%`, data, "리포지토리 진입");
-  //     const results = await this.searcherRepository
-  //       .createQueryBuilder('search')
-  //       .where('search.name LIKE :name', { name: `%${data.term}%` })
-  //       .getMany();
-  //     console.log(results);
-  //     return results
+  async findEventposts(data: any): Promise<Searcher[]> {
+    {
+      console.log(`%${data.term}%`, data, "리포지토리 진입");
+      const results = await this.searcherRepository
+        .createQueryBuilder('search')
+        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .getMany();
+      console.log(results);
+      return results
+    }
+  }
+
+
+
+
       //         `%${term}%`)}})
 
         // .where("searcher.name LIKE: s", {s : `%${name}%`})

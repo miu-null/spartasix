@@ -36,7 +36,7 @@ export class SearcherController {
 
   @Post() 
   async create(
-    @Body('title') createSearchDto: CreateSearchDto
+    @Body() createSearchDto: CreateSearchDto
     ) {
     console.log(createSearchDto, '컨트롤러');
     return await this.searchService.createArticle(createSearchDto);

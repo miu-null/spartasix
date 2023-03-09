@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from "typeorm";
 
 @Entity()
 export class Searcher {
@@ -11,7 +18,12 @@ export class Searcher {
     @Column()
     content: string;
 
-    @Column()
+    @CreateDateColumn()
     createdAt: Date;
-
+  
+    @UpdateDateColumn()
+    updatedAt: Date;
+  
+    @DeleteDateColumn()
+    deletedAt: Date | null;
 }
