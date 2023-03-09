@@ -9,7 +9,6 @@ import { DeleteEventDto } from "./dto/deleteevent.dto";
 export class EventController {
         constructor(private eventService: EventService) {}
     
-
         // @Post("/events")
         // async createUser(@Body() data: CreateEventDto) {
         //   return this.eventService.createEvent(
@@ -39,6 +38,7 @@ export class EventController {
         //     data.content
         //   );
         // }
+
       
         // @Delete('/events/:id')
         // deleteArticle(

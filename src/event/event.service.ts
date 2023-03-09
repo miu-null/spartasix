@@ -24,6 +24,7 @@ export class EventService {
         );
       }
 
+
       // async updateEvent(
       //   id: number,
       //   title: string,
@@ -32,6 +33,7 @@ export class EventService {
       // ) {
       //   this.EventRepository.updateEvent(id, { title, content });
       // }
+
     
       // async deleteEvente(id: number) {
       //   this.EventRepository.softDeleteEvent(id);

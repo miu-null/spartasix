@@ -8,7 +8,7 @@ export class EventRepository {
   
     constructor(
     @InjectRepository(EventPosts)
-    private readonly eventRepository: Repository<EventPosts>,
+    private readonly eventRepository: Repository<EventPosts>
   ) {}
 
   async createEvent(
@@ -37,7 +37,6 @@ export class EventRepository {
   //       date,
   //   });
   // }
-
   // async softDeleteEvent(
   //   id: string,
   // ) {
