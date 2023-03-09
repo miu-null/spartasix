@@ -37,7 +37,7 @@ export class ClubController {
     );
   }
 }
-
+// 자신이 쓴 글을 수정,삭제 기능 -> Users 테이블에서 어떻게 비교?
 //   @Put("/clubs/:clubid")
 //   async updateClubs(
 //     @Param("clubid") clubId: number,

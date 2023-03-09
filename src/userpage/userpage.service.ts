@@ -14,7 +14,7 @@ import { EventPosts } from "../event/entity/event.entity";
 
 @Injectable()
 export class UserpageService {
-  constructor(private userPageRepository: UserPageRepository) {}
+  constructor(private userPageRepository: UserPageRepository) { }
 
   // // 작성한 글 조회
   // async getMyPosts(userId: number) {

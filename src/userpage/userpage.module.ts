@@ -23,4 +23,4 @@ import { ClubMembers } from "./entity/clubmembers.entity";
   controllers: [UserpageController],
   providers: [UserpageService, UserPageRepository],
 })
-export class UserpageModule {}
+export class UserpageModule { }
