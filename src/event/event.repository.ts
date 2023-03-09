@@ -5,18 +5,10 @@ import { EventPosts } from "./entity/event.entity";
 
 @Injectable()
 export class EventRepository {
-<<<<<<< HEAD
-  constructor(
-    @InjectRepository(EventPosts)
-    private readonly eventRepository: Repository<EventPosts>
-  ) { }
-=======
-
   constructor(
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
   ) { }
->>>>>>> 6cd480b ([test])
 
   async createEvent(
     userId: string,
