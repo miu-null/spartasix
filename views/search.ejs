@@ -1,5 +1,14 @@
-<h3> ejs-테스트 입니다 search</h3>
+<h3> search 페이지</h3>
 
-<div> 조이름 : <%= name %>
+<h3> <%- title %> </h3>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div>
+        <% for(let i=0; i < terms.length; i++) {%>
+            <div class="card-text">
+                번호 : <%= terms[i].id %>
+                이름 : <%= terms[i].name %>
+                나이 : <%= terms[i].age %>
+            </div>
+                    <% } %>
+    </div>
 </div>
-<div> 인원수 : <%= age %>
