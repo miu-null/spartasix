@@ -10,7 +10,7 @@ import {
   @Entity({ schema: "EventPosts", name: "EventPosts" })
   export class EventPosts {
     @PrimaryGeneratedColumn({ type: "int", name: "userId" })
-    userId: number;
+    eventId: number;
   
     @Column("varchar", { length: 50 })
     title: string;
