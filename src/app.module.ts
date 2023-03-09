@@ -15,8 +15,8 @@ import { typeOrmConfigService } from "./config/typeorm.config.service";
 import { SearcherModule } from "./searcher/searcher.module";
 // import { ClubModule } from './club/club.module';
 import { UserModule } from "./user/user.module";
-import { EventModule } from "./event/event.module";
-import { UserpageModule } from "./userpage/userpage.module";
+// import { EventModule } from "./event/event.module";
+// import { UserpageModule } from "./userpage/userpage.module";
 
 @Module({
   imports: [
@@ -32,11 +32,11 @@ import { UserpageModule } from "./userpage/userpage.module";
       inject: [ConfigService],
     }),
 
-    EventModule,
+    // EventModule,
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
-    UserpageModule,
+    // UserpageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

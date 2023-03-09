@@ -23,7 +23,7 @@ export class EventRepository {
         date,
     });
   }
-
+  
   // async updateEvent(
   //   id: string,
   //   title: string,
@@ -44,4 +44,4 @@ export class EventRepository {
   //     id,
   //   });
   // }
-}
+// }
