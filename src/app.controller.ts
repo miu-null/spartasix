@@ -4,7 +4,7 @@ import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get() // 메인페이지 바디
   mainpage(@Res() res: Response) {
