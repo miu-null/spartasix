@@ -5,8 +5,8 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import _ from "lodash";
+import { Clubs } from "src/entities/clubs.entity";
 import { Repository } from "typeorm";
-import { Clubs } from "./entity/club.entity";
 
 @Injectable()
 export class ClubService {
