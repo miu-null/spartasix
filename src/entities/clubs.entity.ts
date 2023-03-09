@@ -24,7 +24,7 @@ export class Clubs {
   userId: number;
 
   @Column("int")
-  maxMembers: number;
+  maxMembers: string;
 
   @Column("varchar", { length: 50 })
   title: string;
