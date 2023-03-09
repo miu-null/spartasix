@@ -12,20 +12,20 @@ import { Clubs } from "./entity/club.entity";
 export class ClubService {
   constructor(
     @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
-  ) {}
+  ) { }
 
   async getClubs() {
     return await this.clubRepository.find({
       where: { deletedAt: null },
       // 조회수가 필요할경우 컬럼 추가 필요?
-      // select: ["userId", "title", "createdAt"],
+      select: ["clubId", "title", "createdAt"],
     });
   }
 
   async getClubById(clubId: number) {
     return await this.clubRepository.findOne({
       where: { clubId, deletedAt: null },
-      // select: ["userId", "title", "content", "createdAt", "updatedAt"],
+      select: ["clubId", "title", "content", "createdAt", "updatedAt"],
     });
   }
 
@@ -42,9 +42,8 @@ export class ClubService {
 //     clubId: number,
 //     title: string,
 //     content: string,
-//     password: number,
 //   ) {
-//     await this.checkPassword(clubId, password);
+//     await this.checkPassword(clubId, password); ***
 //     this.clubRepository.update(clubId, { title, content });
 //   }
 

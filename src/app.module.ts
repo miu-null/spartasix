@@ -13,12 +13,11 @@ import { AuthMiddleware } from "./auth/auth.middleware";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
 import { SearcherModule } from "./searcher/searcher.module";
-// import { ClubModule } from "./club/club.module";
+import { ClubModule } from "./club/club.module";
 import { UserModule } from "./user/user.module";
 import { EventModule } from "./event/event.module";
 import { UserpageModule } from "./userpage/userpage.module";
 // import { AuthModule } from './auth/auth.module';
-
 
 @Module({
   imports: [
@@ -37,8 +36,7 @@ import { UserpageModule } from "./userpage/userpage.module";
     // EventModule,
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
-    // ClubModule,
-
+    ClubModule,
     UserpageModule,
     // AuthModule,
 
