@@ -17,5 +17,6 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "typeRoots" : ["./@types", "./node_modules/@types"] //모듈 'module name'에 대한 선언 파일을 찾을 수 없습니다. 해결을 위해 추가
   }
 }
