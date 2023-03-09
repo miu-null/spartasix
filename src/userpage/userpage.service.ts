@@ -4,12 +4,8 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import _ from "lodash";
-
 import { UserPageRepository } from "./userpage.repository";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
-import { Users } from "../user/entity/user.entity";
-import { Clubs } from "../club/entity/club.entity";
-import { EventPosts } from "../event/entity/event.entity";
 // import { UserUpdateDto } from "./dto/userpage.update.dto";
 
 @Injectable()

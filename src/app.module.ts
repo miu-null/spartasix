@@ -10,6 +10,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthMiddleware } from "./auth/auth.middleware";
+// import { ClubModule } from "./club/club.module";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
 import { SearcherModule } from "./searcher/searcher.module";

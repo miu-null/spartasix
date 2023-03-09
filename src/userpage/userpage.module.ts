@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Users } from "../user/entity/user.entity";
 import { UserPageRepository } from "./userpage.repository";
 import { UserpageController } from "./userpage.controller";
 import { UserpageService } from "./userpage.service";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtConfigService } from "src/config/jwt.config.service";
-import { EventPosts } from "src/event/entity/event.entity";
-import { Clubs } from "src/club/entity/club.entity";
-import { ClubMembers } from "./entity/clubmembers.entity";
+import { Users } from "src/entities/users.entity";
+import { Clubs } from "src/entities/clubs.entity";
+import { EventPosts } from "src/entities/eventposts.entity";
+import { ClubMembers } from "src/entities/clubmembers.entity";
 
 @Module({
   imports: [
