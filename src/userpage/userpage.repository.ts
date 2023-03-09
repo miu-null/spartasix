@@ -5,11 +5,11 @@ import {
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ClubMembers } from "src/entities/clubmembers.entity";
+import { Clubs } from "src/entities/clubs.entity";
+import { EventPosts } from "src/entities/eventposts.entity";
+import { Users } from "src/entities/users.entity";
 import { Repository } from "typeorm";
-import { Users } from "src/user/entity/user.entity";
-import { Clubs } from "src/club/entity/club.entity";
-import { EventPosts } from "src/event/entity/event.entity";
-import { ClubMembers } from "./entity/clubmembers.entity";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
 @Injectable()

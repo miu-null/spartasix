@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { EventPosts } from "src/entities/eventposts.entity";
 import { Repository } from "typeorm";
-import { EventPosts } from "./entity/event.entity";
+
 
 @Injectable()
 export class EventRepository {
@@ -43,4 +44,4 @@ export class EventRepository {
   //     id,
   //   });
   // }
-// }
+}

@@ -23,10 +23,11 @@ function signup() {
       phone: phone,
     }),
     success: function (response) {
-      console.log(response);
+      alert("회원가입 성공 !");
+      window.location.replace("signin");
     },
-    error: function (request, status, error) {
-      alert("닉네임 또는 비밀번호가 올바르지 않습니다.")
+    error: function (error) {
+      alert("모든 정보를 입력해 주세요.");
     },
   });
 }
