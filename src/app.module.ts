@@ -19,6 +19,7 @@ import { EventModule } from "./event/event.module";
 import { UserpageModule } from "./userpage/userpage.module";
 // import { AuthModule } from './auth/auth.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -33,12 +34,14 @@ import { UserpageModule } from "./userpage/userpage.module";
       inject: [ConfigService],
     }),
 
-    EventModule,
+    // EventModule,
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
     // ClubModule,
+
     UserpageModule,
     // AuthModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
