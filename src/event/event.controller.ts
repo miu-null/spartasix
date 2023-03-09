@@ -9,7 +9,6 @@
 // export class EventController {
 //         constructor(private eventService: EventService) {}
     
-
         // @Post("/events")
         // async createUser(@Body() data: CreateEventDto) {
         //   return this.eventService.createEvent(
@@ -39,6 +38,7 @@
         //     data.content
         //   );
         // }
+
       
         // @Delete('/events/:id')
         // deleteArticle(
