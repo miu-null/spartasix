@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { Searcher } from "../entities/searcher.entity";
 import { CreateSearchDto } from "./dto/create.search.dto";
 import { Users } from "../entities/users.entity";
-import { JwtService } from "@nestjs/jwt";
+// import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class SearcherRepository {
@@ -12,7 +12,6 @@ export class SearcherRepository {
     @InjectRepository(Searcher)
     private readonly searcherRepository: Repository<Searcher>
   ) {}
-
 
   async findEventposts(data: any): Promise<Searcher[]> {
     {
@@ -25,8 +24,6 @@ export class SearcherRepository {
       return results
     }
   }
-
-
 
   async ArticleCreate(createSearchDto : CreateSearchDto) : Promise<Searcher> {
     console.log(createSearchDto, '리포지토리 진입')
@@ -43,8 +40,7 @@ export class SearcherRepository {
 export class UserSearchRepository {
   constructor(
     @InjectRepository(Users)
-    private readonly userSearchRepository: Repository<Users>,
-    private jwtService: JwtService,
+    private readonly userSearchRepository: Repository<Users>, // private jwtService: JwtService,
   ) {}
 
   async findusers(data: any) {
