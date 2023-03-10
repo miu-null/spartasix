@@ -14,3 +14,12 @@ footer {
     color: rgb(212, 202, 202);
     font-size: large;
 }
+
+.searchPosts_container {
+    /* background-color:rgb(106, 141, 37) ; */
+    background-color:rgb(72, 25, 25) ;  
+    text-align: left;
+    color: rgb(212, 202, 202);
+    font-size: large;
+}
+
