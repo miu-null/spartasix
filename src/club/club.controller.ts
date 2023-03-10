@@ -28,7 +28,6 @@ export class ClubController {
 
   @Post("/clubs")
   createClubs(@Body() data: CreateClubDto) {
-    // data. 수정 필요 컬럼명에 맞게.
     return this.clubService.createClub(
       data.title,
       data.content,
@@ -36,17 +35,18 @@ export class ClubController {
     );
   }
 
-  // @Put("/clubs/:clubid")
-  // update(@Param("clubid") clubid: number, @Body() data: UpdateClubDto) {
-  //   return  this.clubService.updateClub(
-  //     data.title,
-  //     data.content,
-  //     data.maxMembers,
-  //   );
-  // }
+  @Put("/clubs/:clubid")
+  update(@Param("clubid") clubid: number, @Body() data: UpdateClubDto) {
+    return this.clubService.updateClub(
+      clubid,
+      data.title,
+      data.content,
+      data.maxMembers,
+    );
+  }
 
-  // @Delete("clubs/:clubid")
-  // delete(@Param("clubid") clubid: number) {
-  //   return this.clubService.deleteClub(clubid);
-  // }
+  @Delete("clubs/:clubid")
+  delete(@Param("clubid") clubid: number) {
+    return this.clubService.deleteClub(clubid);
+  }
 }
