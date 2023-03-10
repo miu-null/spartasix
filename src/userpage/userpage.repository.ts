@@ -84,10 +84,9 @@ export class UserPageRepository {
   async getClubApps(userId: number) {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
-      .where("members.userId = :userId", { userId })
+      .where("members.userId = :userId", { userId, deletedAt: null })
       // .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
       .getMany();
-
     return members;
 
     //   where: { userId },
@@ -99,7 +98,7 @@ export class UserPageRepository {
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
-      .where("members.userId = :userId", { userId })
+      .where("members.userId = :userId", { userId, deletedAt: null })
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
       .getOne();
     return members;
