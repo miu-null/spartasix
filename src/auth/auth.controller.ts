@@ -1,16 +1,16 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { AuthService } from "./auth.service";
 import { checkNicknameDto } from "./dto/ckecknickname.dto";
 import { CreateUserDto } from "./dto/createuser.dto";
 import { loginDto } from "./dto/login.dto";
-import { UserService } from "./user.service";
 
-@Controller("user")
-export class UserController {
-  constructor(private userService: UserService) {}
-
+@Controller("auth")
+export class AuthController {
+  constructor(private authService: AuthService) {}
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto) {
-    const user = await this.userService.createUser(
+    const user = await this.authService.createUser(
       data.email,
       data.password,
       data.confirmpassword,
@@ -25,17 +25,23 @@ export class UserController {
 
   @Post("/sign-in")
   async login(@Body() data: loginDto) {
-    await this.userService.login(data.email, data.password);
-
+    await this.authService.login(data.email, data.password);
 
     return true;
-
   }
 
   @Post("/check-nickname")
   async checkNickname(@Body() data: checkNicknameDto) {
-    const nickname = await this.userService.checkNickname(data.nickName);
+    const nickname = await this.authService.checkNickname(data.nickName);
 
     return nickname;
+  }
+
+  // 미들웨어 테스트용 api
+  @Post("/test")
+  @UseGuards(AuthGuard())
+  async test() {
+    const user = "user"
+    return user
   }
 }
