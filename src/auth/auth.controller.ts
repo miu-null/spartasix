@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { checkNicknameDto } from "./dto/ckecknickname.dto";
@@ -24,10 +24,10 @@ export class AuthController {
   }
 
   @Post("/sign-in")
-  async login(@Body() data: loginDto) {
-    await this.authService.login(data.email, data.password);
-
-    return true;
+  async login(@Body() data: loginDto, @Res() res) {
+    const accessToken = await this.authService.login(data.email, data.password);
+    res.setHeader("Authorization", "Bearer " + accessToken)
+    return res.json(accessToken)
   }
 
   @Post("/check-nickname")
@@ -41,7 +41,7 @@ export class AuthController {
   @Post("/test")
   @UseGuards(AuthGuard())
   async test() {
-    const user = "user"
-    return user
+    const user = "user";
+    return user;
   }
 }
