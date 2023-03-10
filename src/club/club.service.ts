@@ -17,7 +17,6 @@ export class ClubService {
   async getClubs() {
     return await this.clubRepository.find({
       where: { deletedAt: null },
-      // 조회수가 필요할경우 컬럼 추가 필요?
       select: ["clubId", "title", "createdAt"],
     });
   }
@@ -37,20 +36,20 @@ export class ClubService {
     });
   }
 
-  // async updateClub(
-  //   clubId: number,
-  //   title: string,
-  //   content: string,
-  //   maxMembers: string,
-  // ) {
-  //   this.clubRepository.update({
-  //     title,
-  //     content,
-  //     maxMembers,
-  //   });
-  // }
+  async updateClub(
+    clubId: number,
+    title: string,
+    content: string,
+    maxMembers: string,
+  ) {
+    this.clubRepository.update(clubId, {
+      title,
+      content,
+      maxMembers,
+    });
+  }
 
-  // async deleteClub(clubId: number) {
-  //   this.clubRepository.softDelete(clubId);
-  // }
+  async deleteClub(clubId: number) {
+    await this.clubRepository.softDelete(clubId);
+  }
 }
