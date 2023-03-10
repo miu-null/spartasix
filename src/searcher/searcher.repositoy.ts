@@ -1,53 +1,31 @@
 import { Injectable } from "@nestjs/common";
 import { getRepositoryToken, InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Searcher } from "./entity/searcher.entity";
-import { Like } from "typeorm";
+import { Searcher } from "../entities/searcher.entity";
 import { CreateSearchDto } from "./dto/create.search.dto";
+import { Users } from "../entities/users.entity";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class SearcherRepository {
   constructor(
     @InjectRepository(Searcher)
-    private readonly searcherRepository: Repository<Searcher>,
+    private readonly searcherRepository: Repository<Searcher>
   ) {}
 
-  async findEventposts(data): Promise<Searcher[]> {{
-    console.log(data.term, '리포지토리 진입')
-    const results = await this.searcherRepository
-    .find({
-      where : {
-        // name : Like(`%baby%`)}})
-        content: Like(`%${data.term}%`)}})
-    
-    // createQueryBuilder("name")
-    // .where("searcher.name LIKE: s", {s : `%${name}%`})
-    return results
+
+  async findEventposts(data: any): Promise<Searcher[]> {
+    {
+      console.log(`%${data.term}%`, data, "리포지토리 진입");
+      const results = await this.searcherRepository
+        .createQueryBuilder('search')
+        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .getMany();
+      console.log(results);
+      return results
+    }
   }
-}
 
-  // async findEventposts(data: any): Promise<Searcher[]> {
-  //   {
-  //     console.log(`%${data.term}%`, data, "리포지토리 진입");
-  //     const results = await this.searcherRepository
-  //       .createQueryBuilder('search')
-  //       .where('search.name LIKE :name', { name: `%${data.term}%` })
-  //       .getMany();
-  //     console.log(results);
-  //     return results
-      //         `%${term}%`)}})
-
-        // .where("searcher.name LIKE: s", {s : `%${name}%`})
-      //   return results
-      // }
-  //   }
-  // }
-
-  // const results = await getRepository(Searcher).createQueryBuilder("user")
-  // .where("user.name LIKE : name", {name : `%${name}%`})    
-  // .getMany();
-  // return results
-  // }}
 
 
   async ArticleCreate(createSearchDto : CreateSearchDto) : Promise<Searcher> {
@@ -59,39 +37,26 @@ export class SearcherRepository {
     await this.searcherRepository.save(article);
     return article
   }
-
 }
 
+@Injectable()
+export class UserSearchRepository {
+  constructor(
+    @InjectRepository(Users)
+    private readonly userSearchRepository: Repository<Users>,
+    private jwtService: JwtService,
+  ) {}
 
+  async findusers(data: any) {
+    {
+      console.log(`%${data.term}%`, data, "리포지토리 진입");
+      const results = await this.userSearchRepository
+        .createQueryBuilder('searchUsers')
+        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
+        .getMany();
+      console.log(results);
+      return results
+    }
+  }
 
-
-
-//         findByEventPosts(results : string): Promise<Searcher>{
-//             const results = this.searchjrepository.findOne({results});
-//         }
-
-//     }
-
-
-// searchAllProducts = async (term) => {
-//   console.log('여긴 레포지토리, 검색한 키워드는?', term);
-//   const searchdata = await this.productModel.findAll({
-//     where: { product_name: { [Op.like]: '%' + term + '%' } }
-//   });
-// };
-// return searchdata;
-
-// 'MATCH(name) AGAINST (:name IN BOOLEAN MODE)', 
-
-// searchAllProducts = async (term) => {
-//     console.log('여긴 레포지토리, 검색한 키워드는?', term);
-//     const searchdata = await this.productModel.findAll({
-//       where: {
-//         [Op.or]: [
-//           { product_name: { [Op.like]: '%' + term + '%' } },
-//           { product_detail: { [Op.like]: '%' + term + '%' } },
-//         ],
-//       },
-//     });
-//     return searchdata;
-//   };
+}
