@@ -1,0 +1,15 @@
+<h3> search 페이지</h3>
+
+<h3> <%- title %> </h3>
+<h3>  </h3>
+<div class="searchPosts_container">
+        <div>
+            <% for(let i=0; i < terms.length; i++) {%>
+                <p class="articles">
+                <h5>글번호 : <%= terms[i].id %></h5>
+                <p>제목 : <%= terms[i].title %> // 내용 : <%= terms[i].content %>
+                </p>
+                </p>
+            <% } %>
+        </div>
+</div>

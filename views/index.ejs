@@ -5,3 +5,17 @@
 </div>
 <div> 직업 : <%= job %>
 </div>
+
+<section id="search" class="search-wrap">
+    <form action="/search/posts" class="search-form">
+    <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">         -->
+        <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시글 검색 : 제목, 내용" aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+    </form>
+</section>
+
+<section id="search" class="search-wrap">
+    <form action="/search/users" class="search-form">
+    <!-- <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3"> -->
+        <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임" aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+    </form>
+</section>
