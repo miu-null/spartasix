@@ -5,17 +5,16 @@ import {
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Users } from "src/entities/users.entity";
 import { Repository } from "typeorm";
-import { Users } from "../entities/users.entity";
-import * as bcrypt from "bcrypt";
 
 @Injectable()
-export class UserRepository {
+export class AuthRepository {
   constructor(
     @InjectRepository(Users)
     private readonly userRepository: Repository<Users>,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async createUser(
     email: string,
@@ -41,7 +40,7 @@ export class UserRepository {
   }
 
   async login(email: string) {
-    console.log(email)
+    console.log(email);
     const user = await this.userRepository.findOne({
       where: { email, deletedAt: null },
       select: ["userId", "email", "password"],
@@ -54,7 +53,7 @@ export class UserRepository {
     const payload = { id: user.userId };
     const accessToken = await this.jwtService.signAsync(payload);
 
-    return {...user, accessToken};
+    return { ...user, accessToken };
   }
 
   async checkThisUser(userId: number) {
@@ -84,6 +83,4 @@ export class UserRepository {
 
     return nickname;
   }
-
-
 }
