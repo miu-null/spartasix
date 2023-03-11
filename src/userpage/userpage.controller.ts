@@ -6,31 +6,34 @@ import {
   Patch,
   Delete,
   Request,
+  Res,
 } from "@nestjs/common";
 import { UserpageService } from "./userpage.service";
+import { Response } from "express";
+
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
 @Controller("userpage")
 export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
 
-  //   @Get("/:userId") // 회원이 쓴 글 조회 - 시간순 내림차정렬 추가+ 게시판 글 섞어보는 로직
-  //   async getMyPosts(@Param("userId") userId: number) {
-  //     return await this.userPageService.getMyPosts(userId);
-  //   }
+  // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
+  // TODO 유저정보 조회 - 민감정보 열람은 권한은 본인만 가능하게 (프론트에서)
+  @Get("/:userId")
+  async getMyPosts(@Param("userId") userId: number, @Res() res: Response) {
+    const myPosts = await this.userPageService.getMyPosts(userId);
+    const myClubs = await this.userPageService.getMyClubs(userId);
+    const myInfo = await this.userPageService.getUserInfo(userId);
+
+    const context = { myPosts, myClubs, myInfo };
+
+    return res.render("userpage/userInfo.ejs", context);
+  }
 
   @Get("/:userId/clubs/app") // 신청서 전체조회
   async getClubApps(@Param("userId") userId: number) {
     console.log(userId);
     return await this.userPageService.getClubApps(userId);
-  }
-
-  @Get("/info/:userId") // 유저정보 조회
-  async getUserInfo(@Param("userId") userId: number, @Request() req: any) {
-    const user: any = req.user;
-    console.log(user);
-
-    return await this.userPageService.getUserInfo(userId, user);
   }
 
   @Patch("/info/:userId") // 내 정보 수정하기, 본인검증로직 추가할 것
@@ -57,12 +60,6 @@ export class UserpageController {
       userIMG: data.userIMG,
     });
     return changedInfo;
-  }
-
-  // 운영중인 모임 전체보기
-  @Get("/:userId/clubs")
-  async getMyClubs(@Param("userId") userId: number) {
-    return await this.userPageService.getMyClubs(userId);
   }
 
   @Get("/:userId/clubs/:clubId") // 특정 클럽정보 조회
