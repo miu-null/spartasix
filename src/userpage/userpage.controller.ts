@@ -19,12 +19,17 @@ export class UserpageController {
   //     return await this.userPageService.getMyPosts(userId);
   //   }
 
+  @Get("/:userId/clubs/app") // 신청서 전체조회
+  async getClubApps(@Param("userId") userId: number) {
+    console.log(userId);
+    return await this.userPageService.getClubApps(userId);
+  }
+
   @Get("/info/:userId") // 유저정보 조회
-  async getUserInfo(
-    @Param("userId") userId: number,
-    @Request() req, // @Body() data: UserUpdateDto,
-  ) {
+  async getUserInfo(@Param("userId") userId: number, @Request() req: any) {
     const user: any = req.user;
+    console.log(user);
+
     return await this.userPageService.getUserInfo(userId, user);
   }
 
@@ -34,7 +39,7 @@ export class UserpageController {
     @Request() req, // @Body() data: UserUpdateDto,
     @Body() data: UserUpdateDto,
   ) {
-    const user: any = req.user;
+    // const user: any = req.user;
 
     // const thisData = await this.userPageService.getUsersInfo(userId);
     // const password = data.password.length;
@@ -60,17 +65,12 @@ export class UserpageController {
     return await this.userPageService.getMyClubs(userId);
   }
 
-  //   @Get("/:userId/clubs/:clubId") // 참여중인 모임 하나 보기
-  //   async getThisClub( 이거 개발할 필요가 있나.. 요?
-  //     @Param("userId") userId: number,
-  //     @Param("clubId") clubId: number,
-  //   ) {
-  //     return await this.userPageService.getThisClub(clubId);
-  //   }
-
-  @Get("/:userId/clubs/app") // 신청서 전체조회
-  async getClubApps(@Param("userId") userId: number) {
-    return await this.userPageService.getClubApps(userId);
+  @Get("/:userId/clubs/:clubId") // 특정 클럽정보 조회
+  async getThisClub(
+    @Param("userId") userId: number,
+    @Param("clubId") clubId: number,
+  ) {
+    return await this.userPageService.getThisClub(userId, clubId);
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 //
