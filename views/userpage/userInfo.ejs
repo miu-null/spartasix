@@ -1,0 +1,51 @@
+<h4>My Posts</h4>
+
+<div class="userPosts_container">
+  <div>
+    <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
+    <p class="clubPost">
+    <h5>제목 : <%=myPosts.clubPosts[i].title %></h5>
+<h5>내용 : <%= myPosts.clubPosts[i].content %></h5>    
+</p>
+     <% } %>
+     <% for(let i = 0; i < myPosts.eventPosts.length; i++) {%>
+        <p class="eventPost">
+            <h5>제목 : <%=myPosts.eventPosts[i].title %></h5>
+        <h5>내용 : <%= myPosts.eventPosts[i].content %></h5>    
+        </p>
+     <% } %>
+    </div>
+</div>
+
+
+<h4>My Clubs</h4>
+<div class ="userClubs_container">
+    <div>
+        <% for(let i = 0; i < myClubs.myOwnClub.length; i++) {%>
+        <p class="clubPost">
+        <h5> 운영 중인 클럽 : <%=myClubs.myOwnClub[i].title %></h5>
+    </p>
+    <% } %>
+    <% for(let i = 0; i < myClubs.MyClub.length; i++) {%>
+    <p class="attendingClub">
+        <h5> 참가 중인 클럽 : <%=myClubs.MyClub[i].title %></h5>
+    </p>
+
+         <% } %>
+        </div>
+    </div>
+
+<h4>User Info</h4>
+<div class ="userInfo_container">
+    <%if(myInfo.userId.toString() === "1")  {%>
+        <%= myInfo.password%>
+        <% } %>
+    <div>
+        <%= myInfo.email %>
+        <%= myInfo.nickName%>
+        <%= myInfo.snsURL%>
+        <%= myInfo.userIMG%>
+     
+    </div>
+
+<%= myInfo %></div>
