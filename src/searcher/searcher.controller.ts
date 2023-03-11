@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Render, Query, Res } from '@nestjs/common';
-import { Request, Response} from 'express';
+import { Request, Response } from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { Searcher } from '../entities/searcher.entity';
 import { SearcherService } from './searcher.service';
@@ -11,8 +11,8 @@ import { UserSearchService } from './searcher.service';
 export class SearcherController {
   constructor(
     private searchService: SearcherService,
-    private userService: UserSearchService, 
-    ) {}
+    private userService: UserSearchService,
+  ) { }
 
   @Get("posts")
   async searchEventPosts(@Query() term, @Res() res: Response): Promise<void> {
@@ -23,7 +23,7 @@ export class SearcherController {
         title: "검색결과",
         terms,
       });
-      
+
     } catch (err) {
       console.error(err.message);
     }
@@ -43,10 +43,10 @@ export class SearcherController {
     }
   }
 
-  @Post() 
+  @Post()
   async create(
     @Body() createSearchDto: CreateSearchDto
-    ) {
+  ) {
     console.log(createSearchDto, '컨트롤러');
     return await this.searchService.Articlecreate(createSearchDto);
   }

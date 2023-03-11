@@ -1,12 +1,14 @@
 import {
   Injectable,
-  NotFoundException,
-  UnauthorizedException,
+  // NotFoundException,
+  // UnauthorizedException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import _ from "lodash";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository } from "typeorm";
+import { AuthService } from "src/auth/auth.service";
+import { Users } from "src/entities/users.entity";
 
 @Injectable()
 export class ClubService {
@@ -17,19 +19,26 @@ export class ClubService {
   async getClubs() {
     return await this.clubRepository.find({
       where: { deletedAt: null },
-      select: ["clubId", "title", "createdAt"],
+      select: ["clubId", "title", "maxMembers", "createdAt"],
     });
   }
 
   async getClubById(clubId: number) {
     return await this.clubRepository.findOne({
       where: { clubId, deletedAt: null },
-      select: ["clubId", "title", "content", "createdAt", "updatedAt"],
+      select: ["title", "content", "maxMembers", "createdAt", "updatedAt"],
     });
   }
-
-  createClub(title: string, content: string, maxMembers: string) {
+  // @UseGuards(AuthGuard())
+  // users  import 필요? (작성,수정,삭제)
+  createClub(
+    userId: number,
+    title: string,
+    content: string,
+    maxMembers: string,
+  ) {
     this.clubRepository.insert({
+      userId,
       title,
       content,
       maxMembers,
@@ -42,6 +51,7 @@ export class ClubService {
     content: string,
     maxMembers: string,
   ) {
+    console.log(title);
     this.clubRepository.update(clubId, {
       title,
       content,
