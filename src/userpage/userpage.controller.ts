@@ -42,6 +42,7 @@ export class UserpageController {
     @Request() req, // @Body() data: UserUpdateDto,
     @Body() data: UserUpdateDto,
   ) {
+    console.log(1);
     // const user: any = req.user;
 
     // const thisData = await this.userPageService.getUsersInfo(userId);
