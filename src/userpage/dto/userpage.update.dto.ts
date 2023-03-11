@@ -1,27 +1,12 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-export class UserUpdateDto {
-  // @IsNotEmpty()
-  // email: string;
-  // password: string;
-  // phone: string;
-  // userIMG: string;
-  // nickName: string;
-  // snsUrl: string;
-  @IsString()
-  readonly email: string;
+import { PartialType } from "@nestjs/mapped-types";
+import { IsString, IsOptional } from "class-validator";
+import { CreateUserDto } from "src/auth/dto/createuser.dto";
 
+export class UserUpdateDto extends PartialType(CreateUserDto) {
+  @IsOptional()
   @IsString()
-  readonly password: string;
-
+  readonly userIMG?: string;
+  @IsOptional()
   @IsString()
-  readonly userIMG: string;
-
-  @IsString()
-  readonly nickName: string;
-
-  @IsString()
-  readonly snsUrl: string;
-
-  @IsNumber()
-  readonly phone: string;
+  readonly snsUrl?: string;
 }
