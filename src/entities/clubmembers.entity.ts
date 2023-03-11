@@ -25,7 +25,7 @@ export class ClubMembers {
   @Column("varchar", { length: 200 })
   application: string;
 
-  @Column("boolean")
+  @Column({ default: false })
   isAccepted: boolean;
 
   @CreateDateColumn()
