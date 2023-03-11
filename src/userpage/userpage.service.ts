@@ -12,17 +12,20 @@ import { UserUpdateDto } from "./dto/userpage.update.dto";
 export class UserpageService {
   constructor(private userPageRepository: UserPageRepository) {}
 
-  // // 작성한 글 조회
-  // async getMyPosts(userId: number) {
-  //   // 회원이 쓴 글 조회 테이블2개에서 정보 가져와서 뿌려주기
-  // }
+  //TODO 회원이 쓴 글 내림차순 정렬
+  // 작성한 글 조회
+  async getMyPosts(userId: number) {
+    // 회원이 쓴 글 조회 테이블2개에서 정보 가져와서 뿌려주기
+    return await this.userPageRepository.getMyPosts(userId);
+  }
 
-  // 유저정보 조회
-  async getUserInfo(userId: number, user: any) {
+  //
+  async getUserInfo(userId: number) {
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
 
     return {
+      userId: data.userId,
       email: data.email,
       password,
       phone: data.phone,
@@ -34,7 +37,7 @@ export class UserpageService {
 
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
-    // if (userId ===!)
+    // TODO if (userId ===!)
     return await this.userPageRepository.updateUser(userId, updateUserInfo);
   }
 

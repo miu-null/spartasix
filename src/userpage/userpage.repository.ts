@@ -10,7 +10,6 @@ import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/eventposts.entity";
 import { Users } from "../entities/users.entity";
 import { Repository } from "typeorm";
-import { Brackets } from "typeorm";
 
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
@@ -28,24 +27,25 @@ export class UserPageRepository {
     private jwtService: JwtService,
   ) {}
 
-  // 작성글 조회
-  // async getMyPosts(userId: number) {
-  //   const clubPosts = await this.clubRepository.find({
-  //     where: { userId },
-  //     select: ["title", "content"],
-  //   });
-  //   const eventPosts = await this.eventpostRepository.find({
-  //     where: { userId },
-  //     select: ["title"],
-  //   });
-  //   return { clubPosts, eventPosts };
-  // }
+  //  작성글 조회
+  async getMyPosts(userId: number) {
+    const clubPosts = await this.clubRepository.find({
+      where: { userId },
+      select: ["title", "content"],
+    });
+    const eventPosts = await this.eventpostRepository.find({
+      where: { userId },
+      select: ["title"],
+    });
+    return { clubPosts, eventPosts };
+  }
 
   // 회원정보 확인
   async getUserInfo(userId: number) {
     return await this.userRepository.findOne({
       where: { userId },
       select: [
+        "userId",
         "email",
         "password",
         "phone",
@@ -79,11 +79,19 @@ export class UserPageRepository {
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
 
-    const MyClub = await this.clubMembersRepository
+    const MyClubApp = await this.clubMembersRepository
       .createQueryBuilder("clubMembers")
       .where("clubMembers.userId = :userId", { userId, deletedAt: null })
       .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: true })
       .getMany();
+
+    const MyClub = await this.clubRepository
+      .createQueryBuilder("clubs")
+      .where("clubs.clubId IN (:clubIds)", {
+        clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
+      })
+      .getMany();
+
     return { myOwnClub, MyClub };
   }
 
