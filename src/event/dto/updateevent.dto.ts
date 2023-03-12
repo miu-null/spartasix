@@ -1,8 +1,10 @@
 import { IsNumber, IsString } from 'class-validator';
 
 export class UpdateEventDto {
-    @IsString()
-    readonly userId: string;
+
+   
+    @IsNumber()
+    readonly userId: number;
   
     @IsString()
     readonly title: string;
@@ -13,6 +15,5 @@ export class UpdateEventDto {
     @IsString()
     readonly date: Date;
   
-    @IsNumber()
-    readonly viewCount: number;
+
 }

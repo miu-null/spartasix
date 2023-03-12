@@ -34,7 +34,7 @@ import { UserpageModule } from "./userpage/userpage.module";
       inject: [ConfigService],
     }),
 
-    // EventModule,
+    EventModule,
     UserModule,
     SearcherModule, //김재광 검색기능 테스트
     ClubModule,
