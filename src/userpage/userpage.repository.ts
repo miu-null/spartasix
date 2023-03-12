@@ -40,7 +40,7 @@ export class UserPageRepository {
     return { clubPosts, eventPosts };
   }
 
-  // 　운영중, 참여중인 모임 전체 보기모임 전체보기
+  // 　운영중, 참여중인 모임 전체 보기
   async getMyClubs(userId: number) {
     const myOwnClub = await this.clubRepository
       .createQueryBuilder("clubs")
@@ -140,6 +140,7 @@ export class UserPageRepository {
       .createQueryBuilder("members")
       .where("members.userId = :userId", { userId, deletedAt: null })
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
+      .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
       .getOne();
     return members;
   }

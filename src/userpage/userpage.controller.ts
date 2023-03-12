@@ -7,11 +7,18 @@ import {
   Delete,
   Request,
   Res,
+  UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
 import { UserpageService } from "./userpage.service";
 import { Response } from "express";
-
+import { UseGuards } from "@nestjs/common";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
+import { AuthGuard } from "@nestjs/passport";
+import { Express } from "express";
+import * as AWS from "aws-sdk";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { read } from "fs";
 
 @Controller("userpage")
 export class UserpageController {
@@ -20,13 +27,13 @@ export class UserpageController {
   // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
   // TODO 유저정보 조회 - 민감정보 열람은 권한은 본인만 가능하게 (프론트에서)
   @Get("/:userId")
+  @UseGuards(AuthGuard())
   async getMyPosts(@Param("userId") userId: number, @Res() res: Response) {
     const myPosts = await this.userPageService.getMyPosts(userId);
     const myClubs = await this.userPageService.getMyClubs(userId);
     const myInfo = await this.userPageService.getUserInfo(userId);
 
     const context = { myPosts, myClubs, myInfo };
-
     return res.render("userpage/userInfo.ejs", context);
   }
 
@@ -36,22 +43,45 @@ export class UserpageController {
     return await this.userPageService.getClubApps(userId);
   }
 
+  @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 //
+  async getThisApp(
+    @Param("userId") userId: number,
+    @Param("clubMemberId") clubMemberId: number,
+  ) {
+    return await this.userPageService.getThisApp(userId, clubMemberId);
+  }
+
   @Patch("/info/:userId") // 내 정보 수정하기, 본인검증로직 추가할 것
+  @UseInterceptors(FileInterceptor("userIMG"))
   async updateUser(
     @Param("userId") userId: number,
     @Request() req, // @Body() data: UserUpdateDto,
     @Body() data: UserUpdateDto,
+    @UploadedFile() userIMG: Express.Multer.File,
   ) {
-    console.log(1);
-    // const user: any = req.user;
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
+    const key = `${Date.now() + userIMG.originalname}`;
+    // AWS 객체 생성
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key,
+        Body: userIMG.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME,
+        ACL: "public-read",
+      })
+      .promise();
+    // const imgurl = +key;
+    // Object.assign({
+    //   statusCode: 201,
+    //   message: `이미지 등록 성공`,
+    //   data: { url: imgurl },
+    // });
 
-    // const thisData = await this.userPageService.getUsersInfo(userId);
-    // const password = data.password.length;
-    // 인증된 사람만 patch에 들어올 수 있게- authguard에서 처리
-    // 여기서는 요청을 보내는 것 자체만
-    // if(userId !== user.id ){
-    // }
-    // if (userId === user.id) {
     const changedInfo = await this.userPageService.updateUser(userId, {
       email: data.email,
       password: data.password,
@@ -60,6 +90,7 @@ export class UserpageController {
       snsUrl: data.snsUrl,
       userIMG: data.userIMG,
     });
+    console.log(changedInfo);
     return changedInfo;
   }
 
@@ -71,13 +102,13 @@ export class UserpageController {
     return await this.userPageService.getThisClub(userId, clubId);
   }
 
-  @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 //
-  async getThisApp(
-    @Param("userId") userId: number,
-    @Param("clubMemberId") clubMemberId: number,
-  ) {
-    return await this.userPageService.getThisApp(userId, clubMemberId);
-  }
+  // @Get("/:userId/clubs/:clubId") // 특정 클럽 내 수락한 신청서 조회
+  // async getThisClubApps(
+  //   @Param("userId") userId: number,
+  //   @Param("clubId") clubId: number,
+  // ) {
+  //   return await this.userPageService.getThisClub(userId, clubId);
+  // }
 
   @Patch("/:userId/clubs/app/:clubMemberId") // 모임신청 수락 - 모임신청 테이블의 acceptedMembers +1
   async getThisMember(

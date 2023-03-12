@@ -15,10 +15,18 @@ export class UserpageService {
   //TODO 회원이 쓴 글 내림차순 정렬
   // 작성한 글 조회
   async getMyPosts(userId: number) {
-    return await this.userPageRepository.getMyPosts(userId);
+    const { clubPosts, eventPosts } = await this.userPageRepository.getMyPosts(
+      userId,
+    );
+    clubPosts.sort((a: any, b: any) => {
+      return a.createdAt - b.createdAt;
+    });
+    eventPosts.sort((a: any, b: any) => {
+      return a.createdAt - b.createdAt;
+    });
+    return { clubPosts, eventPosts };
   }
 
-  // TODO 서비스코드 데이터 반환값 확인, 데이터 가공로직 추가
   //　운영중, 참여중인 모임 조회
   async getMyClubs(userId: number) {
     return await this.userPageRepository.getMyClubs(userId);
@@ -50,25 +58,26 @@ export class UserpageService {
     return updatedUser;
   }
 
-  // TODO 서비스코드 데이터 반환값 확인, 데이터 가공로직 추가
   // 특정 클럽정보 조회
   async getThisClub(userId: number, clubId: number) {
     const { currentClub, currentClubMember } =
       await this.userPageRepository.getThisClub(userId, clubId);
-    // const clubInfo = currentClub.map((club) => {
-    //   return ({ clubId, title, createdAt } = club.dataValues.Clubs);
-    // });
+    const clubInfo = [currentClub].map(
+      ({ clubId, title, maxMembers, createdAt }) => {
+        return { clubId, title, maxMembers, createdAt };
+        // = club.dataValues.Clubs);
+      },
+    );
     const clubMemberInfo = currentClubMember.map(({ userId }) => {
       return { userId };
     });
 
     return {
-      //clubInfo,
+      clubInfo,
       clubMemberInfo,
     };
   }
 
-  // TODO 서비스코드 데이터 반환값 확인, 데이터 가공로직 추가
   // 클럽 신청서 조회 // 특정 유저만
   async getClubApps(userId: number) {
     const getMyApps = await this.userPageRepository.getClubApps(userId);
@@ -81,38 +90,25 @@ export class UserpageService {
     return myApps;
   }
 
-  // TODO 서비스코드 데이터 반환값 확인, 데이터 가공로직 추가
   // 특정 신청서 조회 // 특정 유저만
   async getThisApp(userId: number, clubMemberId: number) {
     const getThisApp = await this.userPageRepository.getThisApp(
       userId,
       clubMemberId,
     );
-    // const thisApp = getThisApp.map(
-    //   ({ clubMemberId, userId, application, isAccepted, createdAt }) => {
-    //     return { clubMemberId, userId, application, isAccepted, createdAt };
-    //   },
-
-    // const thisApp = this.userPageRepository.getThisApp(userId, clubMemberId, {
-    //   clubmemberId: getThisApp.clubMemberId,
-    //   userId: getThisApp.userId,
-    //   application: getThisApp.application,
-    //   isAccepted: getThisApp.isAccepted,
-    //   createdAt: getThisApp.createdAt,
-    // });
-    // return { clubMemberId, userId, application, isAccepted, createdAt };
-    // },
-    // );
-    // return thisApp;
+    const thisApp = [getThisApp].map(
+      ({ clubMemberId, userId, application, isAccepted, createdAt }) => {
+        return { clubMemberId, userId, application, isAccepted, createdAt };
+      },
+    );
+    return thisApp;
   }
 
-  // TODO 서비스코드 데이터 반환값 확인, 데이터 가공로직 추가
   // 신청서 수락 // 특정 유저만
   async getThisMember(userId: number, clubMemberId: number) {
     return await this.userPageRepository.getThisMember(userId, clubMemberId);
   }
 
-  // TODO 서비스코드 데이터 반환값 확인, 데이터 가공로직 추가
   // 신청서 거절(삭제)
   async rejectApp(userId: number, clubMemberId: number) {
     return await this.userPageRepository.rejectApp(userId, clubMemberId);
