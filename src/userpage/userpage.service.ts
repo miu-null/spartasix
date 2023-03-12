@@ -18,32 +18,20 @@ export class UserpageService {
   // }
 
   // 유저정보 조회
-  async getUserInfo(userId: number, user: any) {
-    console.log(user);
+  async getUserInfo(userId: number) {
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
-
-    // 로그인한 user 정보가 있어야만 정보가 불러와지
-    // 아래 내용은 프론트에서 작업하기
-    if (userId !== user.id) {
-      return {
-        userIMG: data.userIMG,
-        nickName: data.nickName,
-        email: data.email,
-        snsURL: data.snsURL,
-      }; // 타 유저 조회
-    }
-    if (userId === user.id) {
-      return {
-        email: data.email,
-        password,
-        phone: data.phone,
-        nickName: data.nickName,
-        snsURL: data.snsURL,
-        userIMG: data.userIMG,
-      }; // 본인 조회
-    }
+    return {
+      email: data.email,
+      password,
+      phone: data.phone,
+      nickName: data.nickName,
+      snsURL: data.snsURL,
+      userIMG: data.userIMG,
+      createdAt: data.createdAt,
+    }; // 본인 조회
   }
+  
 
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
