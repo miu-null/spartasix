@@ -1,11 +1,11 @@
 import {
   Body,
   Controller,
-  // Delete,
+  Delete,
   Get,
   Param,
   Post,
-  // Put,
+  Put,
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/create-club.dto";
@@ -14,7 +14,7 @@ import { UpdateClubDto } from "./dto/update-club.dto";
 
 @Controller("club")
 export class ClubController {
-  constructor(private readonly clubService: ClubService) {}
+  constructor(private readonly clubService: ClubService) { }
 
   @Get("/clubs")
   async getClubs() {
@@ -35,27 +35,18 @@ export class ClubController {
       data.maxMembers,
     );
   }
-// 자신이 쓴 글을 수정,삭제 기능 -> Users 테이블에서 어떻게 비교?
-//   @Put("/clubs/:clubid")
-//   async updateClubs(
-//     @Param("clubid") clubId: number,
-//     @Body() data: UpdateClubDto,
-//   ) {
-//     // 수정필요 위와 동일
-//     return this.clubService.updateClub(
-//       clubId,
-//       data.title,
-//       data.content,
-//       data.maxMembers,
-//     );
-//   }
 
-//   @Delete("clubs/:clubid")
-//   async deleteClub(
-//     @Param("clubid") clubId: number,
-//     @Body() data: DeleteClubDto,
-//   ) {
-//     // 수정필요 위와 동일
-//     return await this.clubService.deleteClub(clubId, data.);
-//   }
+  // @Put("/clubs/:clubid")
+  // update(@Param("clubid") clubid: number, @Body() data: UpdateClubDto) {
+  //   return  this.clubService.updateClub(
+  //     data.title,
+  //     data.content,
+  //     data.maxMembers,
+  //   );
+  // }
+
+  // @Delete("clubs/:clubid")
+  // delete(@Param("clubid") clubid: number) {
+  //   return this.clubService.deleteClub(clubid);
+  // }
 }

@@ -1,18 +1,18 @@
-// import { Test, TestingModule } from "@nestjs/testing";
-// import { ClubService } from "./club.service";
+import { Test, TestingModule } from "@nestjs/testing";
+import { ClubService } from "./club.service";
 
-// describe("ClubService", () => {
-//   let service: ClubService;
+describe("ClubService", () => {
+  let service: ClubService;
 
-//   beforeEach(async () => {
-//     const module: TestingModule = await Test.createTestingModule({
-//       providers: [ClubService],
-//     }).compile();
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [ClubService],
+    }).compile();
 
-//     service = module.get<ClubService>(ClubService);
-//   });
+    service = module.get<ClubService>(ClubService);
+  });
 
-//   it("should be defined", () => {
-//     expect(service).toBeDefined();
-//   });
-// });
+  it("should be defined", () => {
+    expect(service).toBeDefined();
+  });
+});
