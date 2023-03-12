@@ -3,11 +3,15 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Clubs } from "src/entities/clubs.entity";
 import { ClubController } from "./club.controller";
 import { ClubService } from "./club.service";
+import { Users } from "src/entities/users.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Clubs])],
+  imports: [TypeOrmModule.forFeature([Clubs, Users])],
+  // PassportModule.register({
+  //   defaultStrategy: "jwt",
+  // }),
   controllers: [ClubController],
   providers: [ClubService],
   exports : [TypeOrmModule],
 })
-export class ClubModule {}
+export class ClubModule { }
