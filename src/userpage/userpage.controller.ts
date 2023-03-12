@@ -38,6 +38,7 @@ export class UserpageController {
     @Res() res: Response
   ) {
     const terms = await this.userPageService.getUserInfo(userId);
+    console.log(terms);
     return res.render("./userpage/userpage.ejs", {
       title: "검색결과",
       terms,

@@ -3,18 +3,14 @@ import { Request, Response} from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { Searcher } from '../entities/searcher.entity';
 import { SearcherService } from './searcher.service';
-import { UserSearchService } from './searcher.service';
-
-
 
 @Controller("search")
 export class SearcherController {
   constructor(
-    private searchService: SearcherService,
-    private userService: UserSearchService, 
+    private searchService: SearcherService
     ) {}
-
-  @Get("posts")
+    
+  @Get("posts")  // 게시글 검색기능 
   async searchEventPosts(@Query() term, @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findEventPosts(term);
@@ -28,11 +24,10 @@ export class SearcherController {
     }
   }
 
-  @Get("users")
+  @Get("users")  // 유저 검색 기능, 
   async searchUsers(@Query() term, @Res() res: Response): Promise<void> {
     try {
-      const terms = await this.userService.findusers(term);
-      console.log(terms, '컨트롤러 반환중')
+      const terms = await this.searchService.findusers(term);
       return res.render("userSearchTest.ejs", {
         title: "검색결과",
         terms,
@@ -43,10 +38,7 @@ export class SearcherController {
   }
 
 
-
-
-
-  @Post() 
+  @Post() // 테스트용 게시글 작성하기 기능
   async create(
     @Body() createSearchDto: CreateSearchDto
     ) {

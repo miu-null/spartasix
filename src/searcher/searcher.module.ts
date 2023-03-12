@@ -5,10 +5,10 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { SearcherController } from './searcher.controller';
-import { SearcherService, UserSearchService } from './searcher.service';
+import { SearcherService} from './searcher.service';
 import { Searcher} from '../entities/searcher.entity';
 import { Users} from '../entities/users.entity';
-import { SearcherRepository, UserSearchRepository } from './searcher.repositoy';
+import { SearcherRepository} from './searcher.repositoy';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Searcher, Users]),
@@ -20,6 +20,6 @@ import { SearcherRepository, UserSearchRepository } from './searcher.repositoy';
 ],
   exports : [TypeOrmModule],
   controllers: [SearcherController],
-  providers: [SearcherService, SearcherRepository, UserSearchService, UserSearchRepository]
+  providers: [SearcherService, SearcherRepository]
 })
 export class SearcherModule {} 
