@@ -28,10 +28,12 @@ export class SearcherRepository {
       const clubs = await this.clubsSearchRepository
         .createQueryBuilder('search')
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.clubId", "DESC")  //최신순(내림차순)
         .getMany();
       const events = await this.eventSearchRepository
         .createQueryBuilder('search')
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.eventPostId", "DESC")  //최신순(내림차순)
         .getMany();
       const results = {events, clubs}
       console.log(results);
@@ -45,6 +47,7 @@ export class SearcherRepository {
       const results = await this.eventSearchRepository
         .createQueryBuilder('searchEvents')
         .where('searchEvents.title LIKE :s OR searchEvents.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       console.log(results);
       return results
