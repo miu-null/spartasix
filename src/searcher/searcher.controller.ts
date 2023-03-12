@@ -1,24 +1,36 @@
-import { Body, Controller, Get, Post, Render, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res, Param } from '@nestjs/common';
 import { Request, Response} from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
-import { Searcher } from '../entities/searcher.entity';
 import { SearcherService } from './searcher.service';
-import { UserSearchService } from './searcher.service';
-
-
 
 @Controller("search")
 export class SearcherController {
   constructor(
-    private searchService: SearcherService,
-    private userService: UserSearchService, 
+    private searchService: SearcherService
     ) {}
 
-  @Get("posts")
+
+  @Get("posts")  // 통합 검색기능 
+  async searchAllPosts(@Query() term, @Res() res: Response): Promise<void> {
+    try {
+      const terms = await this.searchService.findAllPosts(term);
+      const events = terms.events
+      const clubs = terms.clubs
+      return res.render("searchAllPost.ejs", {
+        title: "검색결과",
+        events,
+        clubs,
+      });
+      
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+    
+  @Get("posts1")  // 이벤트게시글 검색기능 
   async searchEventPosts(@Query() term, @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findEventPosts(term);
-      console.log(terms, '컨트롤러 반환중')
       return res.render("postSearchTest.ejs", {
         title: "검색결과",
         terms,
@@ -29,11 +41,25 @@ export class SearcherController {
     }
   }
 
-  @Get("users")
+  @Get("posts1")  // 클럽게시글 검색기능 
+  async searchClubPosts(@Query() term, @Res() res: Response): Promise<void> {
+    try {
+      const terms = await this.searchService.findClubPosts(term);
+      return res.render("postclubTest.ejs", {
+        title: "검색결과",
+        terms,
+      });
+      
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+
+  @Get("users")  // 유저 검색 기능, 
   async searchUsers(@Query() term, @Res() res: Response): Promise<void> {
     try {
-      const terms = await this.userService.findusers(term);
-      console.log(terms, '컨트롤러 반환중')
+      const terms = await this.searchService.findUsers(term);
       return res.render("userSearchTest.ejs", {
         title: "검색결과",
         terms,
@@ -43,7 +69,8 @@ export class SearcherController {
     }
   }
 
-  @Post() 
+
+  @Post() // 테스트용 게시글 작성하기 기능
   async create(
     @Body() createSearchDto: CreateSearchDto
     ) {
