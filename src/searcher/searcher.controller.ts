@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Query, Res, Param } from '@nestjs/common';
 import { Request, Response} from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
-import { Searcher } from '../entities/searcher.entity';
 import { SearcherService } from './searcher.service';
 
 @Controller("search")
@@ -17,7 +16,7 @@ export class SearcherController {
       const terms = await this.searchService.findAllPosts(term);
       const events = terms.events
       const clubs = terms.clubs
-      return res.render("postSearchTest.ejs", {
+      return res.render("searchAllPost.ejs", {
         title: "검색결과",
         events,
         clubs,

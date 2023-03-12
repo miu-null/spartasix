@@ -16,7 +16,7 @@
       <tbody>
         <% for(let i=0; i < events.length; i++) {%>
         <tr>
-          <td class="btn btn-outline-secondary" href="/club/clubs/<%= clubs[i].clubid %>" role="button">자세히보기</td>  
+          <td><a class="btn btn-outline-secondary" href="/events/<%= events[i].eventPostId %>" role="button">자세히보기</a></td>  
           <td><%= events[i].eventPostId %></td>
           <td><%= events[i].userId %></td>
           <td><%= events[i].title %></td>
@@ -40,7 +40,7 @@
       <tbody>
         <% for(let i=0; i < clubs.length; i++) {%>
         <tr>
-          <td class="btn btn-outline-secondary" href="/club/clubs/<%= clubs[i].clubid %>" role="button">자세히보기</td>
+          <td><a class="btn btn-outline-secondary" href="/club/clubs/<%= clubs[i].clubId %>" role="button">자세히보기</a></td>
           <td><%= clubs[i].clubId %></td>
           <td><%= clubs[i].userId %></td>
           <td><%= clubs[i].title %></td>
