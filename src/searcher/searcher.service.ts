@@ -41,14 +41,15 @@ export class SearcherService {
     }
 
 
-    async Articlecreate(createSearchDto:CreateSearchDto) {
-        const {title, content} = createSearchDto
+    async Articlecreate(createSearchDto: CreateSearchDto) {
+        const { title, content } = createSearchDto
         const article = {
             title,
             content,
-            createdAt : new Date(),
+            createdAt: new Date(),
         }
         console.log('크리에이트 서비스', article, title);
         return await this.SearcherRepository.ArticleCreate(createSearchDto)
     }
 }
+

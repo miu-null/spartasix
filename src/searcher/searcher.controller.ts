@@ -6,6 +6,7 @@ import { SearcherService } from './searcher.service';
 @Controller("search")
 export class SearcherController {
   constructor(
+
     private searchService: SearcherService
     ) {}
 
@@ -35,7 +36,7 @@ export class SearcherController {
         title: "검색결과",
         terms,
       });
-      
+
     } catch (err) {
       console.error(err.message);
     }
@@ -69,11 +70,10 @@ export class SearcherController {
     }
   }
 
-
   @Post() // 테스트용 게시글 작성하기 기능
   async create(
     @Body() createSearchDto: CreateSearchDto
-    ) {
+  ) {
     console.log(createSearchDto, '컨트롤러');
     return await this.searchService.Articlecreate(createSearchDto);
   }
