@@ -8,5 +8,6 @@ import { ClubService } from "./club.service";
   imports: [TypeOrmModule.forFeature([Clubs])],
   controllers: [ClubController],
   providers: [ClubService],
+  exports : [TypeOrmModule],
 })
 export class ClubModule {}

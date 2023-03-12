@@ -1,15 +1,51 @@
-<h3> search 페이지</h3>
+<h3> search 통합검색 페이지</h3>
 
 <h3> <%- title %> </h3>
-<h3>  </h3>
-<div class="searchPosts_container">
-        <div>
-            <% for(let i=0; i < terms.length; i++) {%>
-                <p class="articles">
-                <h5>글번호 : <%= terms[i].id %></h5>
-                <p>제목 : <%= terms[i].title %> // 내용 : <%= terms[i].content %>
-                </p>
-                </p>
-            <% } %>
-        </div>
-</div>
+
+<table class="table table-hover align-middle text-center">
+    <thead class="table-dark">
+        <tr>
+          <th scope="col">이벤트</th>
+          <th scope="col">글번호</th>
+          <th scope="col">회원번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">내용</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% for(let i=0; i < events.length; i++) {%>
+        <tr>
+          <td class="btn btn-outline-secondary" href="/club/clubs/<%= clubs[i].clubid %>" role="button">자세히보기</td>  
+          <td><%= events[i].eventPostId %></td>
+          <td><%= events[i].userId %></td>
+          <td><%= events[i].title %></td>
+          <td><%= events[i].content %></td></a></td>
+        </tr>
+        <% } %>
+      </tbody>
+</table>
+
+<table class="table table-hover align-middle text-center">
+    <thead class="table-dark">
+        <tr>
+          <th scope="col">클럽</th>
+          <th scope="col">글번호</th>
+          <th scope="col">회원번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">내용</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% for(let i=0; i < clubs.length; i++) {%>
+        <tr>
+          <td class="btn btn-outline-secondary" href="/club/clubs/<%= clubs[i].clubid %>" role="button">자세히보기</td>
+          <td><%= clubs[i].clubId %></td>
+          <td><%= clubs[i].userId %></td>
+          <td><%= clubs[i].title %></td>
+          <td><%= clubs[i].content %></td></a></td>
+        </tr>
+        <% } %>
+      </tbody>
+</table>

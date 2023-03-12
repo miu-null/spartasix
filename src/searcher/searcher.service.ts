@@ -11,16 +11,31 @@ export class SearcherService {
         private SearcherRepository: SearcherRepository,
         ) {}  
 
-    async findEventPosts(term : any) {
+    
+    async findAllPosts(term : any) {;
         console.log(term, '서비스')
-        const results = await this.SearcherRepository.findEventposts(term);
+        const results = await this.SearcherRepository.findAllPosts(term);
         console.log(term, '리포리토지 통과')
         return results
     }
 
-    async findusers(term: any) {
+    async findEventPosts(term : any) {
         console.log(term, '서비스')
-        const results = await this.SearcherRepository.findusers(term);
+        const results = await this.SearcherRepository.findEventPosts(term);
+        console.log(term, '리포리토지 통과')
+        return results
+    }
+
+    async findClubPosts(term : any) {
+        console.log(term, '서비스')
+        const results = await this.SearcherRepository.findClubPosts(term);
+        console.log(term, '리포리토지 통과')
+        return results
+    }
+
+    async findUsers(term: any) {
+        console.log(term, '서비스')
+        const results = await this.SearcherRepository.findUsers(term);
         console.log(term, '리포리토지 통과')
         return results
     }
