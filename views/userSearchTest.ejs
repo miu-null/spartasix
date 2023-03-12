@@ -2,15 +2,26 @@
 
 <h3> <%- title %> </h3>
 
-<div class="searchPosts_container">
-    <div>
+<table class="table table-hover align-middle text-center">
+    <thead class="table-dark">
+        <tr>
+          <th scope="col">회원번호</th>
+          <th scope="col">닉네임</th>
+          <th scope="col">연락처</th>
+          <th scope="col">이메일</th>
+          <th scope="col">유저페이지</th>
+        </tr>
+      </thead>
+
+      <tbody>
         <% for(let i=0; i < terms.length; i++) {%>
-            <p class="articles">
-            <h5>회원번호 : <%= terms[i].userId %>
-            </h5>
-            <p>회원명 : <%= terms[i].nickName %> // 연락처 : <%= terms[i].phone %> // 이메일 : <%= terms[i].email %>
-            </p>
-            </p>
-            <% } %>
-    </div>
-</div>
+        <tr>
+          <th scope="row"><h5><%= terms[i].userId %></th>
+          <td><%= terms[i].nickName %></td>
+          <td>연락처 : <%= terms[i].phone %></td>
+          <td>이메일 : <%= terms[i].email %></td>
+          <td><a class="btn btn-outline-secondary" href="/userpage/info/<%= terms[i].userId %>" role="button">방문</a></td>
+        </tr>
+        <% } %>
+      </tbody>
+</table>
