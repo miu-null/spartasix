@@ -10,7 +10,9 @@ import { Users } from "../entities/users.entity";
 export class SearcherRepository {
   constructor(
     @InjectRepository(Searcher)
-    private readonly searcherRepository: Repository<Searcher>
+    private readonly searcherRepository: Repository<Searcher>,
+    @InjectRepository(Users)
+    private readonly userSearchRepository: Repository<Users>
   ) {}
 
   async findEventposts(data: any): Promise<Searcher[]> {
@@ -19,6 +21,18 @@ export class SearcherRepository {
       const results = await this.searcherRepository
         .createQueryBuilder('search')
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .getMany();
+      console.log(results);
+      return results
+    }
+  }
+
+  async findusers(data: any) {
+    {
+      console.log(`%${data.term}%`, data, "리포지토리 진입");
+      const results = await this.userSearchRepository
+        .createQueryBuilder('searchUsers')
+        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
         .getMany();
       console.log(results);
       return results
@@ -34,25 +48,4 @@ export class SearcherRepository {
     await this.searcherRepository.save(article);
     return article
   }
-}
-
-@Injectable()
-export class UserSearchRepository {
-  constructor(
-    @InjectRepository(Users)
-    private readonly userSearchRepository: Repository<Users>, // private jwtService: JwtService,
-  ) {}
-
-  async findusers(data: any) {
-    {
-      console.log(`%${data.term}%`, data, "리포지토리 진입");
-      const results = await this.userSearchRepository
-        .createQueryBuilder('searchUsers')
-        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
-        .getMany();
-      console.log(results);
-      return results
-    }
-  }
-
 }

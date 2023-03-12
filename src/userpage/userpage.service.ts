@@ -28,6 +28,7 @@ export class UserpageService {
       nickName: data.nickName,
       snsURL: data.snsURL,
       userIMG: data.userIMG,
+      createdAt: data.createdAt,
     }; // 본인 조회
   }
   
