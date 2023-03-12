@@ -1,33 +1,20 @@
 import { Controller, Get, Res } from "@nestjs/common";
 import { Response } from "express";
-import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
-
-  @Get() // 메인페이지 바디
+  @Get("/") // 메인페이지 바디
   mainpage(@Res() res: Response) {
-    return res.render("index.ejs", {
-      title: "스파르타 커뮤니티",
-      name: "메인페이지",
-      number: 5,
-      job: "software engineer",
-    });
+    return res.render("main.ejs");
   }
 
-  @Get("signup")
-  signup(@Res() res: Response) {
-    return res.render("./sign/signup.ejs");
-  }
-
-  @Get("signin")
+  @Get("sign")
   signin(@Res() res: Response) {
-    return res.render("./sign/signin.ejs")
+    return res.render("./templates/sign/sign");
   }
 
-  @Get("findpassword")
+  @Get("find_id_password")
   findpassword(@Res() res: Response) {
-    return res.render("./sign/findpassword.ejs")
+    return res.render("./templates/sign/findpassword");
   }
 }
