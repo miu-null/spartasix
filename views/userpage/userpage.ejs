@@ -1,0 +1,47 @@
+<section id="page">
+  <header><h3> 🤩<%= terms.nickName %>의 페이지🚀 </h3></header>
+  <nav> 
+    <h5>닉네임</h5> <h5></h5>
+    <div><%= terms.nickName %></div>
+    <h5>연락처</h5>
+    <div><%= terms.phone %></div>
+    <h5>이메일</h5>
+    <div><%= terms.email %></div>
+    <h5>SNS</h5>
+    <div><%= terms.snsURL %></div>
+    <h5>가입일</h5>
+    <div>1<%= terms.createdAt %></div>
+</nav>
+
+
+  <main><table class="table table-hover align-middle text-center">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">최근 활동</th>
+        <th scope="col">작성글</th>
+        <th scope="col">작성 댓글</th>
+        <th scope="col">좋아요</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <tr>
+        <td></td>
+        <td>
+          <%= terms.nickName %>
+        </td>
+        <td>
+          <%= terms.phone %>
+        </td>
+        <td>
+          <%= terms.email %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </main>
+  <footer>Footer</footer>
+</section>
+<!-- <div class="LayoutSideBar"></div> -->
+
+

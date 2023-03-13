@@ -34,9 +34,9 @@ export class UserpageService {
 
   // 회원정보 조회
   async getUserInfo(userId: number) {
+
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
-
     return {
       userId: data.userId,
       email: data.email,
@@ -47,8 +47,6 @@ export class UserpageService {
       userIMG: data.userIMG,
     }; // 본인 조회
   }
-
-  // TODO 일부 정보 수정 가능하게 만들기/ 권한에 따라 정보수정 기능 부여
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     const updatedUser = await this.userPageRepository.updateUser(

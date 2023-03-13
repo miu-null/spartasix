@@ -7,9 +7,12 @@ import {
   Delete,
   Request,
   Res,
+
   UploadedFile,
   UseInterceptors,
+
 } from "@nestjs/common";
+import { Response } from "express";
 import { UserpageService } from "./userpage.service";
 import { Response } from "express";
 import { UseGuards } from "@nestjs/common";
@@ -25,7 +28,7 @@ export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
 
   // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
-  // TODO 유저정보 조회 - 민감정보 열람은 권한은 본인만 가능하게 (프론트에서)
+  // TODO 유저정보 조회 - 민감정보 열람권한은 본인만 가능하게 (프론트에서)
   @Get("/:userId")
   @UseGuards(AuthGuard())
   async getMyPosts(@Param("userId") userId: number, @Res() res: Response) {
@@ -36,6 +39,25 @@ export class UserpageController {
     const context = { myPosts, myClubs, myInfo };
     return res.render("userpage/userInfo.ejs", context);
   }
+
+
+  //////////////////////유저 목록 조회 후, 유저페이지 연결 테스트
+  // @Get("/info/:userId") // 유저정보 조회
+  // async getUserInfo(
+  //   @Param("userId") userId: number,
+  //   @Request() req: any // @Body() data: UserUpdateDto,
+  //   @Res() res: Response
+  // ) {
+  //   const terms = await this.userPageService.getUserInfo(userId);
+  //   console.log(terms);
+  //   return res.render("./userpage/userpage.ejs", {
+  //     title: "검색결과",
+  //     terms,
+  //   });
+
+
+
+
 
   @Get("/:userId/clubs/app") // 신청서 전체조회
   async getClubApps(@Param("userId") userId: number) {
@@ -49,7 +71,10 @@ export class UserpageController {
     @Param("clubMemberId") clubMemberId: number,
   ) {
     return await this.userPageService.getThisApp(userId, clubMemberId);
+
+
   }
+
 
   @Patch("/info/:userId") // 내 정보 수정하기, 본인검증로직 추가할 것
   @UseInterceptors(FileInterceptor("userIMG"))
@@ -100,15 +125,8 @@ export class UserpageController {
     @Param("clubId") clubId: number,
   ) {
     return await this.userPageService.getThisClub(userId, clubId);
-  }
 
-  // @Get("/:userId/clubs/:clubId") // 특정 클럽 내 수락한 신청서 조회
-  // async getThisClubApps(
-  //   @Param("userId") userId: number,
-  //   @Param("clubId") clubId: number,
-  // ) {
-  //   return await this.userPageService.getThisClub(userId, clubId);
-  // }
+  }
 
   @Patch("/:userId/clubs/app/:clubMemberId") // 모임신청 수락 - 모임신청 테이블의 acceptedMembers +1
   async getThisMember(
