@@ -1,5 +1,6 @@
-import { Body, Controller, Post, Param, Get, Put, Delete, Patch, Request } from '@nestjs/common';
+import { Body, Controller, Post, Param, Get, Put, Delete, Patch, Request ,Res,Render} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Response} from 'express';
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
@@ -9,12 +10,11 @@ import { DeleteEventDto } from "./dto/deleteevent.dto";
 export class EventController {
   constructor(private eventService: EventService) { }
 
-
-
   @Get('/list')
-  async getEvent() {
+  async getEvent(@Res() res: Response) {
     const events = await this.eventService.getEvents();
-    return events
+     console.log(events)
+    return res.render("event/event.main.ejs",{events})
   }
 
   @Get('/event/:eventPostId')
