@@ -10,7 +10,6 @@ import { RedisService } from "src/redis/redis.service";
 import { AuthController } from "./auth.controller";
 import { AuthRepository } from "./auth.repository";
 import { AuthService } from "./auth.service";
-import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
   imports: [
@@ -30,7 +29,7 @@ import { JwtStrategy } from "./jwt.strategy";
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, JwtStrategy, RedisService],
-  exports: [PassportModule, JwtStrategy],
+  providers: [AuthService, AuthRepository, RedisService],
+  exports: [PassportModule, AuthService, RedisService],
 })
 export class AuthModule {}

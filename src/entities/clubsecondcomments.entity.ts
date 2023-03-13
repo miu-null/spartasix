@@ -38,7 +38,10 @@ export class ClubSecondComments {
   @JoinColumn({ name: "userId" })
   user: Users;
 
-  @ManyToOne(() => ClubComments, (clubComments: ClubComments) => clubComments.clubSecondComments)
+  @ManyToOne(
+    () => ClubComments,
+    (clubComments: ClubComments) => clubComments.clubSecondComments,
+  )
   @JoinColumn({ name: "clubCommentId" })
   clubComments: ClubComments;
 }

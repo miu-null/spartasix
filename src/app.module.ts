@@ -17,6 +17,7 @@ import { UserpageModule } from "./userpage/userpage.module";
 import { AuthModule } from "./auth/auth.module";
 import { RedisModule } from "./redis/redis.module";
 import "dotenv/config";
+import { AuthMiddleware } from "./auth/auth.middleware";
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
@@ -53,5 +54,11 @@ export class AppModule implements NestModule {
         "sign/(.*)",
       )
       .forRoutes("/");
+      consumer
+      .apply(AuthMiddleware)
+      .forRoutes(
+        {path: "auth/test", method: RequestMethod.POST},
+        {path: "/test", method: RequestMethod.GET}
+      )
   }
 }
