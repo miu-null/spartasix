@@ -12,4 +12,7 @@ export class CreateClubDto {
 
   @IsString()
   readonly maxMembers: string;
+
+  // @IsString()
+  // readonly nickName: string;
 }
