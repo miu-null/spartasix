@@ -2,7 +2,6 @@ import {
   Body,
   CACHE_MANAGER,
   Controller,
-  Get,
   Inject,
   Post,
   Req,

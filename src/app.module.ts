@@ -35,8 +35,12 @@ const ejsMiddleware = require("express-ejs-layouts");
       useClass: JwtConfigService,
       inject: [ConfigService],
     }),
-
-
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: MailerConfigService,
+      inject: [ConfigService],
+    }),
+    
     EventModule,
     SearcherModule,
     ClubModule,
