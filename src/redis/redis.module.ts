@@ -9,7 +9,7 @@ import { CacheConfigService } from "src/config/redis.config.service";
       imports: [ConfigModule],
       useClass: CacheConfigService,
       inject: [ConfigService],
-    })
+    }),
   ],
   providers: [RedisService],
   exports: [],

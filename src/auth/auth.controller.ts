@@ -12,12 +12,15 @@ import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/createuser.dto";
 import { loginDto } from "./dto/login.dto";
 import { Cache } from "cache-manager";
+import { findPasswordDto } from "./dto/findpassword.dto";
+import { MailService } from "src/mail/mail.service";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private authService: AuthService,
+    private mailService: MailService,
   ) {}
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto, @Res() res) {
@@ -40,19 +43,13 @@ export class AuthController {
     return res.json(true);
   }
 
-  // 미들웨어 테스트용 api
-  @Post("/test")
-  async test(@Req() req: any, @Res() res: any): Promise<string> {
-    console.log(req.user);
+  @Post("/find-password")
+  async findPassword(@Body() data: findPasswordDto) {
+    const randomPassword = await this.authService.findPassword(
+      data.email,
+      data.phone,
+    );
 
-    return res.render("../test")
-  }
-
-  // redis 테스트용 api
-  @Get("/")
-  async getCache() {
-    // await this.cacheManager.set("user9", "9");
-    // console.log(this.cacheManager)
-    console.log(await this.cacheManager.get("4"));
+    return true;
   }
 }

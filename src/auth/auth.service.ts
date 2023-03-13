@@ -5,6 +5,7 @@ import {
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
+import { MailService } from "src/mail/mail.service";
 import { RedisService } from "src/redis/redis.service";
 import { AuthRepository } from "./auth.repository";
 
@@ -14,6 +15,7 @@ export class AuthService {
     private authRepository: AuthRepository,
     private readonly jwtService: JwtService,
     private readonly redisService: RedisService,
+    private readonly mailService: MailService,
   ) {}
 
   async createUser(
@@ -58,6 +60,15 @@ export class AuthService {
     );
 
     return { ...user, accessToken, refreshToken };
+  }
+
+  async findPassword(email: string, phone: string) {
+
+    await this.authRepository.findPassword(email, phone);
+
+    const randomPassword = await this.mailService.findPassword(email);
+
+    return randomPassword;
   }
 
   async transformPassword(password: string) {
