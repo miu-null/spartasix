@@ -35,12 +35,7 @@ const ejsMiddleware = require("express-ejs-layouts");
       useClass: JwtConfigService,
       inject: [ConfigService],
     }),
-    MailerModule.forRootAsync({
-      imports: [ConfigModule],
-      useClass: MailerConfigService,
-      inject: [ConfigService],
-    }),
-    
+
     EventModule,
     SearcherModule,
     ClubModule,
@@ -62,5 +57,11 @@ export class AppModule implements NestModule {
         "sign/(.*)",
       )
       .forRoutes("/");
+      consumer
+      .apply(AuthMiddleware)
+      .forRoutes(
+        {path: "auth/test", method: RequestMethod.POST},
+        {path: "/test", method: RequestMethod.GET}
+      )
   }
 }
