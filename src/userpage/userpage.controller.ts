@@ -30,7 +30,7 @@ export class UserpageController {
   // TODO 유저정보 조회 - 민감정보 열람권한은 본인만 가능하게 (프론트에서)
   @Get("/:userId")
   @UseGuards(AuthGuard())
-  async getMyPosts(@Param("userId") userId: number, @Res() res: Response) {
+  async getUserInfo(@Param("userId") userId: number, @Res() res: Response) {
     const myPosts = await this.userPageService.getMyPosts(userId);
     const myClubs = await this.userPageService.getMyClubs(userId);
     const myInfo = await this.userPageService.getUserInfo(userId);
@@ -38,25 +38,6 @@ export class UserpageController {
     const context = { myPosts, myClubs, myInfo };
     return res.render("userpage/userInfo.ejs", context);
   }
-
-
-  //////////////////////유저 목록 조회 후, 유저페이지 연결 테스트
-  // @Get("/info/:userId") // 유저정보 조회
-  // async getUserInfo(
-  //   @Param("userId") userId: number,
-  //   @Request() req: any // @Body() data: UserUpdateDto,
-  //   @Res() res: Response
-  // ) {
-  //   const terms = await this.userPageService.getUserInfo(userId);
-  //   console.log(terms);
-  //   return res.render("./userpage/userpage.ejs", {
-  //     title: "검색결과",
-  //     terms,
-  //   });
-
-
-
-
 
   @Get("/:userId/clubs/app") // 신청서 전체조회
   async getClubApps(@Param("userId") userId: number) {
