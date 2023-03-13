@@ -9,8 +9,8 @@ export class AppController {
   @Get() // 메인페이지 바디
   mainpage(@Res() res: Response) {
     return res.render("index.ejs", {
-      title: "공사중",
-      name: "6-Galic",
+      title: "스파르타 커뮤니티",
+      name: "메인페이지",
       number: 5,
       job: "software engineer",
     });
