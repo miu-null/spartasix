@@ -32,7 +32,7 @@ export class SearcherController {
   async searchEventPosts(@Query() term, @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findEventPosts(term);
-      return res.render("postSearchTest.ejs", {
+      return res.render("searchEvent.ejs", {
         title: "검색결과",
         terms,
       });
@@ -46,7 +46,7 @@ export class SearcherController {
   async searchClubPosts(@Query() term, @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findClubPosts(term);
-      return res.render("postclubTest.ejs", {
+      return res.render("searchClub.ejs", {
         title: "검색결과",
         terms,
       });
