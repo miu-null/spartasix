@@ -62,8 +62,5 @@ export class AppModule implements NestModule {
         "sign/(.*)",
       )
       .forRoutes("/");
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes({ path: "/test", method: RequestMethod.GET });
   }
 }
