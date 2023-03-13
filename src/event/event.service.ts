@@ -1,36 +1,47 @@
 import { Injectable } from '@nestjs/common';
-import { EventRepository } from "./event.repository"; 
+import { EventRepository } from "./event.repository";
+import { UpdateEventDto } from "src/event/dto/updateevent.dto"
+import { DeleteEventDto } from "./dto/deleteevent.dto";
+
 
 @Injectable()
 export class EventService {
 
-    constructor(private EventRepository: EventRepository) {}
-    
-    async createEvent(
-        userId: string,
-        title: string,
-        content: string,
-        date: string,
-        viewCount: number,
-      ) {
-        await this.EventRepository.createEvent(
-            userId,
-            title,
-            content,
-            date,
-        );
-      }
+  constructor(private EventRepository: EventRepository) { }
 
-      // async updateEvent(
-      //   id: number,
-      //   title: string,
-      //   content: string,
 
-      // ) {
-      //   this.EventRepository.updateEvent(id, { title, content });
-      // }
+  async getEvents() {
+    const test = await this.EventRepository.getEvents();
+    return test
+  }
 
-      // async deleteEvente(id: number) {
-      //   this.EventRepository.softDeleteEvent(id);
-      // }
+  async getEventById(eventPostId) {
+    return await this.EventRepository.getEventById(eventPostId)
+  }
+
+  async createEvent(
+    eventPostId: number,
+    userId: number,
+    title: string,
+    content: string,
+    date: Date,
+  ) {
+    await this.EventRepository.createEvent(
+      eventPostId,
+      userId,
+      title,
+      content,
+      date,
+    );
+  }
+
+
+  async updateUser(eventPostId: number, updateEventInfo: UpdateEventDto) {
+    console.log(eventPostId);
+    return await this.EventRepository.updateEvent(eventPostId, updateEventInfo);
+  }
+
+  async deleteEvent(userId: number, deleteEventDto: DeleteEventDto) {
+    this.EventRepository.deleteEvent(userId, deleteEventDto);
+  }
 }
