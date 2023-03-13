@@ -1,4 +1,9 @@
-import { Module } from "@nestjs/common";
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -12,6 +17,8 @@ import { UserpageModule } from "./userpage/userpage.module";
 import { AuthModule } from "./auth/auth.module";
 import { RedisModule } from "./redis/redis.module";
 import "dotenv/config";
+const ejsMiddleware = require("express-ejs-layouts");
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -27,7 +34,7 @@ import "dotenv/config";
     }),
 
     EventModule,
-    SearcherModule, //김재광 검색기능 테스트
+    SearcherModule,
     ClubModule,
     UserpageModule,
     AuthModule,
@@ -36,4 +43,15 @@ import "dotenv/config";
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ejsMiddleware)
+      .exclude(
+        { path: "sign", method: RequestMethod.GET },
+        { path: "sign", method: RequestMethod.POST },
+        "sign/(.*)",
+      )
+      .forRoutes("/");
+  }
+}

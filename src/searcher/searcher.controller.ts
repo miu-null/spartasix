@@ -61,7 +61,7 @@ export class SearcherController {
   async searchUsers(@Query() term, @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findUsers(term);
-      return res.render("userSearchTest.ejs", {
+      return res.render("userSearch.ejs", {
         title: "검색결과",
         terms,
       });
