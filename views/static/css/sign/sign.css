@@ -137,6 +137,10 @@ span {
   padding: 60px;
 }
 
+.find {
+  cursor: pointer;
+}
+
 a {
   margin: auto;
   font-size: 0.8rem;
