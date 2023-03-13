@@ -37,16 +37,24 @@ export class ClubComments {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => ClubCommentLikes, (clubCommentLikes: ClubCommentLikes) => clubCommentLikes.clubComments, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => ClubCommentLikes,
+    (clubCommentLikes: ClubCommentLikes) => clubCommentLikes.clubComments,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   clubCommentLikes: ClubCommentLikes[];
 
-  @OneToMany(() => ClubSecondComments, (clubSecondComments: ClubSecondComments) => clubSecondComments.clubComments, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => ClubSecondComments,
+    (clubSecondComments: ClubSecondComments) => clubSecondComments.clubComments,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   clubSecondComments: ClubSecondComments[];
 
   @ManyToOne(() => Users, (user: Users) => user.clubComments)

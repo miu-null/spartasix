@@ -87,11 +87,6 @@ function sign_in() {
   });
 }
 
-
-function find_id() {
-
-}
-
 function find_password() {
   const email = $("#email1").val();
   const nickname = $("#nickname1").val();

@@ -7,9 +7,7 @@ import {
   Post,
   Req,
   Res,
-  UseGuards,
 } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/createuser.dto";
 import { loginDto } from "./dto/login.dto";
@@ -23,7 +21,7 @@ export class AuthController {
   ) {}
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto, @Res() res) {
-    const user = await this.authService.createUser(
+    await this.authService.createUser(
       data.email,
       data.password,
       data.confirmpassword,
@@ -31,35 +29,30 @@ export class AuthController {
       data.phone,
     );
 
-    return res.json(true)
+    return res.json(true);
   }
 
   @Post("/sign-in")
-  async login(@Body() data: loginDto, @Res() res) {
-    const accessToken = await this.authService.login(data.email, data.password);
-    // res.setHeader('Authorization', 'Bearer ' + accessToken); // 헤더에 token 담기
-    // res.cookie('Authentication', accessToken, {              // 쿠키에 token 담기
-    //   domain: 'localhost',
-    //   path: '/',
-    //   httpOnly: true,
-    // });
+  async login(@Body() data: loginDto, @Res() res, @Req() req) {
+    const user = await this.authService.login(data.email, data.password);
+    res.cookie("accessToken", user.accessToken);
+    res.cookie("refreshToken", user.refreshToken);
     return res.json(true);
   }
 
   // 미들웨어 테스트용 api
   @Post("/test")
-  @UseGuards(AuthGuard())
-  async test(@Req() req) {
-    const user = req.user;
-    return "user";
+  async test(@Req() req: any, @Res() res: any): Promise<string> {
+    console.log(req.user);
+
+    return res.render("../test")
   }
 
   // redis 테스트용 api
   @Get("/")
   async getCache() {
-    await this.cacheManager.set("user9", "9");
+    // await this.cacheManager.set("user9", "9");
     // console.log(this.cacheManager)
-    console.log(await this.cacheManager.get("user9"));
+    console.log(await this.cacheManager.get("4"));
   }
-
 }
