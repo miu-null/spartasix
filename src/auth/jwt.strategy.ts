@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, Req, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -19,17 +19,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: {id: number}): Promise<Users>  {
+
+  async validate(payload: {id: number}, @Req() req): Promise<Users>  {
     const { id } = payload;
-
+    console.log(id)
     const user = await this.userRepository.findOne({
-      where: {userId: id}
+      where: {userId: id},
+      select: ["userId", "email", "nickName"]
     })
-
     if (!user) {
       throw new UnauthorizedException()
     }
-
+    req.user = user
+    console.log(req.user)
     return user;
 
   }

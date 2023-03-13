@@ -28,12 +28,7 @@ export class AuthService {
     }
     const hashpassword = await this.transformPassword(password);
 
-    return await this.authRepository.createUser(
-      email,
-      hashpassword,
-      nickName,
-      phone,
-    );
+    return await this.authRepository.createUser(email, hashpassword, nickName, phone);
   }
 
   async login(email: string, password: string) {
@@ -43,12 +38,7 @@ export class AuthService {
     if (validatePassword === false) {
       throw new UnauthorizedException("비밀번호가 올바르지 않습니다.");
     }
-    console.log(user.accessToken);
     return user.accessToken;
-  }
-
-  async checkNickname(nickName: string) {
-    return this.authRepository.checkNickname(nickName);
   }
 
   async transformPassword(password: string) {
