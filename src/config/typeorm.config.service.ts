@@ -19,7 +19,7 @@ import { Users } from "src/entities/users.entity";
 
 @Injectable()
 export class typeOrmConfigService implements TypeOrmOptionsFactory {
-  constructor(private readonly configService: ConfigService) { }
+  constructor(private readonly configService: ConfigService) {}
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: "mysql",
@@ -48,6 +48,7 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
       // entities: [join(__dirname, "/../entities/*.entity{.ts,.js}")], // 최종적으로 모든 entity 파일이 전부 import 되었을 때 사용 가능.
       synchronize: this.configService.get<boolean>("DATABASE_SYNCHRONIZE"),
       autoLoadEntities: true,
+      logging: "all",
     };
   }
 }
