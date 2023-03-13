@@ -18,10 +18,10 @@ export class UserpageService {
   // }
 
   // 유저정보 조회
+
   async getUserInfo(userId: number, user: any) {
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
-
     return {
       email: data.email,
       password,
@@ -31,7 +31,7 @@ export class UserpageService {
       userIMG: data.userIMG,
     }; // 본인 조회
   }
-
+  
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     // if (userId ===!)

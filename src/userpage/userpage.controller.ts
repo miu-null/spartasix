@@ -6,7 +6,9 @@ import {
   Patch,
   Delete,
   Request,
+  Res,
 } from "@nestjs/common";
+import { Response } from "express";
 import { UserpageService } from "./userpage.service";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
@@ -26,12 +28,30 @@ export class UserpageController {
   }
 
   @Get("/info/:userId") // 유저정보 조회
-  async getUserInfo(@Param("userId") userId: number, @Request() req: any) {
+  async getUserInfo(
+  @Param("userId") userId: number, 
+  @Request() req: any)
+  @Res() res: Response{
     const user: any = req.user;
     console.log(user);
 
     return await this.userPageService.getUserInfo(userId, user);
+
+  //////////////////////유저 목록 조회 후, 유저페이지 연결 테스트
+  // @Get("/info/:userId") // 유저정보 조회
+  // async getUserInfo(
+  //   @Param("userId") userId: number,
+  //   @Request() req: any // @Body() data: UserUpdateDto,
+  //   @Res() res: Response
+  // ) {
+  //   const terms = await this.userPageService.getUserInfo(userId);
+  //   console.log(terms);
+  //   return res.render("./userpage/userpage.ejs", {
+  //     title: "검색결과",
+  //     terms,
+  //   });
   }
+
 
   @Patch("/info/:userId") // 내 정보 수정하기, 본인검증로직 추가할 것
   async updateUser(
@@ -71,6 +91,7 @@ export class UserpageController {
     @Param("clubId") clubId: number,
   ) {
     return await this.userPageService.getThisClub(userId, clubId);
+
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 //
