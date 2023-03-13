@@ -36,12 +36,4 @@ export class ClubMembers {
 
   @DeleteDateColumn()
   deletedAt: Date | null;
-
-  @ManyToOne(() => Users, (user: Users) => user.clubMembers)
-  @JoinColumn({ name: "userId" })
-  user: Users;
-
-  @ManyToOne(() => Clubs, (clubs: Clubs) => clubs.clubMembers)
-  @JoinColumn({ name: "clubId" })
-  clubs: Clubs;
 }
