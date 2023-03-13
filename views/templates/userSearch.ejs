@@ -1,7 +1,6 @@
 <h3> search 페이지- 회원 검색</h3>
 
 <h3> <%- title %> </h3>
-
 <table class="table table-hover align-middle text-center">
     <thead class="table-dark">
         <tr>
@@ -20,7 +19,7 @@
           <td><%= terms[i].nickName %></td>
           <td>연락처 : <%= terms[i].phone %></td>
           <td>이메일 : <%= terms[i].email %></td>
-          <td><a class="btn btn-outline-secondary" href="/userpage/info/<%= terms[i].userId %>" role="button">방문</a></td>
+          <td><a class="btn btn-outline-secondary" href="/userpage/<%= terms[i].userId %>" role="button">방문</a></td>
         </tr>
         <% } %>
       </tbody>

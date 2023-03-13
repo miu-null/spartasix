@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
 } from "typeorm";
 import { AbusingClubCounts } from "./abusingclubcounts.entity";
 import { AbusingEventCounts } from "./abusingeventcounts.entity";
@@ -57,7 +58,7 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => Clubs, (clubs: Clubs) => clubs.user, {
+  @ManyToMany(() => Clubs, (clubs) => clubs.user, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
   })
@@ -99,10 +100,14 @@ export class Users {
   )
   abusingEventCounts: AbusingEventCounts[];
 
-  @OneToMany(() => EventMembers, (eventMembers: EventMembers) => eventMembers.user, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventMembers,
+    (eventMembers: EventMembers) => eventMembers.user,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventMembers: EventMembers[];
 
   @OneToMany(() => EventLikes, (eventLikes: EventLikes) => eventLikes.user, {
@@ -121,10 +126,14 @@ export class Users {
   )
   eventCommentLikes: EventCommentLikes[];
 
-  @OneToMany(() => EventComments, (eventComments: EventComments) => eventComments.user, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventComments,
+    (eventComments: EventComments) => eventComments.user,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventComments: EventComments[];
 
   @OneToMany(
@@ -137,22 +146,20 @@ export class Users {
   )
   clubSecondComments: ClubSecondComments[];
 
-  @OneToMany(() => ClubMembers, (clubMembers: ClubMembers) => clubMembers.user, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
-  clubMembers: ClubMembers[];
-
   @OneToMany(() => ClubLikes, (clubLikes: ClubLikes) => clubLikes.user, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
   })
   clubLikes: ClubLikes[];
 
-  @OneToMany(() => ClubComments, (clubComments: ClubComments) => clubComments.user, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => ClubComments,
+    (clubComments: ClubComments) => clubComments.user,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   clubComments: ClubComments[];
 
   @OneToMany(

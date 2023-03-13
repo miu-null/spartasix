@@ -5,9 +5,9 @@ import {
   DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
 } from "typeorm";
 import { AbusingClubCounts } from "./abusingclubcounts.entity";
 import { ClubComments } from "./clubcomments.entity";
@@ -47,25 +47,30 @@ export class Clubs {
   })
   clubLikes: ClubLikes[];
 
-  @OneToMany(() => ClubMembers, (clubMembers: ClubMembers) => clubMembers.clubs, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
-  clubMembers: ClubMembers[];
-
-  @OneToMany(() => ClubComments, (clubComments: ClubComments) => clubComments.clubs, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => ClubComments,
+    (clubComments: ClubComments) => clubComments.clubs,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   clubComments: ClubComments[];
 
-  @OneToMany(() => AbusingClubCounts, (abusingClubCounts: AbusingClubCounts) => abusingClubCounts.clubs, {
+  @OneToMany(
+    () => AbusingClubCounts,
+    (abusingClubCounts: AbusingClubCounts) => abusingClubCounts.clubs,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
+  abusingClubCounts: AbusingClubCounts[];
+
+  @ManyToMany(() => Users, (user) => user.clubs, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
   })
-  abusingClubCounts: AbusingClubCounts[];
-
-  @ManyToOne(() => Users, (user: Users) => user.clubs)
   @JoinColumn({ name: "userId" })
   user: Users;
 }
