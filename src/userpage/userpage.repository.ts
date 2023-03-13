@@ -10,6 +10,8 @@ import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/eventposts.entity";
 import { Users } from "../entities/users.entity";
 import { Repository } from "typeorm";
+import { Brackets } from "typeorm";
+
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
 @Injectable()
@@ -70,36 +72,62 @@ export class UserPageRepository {
     //
   }
 
-  // 운영중인 모임 전체보기
+  // 운영 및 참여중인 모임 전체보기
   async getMyClubs(userId: number) {
-    return await this.clubRepository.find({
-      where: { userId },
-      select: ["title", "content"],
-      // 일단은 userId로 조회해서 같은 userId의 글을 가져오기
-      // 결과보고, authorId로 조회해보는 방법 생각해보기
-    });
-  }
-
-  // 클럽 신청서 전체보기
-  async getClubApps(userId: number) {
-    const members = await this.clubMembersRepository
-      .createQueryBuilder("members")
-      .where("members.userId = :userId", { userId })
-      // .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
+    const myOwnClub = await this.clubRepository
+      .createQueryBuilder("clubs")
+      .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
 
-    return members;
+    const MyClub = await this.clubMembersRepository
+      .createQueryBuilder("clubMembers")
+      .where("clubMembers.userId = :userId", { userId, deletedAt: null })
+      .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: true })
+      .getMany();
+    return { myOwnClub, MyClub };
+  }
 
-    //   where: { userId },
-    //   select: ["isAccepted", "application"],
-    // });
+  // 특정 클럽정보 조회 (운영자, 참여인원 보여주기)
+  async getThisClub(userId: number, clubId: number) {
+    const currentClub = await this.clubRepository
+      .createQueryBuilder("clubs")
+      .where("clubs.userId = :userId", { userId, deletedAt: null })
+      .andWhere("clubs.clubId = :clubId", { clubId })
+      .getOne();
+    // 여기서 운영자, 클럽명(게시물 이름), 최대인원 등 확인
+
+    console.log(currentClub);
+
+    // 여기서 확정된 참여인원 확인
+    const currentClubMember = await this.clubMembersRepository
+      .createQueryBuilder("ClubMembers")
+      .where("ClubMembers.userId = :userId", {
+        userId,
+        deletedAt: null,
+      })
+      .andWhere("ClubMembers.userId = :userId", { isAccepted: true })
+      .getMany();
+
+    return { currentClub, currentClubMember };
+  }
+
+  // 클럽 신청서 전체보기 clubMembers에서, 같은 clubId를 공유하는 정보 찾아오기
+  // 그 clubId는 userId로 찾기
+  async getClubApps(userId: number) {
+    const myOwnClub = await this.clubMembersRepository
+      .createQueryBuilder("clubMembers")
+      .leftJoin("clubMembers.user", "user")
+      .leftJoin("clubMembers.clubs", "clubs")
+      .where("clubMembers.userId = :userId", { userId, deletedAt: null })
+      .getMany();
+    return myOwnClub;
   }
 
   // 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
-      .where("members.userId = :userId", { userId })
+      .where("members.userId = :userId", { userId, deletedAt: null })
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
       .getOne();
     return members;
@@ -116,11 +144,18 @@ export class UserPageRepository {
 
   // 신청서 거절
   async rejectApp(userId: number, clubMemberId: number) {
+    const clubs = await this.clubRepository
+      .createQueryBuilder("clubs")
+      .where("userId = :userId", { userId })
+      .getMany();
+
+    const clubIds = clubs.map((club) => club.clubId);
+    console.log(clubIds);
     await this.clubMembersRepository
-      .createQueryBuilder("apps")
+      .createQueryBuilder("clubMembers")
+      .where("clubMemberId = :clubMemberId", { clubMemberId })
+      .andWhere("clubId IN (:clubIds)", { clubIds })
       .softDelete()
-      .where("apps.userId = :userId", { userId })
-      .andWhere("apps.clubMemberId = :clubMemberId", { clubMemberId })
       .execute();
   }
 }

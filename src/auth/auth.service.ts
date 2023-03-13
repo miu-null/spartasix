@@ -20,7 +20,7 @@ export class AuthService {
     if (!email || !password || !nickName || !phone) {
       throw new BadRequestException("모든 항목을 작성해 주세요.");
     }
-
+    // 뭔가 생성될 때는 객체/ Id를 리턴해주는 것이 권장됩니다.
     if (password !== confirmpassword) {
       throw new BadRequestException(
         "비밀번호와 비밀번호 확인란이 일치하지 않습니다.",
@@ -28,7 +28,12 @@ export class AuthService {
     }
     const hashpassword = await this.transformPassword(password);
 
-    await this.authRepository.createUser(email, hashpassword, nickName, phone);
+    return await this.authRepository.createUser(
+      email,
+      hashpassword,
+      nickName,
+      phone,
+    );
   }
 
   async login(email: string, password: string) {

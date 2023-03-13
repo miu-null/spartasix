@@ -18,7 +18,8 @@ export class UserpageService {
   // }
 
   // 유저정보 조회
-  async getUserInfo(userId: number) {
+
+  async getUserInfo(userId: number, user: any) {
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
     return {
@@ -28,14 +29,11 @@ export class UserpageService {
       nickName: data.nickName,
       snsURL: data.snsURL,
       userIMG: data.userIMG,
-      createdAt: data.createdAt,
     }; // 본인 조회
   }
   
-
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
-    console.log(userId);
     // if (userId ===!)
     return await this.userPageRepository.updateUser(userId, updateUserInfo);
   }
@@ -43,6 +41,11 @@ export class UserpageService {
   //　운영중인 모임 전체 보기
   async getMyClubs(userId: number) {
     return await this.userPageRepository.getMyClubs(userId);
+  }
+
+  // 특정 클럽정보 조회
+  async getThisClub(userId: number, clubId: number) {
+    return await this.userPageRepository.getThisClub(userId, clubId);
   }
 
   // 클럽 신청서 조회 // 특정 유저만
