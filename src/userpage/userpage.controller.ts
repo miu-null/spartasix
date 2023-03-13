@@ -36,7 +36,7 @@ export class UserpageController {
     const myInfo = await this.userPageService.getUserInfo(userId);
 
     const context = { myPosts, myClubs, myInfo };
-    return res.render("userpage/userInfo.ejs", context);
+    return res.render("userInfo.ejs", context);
   }
 
   @Get("/:userId/clubs/app") // 신청서 전체조회

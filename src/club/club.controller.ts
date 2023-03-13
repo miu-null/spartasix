@@ -24,7 +24,7 @@ export class ClubController {
   async getClubs(@Res() res: Response) {
     const terms = await this.clubService.getClubs();
     console.log(terms);
-    return res.render("club/club.ejs", {
+    return res.render("club.ejs", {
       terms,
     });
   }
