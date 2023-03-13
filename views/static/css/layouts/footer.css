@@ -1,0 +1,10 @@
+footer {
+  background-color:#fa6358;
+  text-align: center;
+  color: rgb(212, 202, 202);
+  font-size: large;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1%;
+}
