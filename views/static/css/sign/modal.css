@@ -1,5 +1,5 @@
- /* The Modal (background) */
- .modal { 
+/* The Modal (background) */
+.modal { 
   position:absolute; 
   width:100%; 
   height:100%; 
@@ -154,4 +154,3 @@ a {
   text-decoration: none;
   color: #000000;
 }
-
