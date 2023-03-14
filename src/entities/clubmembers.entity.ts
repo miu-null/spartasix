@@ -8,8 +8,6 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { Clubs } from "./clubs.entity";
-import { Users } from "./users.entity";
 
 @Entity({ schema: "ClubMembers", name: "ClubMembers" })
 export class ClubMembers {

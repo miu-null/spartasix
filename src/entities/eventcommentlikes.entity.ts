@@ -35,7 +35,10 @@ export class EventCommentLikes {
   @JoinColumn({ name: "userId" })
   user: Users;
 
-  @ManyToOne(() => EventComments, (eventComments: EventComments) => eventComments.eventCommentLikes)
+  @ManyToOne(
+    () => EventComments,
+    (eventComments: EventComments) => eventComments.eventCommentLikes,
+  )
   @JoinColumn({ name: "eventCommentId" })
   eventComments: EventComments;
 }

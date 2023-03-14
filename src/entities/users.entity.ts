@@ -13,7 +13,6 @@ import { AbusingEventCounts } from "./abusingeventcounts.entity";
 import { ClubCommentLikes } from "./clubcommentlikes.entity";
 import { ClubComments } from "./clubcomments.entity";
 import { ClubLikes } from "./clublikes.entity";
-import { ClubMembers } from "./clubmembers.entity";
 import { Clubs } from "./clubs.entity";
 import { ClubSecondComments } from "./clubsecondcomments.entity";
 import { EventComments } from "./eventcomments.entity";

@@ -1,12 +1,12 @@
-function modal_open() { 
+function modal_open() {
   $(`#modal`).fadeIn();
 
   $(document).mouseup(function (e) {
-      if($(`#modal`).has(e.target).length === 0) {
-          $(`#modal`).hide();
-      };
+    if ($(`#modal`).has(e.target).length === 0) {
+      $(`#modal`).hide();
+    }
   });
-};
+}
 
 const hypenTel = (target) => {
   target.value = target.value
@@ -40,6 +40,7 @@ function sign_up() {
     }),
     success: function (response) {
       alert("회원가입 성공 !");
+      window.location.reload();
     },
     error: function (request, status, error) {
       alert(request.responseJSON["message"]);
@@ -81,23 +82,61 @@ function sign_in() {
       password: password,
     }),
     success: function (response) {
-      alert(response)
-      window.location.replace("/")
+      alert(response);
+      window.location.replace("/");
     },
   });
 }
 
-
-function find_id() {
-
-}
-
 function find_password() {
   const email = $("#email1").val();
-  const nickname = $("#nickname1").val();
   const phone = $("#phone1").val();
 
   console.log(email);
-  console.log(nickname);
   console.log(phone);
+
+  $.ajax({
+    type: "POST",
+    url: "auth/find-password",
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    async: false,
+    data: JSON.stringify({
+      email: email,
+      phone: phone,
+    }),
+    success: function (response) {
+      alert("작성하신 이메일로 인증번호 발송 완료 !");
+      checkpass();
+    },
+  });
+}
+
+// 미완성
+function checkpass() {
+  const button = document.querySelector("#div-check");
+  const subbutton = document.querySelector("#onsubmit");
+  const form = document.querySelector("#register1");
+  const textinput = document.createElement("input");
+  const textbutton = document.createElement("input");
+
+  form.removeChild(subbutton);
+
+  button.appendChild(textinput);
+  button.appendChild(textbutton);
+
+  textinput.setAttribute("class", "input-field1");
+  textinput.setAttribute("id", "rename_pass");
+  textinput.setAttribute("placeholder", "New Password");
+
+  textbutton.setAttribute("class", "submit12");
+  textbutton.setAttribute("id", "checkpass");
+  textbutton.setAttribute("type", "button");
+  textbutton.setAttribute("value", "인증 하기");
+  textbutton.style.height = "50px";
+
+  let checkpass = document.querySelector("#checkpass");
+  checkpass.addEventListener("click", function () {
+    const rename_pass = $("#rename_pass").val();
+  });
 }

@@ -1,16 +1,18 @@
+import { MailerModule } from "@nestjs-modules/mailer";
 import { CacheModule, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtConfigService } from "src/config/jwt.config.service";
+import { MailerConfigService } from "src/config/mailer.config.service";
 import { CacheConfigService } from "src/config/redis.config.service";
 import { Users } from "src/entities/users.entity";
+import { MailService } from "src/mail/mail.service";
 import { RedisService } from "src/redis/redis.service";
 import { AuthController } from "./auth.controller";
 import { AuthRepository } from "./auth.repository";
 import { AuthService } from "./auth.service";
-import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
   imports: [
@@ -28,9 +30,14 @@ import { JwtStrategy } from "./jwt.strategy";
       useClass: CacheConfigService,
       inject: [ConfigService],
     }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: MailerConfigService,
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, JwtStrategy, RedisService],
-  exports: [PassportModule, JwtStrategy],
+  providers: [AuthService, AuthRepository, RedisService, MailService],
+  exports: [PassportModule, AuthService, RedisService, MailService],
 })
 export class AuthModule {}
