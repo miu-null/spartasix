@@ -12,6 +12,5 @@ import { Users } from "src/entities/users.entity";
   // }),
   controllers: [ClubController],
   providers: [ClubService],
-  exports : [TypeOrmModule],
 })
 export class ClubModule { }
