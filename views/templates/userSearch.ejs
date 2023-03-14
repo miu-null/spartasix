@@ -1,5 +1,11 @@
 <h3> 회원 검색 결과</h3>
-
+<section id="search" class="search-wrap">
+  <form action="/search/users" class="search-form">
+      <!-- <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3"> -->
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
+          aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+  </form>
+</section>
 <table class="table table-hover align-middle text-center">
     <thead class="table-dark">
         <tr>
@@ -23,3 +29,4 @@
         <% } %>
       </tbody>
 </table>
+

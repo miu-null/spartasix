@@ -37,12 +37,11 @@ export class AuthController {
   @Post("/sign-in")
   async login(@Body() data: loginDto, @Res() res) {
     const accessToken = await this.authService.login(data.email, data.password);
-    // res.setHeader('Authorization', 'Bearer ' + accessToken); // 헤더에 token 담기
-    // res.cookie('Authentication', accessToken, {              // 쿠키에 token 담기
-    //   domain: 'localhost',
-    //   path: '/',
-    //   httpOnly: true,
-    // });
+    res.cookie('Authentication', accessToken, {              // 쿠키에 token 담기
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+    });
     return res.json(true);
   }
 
