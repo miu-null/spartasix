@@ -2,6 +2,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ClubMembers } from "../entities/clubmembers.entity";
 import { Injectable } from "@nestjs/common";
+import { CreateAppDto } from "../club/dto/newApp-club.dto";
 
 @Injectable()
 export class ClubMembersRepository {
@@ -10,17 +11,14 @@ export class ClubMembersRepository {
     private readonly clubMembersRepository: Repository<ClubMembers>,
   ) {}
 
-  async createClubMember(
-    userId: number,
-    clubId: number,
-    application: string,
-    isAccepted: boolean,
-  ) {
-    return await this.clubMembersRepository.insert({
-      userId,
+  async newClubApp(clubId: number, newApp: CreateAppDto) {
+    console.log(newApp);
+    const addNewClubApp = await this.clubMembersRepository.insert({
       clubId,
-      application,
-      isAccepted,
+      userId: newApp.userId,
+      application: newApp.application,
+      isAccepted: newApp.isAccepted,
     });
+    return addNewClubApp;
   }
 }
