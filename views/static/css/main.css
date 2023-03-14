@@ -1,5 +1,5 @@
 :root {
-  --bs-font-sans-serif: 'Rubik', sans-serif;
+  --bs-font-sans-serif: "Rubik", sans-serif;
 }
 
 .main_body {
@@ -12,11 +12,11 @@
   height: 80vh;
   display: flex;
   flex-direction: column;
-  background-color: #F8F5F2;
+
+  background-color: #f8f5f2;
   padding-left: 15%;
   font-weight: bold;
 }
-
 .body_title {
   width: 80%;
   height: 10%;
@@ -29,31 +29,27 @@
 .body_issue {
   width: 80%;
   height: 24%;
-  background-color: #FCFAF9;
+  background-color: #fcfaf9;
 }
-
 .issue_title {
   width: 100%;
   height: 15%;
-  background-color:#FFC0C0;
+  background-color: #ffc0c0;
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
 }
-
 .issue_body {
   width: 100%;
   height: 60%;
   border-radius: 10px;
   padding: 5px;
 }
-
 .issue_content {
-  border: 1px solid #FFC0C0;
+  border: 1px solid #ffc0c0;
   margin-top: 9px;
   border-radius: 5px;
 }
-
 .body_news {
   width: 80%;
   height: 20%;
@@ -65,18 +61,16 @@
 .IT_news {
   width: 40%;
   height: 115%;
-  background-color: #F4F8FB;
+  background-color: #f4f8fb;
 }
-
 .IT_news_title {
   width: 100%;
   height: 15%;
-  background-color:#D0E7FC;
+  background-color: #d0e7fc;
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
 }
-
 .IT_news_body {
   padding-top: -60px;
   width: 100%;
@@ -84,28 +78,24 @@
   border-radius: 10px;
   padding: 5px;
 }
-
 .IT_content {
-  border: 1px solid #D0E7FC;
+  border: 1px solid #d0e7fc;
   margin-top: 9px;
   border-radius: 5px;
 }
-
 .job_news {
   width: 40%;
   height: 115%;
-  background-color: #F6F8FB;
+  background-color: #f6f8fb;
 }
-
 .job_news_title {
   width: 100%;
   height: 15%;
-  background-color:#88A9FF;
+  background-color: #88a9ff;
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
 }
-
 .job_news_body {
   padding-top: -60px;
   width: 100%;
@@ -115,9 +105,7 @@
 }
 
 .job_content {
-  border: 1px solid #88A9FF;
+  border: 1px solid #88a9ff;
   margin-top: 9px;
   border-radius: 5px;
 }
-
-
