@@ -125,7 +125,7 @@ export class UserPageRepository {
     const myOwnClub = await this.clubMembersRepository
       .createQueryBuilder("clubMembers")
       .where("clubMembers.clubId IN clubs", {
-        clubId: clubs.clubId,
+        // clubId: clubs.clubId,
       })
       // .where("clubId IN (:clubId)", { clubId: clubs })
       .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: false })
