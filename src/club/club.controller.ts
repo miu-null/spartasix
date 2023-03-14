@@ -34,13 +34,19 @@ export class ClubController {
     return await this.clubService.getClubById(clubId);
   }
 
-  @Post("/clubs")
+  @Get("clubspost")
+  signup(@Res() res: Response) {
+    return res.render("clubspost.ejs");
+  }
+
+  @Post("/clubspost")
   createClubs(@Body() data: CreateClubDto) {
     return this.clubService.createClub(
       data.userId,
       data.title,
       data.content,
       data.maxMembers,
+      // data.nickname,
     );
   }
 
