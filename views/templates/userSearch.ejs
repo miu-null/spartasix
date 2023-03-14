@@ -18,15 +18,51 @@
       </thead>
 
       <tbody>
-        <% for(let i=0; i < terms.length; i++) {%>
+        <% for(let i=0; i < sliceData.length; i++) {%>
         <tr>
-          <th scope="row"><h5><%= terms[i].userId %></th>
-          <td><%= terms[i].nickName %></td>
-          <td>연락처 : <%= terms[i].phone %></td>
-          <td>이메일 : <%= terms[i].email %></td>
-          <td><a class="btn btn-outline-secondary" href="/userpage/<%= terms[i].userId %>" role="button">방문</a></td>
+          <th scope="row"><h5><%= sliceData[i].userId %></th>
+          <td><%= sliceData[i].nickName %></td>
+          <td>연락처 : <%= sliceData[i].phone %></td>
+          <td>이메일 : <%= sliceData[i].email %></td>
+          <td><a class="btn btn-outline-secondary" href="/userpage/<%= sliceData[i].userId %>" role="button">방문</a></td>
         </tr>
         <% } %>
       </tbody>
+
+
+
+      <!-- 페이지네이션 버튼 -->
+      <div id="pagination">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <% if (unitStart - 1> 0 ) { %>
+            <li class="page-item">
+              <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitStart -1 %>" tabindex="-1"
+                aria-disabled="true">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <% } %>
+              <% for (let i = unitStart; i <= unitEnd; i++) { %>
+                <% if (i <= unitEnd) { %>
+                  <% if ( i == page) { %>
+                    <li class="page-item active" aria-current="page">
+                      <span class="page-link"><%= i %></span>
+                    </li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="users?term=<%=term.term %>&page=<%= i %>">
+                          <%= i %>
+                        </a>
+                      </li>
+                      <% } %> <% } %> <% } %>
+                            <% if (unitEnd < numOfPages) { %>
+                              <li class="page-item">
+                                <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitEnd +1 %>"><span aria-hidden="true">&raquo;</span>
+                                </a>
+                              </li>
+                              <% } %>
+        </ul>
+      </nav>
+    </div>
 </table>
 

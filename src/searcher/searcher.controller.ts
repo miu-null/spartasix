@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res, Param, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
 import { Request, Response} from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { SearcherService } from './searcher.service';
@@ -74,76 +74,44 @@ export class SearcherController {
   @Get("/users")  // 유저 검색 기능, 페이지네이션 테스트
   async searchUsers1(
     @Query() term, 
-    @Query('page') page, 
-    @Query('limit') limit, 
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query('take', new DefaultValuePipe(3), ParseIntPipe) take:number,
     @Res() res: Response): Promise<void> {
   
-    const lists = [
-      { id: 1, name: 'User1' },
-      { id: 2, name: 'User2' },
-      { id: 3, name: 'User3' },
-      { id: 4, name: 'User4' },
-      { id: 5, name: 'User5' },
-      { id: 6, name: 'User6' },
-      { id: 7, name: 'User7' },
-      { id: 8, name: 'User8' },
-      { id: 9, name: 'User9' },
-      { id: 10, name: 'User10' },
-      { id: 11, name: 'User11' },
-      { id: 12, name: 'User12' },
-      { id: 13, name: 'User13' },
-    ] 
-
-    
     try {
-      const Page = parseInt(page)
-      const Limit = parseInt(limit)
-      const startIndex = (Page - 1) * Limit
-      const endIndex = Page * Limit
+      const findData = await this.searchService.findUsers(term);
 
-      const terms = await this.searchService.findUsers(term);
-      console.log(terms, '--------------------------------')
- 
+      const numOfResults = findData.length;  //불러온 데이터 목록 수
+      const startIndex = (page - 1) * take
 
-      const results: any = {}
+      const sliceData = findData.slice(startIndex, startIndex + take)  // 페이지당 조회할 데이터 리스트
+      const numOfPages = Math.ceil(numOfResults / take)   //생성될 페이지 수
 
-      if(endIndex < terms.length) {
-      results.next = {
-        Page: Page +1,
-        Limit: Limit
-      }
-    }
+      const unitSize = 3 // 페이지 묶음 단위 < 1 2 3>  <4 5 6> 
+      const numOfUnits = Math.floor((page -1) / unitSize)  //<1 2 3> 페이지는 0 번째
+      const unitStart = numOfUnits * unitSize + 1
+      const unitEnd = unitStart + (unitSize - 1)
 
-      if(startIndex > 0 ) {
-        results.previous = {
-          Page: Page - 1,
-          Limit: Limit
-        }
+      return res.render("userSearch.ejs", {
+        title: "검색결과",
+        term,
 
-      }
-
-
-
-      // results.next = {}
-      results.results = terms.slice(startIndex, endIndex)
-
-      // results.next = {
-      //   pages: pages + 1,
-      //   limit: limit
-      // }
-      
-      // //  = lists.slice(startIndex, endIndex)
-      // return res.render("userSearch.ejs", {
-      //   // title: "검색결과",
-      //   // terms,
-      //   // results
-      // });
-
-      res.json(results)
+        sliceData,
+        take,
+        numOfPages,
+        unitStart,
+        unitEnd,
+        page,
+      });
     } catch (err) {
       console.error(err.message);
     }
   }
+
+//필요한 것
+
+
+
 
   @Post() // 테스트용 게시글 작성하기 기능
   async create(
