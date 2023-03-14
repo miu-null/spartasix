@@ -3,6 +3,7 @@ import {
   CACHE_MANAGER,
   Controller,
   Inject,
+  Patch,
   Post,
   Req,
   Res,
@@ -43,11 +44,18 @@ export class AuthController {
   }
 
   @Post("/find-password")
-  async findPassword(@Body() data: findPasswordDto) {
+  async findPassword(@Body() data: findPasswordDto, @Res() res) {
     const randomPassword = await this.authService.findPassword(
       data.email,
       data.phone,
     );
+
+    return res.json({data: randomPassword});
+  }
+
+  @Patch("new-password")
+  async newPassword(@Body() data: loginDto) {
+    await this.authService.newPassword(data.email, data.password);
 
     return true;
   }
