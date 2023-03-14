@@ -56,13 +56,11 @@ export class SearcherRepository {
 
   async findClubPosts(data: any) : Promise<Clubs[]> { //clubs 게시글 검색
     {
-      console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.clubsSearchRepository
         .createQueryBuilder('searchClubs')
         .where('searchClubs.title LIKE :s OR searchClubs.content LIKE :s', { s: `%${data.term}%` })
         .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
-      console.log(results, '리포지토리 통과');
       return results
     }
   }
@@ -80,11 +78,26 @@ export class SearcherRepository {
     }
   }
 
+
+  async findUsersCount(data: any) : Promise<Users[]>{
+    {
+      console.log(`%${data.term}%`, data, "리포지토리 진입");
+      const results = await this.userSearchRepository
+        .createQueryBuilder('searchUsers')
+        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
+        .orderBy("searchUsers.userId", "DESC")
+        .take(4)
+        .skip(0)
+        .getMany();
+      console.log(results);
+      return results
+    }
+  }
+
+
   async ArticleCreate(createSearchDto : CreateSearchDto) : Promise<Searcher> {
-    console.log(createSearchDto, '리포지토리 진입')
     const {title, content} = createSearchDto
     const article = this.searcherRepository.create(createSearchDto)
-    console.log('리포지토리 통과')
 
     await this.searcherRepository.save(article);
     return article
