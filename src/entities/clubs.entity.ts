@@ -12,7 +12,6 @@ import {
 import { AbusingClubCounts } from "./abusingclubcounts.entity";
 import { ClubComments } from "./clubcomments.entity";
 import { ClubLikes } from "./clublikes.entity";
-import { ClubMembers } from "./clubmembers.entity";
 import { Users } from "./users.entity";
 
 @Entity({ schema: "Clubs", name: "Clubs" })

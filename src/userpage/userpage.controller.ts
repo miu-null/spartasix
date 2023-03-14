@@ -5,12 +5,10 @@ import {
   Get,
   Patch,
   Delete,
-  Request,
   Res,
-
+  Request,
   UploadedFile,
   UseInterceptors,
-
 } from "@nestjs/common";
 import { Response } from "express";
 import { UserpageService } from "./userpage.service";
@@ -20,7 +18,6 @@ import { AuthGuard } from "@nestjs/passport";
 import { Express } from "express";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { read } from "fs";
 
 @Controller("userpage")
 export class UserpageController {
@@ -29,19 +26,20 @@ export class UserpageController {
   // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
   // TODO 유저정보 조회 - 민감정보 열람권한은 본인만 가능하게 (프론트에서)
   @Get("/:userId")
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async getUserInfo(@Param("userId") userId: number, @Res() res: Response) {
     const myPosts = await this.userPageService.getMyPosts(userId);
+    // const myPosts = "";
     const myClubs = await this.userPageService.getMyClubs(userId);
+    // console.log("myclubs다음");
     const myInfo = await this.userPageService.getUserInfo(userId);
-
+    // console.log("myInfo다음");
     const context = { myPosts, myClubs, myInfo };
     return res.render("userInfo.ejs", context);
   }
 
   @Get("/:userId/clubs/app") // 신청서 전체조회
   async getClubApps(@Param("userId") userId: number) {
-    console.log(userId);
     return await this.userPageService.getClubApps(userId);
   }
 
@@ -51,16 +49,13 @@ export class UserpageController {
     @Param("clubMemberId") clubMemberId: number,
   ) {
     return await this.userPageService.getThisApp(userId, clubMemberId);
-
-
   }
-
 
   @Patch("/info/:userId") // 내 정보 수정하기, 본인검증로직 추가할 것
   @UseInterceptors(FileInterceptor("userIMG"))
   async updateUser(
     @Param("userId") userId: number,
-    @Request() req, // @Body() data: UserUpdateDto,
+    @Request() req: Request, // @Body() data: UserUpdateDto,
     @Body() data: UserUpdateDto,
     @UploadedFile() userIMG: Express.Multer.File,
   ) {
@@ -105,7 +100,6 @@ export class UserpageController {
     @Param("clubId") clubId: number,
   ) {
     return await this.userPageService.getThisClub(userId, clubId);
-
   }
 
   @Patch("/:userId/clubs/app/:clubMemberId") // 모임신청 수락 - 모임신청 테이블의 acceptedMembers +1

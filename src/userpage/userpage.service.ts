@@ -6,7 +6,6 @@ import {
 import _ from "lodash";
 import { UserPageRepository } from "./userpage.repository";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
-// import { UserUpdateDto } from "./dto/userpage.update.dto";
 
 @Injectable()
 export class UserpageService {
@@ -24,6 +23,7 @@ export class UserpageService {
     eventPosts.sort((a: any, b: any) => {
       return a.createdAt - b.createdAt;
     });
+
     return { clubPosts, eventPosts };
   }
 
@@ -34,7 +34,6 @@ export class UserpageService {
 
   // 회원정보 조회
   async getUserInfo(userId: number) {
-
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
     return {
