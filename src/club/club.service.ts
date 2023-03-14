@@ -19,7 +19,14 @@ export class ClubService {
   async getClubs() {
     return await this.clubRepository.find({
       where: { deletedAt: null },
-      select: ["clubId", "title", "maxMembers", "createdAt"],
+      select: [
+        "clubId",
+        "title",
+        "maxMembers",
+        "createdAt",
+        // "nickName",
+        "userId",
+      ],
     });
   }
 
