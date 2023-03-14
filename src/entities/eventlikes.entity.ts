@@ -35,7 +35,10 @@ export class EventLikes {
   @JoinColumn({ name: "userId" })
   user: Users;
 
-  @ManyToOne(() => EventPosts, (eventPosts: EventPosts) => eventPosts.eventLikes)
+  @ManyToOne(
+    () => EventPosts,
+    (eventPosts: EventPosts) => eventPosts.eventLikes,
+  )
   @JoinColumn({ name: "eventPostId" })
   eventPosts: EventPosts;
 }

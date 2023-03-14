@@ -16,7 +16,10 @@ import { EventModule } from "./event/event.module";
 import { UserpageModule } from "./userpage/userpage.module";
 import { AuthModule } from "./auth/auth.module";
 import { RedisModule } from "./redis/redis.module";
-import "dotenv/config";
+import { AuthMiddleware } from "./auth/auth.middleware";
+import { MailerModule } from "@nestjs-modules/mailer";
+import { MailerConfigService } from "./config/mailer.config.service";
+import { MailModule } from "./mail/mail.module";
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
@@ -32,13 +35,19 @@ const ejsMiddleware = require("express-ejs-layouts");
       useClass: JwtConfigService,
       inject: [ConfigService],
     }),
-
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: MailerConfigService,
+      inject: [ConfigService],
+    }),
+    
     EventModule,
     SearcherModule,
     ClubModule,
     UserpageModule,
     AuthModule,
     RedisModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [],
@@ -53,5 +62,8 @@ export class AppModule implements NestModule {
         "sign/(.*)",
       )
       .forRoutes("/");
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: "/test", method: RequestMethod.GET });
   }
 }
