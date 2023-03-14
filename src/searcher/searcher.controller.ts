@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post, Query, Res, Param, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
-import { Request, Response} from 'express';
+import { Body, Controller, Get, Post, Query, Res, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
+import { Response} from 'express';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { SearcherService } from './searcher.service';
 
@@ -81,14 +81,14 @@ export class SearcherController {
     try {
       const findData = await this.searchService.findUsers(term);
 
-      const numOfResults = findData.length;  //불러온 데이터 목록 수
-      const startIndex = (page - 1) * take
+      const totalCount = findData.length;  //불러온 데이터 목록 수
+      const startIndex = (page - 1) * take  //
 
-      const sliceData = findData.slice(startIndex, startIndex + take)  // 페이지당 조회할 데이터 리스트
-      const numOfPages = Math.ceil(numOfResults / take)   //생성될 페이지 수
+      const slicedData = findData.slice(startIndex, startIndex + take)  // 페이지당 조회할 데이터 묶음
+      const lastPage = Math.ceil(totalCount / take)   //생성될 페이지 수
 
-      const unitSize = 3 // 페이지 묶음 단위 < 1 2 3>  <4 5 6> 
-      const numOfUnits = Math.floor((page -1) / unitSize)  //<1 2 3> 페이지는 0 번째
+      const unitSize = 3 // 페이지 묶음 단위 : 3개씩 < 1 2 3>  <4 5 6> 
+      const numOfUnits = Math.floor((page -1) / unitSize)  //<1 2 3> 페이지는 0 번째 index
       const unitStart = numOfUnits * unitSize + 1
       const unitEnd = unitStart + (unitSize - 1)
 
@@ -96,9 +96,9 @@ export class SearcherController {
         title: "검색결과",
         term,
 
-        sliceData,
+        slicedData,
         take,
-        numOfPages,
+        lastPage,
         unitStart,
         unitEnd,
         page,
@@ -108,8 +108,24 @@ export class SearcherController {
     }
   }
 
-//필요한 것
+  
+  // async paginatedResults(@Body() getdata, @Query() term, page, take) {
+  //   const getData = await this.searchService.findUsers(term);
 
+  //   const numOfResults = getData.length;  //불러온 데이터 목록 수
+  //   const startIndex = (page - 1) * take  //
+
+  //   const slicedData = getData.slice(startIndex, startIndex + take)  // 페이지당 조회할 데이터 묶음
+  //   const numOfPages = Math.ceil(numOfResults / take)   //생성될 페이지 수
+
+  //   const unitSize = 3 // 페이지 묶음 단위 : 3개씩 < 1 2 3>  <4 5 6> 
+  //   const numOfUnits = Math.floor((page -1) / unitSize)  //<1 2 3> 페이지는 0 번째 index
+  //   const unitStart = numOfUnits * unitSize + 1
+  //   const unitEnd = unitStart + (unitSize - 1)
+
+  //   return 
+
+  // }
 
 
 
