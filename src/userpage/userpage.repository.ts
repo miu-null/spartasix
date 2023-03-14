@@ -9,7 +9,7 @@ import { ClubMembers } from "../entities/clubmembers.entity";
 import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/eventposts.entity";
 import { Users } from "../entities/users.entity";
-import { Repository } from "typeorm";
+import { In, Raw, Repository } from "typeorm";
 
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
@@ -29,7 +29,6 @@ export class UserPageRepository {
 
   // 작성한 글 조회
   async getMyPosts(userId: number) {
-    console.log("getMyPosts");
     const clubPosts = await this.clubRepository.find({
       where: { userId },
       select: ["title", "content"],
@@ -38,6 +37,7 @@ export class UserPageRepository {
       where: { userId },
       select: ["title"],
     });
+
     return { clubPosts, eventPosts };
   }
 
@@ -47,21 +47,24 @@ export class UserPageRepository {
       .createQueryBuilder("clubs")
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
-
     const MyClubApp = await this.clubMembersRepository
       .createQueryBuilder("clubMembers")
       .where("clubMembers.userId = :userId", { userId, deletedAt: null })
       .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: true })
       .getMany();
-
-    const MyClub = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("clubs.clubId IN (:...clubIds)", {
-        clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
-      })
-      .getMany();
-
-    return { myOwnClub, MyClub };
+    if (MyClubApp.length) {
+      const MyClub = await this.clubRepository
+        .createQueryBuilder("clubs")
+        .where("clubs.clubId IN (:...clubIds)", {
+          clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
+        })
+        .getMany();
+      return {
+        myOwnClub,
+        MyClub,
+      };
+    }
+    return { myOwnClub, MyClub: [] };
   }
 
   // 회원정보 조회
@@ -83,7 +86,6 @@ export class UserPageRepository {
 
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
-    console.log(updateUserInfo);
     const changedInfo = await this.userRepository.update(userId, {
       email: updateUserInfo.email,
       password: updateUserInfo.password,
@@ -114,43 +116,31 @@ export class UserPageRepository {
     return { currentClub, currentClubMember };
   }
 
-  // 클럽 신청서 전체보기 clubMembers에서, 같은 clubId를 공유하는 정보 찾아오기
+  // *클럽 신청서 전체보기 clubMembers에서, 같은 clubId를 공유하는 정보 찾아오기
   // 그 clubId는 userId로 찾기
   async getClubApps(userId: number) {
-    const clubs = await this.clubRepository
+    const myClubs = await this.clubRepository
       .createQueryBuilder("clubs")
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
-    console.log(clubs);
+    // 클럽멤버스에서 이 클럽스의 클럽아이디로 데이터 찾기
     const myOwnClub = await this.clubMembersRepository
       .createQueryBuilder("clubMembers")
-      .where("clubMembers.clubId IN clubs", {
-        clubId: clubs.clubId,
+      .where("clubMembers.clubId IN (:...clubIds)", {
+        clubIds: myClubs.map((clubApp) => clubApp.clubId),
       })
-      // .where("clubId IN (:clubId)", { clubId: clubs })
       .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: false })
-      // .where("clubMembers.clubId IN (...clubIds)", {
-      //   clubIds: clubs.map((clubs) => clubs.clubId),
-      // })
-
-      //   .where("clubId IN (:clubIds)", { clubIds })
-      // .where("clubMembers.clubId IN clubs", {
-      //   clubId: clubs.map((clubs) => clubs.clubId),
-      // })
-      // .leftJoin("clubMembers.clubs", "clubs")
-      // .leftJoin("clubMembers.user", "user")
-      // .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: false })
       .getMany();
     return myOwnClub;
   }
 
-  // 특정 신청서 조회
+  // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
-      .where("members.userId = :userId", { userId, deletedAt: null })
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
-      .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
+      // .where("members.userId = :userId", { userId, deletedAt: null })
+      // .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
       .getOne();
     return members;
   }
