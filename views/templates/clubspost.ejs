@@ -1,0 +1,35 @@
+<body>
+  <div class="clubs-post-form">
+    <div>
+      <h3>모임글 작성하기</h3><br>
+    </div>
+    <div class="row g-2">
+      <div class="col-md">
+        <span>제목</span><br>
+        <input type="email" class="post-control" id="title" placeholder="제목">
+      </div>
+      <div class="col-md">
+        <span>인원수</span><br>
+        <input class="post-control" type="number" id="maxMembers" name="selboxDirect"><br>
+        <span>ID</span><br>
+        <input class="post-control" type="text" id="userId" name="selboxDirect">
+        <!-- <div class="form-floating">
+          <select class="form-select" id="selbox">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="direct">직접 입력</option>
+          </select>
+        </div> -->
+      </div>
+    </div><br>
+    <div class="mb-3">
+      <div class="col-md">
+        <span>내용</span><br>
+        <textarea class="post-control" id="content" rows="10" cols="130" placeholder="내용"></textarea>
+      </div>
+    </div>
+    <button type="button" class="btn btn-dark" onclick="clubpost()">작성완료</button>
+  </div>
+</body>

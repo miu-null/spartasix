@@ -1,14 +1,56 @@
-<h3> search 페이지</h3>
+<h3>모임 게시판</h3>
 
-<h3> <%- title %> </h3>
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <div>
-    <% for(let i=0; i < terms.length; i++) {%>
-      <div class="card-text">
-        번호 : <%= terms[i].id %>
-          이름 : <%= terms[i].name %>
-            나이 : <%= terms[i].age %>
-      </div>
-      <% } %>
-  </div>
-</div>
+<form class="clubs-list">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>글번호</th>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>모집인원</th>
+        <th>등록일</th>
+        <th>좋아요</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% for(let i=0; i < terms.length; i++) {%>
+        <tr class="clubs">
+          <td class="clubs-detail">
+            <%= terms[i].clubId %>
+          </td>
+          <td class="clubs-detail">
+            <%= terms[i].title %>
+          </td>
+          <td class="clubs-detail">
+            <%= terms[i].userId %>
+          </td>
+          <td class="clubs-detail">
+            <%= terms[i].maxMembers %>
+          </td>
+          <td class="clubs-detail">
+            <%= terms[i].createdAt %>
+          </td>
+          <% } %>
+        </tr>
+    </tbody>
+  </table>
+</form>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+  <button href="#" onclick="location.href='clubspost'">글 쓰기</button>
+</nav>
