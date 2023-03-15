@@ -2,7 +2,6 @@ import { MailerOptions, MailerOptionsFactory } from "@nestjs-modules/mailer";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-
 @Injectable()
 export class MailerConfigService implements MailerOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
