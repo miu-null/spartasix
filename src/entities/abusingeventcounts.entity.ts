@@ -35,7 +35,10 @@ export class AbusingEventCounts {
   @JoinColumn({ name: "userId" })
   user: Users;
 
-  @ManyToOne(() => EventPosts, (eventPosts: EventPosts) => eventPosts.abusingEventCounts)
+  @ManyToOne(
+    () => EventPosts,
+    (eventPosts: EventPosts) => eventPosts.abusingEventCounts,
+  )
   @JoinColumn({ name: "eventPostId" })
   eventPosts: EventPosts;
 }

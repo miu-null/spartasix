@@ -37,23 +37,35 @@ export class EventComments {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => EventSecondComments, (eventSecondComments: EventSecondComments) => eventSecondComments.eventComments, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventSecondComments,
+    (eventSecondComments: EventSecondComments) =>
+      eventSecondComments.eventComments,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventSecondComments: EventSecondComments[];
 
-  @OneToMany(() => EventCommentLikes, (eventCommentLikes: EventCommentLikes) => eventCommentLikes.eventComments, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventCommentLikes,
+    (eventCommentLikes: EventCommentLikes) => eventCommentLikes.eventComments,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventCommentLikes: EventCommentLikes[];
 
   @ManyToOne(() => Users, (user: Users) => user.eventComments)
   @JoinColumn({ name: "userId" })
   user: Users;
 
-  @ManyToOne(() => EventPosts, (eventPosts: EventPosts) => eventPosts.eventComments)
+  @ManyToOne(
+    () => EventPosts,
+    (eventPosts: EventPosts) => eventPosts.eventComments,
+  )
   @JoinColumn({ name: "eventPostId" })
   eventPosts: EventPosts;
 }

@@ -3,12 +3,20 @@ import {
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
+import { MailService } from "src/mail/mail.service";
+import { RedisService } from "src/redis/redis.service";
 import { AuthRepository } from "./auth.repository";
 
 @Injectable()
 export class AuthService {
-  constructor(private authRepository: AuthRepository) {}
+  constructor(
+    private authRepository: AuthRepository,
+    private readonly jwtService: JwtService,
+    private readonly redisService: RedisService,
+    private readonly mailService: MailService,
+  ) {}
 
   async createUser(
     email: string,
@@ -27,8 +35,7 @@ export class AuthService {
       );
     }
     const hashpassword = await this.transformPassword(password);
-
-    return await this.authRepository.createUser(email, hashpassword, nickName, phone);
+    await this.authRepository.createUser(email, hashpassword, nickName, phone);
   }
 
   async login(email: string, password: string) {
@@ -38,12 +45,69 @@ export class AuthService {
     if (validatePassword === false) {
       throw new UnauthorizedException("비밀번호가 올바르지 않습니다.");
     }
-    return user.accessToken;
+
+    const accessToken = await this.AccessToken(user.userId);
+    const refreshToken = await this.RefreshToken(user.email);
+    console.log("acc   " + accessToken);
+    console.log("ref   " + refreshToken);
+
+    await this.redisService.setRefreshToken(
+      {
+        id: user.userId.toString(),
+        email: user.email,
+      },
+      refreshToken,
+    );
+
+    return { ...user, accessToken, refreshToken };
+  }
+
+  async findPassword(email: string, phone: string) {
+    const findemail = await this.authRepository.findPassword(email, phone);
+
+    const randomPassword = await this.mailService.findPassword(email);
+
+    return {findemail, randomPassword};
+  }
+
+  async newPassword(email: string, password: string) {
+    const hashpassword = await this.transformPassword(password);
+    await this.authRepository.newPassword(email, hashpassword);
+    return true;
   }
 
   async transformPassword(password: string) {
     const hashpassword = await bcrypt.hash(password, 10);
-
     return hashpassword;
+  }
+
+  async AccessToken(id: number) {
+    const accessToken = await this.jwtService.signAsync({ id });
+    return accessToken;
+  }
+
+  async RefreshToken(email: string) {
+    const refreshToken = await this.jwtService.signAsync({ email });
+    return refreshToken;
+  }
+
+  async validateAcc(token: string) {
+    try {
+      const validatetoken = await this.jwtService.verify(token);
+
+      return validatetoken;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async validateRef(token: string) {
+    try {
+      const validatetoken = await this.jwtService.verify(token);
+
+      return validatetoken;
+    } catch (error) {
+      return false;
+    }
   }
 }

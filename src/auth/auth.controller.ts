@@ -2,28 +2,29 @@ import {
   Body,
   CACHE_MANAGER,
   Controller,
-  Get,
   Inject,
+  Patch,
   Post,
   Req,
   Res,
-  UseGuards,
 } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/createuser.dto";
 import { loginDto } from "./dto/login.dto";
 import { Cache } from "cache-manager";
+import { findPasswordDto } from "./dto/findpassword.dto";
+import { MailService } from "src/mail/mail.service";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private authService: AuthService,
+    private mailService: MailService,
   ) {}
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto, @Res() res) {
-    const user = await this.authService.createUser(
+    await this.authService.createUser(
       data.email,
       data.password,
       data.confirmpassword,
@@ -31,35 +32,31 @@ export class AuthController {
       data.phone,
     );
 
-    return res.json(true)
-  }
-
-  @Post("/sign-in")
-  async login(@Body() data: loginDto, @Res() res) {
-    const accessToken = await this.authService.login(data.email, data.password);
-    // res.setHeader('Authorization', 'Bearer ' + accessToken); // 헤더에 token 담기
-    // res.cookie('Authentication', accessToken, {              // 쿠키에 token 담기
-    //   domain: 'localhost',
-    //   path: '/',
-    //   httpOnly: true,
-    // });
     return res.json(true);
   }
 
-  // 미들웨어 테스트용 api
-  @Post("/test")
-  @UseGuards(AuthGuard())
-  async test(@Req() req) {
-    const user = req.user;
-    return "user";
+  @Post("/sign-in")
+  async login(@Body() data: loginDto, @Res() res, @Req() req) {
+    const user = await this.authService.login(data.email, data.password);
+    res.cookie("accessToken", user.accessToken);
+    res.cookie("refreshToken", user.refreshToken);
+    return res.json(true);
   }
 
-  // redis 테스트용 api
-  @Get("/")
-  async getCache() {
-    await this.cacheManager.set("user9", "9");
-    // console.log(this.cacheManager)
-    console.log(await this.cacheManager.get("user9"));
+  @Post("/find-password")
+  async findPassword(@Body() data: findPasswordDto, @Res() res) {
+    const randomPassword = await this.authService.findPassword(
+      data.email,
+      data.phone,
+    );
+
+    return res.json({data: randomPassword});
   }
 
+  @Patch("new-password")
+  async newPassword(@Body() data: loginDto) {
+    await this.authService.newPassword(data.email, data.password);
+
+    return true;
+  }
 }

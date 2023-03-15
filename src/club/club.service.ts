@@ -9,17 +9,27 @@ import { Clubs } from "src/entities/clubs.entity";
 import { Repository } from "typeorm";
 import { AuthService } from "src/auth/auth.service";
 import { Users } from "src/entities/users.entity";
+import { ClubMembersRepository } from "src/userpage/clubmember.repository";
+import { CreateAppDto } from "./dto/newApp-club.dto";
 
 @Injectable()
 export class ClubService {
   constructor(
+    private clubMembersRepository: ClubMembersRepository,
     @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
-  ) { }
+  ) {}
 
   async getClubs() {
     return await this.clubRepository.find({
       where: { deletedAt: null },
-      select: ["clubId", "title", "maxMembers", "createdAt"],
+      select: [
+        "clubId",
+        "title",
+        "maxMembers",
+        "createdAt",
+        // "nickName",
+        "userId",
+      ],
     });
   }
 
@@ -61,5 +71,13 @@ export class ClubService {
 
   async deleteClub(clubId: number) {
     await this.clubRepository.softDelete(clubId);
+  }
+
+  async newClubApp(clubId: number, newApp: CreateAppDto) {
+    const newclubApp = await this.clubMembersRepository.newClubApp(
+      clubId,
+      newApp,
+    );
+    return newclubApp;
   }
 }
