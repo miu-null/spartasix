@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Injectable,
   NestMiddleware,
+  Next,
+  Req,
   UnauthorizedException,
 } from "@nestjs/common";
 import { RedisService } from "src/redis/redis.service";
@@ -14,7 +16,7 @@ export class AuthMiddleware implements NestMiddleware {
     private redisService: RedisService,
   ) {}
 
-  async use(req: any, next: Function) {
+  async use(req: any, res: any, next: Function) {
     const token = req.headers.cookie;
     const accesstoken = token.split(";")[0].split("=")[1];
     const refreshtoken = token.split(";")[1].split("=")[1];

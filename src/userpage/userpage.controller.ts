@@ -37,7 +37,8 @@ export class UserpageController {
 
   @Get("/:userId/clubs/app") // 신청서 전체조회 (완료)
   async getClubApps(@Param("userId") userId: number) {
-    return await this.userPageService.getClubApps(userId);
+    const users = await this.userPageService.getClubApps(userId);
+    return users
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
@@ -111,6 +112,6 @@ export class UserpageController {
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
   ) {
-    return this.userPageService.rejectApp(userId, clubMemberId);
+    return await this.userPageService.rejectApp(userId, clubMemberId);
   }
 }

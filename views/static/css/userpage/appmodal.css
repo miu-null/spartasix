@@ -1,37 +1,167 @@
-/* Application Modal */
-.modal {
+/* The Modal (background) */
+.Appmodal {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.2);
   top: 0;
   left: 0;
   display: none;
   z-index: 50;
 }
 
-.wrap1 {
-  height: 100%;
-  width: 100%;
+.app_modal {
   background-position: center;
   background-size: cover;
   position: absolute;
-  width: 500px;
-  height: 700px;
+  width: 900px;
+  height: 600px;
   background: #f8f5f2;
-  border-radius: 10px;
+  border-radius: 30px;
   position: absolute;
+  display: flex;
   top: 15%;
   left: 30%;
   margin-top: -5%;
   margin-right: 3%;
   text-align: center;
   box-sizing: border-box;
-  padding: 74px 0;
-  line-height: 23px;
-  cursor: pointer;
+  padding: 34px;
+}
+
+.application {
+  background-color: bisque;
+  width: 120%;
   display: flex;
   flex-direction: column;
-  cursor: default;
-  transform: translate(10%, 2%);
+}
+
+.application2 {
+  background-color: antiquewhite;
+  width: 120%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app_title {
+  margin: auto;
+  font-weight: bold;
+  font-size: 2rem;
+  height: 10%;
+}
+
+.app_body {
+  width: 100%;
+  height: 90%;
+  background-color: antiquewhite;
+}
+
+.app_body_container {
+  margin: auto;
+  margin-top: 2%;
+  display: flex;
+  width: 90%;
+  height: 60px;
+  border: 3px solid #000000;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.member_name {
+  width: 20%;
+  height: 100%;
+  border-right: 3px solid;
+}
+
+.member_body_name {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.member_body {
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  border-right: 3px solid;
+}
+
+.member_body_content {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.member_date {
+  width: 20%;
+  height: 100%;
+  margin: auto
+}
+
+.member_body_date {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.Appmodal2 {
+  position: absolute;
+  display: none;
+  z-index: 70;
+}
+
+.app_modal2 {
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  width: 840px;
+  height: 500px;
+  background: #f8f5f2;
+  border-radius: 30px;
+  position: absolute;
+  display: flex;
+  top: 15%;
+  left: 30%;
+  margin-top: -3.5%;
+  margin-left: 600px;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 34px;
+}
+
+.app_title2 {
+  width: 100%;
+  height: 20%;
+  margin: auto;
+  margin-top: 4.5%;
+  border-bottom: 2px solid;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+
+.app_body2 {
+  width: 100%;
+  height: 50%;
+  border-bottom: 2px solid;
+  margin: auto;
+  margin-top: 10%;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.app_button2 {
+  width: 100%;
+  height: 20%;
+  margin-top: 1%;
+  display: flex;
+}
+
+.app_btn {
+  width: 20%;
+  height: 40px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background-color: rgb(238, 207, 170);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
 }
