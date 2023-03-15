@@ -26,7 +26,7 @@ export class AuthMiddleware implements NestMiddleware {
     const payload = await this.authService.validateAcc(accesstoken);
 
     try {
-      if (payload === false) {
+      if (!payload) {
         const user = await this.redisService.getRefreshToken(refreshtoken);
 
         if (!user) {

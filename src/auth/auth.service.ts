@@ -63,12 +63,17 @@ export class AuthService {
   }
 
   async findPassword(email: string, phone: string) {
-
-    await this.authRepository.findPassword(email, phone);
+    const findemail = await this.authRepository.findPassword(email, phone);
 
     const randomPassword = await this.mailService.findPassword(email);
 
-    return randomPassword;
+    return {findemail, randomPassword};
+  }
+
+  async newPassword(email: string, password: string) {
+    const hashpassword = await this.transformPassword(password);
+    await this.authRepository.newPassword(email, hashpassword);
+    return true;
   }
 
   async transformPassword(password: string) {

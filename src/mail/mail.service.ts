@@ -6,7 +6,6 @@ export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
   async findPassword(email: string) {
-    console.log(email)
     const randomPassword = await this.randomString();
     await this.mailerService.sendMail({
       to: `${email}`,
