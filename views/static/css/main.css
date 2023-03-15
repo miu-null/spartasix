@@ -1,33 +1,22 @@
 :root {
-<<<<<<< HEAD
-  --bs-font-sans-serif: 'Rubik', sans-serif;
-=======
   --bs-font-sans-serif: "Rubik", sans-serif;
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
 }
 
 .main_body {
   width: 100%;
-  height: 100vh;
+  height: 1000vh;
 }
 
 .main_body_container {
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
-  background-color: #F8F5F2;
-  padding-left: 15%;
-  font-weight: bold;
-}
 
-=======
   background-color: #f8f5f2;
   padding-left: 15%;
   font-weight: bold;
 }
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
 .body_title {
   width: 80%;
   height: 10%;
@@ -36,19 +25,7 @@
   margin-top: 5%;
   text-align: center;
 }
-<<<<<<< HEAD
 
-.body_issue {
-  width: 80%;
-  height: 24%;
-  background-color: #FCFAF9;
-}
-
-.issue_title {
-  width: 100%;
-  height: 15%;
-  background-color:#FFC0C0;
-=======
 .body_issue {
   width: 80%;
   height: 24%;
@@ -58,36 +35,21 @@
   width: 100%;
   height: 15%;
   background-color: #ffc0c0;
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
 .issue_body {
   width: 100%;
   height: 60%;
   border-radius: 10px;
   padding: 5px;
 }
-<<<<<<< HEAD
-
-.issue_content {
-  border: 1px solid #FFC0C0;
-  margin-top: 9px;
-  border-radius: 5px;
-}
-
-=======
 .issue_content {
   border: 1px solid #ffc0c0;
   margin-top: 9px;
   border-radius: 5px;
 }
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
 .body_news {
   width: 80%;
   height: 20%;
@@ -95,19 +57,7 @@
   justify-content: space-between;
   margin-top: 7%;
 }
-<<<<<<< HEAD
 
-.IT_news {
-  width: 40%;
-  height: 115%;
-  background-color: #F4F8FB;
-}
-
-.IT_news_title {
-  width: 100%;
-  height: 15%;
-  background-color:#D0E7FC;
-=======
 .IT_news {
   width: 40%;
   height: 115%;
@@ -117,15 +67,10 @@
   width: 100%;
   height: 15%;
   background-color: #d0e7fc;
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
 .IT_news_body {
   padding-top: -60px;
   width: 100%;
@@ -133,25 +78,6 @@
   border-radius: 10px;
   padding: 5px;
 }
-<<<<<<< HEAD
-
-.IT_content {
-  border: 1px solid #D0E7FC;
-  margin-top: 9px;
-  border-radius: 5px;
-}
-
-.job_news {
-  width: 40%;
-  height: 115%;
-  background-color: #F6F8FB;
-}
-
-.job_news_title {
-  width: 100%;
-  height: 15%;
-  background-color:#88A9FF;
-=======
 .IT_content {
   border: 1px solid #d0e7fc;
   margin-top: 9px;
@@ -166,28 +92,16 @@
   width: 100%;
   height: 15%;
   background-color: #88a9ff;
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
 .job_news_body {
   padding-top: -60px;
   width: 100%;
   height: 60%;
   border-radius: 10px;
   padding: 5px;
-}
-<<<<<<< HEAD
-
-.job_content {
-  border: 1px solid #88A9FF;
-  margin-top: 9px;
-  border-radius: 5px;
 }
 
 /* 글 검색 기능 드롭다운 */
@@ -215,10 +129,9 @@ select {
   margin-bottom: 10px;
   margin-top: 10px;
 }
-=======
+
 .job_content {
   border: 1px solid #88a9ff;
   margin-top: 9px;
   border-radius: 5px;
 }
->>>>>>> 030703a ([추가] 유저페이지 프론트 추가)
