@@ -1,0 +1,96 @@
+* {
+  font-family: sans-serif;
+}
+
+.box-container {
+  display: flex;
+  border: 2px solid red;
+  margin: 4px;
+  height: 100vh;
+  gap: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  width: 600px;
+  height: 800px;
+}
+
+.image-info-box {
+  width: 360px;
+  /* border: 2px solid greenyellow; */
+}
+
+/* .image-info-box > * {
+  border: 10px solid rgb(234, 7, 200);
+} */
+
+.image-box {
+  display: flex;
+  justify-content: center;
+  height: 30%;
+  /* border: 1px solid rgb(234, 7, 200); */
+}
+
+.info-box {
+  color: #a58f8f;
+  padding: 37px;
+  background-color: #f4f3f0;
+  height: 70%;
+}
+
+.userBio_container {
+  font-family: "JejuGothic";
+  font-style: normal;
+  /* font-weight: 400; */
+  font-size: 15px;
+  /* line-height: 50px; */
+  color: #625858;
+  display: flex;
+  width: 280px;
+  padding: 28px;
+  background-color: #f8f8f8;
+  justify-content: center;
+  margin-top: 10%;
+  border-radius: 17px;
+}
+.post-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-box {
+  width: 70px;
+  align-self: end;
+}
+
+.edit-box {
+  width: 45px;
+  font-size: 11pt;
+  position: relative;
+  left: 51%;
+  background: #e79292;
+  border-radius: 10px;
+  /* align-self: end; */
+}
+
+.post-box {
+  border: 2px solid orange;
+  height: 758px;
+}
+
+.member-photo {
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
