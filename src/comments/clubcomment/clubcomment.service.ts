@@ -1,4 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
+import { ClubCommentRepository } from "./clubcomment.repository";
 
 @Injectable()
-export class ClubcommentService {}
+export class ClubCommentService {
+  constructor(private readonly clubCommentRepository: ClubCommentRepository) {}
+}

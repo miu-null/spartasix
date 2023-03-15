@@ -1,9 +1,15 @@
-import { Module } from '@nestjs/common';
-import { EventcommentController } from './eventcomment.controller';
-import { EventcommentService } from './eventcomment.service';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { EventComments } from "src/entities/eventcomments.entity";
+import { EventCommentController } from "./eventcomment.controller";
+import { EventCommentRepository } from "./eventcomment.repository";
+import { EventCommentService } from "./eventcomment.service";
 
 @Module({
-  controllers: [EventcommentController],
-  providers: [EventcommentService]
+  imports: [
+    TypeOrmModule.forFeature([EventComments]),
+  ],
+  controllers: [EventCommentController],
+  providers: [EventCommentService, EventCommentRepository],
 })
-export class EventcommentModule {}
+export class EventCommentModule {}
