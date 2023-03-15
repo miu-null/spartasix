@@ -35,7 +35,6 @@
 .issue_title {
   width: 100%;
   height: 15%;
-  background-color:#FFC0C0;
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
@@ -71,7 +70,7 @@
 .IT_news_title {
   width: 100%;
   height: 15%;
-  background-color:#D0E7FC;
+  background-color: #D0E7FC;
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
@@ -100,7 +99,7 @@
 .job_news_title {
   width: 100%;
   height: 15%;
-  background-color:#88A9FF;
+  background-color: #88A9FF;
   border-radius: 10px;
   padding: 5px;
   font-size: 1.2rem;
@@ -118,4 +117,13 @@
   border: 1px solid #88A9FF;
   margin-top: 9px;
   border-radius: 5px;
+}
+
+/* event main css */
+.tableName {
+  background-color: #FFC0C0;
+}
+
+.eventList {
+  background-color: #FAEFE5;
 }

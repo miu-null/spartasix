@@ -13,30 +13,42 @@ export class EventController {
   @Get('/list')
   async getEvent(@Res() res: Response) {
     const events = await this.eventService.getEvents();
-     console.log(events)
-    return res.render("event/event.main.ejs",{events})
+    return res.render("eventMain.ejs",{events})
+  }
+  // 렌더링페이지
+  @Get('/newevent')
+  async getNewEvent(@Res() res: Response) {
+    return res.render("eventNew.ejs")
+  }
+  // 렌더링페이지
+  @Get('/updateevent/:id')
+  async getUpdateEvent(@Res() res: Response, @Param('eventPostId') eventPostId: number) {
+    const event = await this.eventService.getEventById(eventPostId);
+    return res.render("eventUpdate.ejs",{event})
   }
 
   @Get('/event/:eventPostId')
-  async getEventById(@Param('eventPostId') eventPostId: number) {
-    return await this.eventService.getEventById(eventPostId);
+  async getEventById(@Res() res: Response, @Param('eventPostId') eventPostId: number) {
+    const event = await this.eventService.getEventById(eventPostId);
+    return res.render("eventDetail.ejs",{event})
   }
 
-
   @Post("/newevent")
-  async createUser(@Body() data: CreateEventDto) {
-    return await this.eventService.createEvent(
+  async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
+    const event=await this.eventService.createEvent(
       data.eventPostId,
       data.userId,
       data.title,
       data.content,
       data.date,
     );
+    return res.render("eventNew.ejs",{event})
   }
 
 
   @Patch("/event/:eventPostId")
   async updateUser(
+    @Res() res: Response,
     @Param("eventPostId") eventPostId: number,
     @Request() req,
     @Body() data: UpdateEventDto,
@@ -49,7 +61,8 @@ export class EventController {
       content: data.content,
       date: data.date,
     });
-    return changedInfo;
+
+    return res.render("eventUpdate.ejs",{changedInfo})
   }
 
 
