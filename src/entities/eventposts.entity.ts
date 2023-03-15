@@ -44,28 +44,44 @@ export class EventPosts {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => EventMembers, (eventMembers: EventMembers) => eventMembers.eventPosts, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventMembers,
+    (eventMembers: EventMembers) => eventMembers.eventPosts,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventMembers: EventMembers[];
 
-  @OneToMany(() => EventLikes, (eventMembers: EventLikes) => eventMembers.eventPosts, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventLikes,
+    (eventMembers: EventLikes) => eventMembers.eventPosts,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventLikes: EventLikes[];
 
-  @OneToMany(() => AbusingEventCounts, (eventMembers: AbusingEventCounts) => eventMembers.eventPosts, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => AbusingEventCounts,
+    (eventMembers: AbusingEventCounts) => eventMembers.eventPosts,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   abusingEventCounts: AbusingEventCounts[];
 
-  @OneToMany(() => EventComments, (eventComments: EventComments) => eventComments.eventPosts, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
+  @OneToMany(
+    () => EventComments,
+    (eventComments: EventComments) => eventComments.eventPosts,
+    {
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+  )
   eventComments: EventComments[];
 
   @ManyToOne(() => Users, (user: Users) => user.eventPosts)

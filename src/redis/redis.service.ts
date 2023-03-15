@@ -2,13 +2,23 @@ import { CACHE_MANAGER, Inject, Injectable } from "@nestjs/common";
 import { Cache } from "cache-manager";
 @Injectable()
 export class RedisService {
+  set(arg0: string, refreshToken: string) {
+    throw new Error("Method not implemented.");
+  }
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
-  async setRefreshToken(userId: string, refreshToken: string) {
-    await this.cacheManager.set(userId, refreshToken);
+  async setRefreshToken(
+    user: { id: string; email: string },
+    refreshToken: string,
+  ) {
+    await this.cacheManager.set(refreshToken, {
+      userId: user.id,
+      email: user.email,
+    });
   }
 
-  async getRefreshToken(userId: string) {
-    await this.cacheManager.get(userId);
+  async getRefreshToken(token: string) {
+    const user = await this.cacheManager.get(token);
+    return user;
   }
 }
