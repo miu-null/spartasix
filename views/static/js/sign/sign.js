@@ -69,8 +69,6 @@ function sign_in() {
   const email = $("#log_email").val();
   const password = $("#log_password").val();
 
-  console.log(email, password);
-
   $.ajax({
     type: "POST",
     url: "auth/sign-in",
@@ -92,9 +90,6 @@ function find_password() {
   const email = $("#email1").val();
   const phone = $("#phone1").val();
 
-  console.log(email);
-  console.log(phone);
-
   $.ajax({
     type: "POST",
     url: "auth/find-password",
@@ -106,17 +101,17 @@ function find_password() {
       phone: phone,
     }),
     success: function (response) {
-      alert("작성하신 이메일로 인증번호 발송 완료 !");
-      checkpass();
+      alert("발송된 인증번호를 입력해 주세요.");
+      checkpass(response.data);
     },
   });
 }
 
 // 미완성
-function checkpass() {
-  const button = document.querySelector("#div-check");
-  const subbutton = document.querySelector("#onsubmit");
-  const form = document.querySelector("#register1");
+function checkpass(randompassword) {
+  const button = document.querySelector("#div-check"); // 인증 번호 넣을 div
+  const subbutton = document.querySelector("#onsubmit"); // 지울 버튼
+  const form = document.querySelector("#register1"); // 최상위 form
   const textinput = document.createElement("input");
   const textbutton = document.createElement("input");
 
@@ -127,7 +122,7 @@ function checkpass() {
 
   textinput.setAttribute("class", "input-field1");
   textinput.setAttribute("id", "rename_pass");
-  textinput.setAttribute("placeholder", "New Password");
+  textinput.setAttribute("placeholder", "authentication password");
 
   textbutton.setAttribute("class", "submit12");
   textbutton.setAttribute("id", "checkpass");
@@ -138,5 +133,58 @@ function checkpass() {
   let checkpass = document.querySelector("#checkpass");
   checkpass.addEventListener("click", function () {
     const rename_pass = $("#rename_pass").val();
+
+    if (rename_pass !== randompassword.randomPassword) {
+      alert("유효하지 않은 인증번호 입니다.");
+    }
+
+    if (rename_pass === randompassword.randomPassword) {
+      alert("인증 완료. 새로운 비밀번호를 입력해주세요.");
+      const input1 = document.querySelector("#email1"); // 지울 input
+      const input2 = document.querySelector("#phone1"); // 지울 input
+      const input3 = document.querySelector("#rename_pass"); // 지울 input
+      const button1 = document.querySelector("#checkpass"); // 지울 input
+      const newpassinput = document.createElement("input");
+      const newpassbutton = document.createElement("input");
+
+      form.appendChild(newpassinput);
+      form.appendChild(newpassbutton);
+
+      form.removeChild(input1);
+      form.removeChild(input2);
+      button.removeChild(input3);
+      button.removeChild(button1);
+
+      newpassinput.setAttribute("class", "input-field1");
+      newpassinput.setAttribute("id", "new_input");
+      newpassinput.setAttribute("placeholder", "new password");
+
+      newpassbutton.setAttribute("class", "submit12");
+      newpassbutton.setAttribute("id", "new_passbtn");
+      newpassbutton.setAttribute("type", "button");
+      newpassbutton.setAttribute("value", "비밀번호 변경하기");
+      newpassbutton.style.height = "50px";
+
+      let newpass = document.querySelector("#new_passbtn");
+      newpass.addEventListener("click", function () {
+        const newpassword = $("#new_input").val();
+
+        $.ajax({
+          type: "PATCH",
+          url: "auth/new-password",
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          async: false,
+          data: JSON.stringify({
+            email: randompassword.findemail["email"],
+            password: newpassword,
+          }),
+          success: function (response) {
+            alert("비밀번호 수정 완료 !");
+            window.location.reload();
+          },
+        });
+      });
+    }
   });
 }
