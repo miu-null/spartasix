@@ -28,7 +28,6 @@ export class AuthRepository {
     }
 
     if (nickname) {
-      console.log("hello");
       throw new BadRequestException("이미 존재하는 닉네임 입니다.");
     }
     const myphone = phone.split("-").join("")
@@ -63,14 +62,26 @@ export class AuthRepository {
 
     const user = await this.userRepository.findOne({
       where: { email, phone: findphone, deletedAt: null },
-      select: ["password"],
+      select: ["email"],
     });
 
     if (!user) {
       throw new BadRequestException("회원이 존재하지 않습니다.");
     }
-    console.log("user" + user)
+
     return user
+  }
+
+  async newPassword(email: string, password: string) {
+    const userId = await this.userRepository.findOne({
+      where: { email },
+      select: ["userId"]
+    })
+
+    await this.userRepository.update(
+      userId, {password: password},
+    )
+    return true;
   }
 
   async checkThisUser(userId: number) {
