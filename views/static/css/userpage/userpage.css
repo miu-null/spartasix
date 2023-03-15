@@ -77,7 +77,10 @@
 }
 
 .post-box {
-  border: 2px solid orange;
+  /* border: 2px solid orange; */
+  background-color: #efe8df;
+  border-radius: 5px;
+  padding: 30px;
   height: 758px;
 }
 

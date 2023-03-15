@@ -123,15 +123,29 @@ export class UserPageRepository {
       .createQueryBuilder("clubs")
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
-    // 클럽멤버스에서 이 클럽스의 클럽아이디로 데이터 찾기
-    const myOwnClub = await this.clubMembersRepository
-      .createQueryBuilder("clubMembers")
-      .where("clubMembers.clubId IN (:...clubIds)", {
-        clubIds: myClubs.map((clubApp) => clubApp.clubId),
-      })
-      .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: false })
-      .getMany();
-    return myOwnClub;
+    const myOwnClub = myClubs.length
+      ? await this.clubMembersRepository
+          .createQueryBuilder("clubMembers")
+          .where("clubMembers.clubId IN (:...clubIds)", {
+            clubIds: myClubs.map((clubApp) => clubApp.clubId),
+          })
+          .andWhere("clubMembers.isAccepted = :isAccepted", {
+            isAccepted: false,
+          })
+          .getMany()
+      : [];
+    const userName = myOwnClub.length
+      ? await this.userRepository
+          .createQueryBuilder("users")
+          .select("users.nickName")
+          .where("users.userId IN (:...userIds)", {
+            userIds: myOwnClub.map((clubApps) => clubApps.userId),
+          })
+          .getMany()
+      : [];
+    const userNamesArray = userName.map((user) => user.nickName);
+    console.log(userNamesArray);
+    return { userNamesArray, myOwnClub };
   }
 
   // TODO 특정 신청서 조회
