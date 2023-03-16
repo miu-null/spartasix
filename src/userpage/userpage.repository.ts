@@ -74,8 +74,10 @@ export class UserPageRepository {
       .createQueryBuilder("clubs")
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
+    console.log(myClubs)
     const myOwnClub = myClubs.length
       ? await this.clubMembersRepository
+
         .createQueryBuilder("clubMembers")
         .where("clubMembers.clubId IN (:...clubIds)", {
           clubIds: myClubs.map((clubApp) => clubApp.clubId),
@@ -85,6 +87,7 @@ export class UserPageRepository {
         })
         .getMany()
       : [];
+
     const userName = myOwnClub.length
       ? await this.userRepository
         .createQueryBuilder("users")
@@ -94,6 +97,7 @@ export class UserPageRepository {
         })
         .getMany()
       : [];
+
     const userNamesArray = userName.map((user) => user.nickName);
     console.log(userNamesArray);
     return { userNamesArray, myOwnClub };
@@ -147,16 +151,13 @@ export class UserPageRepository {
       .getMany();
     return { currentClub, currentClubMember };
   }
-
-
-
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
-      // .where("members.userId = :userId", { userId, deletedAt: null })
-      // .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
+      .where("members.userId = :userId", { userId, deletedAt: null })
+      .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
       .getOne();
     return members;
   }
