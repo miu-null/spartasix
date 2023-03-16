@@ -1,0 +1,163 @@
+/* The Modal (background) */
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 50;
+}
+
+.wrap1 {
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  width: 500px;
+  height: 700px;
+  background: #f8f5f2;
+  border-radius: 10px;
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  margin-top: -5%;
+  margin-right: 3%;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 74px 0;
+  line-height: 23px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+  transform: translate(10%, 2%);
+}
+
+.form-wrap1 {
+  width: 380px;
+  height: 600px;
+  position: relative;
+  margin: 10% auto;
+  background: #fff;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.button-wrap1 {
+  width: 280px;
+  margin: 35px auto;
+  position: relative;
+  box-shadow: 0 0 600px 9px #f4e3d2;
+  border-radius: 30px;
+}
+
+.togglebtn1 {
+  padding: 10px 30px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
+  font-size: 0.8rem;
+}
+
+#btn1 {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 130px;
+  height: 100%;
+  background: linear-gradient(to right, #f9528a, #ff105f);
+  border-radius: 30px;
+  transition: 0.5s;
+}
+
+.social-icons1 {
+  margin: 30px auto;
+  text-align: center;
+  border-radius: 70%;
+}
+
+.social-icons1 img {
+  width: 30px;
+  cursor: pointer;
+  border-radius: 70%;
+}
+
+.input-group1 {
+  top: 180px;
+  position: absolute;
+  width: 280px;
+  transition: 0.5s;
+}
+
+.input-field1 {
+  width: 100%;
+  padding: 10px 0;
+  margin: 5px 0;
+  border: none;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+}
+
+.submit12 {
+  width: 85%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  background: linear-gradient(to right, #f9528a, #ff105f);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+}
+
+.submit11 {
+  width: 85%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  background: linear-gradient(to right, #f9528a, #ff105f);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+}
+
+span {
+  color: #777;
+  font-size: 12px;
+  bottom: 68px;
+  position: absolute;
+}
+
+#log_password1 {
+  margin-bottom: -30px;
+}
+
+#login1 {
+  left: 50px;
+}
+
+#register1 {
+  left: 450px;
+}
+
+.find_tag1 {
+  display: flex;
+  padding: 60px;
+}
+
+a {
+  margin: auto;
+  font-size: 0.8rem;
+  position: relative;
+  text-decoration: none;
+  color: #000000;
+}

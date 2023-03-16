@@ -68,6 +68,7 @@ export class AppModule implements NestModule {
       .forRoutes("/");
     consumer
       .apply(AuthMiddleware)
+
       .forRoutes(
         {
           path: "/eventcomment/create-comment/:id",
