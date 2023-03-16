@@ -10,6 +10,7 @@ import {
   Render,
   Next,
   Req,
+  Query,ParseIntPipe, DefaultValuePipe
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/create-club.dto";
@@ -19,10 +20,16 @@ import { Request, Response } from "express";
 import { CreateAppDto } from "./dto/newApp-club.dto";
 import { getegid } from "process";
 import { UpdateDateColumn } from "typeorm";
+import { SearcherService } from 'src/searcher/searcher.service';
 
 @Controller("club")
 export class ClubController {
-  constructor(private readonly clubService: ClubService) { }
+  constructor(
+    private readonly clubService: ClubService,
+    private readonly searchService : SearcherService
+    
+    ) { }
+
 
   @Get("/list")
   async getClubs(@Res() res: Response, @Next() Next: Response) {
@@ -32,6 +39,7 @@ export class ClubController {
       terms,
     });
   }
+
   // 신청서 작성
   @Post("/:clubId")
   async createApp(@Param("clubId") clubId: number, @Body() data: CreateAppDto) {
@@ -43,6 +51,7 @@ export class ClubController {
     });
     return createNew;
   }
+
 
    @Get("/clubs/:clubId")
   updateclub(@Res() res: Response) {
@@ -69,7 +78,6 @@ export class ClubController {
   postclub(@Res() res: Response) {
     return res.render("clubspost.ejs");
   }
-
   @Post("/clubspost")
   createClubs(@Body() data: CreateClubDto, @Res() res) {
     const club = this.clubService.createClub(
@@ -81,6 +89,7 @@ export class ClubController {
     );
     return res.json(true);
   }
+
 
   @Put("/clubs/:clubId")
   update(
@@ -96,11 +105,27 @@ export class ClubController {
       data.maxMembers,
     );
     return res.json(true);
-  }
 
+  }
   @Delete("/list/:clubid")
   async delete(@Param("clubid") clubid: number, @Res() res) {
     const club = await this.clubService.deleteClub(clubid);
     return res.json(true);
+  }
+
+  ///모임게시판 검색기능
+  @Get("/search")  
+  async searchClubs(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query() term:string,
+    @Res() res: Response)
+    {
+    const searchData = await this.searchService.paginatedResults('clubs', page, term)
+    console.log('검색', searchData);
+    return res.render("clubsearch.ejs", {
+      term,
+      ...searchData,
+    });
+
   }
 }
