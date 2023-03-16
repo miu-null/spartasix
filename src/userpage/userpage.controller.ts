@@ -86,12 +86,12 @@ export class UserpageController {
     });
 
     const changedInfo = await this.userPageService.updateUser(userId, {
-      email: data.email,
-      password: data.password,
-      phone: data.phone,
-      nickName: data.nickName,
-      snsUrl: data.snsUrl,
-      userIMG: imgUrl,
+      // email: data.email,
+      // password: data.password,
+      // phone: data.phone,
+      // nickName: data.nickName,
+      // snsUrl: data.snsUrl,
+      // userIMG: imgUrl,
     });
     return changedInfo;
   }

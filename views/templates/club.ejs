@@ -30,20 +30,11 @@
     </div>
   </div>
 </form>
-<!-- <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav> -->
+    <section id="search" class="search-wrap">
+    <form action="/club/search" class="search-form">
+      <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시판 검색 : 제목, 내용"
+        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+    </form>
+  </section>
+

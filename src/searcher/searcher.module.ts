@@ -25,6 +25,9 @@ import { ClubMembers } from 'src/entities/clubmembers.entity';
 ],
   exports : [TypeOrmModule],
   controllers: [SearcherController],
-  providers: [SearcherService, SearcherRepository, ClubService, ClubMembersRepository]
+  providers: [SearcherService, SearcherRepository, 
+    ClubService, 
+    ClubMembersRepository
+  ]
 })
 export class SearcherModule {} 
