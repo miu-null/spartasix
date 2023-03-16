@@ -82,6 +82,18 @@ export class AppModule implements NestModule {
           path: "/eventcomment/delete-comment/:id",
           method: RequestMethod.DELETE,
         },
+        {
+          path: "/clubcomment/create-comment/:id",
+          method: RequestMethod.POST,
+        },
+        {
+          path: "/clubcomment/update-comment/:id",
+          method: RequestMethod.PATCH,
+        },
+        {
+          path: "/clubcomment/delete-comment/:id",
+          method: RequestMethod.DELETE,
+        },
       );
   }
 }

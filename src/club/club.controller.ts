@@ -39,6 +39,7 @@ export class ClubController {
     });
     return createNew;
   }
+  
   @Get("/:clubId")
   async getClubsById(@Param("clubId") clubId: number) {
     return await this.clubService.getClubById(clubId);
