@@ -1,18 +1,3 @@
-// $(function () {
-//   //직접입력 인풋박스 기존에는 숨어있다가
-
-//   $("#selboxDirect").hide();
-
-//   $("#selbox").change(function () {
-//     //직접입력을 누를 때 나타남
-
-//     if ($("#selbox").val() == "direct") {
-//       $("#selboxDirect").show();
-//     } else {
-//       $("#selboxDirect").hide();
-//     }
-//   });
-// });
 function clubpost() {
   const title = $("#title").val();
   const maxMembers = $("#maxMembers").val();
@@ -32,7 +17,26 @@ function clubpost() {
     }),
     success: function (response) {
       alert("작성 완료");
-      window.location.replace("club");
+      window.location.replace("http://localhost:3000/club/list");
+    },
+    error: function (error) {
+      alert("error");
+    },
+  });
+}
+
+function clubdelete() {
+  const clubId = location.pathname.split("list/")[1];
+  console.log(clubId);
+  $.ajax({
+    type: "DELETE",
+    url: `/club/list/${clubId}`,
+    success: function (response) {
+      alert("삭제 완료");
+      window.location.replace("http://localhost:3000/club/list");
+    },
+    error: function (error) {
+      alert("권한이 없습니다");
     },
   });
 }
