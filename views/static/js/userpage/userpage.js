@@ -1,4 +1,3 @@
-
 function modal_open1(i) {
   $(`#Appmodal`).fadeIn();
   $(document).mouseup(function (e) {
@@ -16,7 +15,6 @@ function modal_open2() {
     if ($(`#Appmodal2`).has(e.target).length === 0) {
       $(`#Appmodal2`).hide();
       window.location.reload();
-
     }
   });
 }
@@ -115,3 +113,12 @@ function delete_accepted(userId, clubMemberId) {
     },
   });
 }
+
+// function editInfo(userId) {
+//   $.ajax({
+//     type: "PATCH",
+
+//     async: true,
+//     success: function (res) {},
+//   });
+// }
