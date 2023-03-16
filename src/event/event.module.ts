@@ -20,4 +20,4 @@ import { ClubMembersRepository } from "src/userpage/clubmember.repository";
   SearcherService, SearcherRepository, ClubService, ClubMembersRepository
 ],
 })
-export class EventModule { }
+export class EventModule {}
