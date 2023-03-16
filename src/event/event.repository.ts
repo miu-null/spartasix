@@ -31,18 +31,6 @@ export class EventRepository {
     .leftJoinAndSelect("eventUser.user", "nickName")
     .getOne();
   console.log(event);
-    // const event = await this.eventRepository.findOne({
-    //   where: { eventPostId },
-    //   select: [
-    //     "title",
-    //     "userId",
-    //     "date",
-    //     "eventPostId",
-    //     "viewCount",
-    //     "content",
-    //     "createdateAt",
-    //   ],
-    // })
     return event
   }
 
@@ -74,7 +62,7 @@ export class EventRepository {
     return changedInfo;
   }
 
-  async deleteEvent(userId: number, deleteEventDto: DeleteEventDto) {
-    await this.eventRepository.delete({ userId });
+  async deleteEvent(eventPostId: number, deleteEventDto: DeleteEventDto) {
+    await this.eventRepository.delete({ eventPostId });
   }
 }

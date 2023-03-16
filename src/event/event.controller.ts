@@ -72,12 +72,14 @@ export class EventController {
   }
 
 
-  @Delete('/event/delete/:userId')
-  deleteArticle(
-    @Param('userId') userId: number, deleteEventDto: DeleteEventDto
-
-  ) {
-    return this.eventService.deleteEvent(userId, deleteEventDto);
+  @Delete('/event/delete/:eventPostId')
+  async deleteArticle(
+     @Res() res: Response,
+     @Param('eventPostId') eventPostId: number, 
+     deleteEventDto: DeleteEventDto 
+    ) {
+      const deleteEvent = await this.eventService.deleteEvent(eventPostId, deleteEventDto);
+    return res.render("eventMain.ejs")
   }
 
 }
