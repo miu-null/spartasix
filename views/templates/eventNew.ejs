@@ -5,20 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-        <style>
-            .event-container-lg{
-                font-family: Arial, Helvetica, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-                height: 1000px;   
-            }
-            input{
-                margin-bottom: 13px;
-            }
-        </style>
+    <style>
+        .event-container-lg {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            height: 1000px;
+        }
+
+        input {
+            margin-bottom: 13px;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,46 +29,73 @@
         <div class="row">
             <div class="col-9"></div>
             <div class="col-3">
-                <a href="list" class="btn btn-outline-danger" type="button" class="btn btn-outline-danger" style="float:right; margin-bottom: 13px;">취소하기</a>
+                <a href="list" class="btn btn-outline-danger" type="button" class="btn btn-outline-danger"
+                    style="float:right; margin-bottom: 13px;">취소하기</a>
             </div>
         </div>
 
-        <div class="event-container-lg" style="background-color: #FAEFE5; text-align: center;argin-top: 200;" >
-        
-                <h5 style="background-color: #FFC0C0; text-align: left;">이벤트 게시판</h5>
-                <div class="container" style="margin: 50px 50px 50px 50px;">
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="제목" name="email">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            시작 일자
-                       </div>
-                        <div class="col-3">
-                            <input type="date" class="form-control" placeholder="이벤트 시작 기간" name="email">
-                        </div>
-                        <div class="col-3">
-                            종료 일자
-                        </div>
-                        <div class="col-3">
-                            <input type="date" class="form-control" placeholder="이벤트 종료 기간" name="email">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <textarea class="form-control" rows="5" id="comment" name="text" placeholder="내용" style="height: 607px;"></textarea>
-                            <!-- <input type="text" class="form-control" placeholder="내용" name="email"> -->
-                        </div>
+        <div class="event-container-lg" style="background-color: #FAEFE5; text-align: center;argin-top: 200;">
+
+            <h5 style="background-color: #FFC0C0; text-align: left;">이벤트 게시판</h5>
+            <div class="container" style="margin: 50px 50px 50px 50px;">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" id="title" class="form-control" placeholder="제목">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        시작 일자
+                    </div>
+                    <div class="col-3">
+                        <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
+                    </div>
+                    <div class="col-3">
+                        종료 일자
+                    </div>
+                    <div class="col-3">
+                        <input type="date" class="form-control" id="endDate" placeholder="이벤트 종료 기간">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <textarea class="form-control" rows="5" id="content" name="text" placeholder="내용"
+                            style="height: 607px;"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-dark" onclick="eventNew()">작성완료</button>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-        crossorigin="anonymous"></script>
+    <script>
+        function eventNew() {
+            const title = $("#title").val();
+            const date = $("#startDate").val();
+            // const endDate = $("#endDate").val();
+            const content = $("#content").val();
+            const userId = 1
+            console.log(title, date, content, userId);
+            $.ajax({
+                type: "POST",
+                url: "/events/newevent",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    title: title,
+                    date: startDate,
+                    // endDate: endDate,
+                    content: content,
+                    userId: userId
+                }),
+                success: function (response) {
+                    alert("작성 완료");
+                    window.location.replace("/events/list");
+                },
+            });
+        }
+
+    </script>
 </body>
 
 </html>
