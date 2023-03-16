@@ -22,6 +22,7 @@ import { MailerConfigService } from "./config/mailer.config.service";
 import { MailModule } from "./mail/mail.module";
 import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
+import { PaginationModule } from './pagination/pagination.module';
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
@@ -42,7 +43,6 @@ const ejsMiddleware = require("express-ejs-layouts");
       useClass: MailerConfigService,
       inject: [ConfigService],
     }),
-
     EventModule,
     SearcherModule,
     ClubModule,
@@ -52,6 +52,7 @@ const ejsMiddleware = require("express-ejs-layouts");
     MailModule,
     ClubCommentModule,
     EventCommentModule,
+    PaginationModule,
   ],
   controllers: [AppController],
   providers: [],
@@ -70,6 +71,15 @@ export class AppModule implements NestModule {
       .apply(AuthMiddleware)
 
       .forRoutes(
+        { path: "auth/test", method: RequestMethod.POST },
+        { path: "/test", method: RequestMethod.GET },
+        { path: "club/clubspost", method: RequestMethod.POST },
+        { path: "/clubspost", method: RequestMethod.POST },
+        { path: "club/clubs/:clubId", method: RequestMethod.PUT },
+        { path: "/clubs/:clubId", method: RequestMethod.PUT },
+        { path: "club/list/:clubId", method: RequestMethod.DELETE },
+        { path: "/list/:clubId", method: RequestMethod.DELETE },
+         
         {
           path: "/eventcomment/create-comment/:id",
           method: RequestMethod.POST,
@@ -80,6 +90,19 @@ export class AppModule implements NestModule {
         },
         {
           path: "/eventcomment/delete-comment/:id",
+          method: RequestMethod.DELETE,
+        },
+
+        {
+          path: "/clubcomment/create-comment/:id",
+          method: RequestMethod.POST,
+        },
+        {
+          path: "/clubcomment/update-comment/:id",
+          method: RequestMethod.PATCH,
+        },
+        {
+          path: "/clubcomment/delete-comment/:id",
           method: RequestMethod.DELETE,
         },
       );

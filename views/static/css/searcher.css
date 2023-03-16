@@ -25,7 +25,7 @@ input {
 }
 
 /* 검색창 돋보기 */
-.serch img {
+.search img {
   position: absolute;
   width: 17px;
   top: 10px;
