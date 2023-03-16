@@ -1,4 +1,4 @@
-function modal_open1(i) {
+function modal_open1() {
   $(`#Appmodal`).fadeIn();
   $(document).mouseup(function (e) {
     if ($(`#Appmodal`).has(e.target).length === 0) {
