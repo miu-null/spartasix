@@ -43,11 +43,8 @@ export class ClubController {
     });
     return createNew;
   }
-  // @Get("/:clubId")
-  // async getClubsById(@Param("clubId") clubId: number) {
-  //   return await this.clubService.getClubById(clubId);
-  // clubid랑 게시글에 대한 데이터
-  @Get("/clubs/:clubId")
+
+   @Get("/clubs/:clubId")
   updateclub(@Res() res: Response) {
     return res.render("clubupdate.ejs");
   }
@@ -67,10 +64,6 @@ export class ClubController {
       terms,
     });
   }
-  // @Get("/clubs/:clubId")
-  // async getClubsById(@Param("clubId") clubId: number) {
-  //   return await this.clubService.getClubById(clubId);
-  // }
 
   @Get("/clubspost")
   postclub(@Res() res: Response) {
