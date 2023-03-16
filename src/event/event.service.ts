@@ -20,14 +20,14 @@ export class EventService {
   }
 
   async createEvent(
-    eventPostId: number,
+   
     userId: number,
     title: string,
     content: string,
     date: Date,
   ) {
     await this.EventRepository.createEvent(
-      eventPostId,
+      
       userId,
       title,
       content,
