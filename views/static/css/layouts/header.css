@@ -83,11 +83,13 @@ input {
   font-size: 14px;
 }
 
+
 /* 검색창 돋보기 */
-img {  
-  position : absolute;
+.search img {
+  position: absolute;
   width: 17px;
   top: 10px;
   right: 12px;
   margin: 0;
 } 
+
