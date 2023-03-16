@@ -17,7 +17,7 @@ export class ClubService {
   constructor(
     private clubMembersRepository: ClubMembersRepository,
     @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
-  ) {}
+  ) { }
 
   async getClubs() {
     return await this.clubRepository.find({
@@ -36,7 +36,14 @@ export class ClubService {
   async getClubById(clubId: number) {
     return await this.clubRepository.findOne({
       where: { clubId, deletedAt: null },
-      select: ["title", "content", "maxMembers", "createdAt", "updatedAt"],
+      select: [
+        "title",
+        "content",
+        "maxMembers",
+        "createdAt",
+        "updatedAt",
+        "clubId",
+      ],
     });
   }
   // @UseGuards(AuthGuard())
@@ -57,12 +64,14 @@ export class ClubService {
 
   async updateClub(
     clubId: number,
+    userId: number,
     title: string,
     content: string,
     maxMembers: string,
   ) {
-    console.log(title);
+    console.log(clubId, title, content, maxMembers);
     this.clubRepository.update(clubId, {
+      userId,
       title,
       content,
       maxMembers,
