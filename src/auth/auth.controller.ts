@@ -21,7 +21,7 @@ export class AuthController {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private authService: AuthService,
     private mailService: MailService,
-  ) {}
+  ) { }
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto, @Res() res) {
     await this.authService.createUser(
