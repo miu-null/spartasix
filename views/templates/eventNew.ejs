@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Bootstrap demo</title>
     <style>
         .event-container-lg {
@@ -80,14 +81,13 @@
                 }),
                 success: function (response) {
                     alert("작성 완료");
-                    window.location.replace("/");
+                    location.replace(`/events/list`);
                 }, 
                 error: function(response){
                     console.log(response)
                 }
             });
         }
-
     </script>
 </body>
 

@@ -81,22 +81,22 @@
 </body>
 <script type="application/javascript">
     
- $(document).ready(function() {
-    $('a').on('click', function(event) {
-      event.preventDefault();
-      var eventId = $(this).attr('id');
-      $.ajax({
-        type: 'POST',
-        url: '/event/' + eventId,
-        success: function(data) {
-          // handle successful response from server
-        },
-        error: function(error) {
-          // handle error response from server
-        }
-      });
-    });
-  });
+//  $(document).ready(function() {
+//     $('a').on('click', function(event) {
+//       event.preventDefault();
+//       var eventId = $(this).attr('id');
+//       $.ajax({
+//         type: 'POST',
+//         url: '/event/' + eventId,
+//         success: function(data) {
+//           // handle successful response from server
+//         },
+//         error: function(error) {
+//           // handle error response from server
+//         }
+//       });
+//     });
+//   });
 </script>
 
 </html>

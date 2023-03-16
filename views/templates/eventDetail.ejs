@@ -20,7 +20,7 @@
         <div class="container-lg" style="margin-top: 200;">
             <div  style="margin-bottom: 13px;">
                 <button type="button" class="btn btn-outline-danger" onclick="location.href='updateevent/<%= event.eventPostId%>'">수정하기</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='updateevent/<%= event.eventPostId%>'">삭제하기</button>
+                <button type="button" class="btn btn-outline-danger" onclick="location.href='event/delete/<%= event.eventPostId%>'">삭제하기</button>
             </div>
            
             <div style="background-color: #FAEFE5; text-align: center; margin-top: 13px; ">
@@ -62,5 +62,28 @@
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
 </body>
-
+<script>
+    function deleteEvent() {
+            
+            $.ajax({
+                type: "POST",
+                url: "/events/newevent",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    title: title,
+                    date: date,
+                    content: content,
+                    userId: userId
+                }),
+                success: function (response) {
+                    alert("작성 완료");
+                    location.replace(`/events/list`);
+                }, 
+                error: function(response){
+                    console.log(response)
+                }
+            });
+        }
+</script>
 </html>
