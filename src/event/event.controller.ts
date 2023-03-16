@@ -10,38 +10,49 @@ import { DeleteEventDto } from "./dto/deleteevent.dto";
 export class EventController {
   constructor(private eventService: EventService) { }
 
+
+  //새글 쓰기
+  @Post("/newevent")
+  async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
+    console.log('new event')
+    return await this.eventService.createEvent(
+      data.userId,
+      data.title,
+      data.content,
+      data.date,
+    );
+  }
+  @Get('/test')
+  async test(@Res() res: Response){
+    console.log('test')
+    return res.json({test:'test'})
+  }
+
+
   @Get('/list')
   async getEvent(@Res() res: Response) {
     const events = await this.eventService.getEvents();
     return res.render("eventMain.ejs",{events})
   }
-  // 렌더링페이지
+  // 작성 페이지 렌더링
   @Get('/newevent')
   async getNewEvent(@Res() res: Response) {
     return res.render("eventNew.ejs")
   }
-  // 렌더링페이지
+  // 조회 페이지 렌더링
   @Get('/event/updateevent/:eventPostId')
   async getUpdateEvent(@Res() res: Response, @Param('eventPostId') eventPostId: number) {
     const event = await this.eventService.getEventById(eventPostId);
     return res.render("eventUpdate.ejs",{event})
   }
 
+  //게시글 조회
   @Get('/event/:eventPostId')
   async getEventById(@Res() res: Response, @Param('eventPostId') eventPostId: number) {
     const event = await this.eventService.getEventById(eventPostId);
+    console.log(event.createdateAt)
+    event.createdateAt=new Date(event.createdateAt);
     return res.render("eventDetail.ejs",{event})
-  }
-
-  @Post("/newevent")
-  async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
-    const event=await this.eventService.createEvent(
-      data.userId,
-      data.title,
-      data.content,
-      data.date,
-    );
-    return res.render("eventNew.ejs",{event})
   }
 
 
