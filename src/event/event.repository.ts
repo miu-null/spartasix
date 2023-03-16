@@ -16,7 +16,7 @@ export class EventRepository {
 
   async getEvents() {
     const events = await this.eventRepository.find({
-      where: { deletedAt: null }, select: ["userId", "title", "createdateAt", "viewCount"],
+      where: { deletedAt: null }, select: ["userId", "eventPostId", "title", "content", "createdateAt", "viewCount"],
     })
     return events
   }
@@ -26,23 +26,26 @@ export class EventRepository {
       where: { eventPostId },
       select: [
         "title",
+        "userId",
         "date",
+        "eventPostId",
         "viewCount",
         "content",
+        "createdateAt",
       ],
     })
     return event
   }
 
   async createEvent(
-    eventPostId: number,
+   
     userId: number,
     title: string,
     content: string,
     date: Date,
   ) {
     await this.eventRepository.insert({
-      eventPostId,
+     
       userId,
       title,
       content,

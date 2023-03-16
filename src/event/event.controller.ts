@@ -21,7 +21,7 @@ export class EventController {
     return res.render("eventNew.ejs")
   }
   // 렌더링페이지
-  @Get('/updateevent/:id')
+  @Get('/event/updateevent/:eventPostId')
   async getUpdateEvent(@Res() res: Response, @Param('eventPostId') eventPostId: number) {
     const event = await this.eventService.getEventById(eventPostId);
     return res.render("eventUpdate.ejs",{event})
@@ -36,7 +36,6 @@ export class EventController {
   @Post("/newevent")
   async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
     const event=await this.eventService.createEvent(
-      data.eventPostId,
       data.userId,
       data.title,
       data.content,
@@ -46,7 +45,7 @@ export class EventController {
   }
 
 
-  @Patch("/event/:eventPostId")
+  @Patch("/event/updateevent/:eventPostId")
   async updateUser(
     @Res() res: Response,
     @Param("eventPostId") eventPostId: number,
