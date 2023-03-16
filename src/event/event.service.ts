@@ -1,40 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 import { EventRepository } from "./event.repository";
-import { UpdateEventDto } from "src/event/dto/updateevent.dto"
+import { UpdateEventDto } from "src/event/dto/updateevent.dto";
 import { DeleteEventDto } from "./dto/deleteevent.dto";
-
 
 @Injectable()
 export class EventService {
-
-  constructor(private EventRepository: EventRepository) { }
-
+  constructor(private EventRepository: EventRepository) {}
 
   async getEvents() {
-    const test = await this.EventRepository.getEvents();
-    return test
+    const event = await this.EventRepository.getEvents();
+    // const eventlist = event.map({ eventId, nickName });
+    // return eventlist;
+    return event;
   }
 
   async getEventById(eventPostId) {
-    return await this.EventRepository.getEventById(eventPostId)
+    return await this.EventRepository.getEventById(eventPostId);
   }
 
   async createEvent(
-   
     userId: number,
     title: string,
     content: string,
     date: Date,
   ) {
-    await this.EventRepository.createEvent(
-      
-      userId,
-      title,
-      content,
-      date,
-    );
+    await this.EventRepository.createEvent(userId, title, content, date);
   }
-
 
   async updateUser(eventPostId: number, updateEventInfo: UpdateEventDto) {
     console.log(eventPostId);
