@@ -119,12 +119,12 @@ export class UserPageRepository {
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     const changedInfo = await this.userRepository.update(userId, {
-      email: updateUserInfo.email,
-      password: updateUserInfo.password,
-      phone: updateUserInfo.phone,
-      nickName: updateUserInfo.nickName,
-      snsURL: updateUserInfo.snsUrl,
-      userIMG: updateUserInfo.userIMG,
+      // email: updateUserInfo.email,
+      // password: updateUserInfo.password,
+      // phone: updateUserInfo.phone,
+      // nickName: updateUserInfo.nickName,
+      // snsURL: updateUserInfo.snsUrl,
+      // userIMG: updateUserInfo.userIMG,
     });
     return changedInfo;
     //
@@ -147,39 +147,6 @@ export class UserPageRepository {
       .getMany();
     return { currentClub, currentClubMember };
   }
-
-  // *클럽 신청서 전체보기 clubMembers에서, 같은 clubId를 공유하는 정보 찾아오기
-  // 그 clubId는 userId로 찾기
-  async getClubApps(userId: number) {
-    const myClubs = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("clubs.userId = :userId", { userId, deletedAt: null })
-      .getMany();
-    const myOwnClub = myClubs.length
-      ? await this.clubMembersRepository
-          .createQueryBuilder("clubMembers")
-          .where("clubMembers.clubId IN (:...clubIds)", {
-            clubIds: myClubs.map((clubApp) => clubApp.clubId),
-          })
-          .andWhere("clubMembers.isAccepted = :isAccepted", {
-            isAccepted: false,
-          })
-          .getMany()
-      : [];
-    const userName = myOwnClub.length
-      ? await this.userRepository
-          .createQueryBuilder("users")
-          .select("users.nickName")
-          .where("users.userId IN (:...userIds)", {
-            userIds: myOwnClub.map((clubApps) => clubApps.userId),
-          })
-          .getMany()
-      : [];
-    const userNamesArray = userName.map((user) => user.nickName);
-    console.log(userNamesArray);
-    return { userNamesArray, myOwnClub };
-  }
-
 
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
