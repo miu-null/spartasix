@@ -30,6 +30,7 @@ export class ClubController {
     
     ) { }
 
+
   @Get("/list")
   async getClubs(@Res() res: Response, @Next() Next: Response) {
     const terms = await this.clubService.getClubs();
@@ -50,9 +51,12 @@ export class ClubController {
     });
     return createNew;
   }
-  // @Get("/:clubId")
-  // async getClubsById(@Param("clubId") clubId: number) {
-  //   return await this.clubService.getClubById(clubId);
+
+
+   @Get("/clubs/:clubId")
+  updateclub(@Res() res: Response) {
+    return res.render("clubupdate.ejs");
+  }
 
   @Get("/list/:clubId")
   async getClubsById(
@@ -69,10 +73,7 @@ export class ClubController {
       terms,
     });
   }
-  // @Get("/clubs/:clubId")
-  // async getClubsById(@Param("clubId") clubId: number) {
-  //   return await this.clubService.getClubById(clubId);
-  // }
+
   @Get("/clubspost")
   postclub(@Res() res: Response) {
     return res.render("clubspost.ejs");
@@ -88,24 +89,23 @@ export class ClubController {
     );
     return res.json(true);
   }
-  // clubid랑 게시글에 대한 데이터
-  @Get("/clubs/:clubId")
-  updateclub(@Res() res: Response) {
-    return res.render("clubupdate.ejs");
-  }
+
+
   @Put("/clubs/:clubId")
   update(
-    @Param("clubid") clubid: number,
+    @Param("clubId") clubid: number,
     @Body() data: UpdateClubDto,
     @Res() res,
   ) {
     const update = this.clubService.updateClub(
       clubid,
+      data.userId,
       data.title,
       data.content,
       data.maxMembers,
     );
     return res.json(true);
+
   }
   @Delete("/list/:clubid")
   async delete(@Param("clubid") clubid: number, @Res() res) {
@@ -126,6 +126,6 @@ export class ClubController {
       term,
       ...searchData,
     });
-  }
 
+  }
 }
