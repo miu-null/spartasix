@@ -25,7 +25,7 @@ export class UserPageRepository {
     @InjectRepository(EventPosts)
     private readonly eventpostRepository: Repository<EventPosts>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   // 작성한 글 조회
   async getMyPosts(userId: number) {
@@ -56,11 +56,11 @@ export class UserPageRepository {
 
     const MyClub = MyClubApp.length
       ? await this.clubRepository
-          .createQueryBuilder("clubs")
-          .where("clubs.clubId IN (:...clubIds)", {
-            clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
-          })
-          .getMany()
+        .createQueryBuilder("clubs")
+        .where("clubs.clubId IN (:...clubIds)", {
+          clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
+        })
+        .getMany()
       : [];
     return {
       myOwnClub,
@@ -76,23 +76,23 @@ export class UserPageRepository {
       .getMany();
     const myOwnClub = myClubs.length
       ? await this.clubMembersRepository
-          .createQueryBuilder("clubMembers")
-          .where("clubMembers.clubId IN (:...clubIds)", {
-            clubIds: myClubs.map((clubApp) => clubApp.clubId),
-          })
-          .andWhere("clubMembers.isAccepted = :isAccepted", {
-            isAccepted: false,
-          })
-          .getMany()
+        .createQueryBuilder("clubMembers")
+        .where("clubMembers.clubId IN (:...clubIds)", {
+          clubIds: myClubs.map((clubApp) => clubApp.clubId),
+        })
+        .andWhere("clubMembers.isAccepted = :isAccepted", {
+          isAccepted: false,
+        })
+        .getMany()
       : [];
     const userName = myOwnClub.length
       ? await this.userRepository
-          .createQueryBuilder("users")
-          .select("users.nickName")
-          .where("users.userId IN (:...userIds)", {
-            userIds: myOwnClub.map((clubApps) => clubApps.userId),
-          })
-          .getMany()
+        .createQueryBuilder("users")
+        .select("users.nickName")
+        .where("users.userId IN (:...userIds)", {
+          userIds: myOwnClub.map((clubApps) => clubApps.userId),
+        })
+        .getMany()
       : [];
     const userNamesArray = userName.map((user) => user.nickName);
     console.log(userNamesArray);
@@ -148,37 +148,6 @@ export class UserPageRepository {
     return { currentClub, currentClubMember };
   }
 
-  // *클럽 신청서 전체보기 clubMembers에서, 같은 clubId를 공유하는 정보 찾아오기
-  // 그 clubId는 userId로 찾기
-  async getClubApps(userId: number) {
-    const myClubs = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("clubs.userId = :userId", { userId, deletedAt: null })
-      .getMany();
-    const myOwnClub = myClubs.length
-      ? await this.clubMembersRepository
-          .createQueryBuilder("clubMembers")
-          .where("clubMembers.clubId IN (:...clubIds)", {
-            clubIds: myClubs.map((clubApp) => clubApp.clubId),
-          })
-          .andWhere("clubMembers.isAccepted = :isAccepted", {
-            isAccepted: false,
-          })
-          .getMany()
-      : [];
-    const userName = myOwnClub.length
-      ? await this.userRepository
-          .createQueryBuilder("users")
-          .select("users.nickName")
-          .where("users.userId IN (:...userIds)", {
-            userIds: myOwnClub.map((clubApps) => clubApps.userId),
-          })
-          .getMany()
-      : [];
-    const userNamesArray = userName.map((user) => user.nickName);
-    console.log(userNamesArray);
-    return { userNamesArray, myOwnClub };
-  }
 
 
   // TODO 특정 신청서 조회
