@@ -22,7 +22,7 @@ export class SearcherRepository {
 
   ) {}
 
-  async findAllPosts(data: any): Promise<any> {  //테스트용 통합검색
+  async findAllPosts(data: any): Promise<any> {  //통합검색
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const clubs = await this.clubsSearchRepository
@@ -71,9 +71,9 @@ export class SearcherRepository {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.userSearchRepository
         .createQueryBuilder('searchUsers')
-        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
+        .where('searchUsers.email LIKE :s OR searchUsers.phone LIKE :s', { s: `%${data.term}%` })
         .getMany();
-      console.log(results);
+      console.log(results, '레포지토리 통과');
       return results
     }
   }
