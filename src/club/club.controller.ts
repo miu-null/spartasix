@@ -17,7 +17,8 @@ import { DeleteClubDto } from "./dto/delete-club.dto";
 import { UpdateClubDto } from "./dto/update-club.dto";
 import { Request, Response } from "express";
 import { CreateAppDto } from "./dto/newApp-club.dto";
-
+import { getegid } from "process";
+import { UpdateDateColumn } from "typeorm";
 
 @Controller("club")
 export class ClubController {
@@ -45,6 +46,11 @@ export class ClubController {
   // @Get("/:clubId")
   // async getClubsById(@Param("clubId") clubId: number) {
   //   return await this.clubService.getClubById(clubId);
+  // clubid랑 게시글에 대한 데이터
+  @Get("/clubs/:clubId")
+  updateclub(@Res() res: Response) {
+    return res.render("clubupdate.ejs");
+  }
 
   @Get("/list/:clubId")
   async getClubsById(
@@ -83,14 +89,20 @@ export class ClubController {
     return res.json(true);
   }
 
-  @Put("/:clubId")
-  update(@Param("clubid") clubid: number, @Body() data: UpdateClubDto) {
-    return this.clubService.updateClub(
+  @Put("/clubs/:clubId")
+  update(
+    @Param("clubId") clubid: number,
+    @Body() data: UpdateClubDto,
+    @Res() res,
+  ) {
+    const update = this.clubService.updateClub(
       clubid,
+      data.userId,
       data.title,
       data.content,
       data.maxMembers,
     );
+    return res.json(true);
   }
 
   @Delete("/list/:clubid")
