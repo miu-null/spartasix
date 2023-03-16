@@ -47,7 +47,7 @@ export class SearcherRepository {
       const results = await this.eventRepository
         .createQueryBuilder('searchEvents')
         .where('searchEvents.title LIKE :s OR searchEvents.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.eventPostid", "DESC")  //최신순(내림차순)
+        // .orderBy("search.eventPostId", "DESC")  //최신순(내림차순)
         .getMany();
       console.log(results);
       return results
