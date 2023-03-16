@@ -39,20 +39,6 @@ export class ClubController {
     });
   }
 
-  @Get("/search")  ///검색
-  async searchClubs(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
-    @Query() term:string,
-    @Res() res: Response)
-    {
-    const searchData = await this.searchService.paginatedResults('clubs', page, term)
-    console.log('검색', searchData);
-    return res.render("clubsearch.ejs", {
-      term,
-      ...searchData,
-    });
-  }
-
   // 신청서 작성
   @Post("/:clubId")
   async createApp(@Param("clubId") clubId: number, @Body() data: CreateAppDto) {
@@ -126,4 +112,20 @@ export class ClubController {
     const club = await this.clubService.deleteClub(clubid);
     return res.json(true);
   }
+
+  ///모임게시판 검색기능
+  @Get("/search")  
+  async searchClubs(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query() term:string,
+    @Res() res: Response)
+    {
+    const searchData = await this.searchService.paginatedResults('clubs', page, term)
+    console.log('검색', searchData);
+    return res.render("clubsearch.ejs", {
+      term,
+      ...searchData,
+    });
+  }
+
 }

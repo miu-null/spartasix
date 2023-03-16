@@ -22,19 +22,6 @@ export class EventController {
     return res.render("eventMain.ejs",{events})
   }
 
-  @Get("/search")  ///검색
-  async searchClubs(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
-    @Query() term:string,
-    @Res() res: Response){
-    const searchData = await this.searchService.paginatedResults('events', page, term)
-    console.log('검색', searchData);
-    return res.render("eventsearch.ejs", {
-      term,
-      ...searchData,
-    });
-  }
-
   // 렌더링페이지
   @Get('/newevent')
   async getNewEvent(@Res() res: Response) {
@@ -91,6 +78,20 @@ export class EventController {
 
   ) {
     return this.eventService.deleteEvent(userId, deleteEventDto);
+  }
+  
+
+  @Get("/search")  ///검색
+  async searchClubs(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query() term:string,
+    @Res() res: Response){
+    const searchData = await this.searchService.paginatedResults('events', page, term)
+    console.log('검색', searchData);
+    return res.render("eventsearch.ejs", {
+      term,
+      ...searchData,
+    });
   }
 
 
