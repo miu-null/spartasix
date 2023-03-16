@@ -26,7 +26,7 @@ export class EventComments {
   eventPostId: number;
 
   @Column("varchar")
-  content: number;
+  content: string;
 
   @CreateDateColumn()
   createdAt: Date;
