@@ -48,18 +48,18 @@ export class ClubController {
   signup(@Res() res: Response) {
     return res.render("clubspost.ejs");
   }
-
+  
   @Post("/clubspost")
-  createClubs(@Body() data: CreateClubDto) {
-    return this.clubService.createClub(
+  createClubs(@Body() data: CreateClubDto, @Res() res) {
+    const club = this.clubService.createClub(
       data.userId,
       data.title,
       data.content,
       data.maxMembers,
       // data.nickname,
     );
+    return res.json(true);
   }
-
   @Put("/:clubId")
   update(@Param("clubid") clubid: number, @Body() data: UpdateClubDto) {
     return this.clubService.updateClub(

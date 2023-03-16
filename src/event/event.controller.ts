@@ -11,22 +11,6 @@ export class EventController {
   constructor(private eventService: EventService) { }
 
 
-  //새글 쓰기
-  @Post("/newevent")
-  async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
-    console.log('new event')
-    return await this.eventService.createEvent(
-      data.userId,
-      data.title,
-      data.content,
-      data.date,
-    );
-  }
-  @Get('/test')
-  async test(@Res() res: Response){
-    console.log('test')
-    return res.json({test:'test'})
-  }
 
 
   @Get('/list')
@@ -55,6 +39,18 @@ export class EventController {
     return res.render("eventDetail.ejs",{event})
   }
 
+    //새글 쓰기
+    @Post("/newevent")
+    async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
+      console.log('new event')
+      const event =await this.eventService.createEvent(
+        data.userId,
+        data.title,
+        data.content,
+        data.date,
+      );
+      return res.json(true);
+    }
 
   @Patch("/event/updateevent/:eventPostId")
   async updateUser(
@@ -76,7 +72,7 @@ export class EventController {
   }
 
 
-  @Delete('/event/:userId')
+  @Delete('/event/delete/:userId')
   deleteArticle(
     @Param('userId') userId: number, deleteEventDto: DeleteEventDto
 
