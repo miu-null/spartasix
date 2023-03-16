@@ -1,62 +1,57 @@
-    <!-- modal -->
-    <div id="modal" class="modal">
-      <div class="modal_content">
-        <div class="wrap1">
-          <div class="form-wrap1">
-            <div class="button-wrap1">
-              <div id="btn1"></div>
-              <button type="button" class="togglebtn1" onclick="register1()">비밀번호 찾기</button>
-            </div>
-            <form id="login1" action="" class="input-group1">
-              <input type="text" id="find_email" class="input-field1" placeholder="phone">
-              <input type="text" id="find_password" class="input-field1" placeholder="Password">
-              <button type="button" class="submit11" onclick="find_id()">아이디 찾기</button>
-            </form>
-            <form id="register1" action="" class="input-group1">
-              <input type="text" id="email1" class="input-field1" placeholder="Email" onchage="validEmail(this)">
-              <input type="text" id="phone1" class="input-field1" placeholder="phone" oninput="hypenTel(this)" maxlength="13">
-              <div id="div-check"></div>
-              <button type="button" id="onsubmit" class="submit12" onclick="find_password()">비밀번호 찾기</button>
-            </form>
-          </div>
-        </div>
+
+<!-- modal1 -->
+<div id="Appmodal" class="Appmodal">
+  <div class="app_modal">
+    <div class="application">
+      <div class="app_title">
+        모임 신청서
+      </div>
+      <div class="app_body">
+        
+
       </div>
     </div>
+  </div>
+</div>
 
-    <!--body-->
+<!-- modal2 -->
+<div id="Appmodal2" class="Appmodal2">
+  <div class="app_modal2">
+    <div class="application2">
 
-
+    </div>
+  </div>
+</div>
+<!--body-->
 
 <div class="box-container">
   <div class="box image-info-box">
     <div class="image-box">
       <div class="member-photo">
         <img src="/img/01.png" alt="Member Photo">
-        <img src= "`${myInfo.userIMG}`"">
+
       </div>
-    </div> 
-    <div class="info-box"> <h5> 회 원 정 보 
-    <button class="edit-box">수정</button> </h5>
+    </div>
+    <div class="info-box">
+      <h5> 회 원 정 보
+        <button class="edit-box">수정</button>
+      </h5>
       <div class="userBio_container">
-    <%if(myInfo.userId.toString() === "1")  {%> 
-              <%= myInfo.password%>
+        <%if(myInfo.userId.toString() === "1")  {%>
+        <%= myInfo.password%>
         <% } %>
         <div>
-         Name :&nbsp <%= myInfo.nickName %> <br>
-         E-mail :&nbsp <%= myInfo.email %><br>
-         <br><br>
-        Social media :&nbsp<%= myInfo.snsURL %> http://instagram.com/minminminmin
-          <%= myInfo.userIMG %>
+          Name :&nbsp <%= myInfo.nickName %> <br>
+          E-mail :&nbsp <%= myInfo.email %><br>
+          <br><br>
+          Social media :&nbsp<%= myInfo.snsURL %> http://instagram.com/minminminmin
         </div>
       </div>
-
-
     </div>
   </div>
   <div class="post-column">
-    <button class="message-box">쪽지함</button>
-    <div class="box post-box">post
-
+    <button class="message-box" onclick="modal_open1(); selectApp('<%= myInfo.userId %>');">쪽지함</button>
+    <div class="box post-box">
       <div class="userPosts_container">
         <div>
           <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
@@ -74,28 +69,28 @@
 
 
 
-          <h4>My Clubs</h4>
-          <div class="userClubs_container">
+        </div>
+      </div>
+      <div class="post-column">
+        <button class="message-box" onclick="modal_open1()">쪽지함</button>
+        <div class="box post-box">
+          <div class="userPosts_container">
             <div>
-              <% for(let i = 0; i < myClubs.myOwnClub.length; i++) {%>
+              <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
               <p class="clubPost">
-              <h5> 운영 중인 모임 : <%=myClubs.myOwnClub[i].title %></h5>
+              <h5>제목 : <%=myPosts.clubPosts[i].title %></h5>
+              <h5>내용 : <%= myPosts.clubPosts[i].content %></h5>
               </p>
               <% } %>
+
               <h5> 참가 중인 모임 : </h5>
               <% for(let i = 0; i < myClubs.MyClub.length; i++) {%>
               <p class="attendingClub">
-              <h5>  <%=myClubs.MyClub[i].title %></h5>
+              <h5> <%=myClubs.MyClub[i].title %></h5>
               </p>
-
               <% } %>
-            </div>
-          </div>
-
-
-
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
+    </body>
 
