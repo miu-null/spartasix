@@ -1,0 +1,57 @@
+<form class="clubs-list">
+  <h3 style="text-align: center; margin: 50px 0px 50px 50px;">스파르타커뮤클럽</h3>
+  <div class="form-club">
+    <div class="form-category">
+      <p>모각코/모임 게시판</p>
+      <div style="float: left;">
+        <!-- <button type="button" class="club-post" onclick="location.href='/club/clubspost'">글 쓰기</button> -->
+      </div>
+    </div>
+    <div class="article-btn">
+      <button type="button" onclick="location.href='/club/list'">
+        목록
+      </button>
+      <button type="button" onclick="location.href='/club/clubs/<%= detail.clubId%>'">
+        수정
+      </button>
+      <button type="button" onclick="clubdelete()">
+        삭제
+      </button>
+    </div>
+    <div class="article-info">
+      <span class="info-title">제목 : <%= detail.title %> </span>
+      <span class="info-date">작성일 : 표기예정 간략화 필요 </span>
+    </div>
+    <div class="info-user">
+      <button class="info-btn2">
+        모임 참여하기
+      </button>
+      <span>작성자 : 표기예정 <%= detail.userId %> </span>
+      <button class="info-btn1">
+        신고
+      </button>
+    </div>
+    <div class="form-list">
+      <h2>
+        <%= detail.content %>
+      </h2>
+    </div>
+  </div>
+</form>
+<!-- <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav> -->
