@@ -50,10 +50,10 @@ export class AuthController {
       data.phone,
     );
 
-    return res.json({data: randomPassword});
+    return res.json({ data: randomPassword });
   }
 
-  @Patch("new-password")
+  @Patch("/new-password")
   async newPassword(@Body() data: loginDto) {
     await this.authService.newPassword(data.email, data.password);
 

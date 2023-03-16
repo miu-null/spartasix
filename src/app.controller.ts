@@ -17,4 +17,14 @@ export class AppController {
   findpassword(@Res() res: Response) {
     return res.render("findpassword");
   }
+
+  @Get("comment")
+  comment(@Res() res: Response) {
+    return res.render("comment");
+  }
+
+  @Get("mypage")
+  mypage(@Res() res: Response) {
+    return res.render("userinfo")
+  }
 }
