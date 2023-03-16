@@ -77,17 +77,15 @@ export class UserPageRepository {
     console.log(myClubs)
     const myOwnClub = myClubs.length
       ? await this.clubMembersRepository
-
-        .createQueryBuilder("clubMembers")
-        .where("clubMembers.clubId IN (:...clubIds)", {
-          clubIds: myClubs.map((clubApp) => clubApp.clubId),
-        })
-        .andWhere("clubMembers.isAccepted = :isAccepted", {
-          isAccepted: false,
-        })
-        .getMany()
+          .createQueryBuilder("clubMembers")
+          .where("clubMembers.clubId IN (:...clubIds)", {
+            clubIds: myClubs.map((clubapp) => clubapp.clubId),
+          })
+          .andWhere("clubMembers.isAccepted = :isAccepted", {
+            isAccepted: false,
+          })
+          .getMany()
       : [];
-
     const userName = myOwnClub.length
       ? await this.userRepository
         .createQueryBuilder("users")
@@ -157,8 +155,6 @@ export class UserPageRepository {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
-      .where("members.userId = :userId", { userId, deletedAt: null })
-      .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
       .getOne();
     return members;
   }
@@ -174,18 +170,10 @@ export class UserPageRepository {
 
   // 신청서 거절
   async rejectApp(userId: number, clubMemberId: number) {
-    const clubs = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("userId = :userId", { userId })
-      .getMany();
-
-    const clubIds = clubs.map((club) => club.clubId);
-    console.log(clubIds);
     await this.clubMembersRepository
       .createQueryBuilder("clubMembers")
-      .where("clubMemberId = :clubMemberId", { clubMemberId })
-      .andWhere("clubId IN (:clubIds)", { clubIds })
       .softDelete()
+      .where("clubMemberId = :clubMemberId", { clubMemberId })
       .execute();
   }
 }

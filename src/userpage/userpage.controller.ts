@@ -36,9 +36,9 @@ export class UserpageController {
     const myInfo = await this.userPageService.getUserInfo(userId);
     const myApps = await this.userPageService.getClubApps(userId);
     const context = { myPosts, myClubs, myInfo, myApps };
-
     return res.render("userInfo", context);
   }
+
   @Get("/:userId/clubs/app") // 신청서 전체조회 (완료)
   async getClubApps(@Param("userId") userId: number) {
     const users = await this.userPageService.getClubApps(userId);
@@ -124,6 +124,5 @@ export class UserpageController {
   ) {
     const notThisApp = this.userPageService.rejectApp(userId, clubMemberId);
     return notThisApp;
-
   }
 }
