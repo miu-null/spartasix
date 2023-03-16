@@ -1,20 +1,40 @@
-import { Body, Controller, Post, Param, Get, Put, Delete, Patch, Request ,Res,Render} from '@nestjs/common';
+import { Body, Controller, Post, Param, Get, Put, Delete, Patch, Request ,Res, Render, 
+  Query, DefaultValuePipe, ParseIntPipe
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Response} from 'express';
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
 import { DeleteEventDto } from "./dto/deleteevent.dto";
+import { SearcherService } from 'src/searcher/searcher.service';
 
 @Controller('events')
 export class EventController {
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService,
+    private searchService: SearcherService,    
+    ) { }
 
   @Get('/list')
   async getEvent(@Res() res: Response) {
     const events = await this.eventService.getEvents();
     return res.render("eventMain.ejs",{events})
   }
+
+  @Get("/search")  ///검색
+  async searchClubs(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query() term:string,
+    @Res() res: Response){
+    const searchData = await this.searchService.paginatedResults('events', page, term)
+    console.log('검색', searchData);
+    return res.render("eventsearch.ejs", {
+      term,
+      ...searchData,
+    });
+  }
+
   // 렌더링페이지
   @Get('/newevent')
   async getNewEvent(@Res() res: Response) {
@@ -72,5 +92,6 @@ export class EventController {
   ) {
     return this.eventService.deleteEvent(userId, deleteEventDto);
   }
+
 
 }

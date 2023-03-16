@@ -43,8 +43,8 @@ export class ClubController {
   async searchClubs(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
     @Query() term:string,
-    @Res() res: Response, 
-    @Next() Next: Response) {
+    @Res() res: Response)
+    {
     const searchData = await this.searchService.paginatedResults('clubs', page, term)
     console.log('검색', searchData);
     return res.render("clubsearch.ejs", {

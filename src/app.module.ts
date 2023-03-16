@@ -43,7 +43,6 @@ const ejsMiddleware = require("express-ejs-layouts");
       useClass: MailerConfigService,
       inject: [ConfigService],
     }),
-
     EventModule,
     SearcherModule,
     ClubModule,
