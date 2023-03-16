@@ -45,16 +45,7 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        시작 일자
-                    </div>
-                    <div class="col-3">
                         <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
-                    </div>
-                    <div class="col-3">
-                        종료 일자
-                    </div>
-                    <div class="col-3">
-                        <input type="date" class="form-control" id="endDate" placeholder="이벤트 종료 기간">
                     </div>
                 </div>
                 <div class="row">
@@ -63,19 +54,19 @@
                             style="height: 607px;"></textarea>
                     </div>
                 </div>
-                <button type="button" class="btn btn-dark" onclick="eventNew()">작성완료</button>
+                <button type="button" class="btn btn-danger" onclick="eventNew()"
+                    style="margin-left: 90%;">작성완료</button>
             </div>
         </div>
     </div>
 
     <script>
         function eventNew() {
+            const userId = 1;
             const title = $("#title").val();
             const date = $("#startDate").val();
-            // const endDate = $("#endDate").val();
             const content = $("#content").val();
-            const userId = 1
-            console.log(title, date, content, userId);
+            console.log(userId, title, date, content);
             $.ajax({
                 type: "POST",
                 url: "/events/newevent",
@@ -83,15 +74,17 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
                     title: title,
-                    date: startDate,
-                    // endDate: endDate,
+                    date: date,
                     content: content,
                     userId: userId
                 }),
                 success: function (response) {
                     alert("작성 완료");
-                    window.location.replace("/events/list");
-                },
+                    window.location.replace("/");
+                }, 
+                error: function(response){
+                    console.log(response)
+                }
             });
         }
 

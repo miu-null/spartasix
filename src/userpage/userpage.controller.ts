@@ -35,6 +35,10 @@ export class UserpageController {
     const myClubs = await this.userPageService.getMyClubs(userId);
     const myInfo = await this.userPageService.getUserInfo(userId);
     const myApps = await this.userPageService.getClubApps(userId);
+    const context = { myPosts, myClubs, myInfo, myApps };
+
+    return res.render("userInfo", context);
+  }
 
 
   @Get("/:userId/clubs/app") // 신청서 전체조회 (완료)
