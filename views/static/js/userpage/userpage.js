@@ -1,8 +1,10 @@
+
 function modal_open1(i) {
   $(`#Appmodal`).fadeIn();
   $(document).mouseup(function (e) {
     if ($(`#Appmodal`).has(e.target).length === 0) {
       $(`#Appmodal`).hide();
+
       window.location.reload();
     }
   });
@@ -14,6 +16,7 @@ function modal_open2() {
     if ($(`#Appmodal2`).has(e.target).length === 0) {
       $(`#Appmodal2`).hide();
       window.location.reload();
+
     }
   });
 }

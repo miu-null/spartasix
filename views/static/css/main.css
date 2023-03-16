@@ -102,6 +102,34 @@
   border-radius: 10px;
   padding: 5px;
 }
+
+
+/* 글 검색 기능 드롭다운 */
+/* body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  height: 100vh;
+  background-color: #f1f1f1;
+}
+input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+select {
+  margin-bottom: 10px;
+  margin-top: 10px;
+} */
+
 .job_content {
   border: 1px solid #88a9ff;
   margin-top: 9px;

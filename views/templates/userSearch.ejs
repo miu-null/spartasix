@@ -13,23 +13,23 @@
     </thead>
 
     <tbody>
-      <% for(let i=0; i < slicedData.length; i++) {%>
-      <tr>
-        <th scope="row">
-          <h5>
-            <%= slicedData[i].userId %>
-        </th>
-        <td>
-          <%= slicedData[i].nickName %>
-        </td>
-        <td>연락처 : <%= slicedData[i].phone %>
-        </td>
-        <td>이메일 : <%= slicedData[i].email %>
-        </td>
-        <td><a class="btn btn-outline-secondary" href="/userpage/<%= slicedData[i].userId %>" role="button">방문</a>
-        </td>
-      </tr>
-      <% } %>
+      <% slicedData.forEach(data => { %>
+        <tr>
+          <th scope="row">
+            <h5>
+              <%= data.userId %>
+          </th>
+          <td>
+            <%= data.nickName %>
+          </td>
+          <td>연락처 : <%= data.phone %>
+          </td>
+          <td>이메일 : <%= data.email %>
+          </td>
+          <td><a class="btn btn-outline-secondary" href="/userpage/<%= data.userId %>" role="button">방문</a>
+          </td>
+        </tr>
+        <% }) %>
     </tbody>
   </table>
 
@@ -38,28 +38,33 @@
     <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         <% if (unitStart - 1> 0 ) { %>
-        <li class="page-item">
-          <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitStart -1 %>" tabindex="-1" aria-disabled="true">이전</span>
-          </a>
-        </li>
-        <% } %>
-        <% for (let i=unitStart; i <=unitEnd; i++) { %>
-        <% if (i <= unitEnd) { %>
-        <% if ( i=== page) { %>
-        <li class="page-item active" aria-current="page">
-          <span class="page-link">
-            <%= i %>
-          </span>
-        </li>
-        <% } else { %>
-        <li class="page-item"><a class="page-link" href="users?term=<%=term.term %>&page=<%= i %>"><%= i %></a></li>
-        <% } } } %>
-        <% if (unitEnd < lastPage) { %>
-        <li class="page-item">
-          <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
-          </a>
-        </li>
-        <% } %>
+          <li class="page-item">
+            <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitStart -1 %>" tabindex="-1"
+              aria-disabled="true">이전</span>
+            </a>
+          </li>
+          <% } %>
+            <% for (let i=unitStart; i <= unitEnd; i++) { %>
+              <% if (i <= lastPage) { %>
+                <% if ( i===page) { %>
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                      <%= i %>
+                    </span>
+                  </li>
+                  <% } else { %>
+                    <li class="page-item"><a class="page-link" href="users?term=<%=term.term %>&page=<%= i %>">
+                        <%= i %>
+                      </a></li>
+                    <% } %>
+                      <% } %>
+                        <% } %>
+                          <% if (unitEnd <=lastPage) { %>
+                            <li class="page-item">
+                              <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
+                              </a>
+                            </li>
+                            <% } %> 
       </ul>
     </nav>
   </div>
@@ -69,7 +74,8 @@
   <section id="search" class="search-wrap">
     <form action="/search/users" class="search-form">
       <!-- <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3"> -->
-      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임" aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
+        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
     </form>
   </section>
 

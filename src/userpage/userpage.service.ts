@@ -23,7 +23,6 @@ export class UserpageService {
     eventPosts.sort((a: any, b: any) => {
       return a.createdAt - b.createdAt;
     });
-
     return { clubPosts, eventPosts };
   }
 
