@@ -150,6 +150,7 @@ export class UserPageRepository {
     return { currentClub, currentClubMember };
   }
 
+
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository

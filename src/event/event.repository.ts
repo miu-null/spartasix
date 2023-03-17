@@ -24,20 +24,16 @@ export class EventRepository {
     return events;
   } // mySQL leftjoin
 
+
   async getEventById(eventPostId) {
-    const event = await this.eventRepository.findOne({
-      where: { eventPostId },
-      select: [
-        "title",
-        "userId",
-        "date",
-        "eventPostId",
-        "viewCount",
-        "content",
-        "createdateAt",
-      ],
-    });
-    return event;
+    const event = await this.eventRepository
+    .createQueryBuilder("eventUser")
+    .where(eventPostId)
+    .leftJoinAndSelect("eventUser.user", "nickName")
+    .getOne();
+  console.log(event);
+    return event
+
   }
 
   async createEvent(
@@ -65,7 +61,7 @@ export class EventRepository {
     return changedInfo;
   }
 
-  async deleteEvent(userId: number, deleteEventDto: DeleteEventDto) {
-    await this.eventRepository.delete({ userId });
+  async deleteEvent(eventPostId: number, deleteEventDto: DeleteEventDto) {
+    await this.eventRepository.delete({ eventPostId });
   }
 }
