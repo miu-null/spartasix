@@ -24,7 +24,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 export class UserpageController {
   constructor(
     private readonly userPageService: UserpageService, // private readonly s3Client: S3Client,
-  ) {}
+  ) { }
 
   // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
   // TODO 유저정보 조회 - 민감정보 열람권한은 본인만 가능하게 (프론트에서)
@@ -36,15 +36,13 @@ export class UserpageController {
     const myInfo = await this.userPageService.getUserInfo(userId);
     const myApps = await this.userPageService.getClubApps(userId);
     const context = { myPosts, myClubs, myInfo, myApps };
-
     return res.render("userInfo", context);
   }
-
 
   @Get("/:userId/clubs/app") // 신청서 전체조회 (완료)
   async getClubApps(@Param("userId") userId: number) {
     const users = await this.userPageService.getClubApps(userId);
-    return users
+    return users;
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
@@ -88,12 +86,12 @@ export class UserpageController {
     });
 
     const changedInfo = await this.userPageService.updateUser(userId, {
-      email: data.email,
-      password: data.password,
-      phone: data.phone,
-      nickName: data.nickName,
-      snsUrl: data.snsUrl,
-      userIMG: imgUrl,
+      // email: data.email,
+      // password: data.password,
+      // phone: data.phone,
+      // nickName: data.nickName,
+      // snsUrl: data.snsUrl,
+      // userIMG: imgUrl,
     });
     return changedInfo;
   }
@@ -126,6 +124,5 @@ export class UserpageController {
   ) {
     const notThisApp = this.userPageService.rejectApp(userId, clubMemberId);
     return notThisApp;
-
   }
 }

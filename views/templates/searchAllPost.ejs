@@ -34,7 +34,7 @@
 
           <% events.forEach(data => { %>
         <tr>
-          <td><a class="btn btn-outline-secondary" href="/events/<%= event.eventPostId %>" role="button">자세히보기</a></td>  
+          <td><a class="btn btn-outline-secondary" href="/events/<%= data.eventPostId %>" role="button">자세히보기</a></td>  
           <td><%= data.eventPostId %></td>
           <td><%= data.userId %></td>
           <td><%= data.title %></td>
