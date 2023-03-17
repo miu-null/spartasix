@@ -1,13 +1,13 @@
 /* 검색창 */
 .search-wrap {
-    position: relative;
-    width: 300px;
-    margin: auto
-  }
-  
+  position: relative;
+  width: 300px;
+  margin: auto;
+}
+
 .searcher_body {
-    width: 100%;
-    height: 500vh;
+  width: 100%;
+  height: 500vh;
 }
 
 /* 검색창 */
@@ -25,10 +25,10 @@ input {
 }
 
 /* 검색창 돋보기 */
-img {  
-  position : absolute;
+.search img {
+  position: absolute;
   width: 17px;
   top: 10px;
   right: 12px;
   margin: 0;
-} 
+}

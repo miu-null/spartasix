@@ -1,3 +1,13 @@
+<body> 
+
+<script>
+  function setIsEditing(isEditing) {
+    console.log(isEditing)
+    isEditing = !isEditing;
+    console.log(isEditing)
+  }
+</script>
+
 
 <!-- modal1 -->
 <div id="Appmodal" class="Appmodal">
@@ -7,7 +17,7 @@
         모임 신청서
       </div>
       <div class="app_body">
-        
+
 
       </div>
     </div>
@@ -28,23 +38,20 @@
   <div class="box image-info-box">
     <div class="image-box">
       <div class="member-photo">
-        <img src="/img/01.png" alt="Member Photo">
-
+        <img src="<%= myInfo.userIMG %>" alt="Member Photo">
       </div>
     </div>
     <div class="info-box">
+      <% let isEditing = false; %>
       <h5> 회 원 정 보
-        <button class="edit-box">수정</button>
+        <button onclick="() => " class="edit-box"> <%= isEditing ? "확인" : "수정" %> </button>
       </h5>
       <div class="userBio_container">
-        <%if(myInfo.userId.toString() === "1")  {%>
-        <%= myInfo.password%>
-        <% } %>
         <div>
           Name :&nbsp <%= myInfo.nickName %> <br>
           E-mail :&nbsp <%= myInfo.email %><br>
           <br><br>
-          Social media :&nbsp<%= myInfo.snsURL %> http://instagram.com/minminminmin
+          Social media :&nbsp<%= myInfo.snsURL %>
         </div>
       </div>
     </div>
@@ -66,31 +73,9 @@
           <h5>내용 : <%= myPosts.eventPosts[i].content %></h5>
           </p>
           <% } %>
-
-
-
-        </div>
-      </div>
-      <div class="post-column">
-        <button class="message-box" onclick="modal_open1()">쪽지함</button>
-        <div class="box post-box">
-          <div class="userPosts_container">
-            <div>
-              <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
-              <p class="clubPost">
-              <h5>제목 : <%=myPosts.clubPosts[i].title %></h5>
-              <h5>내용 : <%= myPosts.clubPosts[i].content %></h5>
-              </p>
-              <% } %>
-
-              <h5> 참가 중인 모임 : </h5>
-              <% for(let i = 0; i < myClubs.MyClub.length; i++) {%>
-              <p class="attendingClub">
-              <h5> <%=myClubs.MyClub[i].title %></h5>
-              </p>
-              <% } %>
         </div>
       </div>
     </div>
-    </body>
+  </div>
 
+</div></body>

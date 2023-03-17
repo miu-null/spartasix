@@ -25,7 +25,7 @@ export class UserPageRepository {
     @InjectRepository(EventPosts)
     private readonly eventpostRepository: Repository<EventPosts>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   // 작성한 글 조회
   async getMyPosts(userId: number) {
@@ -56,11 +56,11 @@ export class UserPageRepository {
 
     const MyClub = MyClubApp.length
       ? await this.clubRepository
-          .createQueryBuilder("clubs")
-          .where("clubs.clubId IN (:...clubIds)", {
-            clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
-          })
-          .getMany()
+        .createQueryBuilder("clubs")
+        .where("clubs.clubId IN (:...clubIds)", {
+          clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
+        })
+        .getMany()
       : [];
     return {
       myOwnClub,
@@ -74,11 +74,12 @@ export class UserPageRepository {
       .createQueryBuilder("clubs")
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
+    console.log(myClubs)
     const myOwnClub = myClubs.length
       ? await this.clubMembersRepository
           .createQueryBuilder("clubMembers")
           .where("clubMembers.clubId IN (:...clubIds)", {
-            clubIds: myClubs.map((clubApp) => clubApp.clubId),
+            clubIds: myClubs.map((clubapp) => clubapp.clubId),
           })
           .andWhere("clubMembers.isAccepted = :isAccepted", {
             isAccepted: false,
@@ -87,13 +88,14 @@ export class UserPageRepository {
       : [];
     const userName = myOwnClub.length
       ? await this.userRepository
-          .createQueryBuilder("users")
-          .select("users.nickName")
-          .where("users.userId IN (:...userIds)", {
-            userIds: myOwnClub.map((clubApps) => clubApps.userId),
-          })
-          .getMany()
+        .createQueryBuilder("users")
+        .select("users.nickName")
+        .where("users.userId IN (:...userIds)", {
+          userIds: myOwnClub.map((clubApps) => clubApps.userId),
+        })
+        .getMany()
       : [];
+
     const userNamesArray = userName.map((user) => user.nickName);
     console.log(userNamesArray);
     return { userNamesArray, myOwnClub };
@@ -119,12 +121,12 @@ export class UserPageRepository {
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     const changedInfo = await this.userRepository.update(userId, {
-      email: updateUserInfo.email,
-      password: updateUserInfo.password,
-      phone: updateUserInfo.phone,
-      nickName: updateUserInfo.nickName,
-      snsURL: updateUserInfo.snsUrl,
-      userIMG: updateUserInfo.userIMG,
+      // email: updateUserInfo.email,
+      // password: updateUserInfo.password,
+      // phone: updateUserInfo.phone,
+      // nickName: updateUserInfo.nickName,
+      // snsURL: updateUserInfo.snsUrl,
+      // userIMG: updateUserInfo.userIMG,
     });
     return changedInfo;
     //
@@ -148,15 +150,12 @@ export class UserPageRepository {
     return { currentClub, currentClubMember };
   }
 
- 
 
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository
       .createQueryBuilder("members")
       .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
-      // .where("members.userId = :userId", { userId, deletedAt: null })
-      // .andWhere("members.isAccepted = :isAccepted", { isAccepted: false })
       .getOne();
     return members;
   }
@@ -172,18 +171,10 @@ export class UserPageRepository {
 
   // 신청서 거절
   async rejectApp(userId: number, clubMemberId: number) {
-    const clubs = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("userId = :userId", { userId })
-      .getMany();
-
-    const clubIds = clubs.map((club) => club.clubId);
-    console.log(clubIds);
     await this.clubMembersRepository
       .createQueryBuilder("clubMembers")
-      .where("clubMemberId = :clubMemberId", { clubMemberId })
-      .andWhere("clubId IN (:clubIds)", { clubIds })
       .softDelete()
+      .where("clubMemberId = :clubMemberId", { clubMemberId })
       .execute();
   }
 }
