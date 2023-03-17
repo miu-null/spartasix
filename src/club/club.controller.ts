@@ -74,10 +74,6 @@ export class ClubController {
     });
   }
 
-  @Get("/clubspost")
-  postclub(@Res() res: Response) {
-    return res.render("clubspost.ejs");
-  }
   @Post("/clubspost")
   createClubs(@Body() data: CreateClubDto, @Res() res) {
     const club = this.clubService.createClub(

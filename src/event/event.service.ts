@@ -32,7 +32,7 @@ export class EventService {
     return await this.EventRepository.updateEvent(eventPostId, updateEventInfo);
   }
 
-  async deleteEvent(userId: number, deleteEventDto: DeleteEventDto) {
-    this.EventRepository.deleteEvent(userId, deleteEventDto);
+  async deleteEvent(eventPostId: number, deleteEventDto: DeleteEventDto) {
+    this.EventRepository.deleteEvent(eventPostId, deleteEventDto);
   }
 }
