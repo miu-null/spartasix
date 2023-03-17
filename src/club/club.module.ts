@@ -16,7 +16,8 @@ import { Searcher } from "src/entities/searcher.entity";
 import { PassportModule } from "@nestjs/passport";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts, Searcher])],
+  imports: [
+    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts, Searcher]),
     PassportModule.register({
       defaultStrategy: "jwt",
     }),
@@ -27,8 +28,11 @@ import { PassportModule } from "@nestjs/passport";
     }),
   ],
   controllers: [ClubController],
-  providers: [ClubService, ClubMembersRepository, 
-   SearcherService, SearcherRepository, 
+  providers: [
+    ClubService,
+    ClubMembersRepository,
+    SearcherService,
+    SearcherRepository,
   ],
   exports: [TypeOrmModule, PassportModule],
 })
