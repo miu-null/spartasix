@@ -36,4 +36,4 @@ import { PassportModule } from "@nestjs/passport";
   ],
   exports: [TypeOrmModule, PassportModule],
 })
-export class ClubModule { }
+export class ClubModule {}
