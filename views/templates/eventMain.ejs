@@ -39,12 +39,9 @@
             </thead>
             <tbody>
                 <% for(let i=0; i < events.length; i++) {%>
-                    <tr> 
-                        
+                    <tr style="margin-top: 200; background-color: #FAEFE5;" onclick="location.href='event/<%= events[i].eventPostId%>'"> 
                         <td id="title">
-                        <a style="margin-top: 200; background-color: #FAEFE5;" onclick="location.href='event/<%= events[i].eventPostId%>'">
                             <%= events[i].title %>
-                        </a>
                         </td>
                         <td id="nickName">
                             <%= events[i].user.nickName %>
@@ -58,7 +55,6 @@
                         <td id="viewCount">
                             <%= events[i].viewCount %>
                         </td>
-
                     </tr>
                     <% } %>
             </tbody>
