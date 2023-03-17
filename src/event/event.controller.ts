@@ -17,7 +17,29 @@ export class EventController {
     ) { }
 
 
+<<<<<<< HEAD
   @Get("/list")
+=======
+  //새글 쓰기
+  @Post("/newevent")
+  async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
+    console.log('new event')
+    return await this.eventService.createEvent(
+      data.userId,
+      data.title,
+      data.content,
+      data.date,
+    );
+  }
+  @Get('/test')
+  async test(@Res() res: Response){
+    console.log('test')
+    return res.json({test:'test'})
+  }
+
+
+  @Get('/list')
+>>>>>>> eb9de0c (merge)
   async getEvent(@Res() res: Response) {
     const events = await this.eventService.getEvents();
     return res.render("eventMain.ejs", { events });
