@@ -25,7 +25,6 @@ function clubupdate() {
   const maxMembers = $("#maxMembers").val();
   const content = $("#content").val();
   const clubId = location.pathname.split("clubs/")[1];
-  console.log(title, maxMembers, content, userId, clubId);
   $.ajax({
     type: "PUT",
     url: `/club/clubs/${clubId}`,
@@ -34,7 +33,7 @@ function clubupdate() {
     data: JSON.stringify({
       clubId: clubId,
       title: title,
-      maxMembers: maxMembers,
+      maxMembers: Number(maxMembers),
       content: content,
     }),
     success: function (response) {
