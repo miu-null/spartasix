@@ -39,12 +39,14 @@ export class EventRepository {
     title: string,
     content: string,
     date: Date,
+    postIMG: string,
   ) {
     await this.eventRepository.insert({
       userId,
       title,
       content,
       date,
+      postIMG,
     });
   }
 

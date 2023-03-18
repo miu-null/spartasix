@@ -23,12 +23,22 @@ export class EventService {
     title: string,
     content: string,
     date: Date,
+    postIMG: string,
   ) {
-    await this.EventRepository.createEvent(userId, title, content, date);
+    await this.EventRepository.createEvent(
+      userId,
+      title,
+      content,
+      date,
+      postIMG,
+    );
   }
 
   async updateEvent(eventPostId: number, updateEventInfo) {
-    const eventPost = await this.EventRepository.updateEvent(eventPostId, updateEventInfo);
+    const eventPost = await this.EventRepository.updateEvent(
+      eventPostId,
+      updateEventInfo,
+    );
     return true;
   }
 
