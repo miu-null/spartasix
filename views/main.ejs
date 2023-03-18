@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공사중</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>공사중</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet" />
-  
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/layouts/header.css">
-  <link rel="stylesheet" href="/css/layouts/footer.css">
-  <link rel="stylesheet" href="/css/searcher.css">
-  <link rel="stylesheet" href="/css/userpage/userpage.css">
-  <link rel="stylesheet" href="/css/userpage/appmodal.css">
-  <link rel="stylesheet" href="/css/club/club.css">
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/layouts/header.css" />
+    <link rel="stylesheet" href="/css/layouts/footer.css" />
+    <link rel="stylesheet" href="/css/searcher.css" />
+    <link rel="stylesheet" href="/css/userpage/userpage.css" />
+    <link rel="stylesheet" href="/css/userpage/appmodal.css" />
+    <link rel="stylesheet" href="/css/club/club.css" />
 
     <script type="text/javascript" src="/js/club/clubspost.js"></script>
     <script type="text/javascript" src="/js/userpage/userpage.js"></script>
+    <script type="text/javascript" src="/js/event/event.js"></script>
+    <script type="text/javascript" src="/js/club/clubspost.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 
-<body>
-  <div class="main_body">
-    <%- include("templates/layouts/header.ejs") %>
-    
+  <body>
+    <div class="main_body">
+      <%- include("templates/layouts/header.ejs") %>
+
       <main><%- body %></main>
-      
-    <%- include("templates/layouts/footer.ejs") %>
+
+      <%- include("templates/layouts/footer.ejs") %>
 
       <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

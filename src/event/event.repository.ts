@@ -24,16 +24,14 @@ export class EventRepository {
     return events;
   } // mySQL leftjoin
 
-
   async getEventById(eventPostId) {
     const event = await this.eventRepository
-    .createQueryBuilder("eventUser")
-    .where(eventPostId)
-    .leftJoinAndSelect("eventUser.user", "nickName")
-    .getOne();
-  console.log(event);
-    return event
-
+      .createQueryBuilder("eventUser")
+      .where(eventPostId)
+      .leftJoinAndSelect("eventUser.user", "nickName")
+      .getOne();
+    console.log(event);
+    return event;
   }
 
   async createEvent(
