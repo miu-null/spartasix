@@ -61,34 +61,6 @@
         </div>
     </div>
 
-    <script>
-        function eventNew() {
-            const userId = 1;
-            const title = $("#title").val();
-            const date = $("#startDate").val();
-            const content = $("#content").val();
-            console.log(userId, title, date, content);
-            $.ajax({
-                type: "POST",
-                url: "/events/newevent",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    title: title,
-                    date: date,
-                    content: content,
-                    userId: userId
-                }),
-                success: function (response) {
-                    alert("작성 완료");
-                    location.replace(`/events/list`);
-                }, 
-                error: function(response){
-                    console.log(response)
-                }
-            });
-        }
-    </script>
 </body>
 
 </html>
