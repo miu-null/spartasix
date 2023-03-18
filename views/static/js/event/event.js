@@ -24,11 +24,11 @@ function updateEvent(eventPostId) {
   const title = $("#title2").val();
   const date = $("#date2").val();
   const content = $("#content2").val();
-  
-  console.log("제목 : " + title)
-  console.log("내용 : " + content)
-  console.log(date)
-  console.log(eventPostId)
+
+  console.log("제목 : " + title);
+  console.log("내용 : " + content);
+  console.log(date);
+  console.log(eventPostId);
   $.ajax({
     type: "PATCH",
     url: `/events/list/${eventPostId}/update`,
@@ -37,14 +37,13 @@ function updateEvent(eventPostId) {
     data: JSON.stringify({
       title: title,
       content: content,
-      date: date
+      date: date,
     }),
     success: function (response) {
-      console.log("수정 성공 !")
       alert("수정 완료");
-      window.location.replace("/events/list")
-    }
-  })
+      window.location.replace(`/events/list/${eventPostId}`);
+    },
+  });
 }
 
 function deleteEvent(eventPostId) {
