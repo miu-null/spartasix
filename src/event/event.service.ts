@@ -27,12 +27,13 @@ export class EventService {
     await this.EventRepository.createEvent(userId, title, content, date);
   }
 
-  async updateUser(eventPostId: number, updateEventInfo: UpdateEventDto) {
-    console.log(eventPostId);
-    return await this.EventRepository.updateEvent(eventPostId, updateEventInfo);
+  async updateEvent(eventPostId: number, updateEventInfo) {
+    const eventPost = await this.EventRepository.updateEvent(eventPostId, updateEventInfo);
+    return true;
   }
 
-  async deleteEvent(eventPostId: number, deleteEventDto: DeleteEventDto) {
-    this.EventRepository.deleteEvent(eventPostId, deleteEventDto);
+  async deleteEvent(eventPostId: number) {
+    await this.EventRepository.deleteEvent(eventPostId);
+    return true;
   }
 }
