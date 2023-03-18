@@ -49,6 +49,8 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
       synchronize: this.configService.get<boolean>("DATABASE_SYNCHRONIZE"),
       autoLoadEntities: true,
       logging: "all",
+      timezone: "Asia/Seoul",
+      charset: "utf8mb4"
     };
   }
 }
