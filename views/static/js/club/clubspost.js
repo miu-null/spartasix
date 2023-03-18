@@ -1,9 +1,8 @@
 function clubpost() {
   const title = $("#title").val();
-  const maxMembers = $("#maxMembers").val();
+  let maxMembers = $("#maxMembers").val();
   const content = $("#content").val();
-  const userId = $("#userId").val();
-  console.log(title, maxMembers, content, userId);
+  maxMembers = Number(maxMembers)
   $.ajax({
     type: "POST",
     url: "/club/clubspost",
@@ -11,16 +10,12 @@ function clubpost() {
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       title: title,
-      maxMembers: maxMembers,
+      maxMembers: Number(maxMembers),
       content: content,
-      userId: userId,
     }),
     success: function (response) {
       alert("작성 완료");
       window.location.replace("http://localhost:3000/club/list");
-    },
-    error: function (error) {
-      alert("error");
     },
   });
 }
@@ -29,7 +24,6 @@ function clubupdate() {
   const title = $("#title").val();
   const maxMembers = $("#maxMembers").val();
   const content = $("#content").val();
-  const userId = $("#userId").val();
   const clubId = location.pathname.split("clubs/")[1];
   console.log(title, maxMembers, content, userId, clubId);
   $.ajax({
@@ -42,7 +36,6 @@ function clubupdate() {
       title: title,
       maxMembers: maxMembers,
       content: content,
-      userId: userId,
     }),
     success: function (response) {
       alert("수정 완료");

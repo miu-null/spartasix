@@ -4,17 +4,14 @@ import {
   Post,
   Param,
   Get,
-  Put,
   Delete,
   Patch,
   Request,
   Res,
-  Render,
   Query,
   DefaultValuePipe,
   ParseIntPipe,
 } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
 import { Response } from "express";
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";

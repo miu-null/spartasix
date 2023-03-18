@@ -17,9 +17,6 @@ import { AuthService } from "./auth.service";
 @Module({
   imports: [
     TypeOrmModule.forFeature([Users]),
-    PassportModule.register({
-      defaultStrategy: "jwt",
-    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useClass: JwtConfigService,
@@ -38,6 +35,6 @@ import { AuthService } from "./auth.service";
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthRepository, RedisService, MailService],
-  exports: [PassportModule, AuthService, RedisService, MailService],
+  exports: [AuthService, RedisService, MailService],
 })
 export class AuthModule {}
