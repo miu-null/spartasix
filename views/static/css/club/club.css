@@ -1,34 +1,4 @@
 .clubs-list {
-    color: #000000;
-  }
-  .info-user button {
-    float: right;
-  }
-  .info-btn1 {
-    background: #E75252;
-    border-radius: 26px;
-    border: none;
-    color: white;
-    margin-right: 10px;
-  }
-  .info-btn2 {
-    background: #FFC793;
-    border-radius: 26px;
-    border: none;
-    color: #AA4F4F;
-    margin-right: 10px;
-  }
-  .form-list h2 {
-    margin: 30px;
-  }
-  .article-btn button {
-    margin: 5px;
-    border: none;
-    background-color: transparent;
-    color: #AA4F4F;
-    float: right;
-  }
-=======
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
@@ -50,7 +20,6 @@
   border-radius: 15px;
   display: flex;
 }
-
 .form-category p {
   /* 모각코 / 모임 게시판 */
   font-family: "JejuGothic";
@@ -105,7 +74,6 @@
   margin-left: 30px;
   margin-top: 20px;
 }
-
 .info-user span {
   font-family: "JejuGothic";
   font-style: normal;
@@ -114,11 +82,9 @@
   line-height: 33px;
   color: #000000;
 }
-
 .info-user button {
   float: right;
 }
-
 .info-btn1 {
   background: #e75252;
   border-radius: 26px;
@@ -126,7 +92,6 @@
   color: white;
   margin-right: 10px;
 }
-
 .info-btn2 {
   background: #ffc793;
   border-radius: 26px;
@@ -134,7 +99,6 @@
   color: #aa4f4f;
   margin-right: 10px;
 }
-
 .form-list h2 {
   margin: 30px;
 }
@@ -145,4 +109,3 @@
   color: #aa4f4f;
   float: right;
 }
-
