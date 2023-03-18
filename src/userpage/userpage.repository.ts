@@ -25,7 +25,7 @@ export class UserPageRepository {
     @InjectRepository(EventPosts)
     private readonly eventpostRepository: Repository<EventPosts>,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   // 작성한 글 조회
   async getMyPosts(userId: number) {
@@ -56,11 +56,11 @@ export class UserPageRepository {
 
     const MyClub = MyClubApp.length
       ? await this.clubRepository
-        .createQueryBuilder("clubs")
-        .where("clubs.clubId IN (:...clubIds)", {
-          clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
-        })
-        .getMany()
+          .createQueryBuilder("clubs")
+          .where("clubs.clubId IN (:...clubIds)", {
+            clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
+          })
+          .getMany()
       : [];
     return {
       myOwnClub,
@@ -74,7 +74,7 @@ export class UserPageRepository {
       .createQueryBuilder("clubs")
       .where("clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
-    console.log(myClubs)
+    console.log(myClubs);
     const myOwnClub = myClubs.length
       ? await this.clubMembersRepository
           .createQueryBuilder("clubMembers")
@@ -88,12 +88,12 @@ export class UserPageRepository {
       : [];
     const userName = myOwnClub.length
       ? await this.userRepository
-        .createQueryBuilder("users")
-        .select("users.nickName")
-        .where("users.userId IN (:...userIds)", {
-          userIds: myOwnClub.map((clubApps) => clubApps.userId),
-        })
-        .getMany()
+          .createQueryBuilder("users")
+          .select("users.nickName")
+          .where("users.userId IN (:...userIds)", {
+            userIds: myOwnClub.map((clubApps) => clubApps.userId),
+          })
+          .getMany()
       : [];
 
     const userNamesArray = userName.map((user) => user.nickName);
@@ -121,12 +121,12 @@ export class UserPageRepository {
   // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     const changedInfo = await this.userRepository.update(userId, {
-      // email: updateUserInfo.email,
-      // password: updateUserInfo.password,
-      // phone: updateUserInfo.phone,
-      // nickName: updateUserInfo.nickName,
-      // snsURL: updateUserInfo.snsUrl,
-      // userIMG: updateUserInfo.userIMG,
+      email: updateUserInfo.email,
+      password: updateUserInfo.password,
+      phone: updateUserInfo.phone,
+      nickName: updateUserInfo.nickName,
+      snsURL: updateUserInfo.snsUrl,
+      userIMG: updateUserInfo.userIMG,
     });
     return changedInfo;
     //
@@ -149,7 +149,6 @@ export class UserPageRepository {
       .getMany();
     return { currentClub, currentClubMember };
   }
-
 
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {

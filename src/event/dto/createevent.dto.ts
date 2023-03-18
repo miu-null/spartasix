@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsString, IsOptional } from "class-validator";
 
 export class CreateEventDto {
   @IsString()
@@ -9,4 +9,8 @@ export class CreateEventDto {
 
   @IsString()
   readonly date: Date;
+
+  @IsOptional()
+  @IsString()
+  readonly postIMG?: string;
 }

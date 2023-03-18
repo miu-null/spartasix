@@ -2,7 +2,7 @@ function clubpost() {
   const title = $("#title").val();
   let maxMembers = $("#maxMembers").val();
   const content = $("#content").val();
-  maxMembers = Number(maxMembers)
+  maxMembers = Number(maxMembers);
   $.ajax({
     type: "POST",
     url: "/club/clubspost",
@@ -34,7 +34,7 @@ function clubupdate() {
     data: JSON.stringify({
       clubId: clubId,
       title: title,
-      maxMembers: maxMembers,
+      maxMembers: Number(maxMembers),
       content: content,
     }),
     success: function (response) {

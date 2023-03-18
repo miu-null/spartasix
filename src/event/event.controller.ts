@@ -12,12 +12,16 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   Req,
+  UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
 import { Response } from "express";
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
+import * as AWS from "aws-sdk";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller("events")
 export class EventController {
@@ -28,17 +32,43 @@ export class EventController {
 
   //새글 쓰기
   @Post("/newevent")
+  @UseInterceptors(FileInterceptor("postIMG"))
   async createUser(
     @Req() req,
     @Res() res: Response,
     @Body() data: CreateEventDto,
+    @UploadedFile() uploadedFile: Express.Multer.File,
   ) {
-    const userId = req.user;
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
+    const key = `${Date.now() + uploadedFile.originalname}`;
+    // AWS 객체 생성
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key,
+        Body: uploadedFile.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME,
+        ACL: "public-read",
+      })
+      .promise();
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    Object.assign({
+      statusCode: 201,
+      message: `이미지 등록 성공`,
+      data: { url: postIMG },
+    });
+
+    const userId = req.userId;
     const event = await this.eventService.createEvent(
       userId,
       data.title,
       data.content,
       data.date,
+      data.postIMG,
     );
     return res.json(true);
   }
@@ -73,7 +103,7 @@ export class EventController {
     return res.render("eventDetail.ejs", { events });
   }
 
-  // 수정  페이지 렌더링
+  // 수정 페이지 렌더링
   @Get("/list/:eventPostId/update")
   async getUpdateEvent(
     @Res() res: Response,
