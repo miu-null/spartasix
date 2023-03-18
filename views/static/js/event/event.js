@@ -40,9 +40,8 @@ function updateEvent(eventPostId) {
       date: date
     }),
     success: function (response) {
-      console.log("수정 성공 !")
       alert("수정 완료");
-      window.location.replace("/events/list")
+      window.location.replace(`/events/list/${eventPostId}`);
     }
   })
 }
