@@ -11,12 +11,12 @@ import {
   Query,
   DefaultValuePipe,
   ParseIntPipe,
+  Req,
 } from "@nestjs/common";
 import { Response } from "express";
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
-import { DeleteEventDto } from "./dto/deleteevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 
 @Controller("events")
@@ -28,10 +28,14 @@ export class EventController {
 
   //새글 쓰기
   @Post("/newevent")
-  async createUser(@Res() res: Response, @Body() data: CreateEventDto) {
-    console.log("new event");
+  async createUser(
+    @Req() req,
+    @Res() res: Response,
+    @Body() data: CreateEventDto,
+  ) {
+    const userId = req.user;
     const event = await this.eventService.createEvent(
-      data.userId,
+      userId,
       data.title,
       data.content,
       data.date,
@@ -65,28 +69,8 @@ export class EventController {
     @Param("eventPostId") eventPostId: number,
   ) {
     const events = await this.eventService.getEventById(eventPostId);
-    console.log(events.createdateAt);
     events.createdateAt = new Date(events.createdateAt);
     return res.render("eventDetail.ejs", { events });
-  }
-
-  // 게시글 수정
-  @Patch("/list/:eventPostId/update")
-  async updateUser(
-    @Res() res: Response,
-    @Param("eventPostId") eventPostId: number,
-    @Request() req,
-    @Body() data: UpdateEventDto,
-  ) {
-    const user: any = req.user;
-    const events = await this.eventService.updateUser(eventPostId, {
-      userId: data.userId,
-      title: data.title,
-      content: data.content,
-      date: data.date,
-    });
-
-    return res.render("eventUpdate.ejs", { events });
   }
 
   // 수정  페이지 렌더링
@@ -99,17 +83,29 @@ export class EventController {
     return res.render("eventUpdate.ejs", { events });
   }
 
-  @Delete("/list/:eventPostId/delete")
-  async deleteArticle(
-    @Res() res: Response,
+  // 게시글 수정
+  @Patch("/list/:eventPostId/update")
+  async updateEvent(
     @Param("eventPostId") eventPostId: number,
-    deleteEventDto: DeleteEventDto,
+    @Req() req,
+    @Body() data: UpdateEventDto,
   ) {
-    const deleteEvent = await this.eventService.deleteEvent(
-      eventPostId,
-      deleteEventDto,
-    );
-    return res.render("eventMain.ejs");
+    const userId = req.user;
+    const events = await this.eventService.updateEvent(eventPostId, {
+      userId,
+      title: data.title,
+      content: data.content,
+      date: data.date,
+    });
+
+    return events;
+  }
+
+  @Delete("/list/:eventPostId")
+  async deleteArticle(@Param("eventPostId") eventPostId: number) {
+    console.log("Hello");
+    const deleteEvent = await this.eventService.deleteEvent(eventPostId);
+    return true;
   }
 
   @Get("/search") ///검색
