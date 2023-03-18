@@ -48,8 +48,7 @@ export class EventRepository {
     });
   }
 
-  async updateEvent(eventPostId: number, UpdateEventInfo: UpdateEventDto) {
-    console.log(UpdateEventInfo);
+  async updateEvent(eventPostId: number, UpdateEventInfo) {
     const changedInfo = await this.eventRepository.update(eventPostId, {
       userId: UpdateEventInfo.userId,
       title: UpdateEventInfo.title,
@@ -59,7 +58,8 @@ export class EventRepository {
     return changedInfo;
   }
 
-  async deleteEvent(eventPostId: number, deleteEventDto: DeleteEventDto) {
-    await this.eventRepository.delete({ eventPostId });
+  async deleteEvent(eventPostId: number) {
+    await this.eventRepository.softDelete(eventPostId);
+    return true;
   }
 }

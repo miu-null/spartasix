@@ -12,76 +12,54 @@
         <% {%>
         <div class="row">
           <div class="col-8">
-            <%= events.title %>
             <input
               type="text"
+              id="title2"
               class="form-control"
               placeholder="Enter email"
               name="email"
+              value="<%= events.title %>"
             />
           </div>
           <div class="col-4">
-            <%= events.createdateAt %>
             <input
               type="text"
               class="form-control"
               placeholder="Enter email"
               name="email"
+              value=" <%= events.createdateAt %>"
             />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-9">
-            <%= events.userId %>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter email"
-              name="email"
-            />
-          </div>
-          <div class="col-3" style="float: right">
-            <button type="button" class="btn btn-outline-danger">신고</button>
-            <button type="button" class="btn btn-outline-danger">
-              알림등록하기
-            </button>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <input
               type="text"
+              id="date2"
               class="form-control"
               placeholder="Enter email"
               name="email"
+              value="<%= events.date %>"
             />
-            <%= events.date %>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <input
               type="text"
+              id="content2"
               class="form-control"
               placeholder="Enter email"
               name="email"
+              value="<%= events.content %>"
             />
-            <%= events.title %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter email"
-              name="email"
-            />
-            <%= events.content %>
           </div>
         </div>
         <% } %>
       </div>
+      <button type="button" onclick="updateEvent('<%= events.eventPostId %>')">
+        수정하기
+      </button>
     </div>
   </div>
 </body>
