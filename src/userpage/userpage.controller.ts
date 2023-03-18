@@ -17,14 +17,11 @@ import { UserUpdateDto } from "./dto/userpage.update.dto";
 import { AuthGuard } from "@nestjs/passport";
 import { Express } from "express";
 import * as AWS from "aws-sdk";
-// import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
 import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller("userpage")
 export class UserpageController {
-  constructor(
-    private readonly userPageService: UserpageService, // private readonly s3Client: S3Client,
-  ) { }
+  constructor(private readonly userPageService: UserpageService) {}
 
   // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
   // TODO 유저정보 조회 - 민감정보 열람권한은 본인만 가능하게 (프론트에서)
@@ -86,12 +83,12 @@ export class UserpageController {
     });
 
     const changedInfo = await this.userPageService.updateUser(userId, {
-      // email: data.email,
-      // password: data.password,
-      // phone: data.phone,
-      // nickName: data.nickName,
-      // snsUrl: data.snsUrl,
-      // userIMG: imgUrl,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+      nickName: data.nickName,
+      snsUrl: data.snsUrl,
+      userIMG: imgUrl,
     });
     return changedInfo;
   }
