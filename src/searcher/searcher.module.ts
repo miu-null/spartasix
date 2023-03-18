@@ -6,14 +6,14 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { SearcherController } from './searcher.controller';
 import { SearcherService} from './searcher.service';
-import { Searcher} from '../entities/searcher.entity';
-import { Users } from '../entities/users.entity';
-import { EventPosts } from '../entities/eventposts.entity'
 import { SearcherRepository} from './searcher.repositoy';
 import { Clubs } from "src/entities/clubs.entity";
-import { ClubService } from 'src/club/club.service';
-import { ClubMembersRepository } from 'src/userpage/clubmember.repository';
 import { ClubMembers } from 'src/entities/clubmembers.entity';
+import { ClubRepository } from 'src/club/club.repository';
+import { EventRepository } from 'src/event/event.repository';
+import { Searcher } from 'src/entities/searcher.entity';
+import { Users } from 'src/entities/users.entity';
+import { EventPosts } from 'src/entities/eventposts.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Searcher, Users, EventPosts, Clubs, ClubMembers]),
@@ -23,11 +23,8 @@ import { ClubMembers } from 'src/entities/clubmembers.entity';
     inject: [ConfigService],
   }),
 ],
-  exports : [TypeOrmModule],
+  exports : [TypeOrmModule ],
   controllers: [SearcherController],
-  providers: [SearcherService, SearcherRepository, 
-    ClubService, 
-    ClubMembersRepository
-  ]
+  providers: [SearcherService, SearcherRepository, ClubRepository, EventRepository]
 })
 export class SearcherModule {} 

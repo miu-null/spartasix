@@ -7,7 +7,6 @@ import {
   Post,
   Put,
   Res,
-  Render,
   Next,
   Req,
   Query,
@@ -15,13 +14,10 @@ import {
   DefaultValuePipe,
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
-import { CreateClubDto } from "./dto/create-club.dto";
-import { DeleteClubDto } from "./dto/delete-club.dto";
-import { UpdateClubDto } from "./dto/update-club.dto";
-import { Request, Response } from "express";
-import { CreateAppDto } from "./dto/newApp-club.dto";
-import { getegid } from "process";
-import { UpdateDateColumn } from "typeorm";
+import { CreateClubDto } from "./dto/createclub.dto";
+import { UpdateClubDto } from "./dto/updateclub.dto";
+import { Response } from "express";
+import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 
 @Controller("club")
@@ -34,27 +30,66 @@ export class ClubController {
   @Get("/list")
   async getClubs(@Res() res: Response, @Next() Next: Response) {
     const terms = await this.clubService.getClubs();
-    console.log(terms);
+
     return res.render("club.ejs", {
       terms,
     });
   }
 
+  @Get("/clubspost")
+  postclub(@Res() res: Response) {
+    return res.render("clubspost.ejs");
+  }
+
+  @Post("/clubspost")
+  async createClub(@Body() data: CreateClubDto, @Req() req) {
+    const userId = req.user;
+    const post = await this.clubService.createClub(
+      userId,
+      data.title,
+      data.content,
+      data.maxMembers,
+    );
+    return post;
+  }
+
   // 신청서 작성
   @Post("/:clubId")
-  async createApp(@Param("clubId") clubId: number, @Body() data: CreateAppDto) {
-    console.log(data);
-    const createNew = await this.clubService.newClubApp(clubId, {
-      userId: data.userId,
-      application: data.application,
-      isAccepted: data.isAccepted,
-    });
+  async createApp(
+    @Param("clubId") clubId: number,
+    @Body() data: CreateAppDto,
+    @Req() req,
+  ) {
+    const userId = req.user;
+    const createNew = await this.clubService.createApp(
+      clubId,
+      userId,
+      data.application,
+      data.isAccepted,
+    );
     return createNew;
   }
 
   @Get("/clubs/:clubId")
-  updateclub(@Res() res: Response) {
+  async updateclub(@Res() res: Response) {
     return res.render("clubupdate.ejs");
+  }
+
+  @Put("/clubs/:clubId")
+  async updateClub(
+    @Param("clubId") clubid: number,
+    @Body() data: UpdateClubDto,
+    @Req() req,
+  ) {
+    const userId = req.user;
+    const update = await this.clubService.updateClub(
+      clubid,
+      userId,
+      data.title,
+      data.content,
+      data.maxMembers,
+    );
+    return update;
   }
 
   @Get("/list/:clubId")
@@ -73,32 +108,6 @@ export class ClubController {
     });
   }
 
-  @Post("/clubspost")
-  createClubs(@Body() data: CreateClubDto, @Res() res) {
-    const club = this.clubService.createClub(
-      data.userId,
-      data.title,
-      data.content,
-      data.maxMembers,
-    );
-    return res.json(true);
-  }
-
-  @Put("/clubs/:clubId")
-  update(
-    @Param("clubId") clubid: number,
-    @Body() data: UpdateClubDto,
-    @Res() res,
-  ) {
-    const update = this.clubService.updateClub(
-      clubid,
-      data.userId,
-      data.title,
-      data.content,
-      data.maxMembers,
-    );
-    return res.json(true);
-  }
   @Delete("/list/:clubid")
   async delete(@Param("clubid") clubid: number, @Res() res) {
     const club = await this.clubService.deleteClub(clubid);

@@ -1,65 +1,40 @@
-import {
-  Injectable,
-  // NotFoundException,
-  // UnauthorizedException,
-} from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { Injectable } from "@nestjs/common";
+import { ClubRepository } from "./club.repository";
 import _ from "lodash";
-import { Clubs } from "src/entities/clubs.entity";
-import { Repository } from "typeorm";
-import { AuthService } from "src/auth/auth.service";
-import { Users } from "src/entities/users.entity";
-import { ClubMembersRepository } from "src/userpage/clubmember.repository";
-import { CreateAppDto } from "./dto/newApp-club.dto";
-
 @Injectable()
 export class ClubService {
-  constructor(
-    private clubMembersRepository: ClubMembersRepository,
-    @InjectRepository(Clubs) private clubRepository: Repository<Clubs>,
-  ) { }
+  constructor(private readonly clubRepository: ClubRepository) {}
 
   async getClubs() {
-    return await this.clubRepository.find({
-      where: { deletedAt: null },
-      select: [
-        "clubId",
-        "title",
-        "maxMembers",
-        "createdAt",
-        // "nickName",
-        "userId",
-      ],
-    });
+    const data = await this.clubRepository.getClubs();
+
+    return data;
   }
 
-  async getClubById(clubId: number) {
-    return await this.clubRepository.findOne({
-      where: { clubId, deletedAt: null },
-      select: [
-        "title",
-        "content",
-        "maxMembers",
-        "createdAt",
-        "updatedAt",
-        "clubId",
-      ],
-    });
-  }
-  // @UseGuards(AuthGuard())
   // users  import 필요? (작성,수정,삭제)
-  createClub(
+  async createClub(
     userId: number,
     title: string,
     content: string,
-    maxMembers: string,
+    maxMembers: number,
   ) {
-    this.clubRepository.insert({
+    await this.clubRepository.createClub(userId, title, content, maxMembers);
+    return true;
+  }
+
+  async createApp(
+    clubId: number,
+    userId: number,
+    application: string,
+    isAccepted: boolean,
+  ) {
+    const data = await this.clubRepository.createApp(
+      clubId,
       userId,
-      title,
-      content,
-      maxMembers,
-    });
+      application,
+      isAccepted,
+    );
+    return data;
   }
 
   async updateClub(
@@ -67,26 +42,27 @@ export class ClubService {
     userId: number,
     title: string,
     content: string,
-    maxMembers: string,
+    maxMembers: number,
   ) {
     console.log(clubId, title, content, maxMembers);
-    this.clubRepository.update(clubId, {
+    const data = await this.clubRepository.updateClub(
+      clubId,
       userId,
       title,
       content,
       maxMembers,
-    });
+    );
+
+    return data;
+  }
+
+  async getClubById(clubId: number) {
+    const data = await this.clubRepository.getClubById(clubId);
+
+    return data;
   }
 
   async deleteClub(clubId: number) {
-    await this.clubRepository.softDelete(clubId);
-  }
-
-  async newClubApp(clubId: number, newApp: CreateAppDto) {
-    const newclubApp = await this.clubMembersRepository.newClubApp(
-      clubId,
-      newApp,
-    );
-    return newclubApp;
+    await this.clubRepository.deleteClubDto(clubId);
   }
 }
