@@ -4,9 +4,7 @@
   font-family: sans-serif;
 }
 
-body {
-  background-color: #f8f5f2;
-}
+
 
 .wrap {
   height: 100%;
@@ -21,7 +19,6 @@ body {
   height: 600px;
   position: relative;
   margin: 10% auto;
-  background: #fff;
   padding: 5px;
   overflow: hidden;
 }
@@ -30,7 +27,6 @@ body {
   width: 230px;
   margin: 35px auto;
   position: relative;
-  box-shadow: 0 0 600px 9px #fcae8f;
   border-radius: 30px;
 }
 
