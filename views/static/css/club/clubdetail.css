@@ -1,0 +1,231 @@
+.eventdetail_container {
+  padding-top: 8%;
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.eventdetail_button {
+  display: flex;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+
+.eventdetail_title {
+  border-top: 4px solid;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 1px solid;
+}
+
+.eventdetail_first {
+  display: flex;
+  margin-top: 10px;
+}
+
+.eventdetail_first_id {
+  width: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.eventdetail_first_title {
+  width: 500px;
+  display: flex;
+}
+
+.first_title {
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.title_text {
+  width: 400px;
+  text-align: center;
+}
+
+.eventdetail_first_nickname {
+  width: 270px;
+  display: flex;
+}
+
+.first_nickname {
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.nickname_text {
+  width: 100px;
+  text-align: center;
+}
+
+.eventdetail_first_likes {
+  display: flex;
+}
+
+.first_likes {
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.likes_text {
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.eventdetail_second {
+  display: flex;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.eventdetail_second_start {
+  margin-left: 20px;
+  display: flex;
+}
+
+.start_date {
+  width: 150px;
+  font-weight: bold;
+}
+
+.date_text {
+  font-weight: bold;
+}
+
+.eventdetail_second_end {
+  display: flex;
+}
+
+.end_date {
+  margin-left: 20px;
+  width: 140px;
+  font-weight: bold;
+}
+
+.eventdetail_second_date {
+  display: flex;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.second_date_text {
+  margin-left: 15px;
+}
+
+.eventdetail_second_view {
+  display: flex;
+  margin-left: 130px;
+  font-weight: bold;
+}
+
+.view_title {
+  width: 42px;
+}
+
+.view_text {
+  width: 100px;
+  text-align: center;
+}
+
+.eventdetail_body {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eventdetail_body_button {
+  display: flex;
+  margin-left: auto;
+}
+
+.eventdetail_body_button_remind {
+  margin-right: 10px;
+}
+
+.remind_button {
+  border-radius: 30px;
+  border: 1px solid #f23232;
+  font-weight: bold;
+  background-color: white;
+}
+
+.report_button {
+  border-radius: 30px;
+  border: 1px solid #f23232;
+  font-weight: bold;
+  background-color: #f23232;
+  color: white;
+  text-align: center;
+  width: 100px;
+}
+
+.eventdetail_body_text {
+  margin: auto;
+  margin-top: 100px;
+  width: 80%;
+  height: 500px;
+}
+
+.eventdetail_like_container {
+  text-align: center;
+}
+
+.eventdetail_like_img {
+  width: 30px;
+  margin: auto;
+}
+
+.eventdetail_bottom {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 4px solid;
+  margin-bottom: 100px;
+}
+
+.eventdetail_bottom_div {
+  display: flex;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid;
+}
+
+.eventdetail_bottom_div1 {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.eventdetail_bottom_div_title {
+  margin-left: 30px;
+  width: 70px;
+}
+
+.eventdetail_bottom_div_body {
+  margin-left: 200px;
+}
+
+.eventdetail_bottom_div_nickname {
+  margin-left: 300px;
+}
+
+.eventdetail_bottom_div_date {
+  margin-left: 60px;
+}
+

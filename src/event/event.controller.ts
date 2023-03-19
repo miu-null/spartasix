@@ -79,16 +79,11 @@ export class EventController {
     return res.render("eventNew.ejs");
   }
 
-  @Get("/test")
-  async test(@Res() res: Response) {
-    console.log("test");
-    return res.json({ test: "test" });
-  }
-
   // 전체 글 조회
   @Get("/list")
   async getEvent(@Res() res: Response) {
     const events = await this.eventService.getEvents();
+    console.log("events : " + JSON.stringify(events))
     return res.render("eventMain.ejs", { events });
   }
 
@@ -100,6 +95,7 @@ export class EventController {
   ) {
     const events = await this.eventService.getEventById(eventPostId);
     events.createdateAt = new Date(events.createdateAt);
+
     return res.render("eventDetail.ejs", { events });
   }
 
@@ -133,7 +129,6 @@ export class EventController {
 
   @Delete("/list/:eventPostId")
   async deleteArticle(@Param("eventPostId") eventPostId: number) {
-    console.log("Hello");
     const deleteEvent = await this.eventService.deleteEvent(eventPostId);
     return true;
   }
