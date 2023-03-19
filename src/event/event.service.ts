@@ -8,7 +8,7 @@ export class EventService {
   constructor(private EventRepository: EventRepository) {}
 
   async getEvents(page) {
-    const event = await this.EventRepository.getEvents(page);
+    const event = await this.EventRepository.paginatedResults(page);
     // const eventlist = event.map({ eventId, nickName });
     // return eventlist;
     return event;
