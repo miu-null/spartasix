@@ -8,7 +8,7 @@
 .new_event {
   float: right;
   text-decoration: none;
-  color: #EA4E4E;
+  color: #ea4e4e;
   font-weight: bold;
 }
 
@@ -31,7 +31,6 @@
   width: 30px;
 }
 
-
 #Id {
   font-weight: bold;
 }
@@ -46,4 +45,28 @@
 
 #Likes {
   font-weight: bold;
+}
+
+.textarea {
+  margin-top: -30px;
+  margin-left: -60px;
+  resize: none;
+  border: none;
+  width: 800px;
+  height: 900px;
+}
+
+.textarea:focus {
+  outline: none;
+}
+
+.event_title {
+  resize: none;
+  border: none;
+  margin-top: -10px;
+  width: 120px;
+}
+
+.event_title:focus {
+  outline: none;
 }

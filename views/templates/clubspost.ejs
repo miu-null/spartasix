@@ -1,24 +1,36 @@
-<body>
-  <div class="clubs-post-form">
-    <div>
-      <h3>모임글 작성하기</h3><br>
+<div class="eventdetail_container">
+  <div class="eventdetail_button">
+    <div class="eventdetail_edit">
+      <a onclick="clubpost()" class="new_event">작성&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
-    <div class="row g-2">
-      <div class="col-md">
-        <span>제목</span><br>
-        <input type="text" class="post-control" id="title" placeholder="제목">
-      </div>
-      <div class="col-md">
-        <span>인원수</span><br>
-        <input class="post-control" type="text" id="maxMembers" name="selboxDirect"><br>
-      </div>
-    </div><br>
-    <div class="mb-3">
-      <div class="col-md">
-        <span>내용</span><br>
-        <textarea type="text" class="post-control" id="content" rows="10" cols="130" placeholder="내용"></textarea>
-      </div>
+    <div class="eventdetail_delete">
+      <a href="list" class="new_event">취소</a>
     </div>
-    <button type="button" class="btn btn-dark" onclick="clubpost()">작성완료</button>
   </div>
-</body>
+  <div class="eventdetail_title">
+    <div class="eventdetail_first">
+      <div class="eventdetail_first_title">
+        <div class="first_title">
+          Title
+        </div>
+        <div class="title_text">
+          <input id="event_title" class="event_title" placeholder="title">
+        </div>
+      </div>
+    </div>
+    <div class="eventdetail_second">
+      <div class="eventdetail_second_start">
+        <div class="start_date">
+          maxMembers : 
+        </div>
+        <div class="col-3">
+          <input id="event_maxMembers" class="event_title" placeholder="maxMember">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="eventdetail_body">
+    <div class="eventdetail_body_text">
+      <textarea id="event_content" placeholder="content" class="textarea"></textarea>
+    </div>
+  </div>
