@@ -11,7 +11,6 @@ import {
 } from "typeorm";
 import { ClubCommentLikes } from "./clubcommentlikes.entity";
 import { Clubs } from "./clubs.entity";
-import { ClubSecondComments } from "./clubsecondcomments.entity";
 import { Users } from "./users.entity";
 
 @Entity({ schema: "ClubComments", name: "ClubComments" })
@@ -27,6 +26,9 @@ export class ClubComments {
 
   @Column("varchar")
   content: string;
+
+  @Column("int")
+  class: number;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -46,16 +48,6 @@ export class ClubComments {
     },
   )
   clubCommentLikes: ClubCommentLikes[];
-
-  @OneToMany(
-    () => ClubSecondComments,
-    (clubSecondComments: ClubSecondComments) => clubSecondComments.clubComments,
-    {
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    },
-  )
-  clubSecondComments: ClubSecondComments[];
 
   @ManyToOne(() => Users, (user: Users) => user.clubComments)
   @JoinColumn({ name: "userId" })
