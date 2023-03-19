@@ -7,8 +7,8 @@ import { DeleteEventDto } from "./dto/deleteevent.dto";
 export class EventService {
   constructor(private EventRepository: EventRepository) {}
 
-  async getEvents() {
-    const event = await this.EventRepository.getEvents();
+  async getEvents(page) {
+    const event = await this.EventRepository.getEvents(page);
     // const eventlist = event.map({ eventId, nickName });
     // return eventlist;
     return event;
