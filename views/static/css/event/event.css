@@ -1,54 +1,49 @@
-.club_container {
+.event_container {
   margin-top: 100px;
   margin-bottom: 150px;
   display: flex;
   flex-direction: column;
 }
 
-.new_club {
+.new_event {
   float: right;
   text-decoration: none;
   color: #EA4E4E;
   font-weight: bold;
 }
 
-.club_table_container {
+.event_table_container {
   margin-left: 170px;
 }
 
-.club_table {
+.event_table {
   max-width: 1100px;
   margin-left: 30px;
 }
 
-
-#club_thead {
+#event_thead {
   border-bottom: 4px solid;
   font-weight: bold;
 }
 
-#club_tr {
+#event_tr {
   border-bottom: 2px solid;
   width: 30px;
 }
 
-#club_Id {
+
+#Id {
   font-weight: bold;
 }
 
-
-#club_maxMember {
+#Date {
   font-weight: bold;
 }
 
-#club_Date {
+#View {
   font-weight: bold;
 }
 
-#club_View {
-  font-weight: bold;
-}
-
-#club_Likes {
+#Likes {
   font-weight: bold;
 }
