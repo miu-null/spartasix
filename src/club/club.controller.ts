@@ -30,7 +30,7 @@ export class ClubController {
   @Get("/list")
   async getClubs(@Res() res: Response, @Next() Next: Response) {
     const terms = await this.clubService.getClubs();
-
+    console.log(terms)
     return res.render("club.ejs", {
       terms,
     });
@@ -70,7 +70,7 @@ export class ClubController {
     return createNew;
   }
 
-  @Get("/clubs/:clubId")
+  @Get("/club/:clubId")
   async updateclub(@Res() res: Response) {
     return res.render("clubupdate.ejs");
   }
