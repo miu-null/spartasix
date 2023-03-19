@@ -1,66 +1,44 @@
-<!doctype html>
-<html lang="ko">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Bootstrap demo</title>
-    <style>
-        .event-container-lg {
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            height: 1000px;
-        }
-
-        input {
-            margin-bottom: 13px;
-        }
-    </style>
-</head>
-
-<body>
-    <div style="margin: 100px 10px 150px 10px;">
-
-        <div class="row">
-            <h3 style="text-align: center; margin-bottom: 150;">스파르타커뮤클럽</h3>
-        </div>
-
-        <div class="row">
-            <div class="col-9"></div>
-            <div class="col-3">
-                <a href="list" class="btn btn-outline-danger" type="button" class="btn btn-outline-danger"
-                    style="float:right; margin-bottom: 13px;">취소하기</a>
-            </div>
-        </div>
-
-        <div class="event-container-lg" style="background-color: #FAEFE5; text-align: center;argin-top: 200;">
-
-            <h5 style="background-color: #FFC0C0; text-align: left;">이벤트 게시판</h5>
-            <div class="container" style="margin: 50px 50px 50px 50px;">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" id="title" class="form-control" placeholder="제목">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <textarea class="form-control" rows="5" id="content" name="text" placeholder="내용"
-                            style="height: 607px;"></textarea>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-danger" onclick="eventNew()"
-                    style="margin-left: 90%;">작성완료</button>
-            </div>
-        </div>
+<div class="eventdetail_container">
+    <div class="eventdetail_button">
+      <div class="eventdetail_edit">
+        <a onclick="eventNew()" class="new_event">작성&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      </div>
+      <div class="eventdetail_delete">
+        <a href="/club/list" class="new_event">취소</a>
+      </div>
     </div>
-
-</body>
-
-</html>
+    <div class="eventdetail_title">
+      <div class="eventdetail_first">
+        <div class="eventdetail_first_title">
+          <div class="first_title">
+            Title
+          </div>
+          <div class="title_text">
+            <input id="event_title" class="event_title" placeholder="title">
+          </div>
+        </div>
+      </div>
+      <div class="eventdetail_second">
+        <div class="eventdetail_second_start">
+          <div class="start_date">
+            Event started at : 
+          </div>
+          <div class="col-3">
+            <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
+        </div>
+        </div>
+        <div class="eventdetail_second_end">
+          <div class="end_date">
+            Event ended at : 
+          </div>
+          <div class="col-3">
+            <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="eventdetail_body">
+      <div class="eventdetail_body_text">
+        <textarea id="event_content" placeholder="content" class="textarea"></textarea>
+      </div>
+    </div>
