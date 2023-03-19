@@ -11,7 +11,6 @@ import {
 } from "typeorm";
 import { EventCommentLikes } from "./eventcommentlikes.entity";
 import { EventPosts } from "./eventposts.entity";
-import { EventSecondComments } from "./eventsecondcomments.entity";
 import { Users } from "./users.entity";
 
 @Entity({ schema: "EventComments", name: "EventComments" })
@@ -28,6 +27,9 @@ export class EventComments {
   @Column("varchar")
   content: string;
 
+  @Column("int")
+  class: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -36,17 +38,6 @@ export class EventComments {
 
   @DeleteDateColumn()
   deletedAt: Date | null;
-
-  @OneToMany(
-    () => EventSecondComments,
-    (eventSecondComments: EventSecondComments) =>
-      eventSecondComments.eventComments,
-    {
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    },
-  )
-  eventSecondComments: EventSecondComments[];
 
   @OneToMany(
     () => EventCommentLikes,
