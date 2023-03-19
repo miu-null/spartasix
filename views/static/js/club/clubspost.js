@@ -1,3 +1,14 @@
+function modal_open() {
+  $(`#club_modal`).fadeIn();
+
+  $(document).mouseup(function (e) {
+    if ($(`#club_modal`).has(e.target).length === 0) {
+      $(`#club_modal`).hide();
+    }
+  });
+}
+
+
 function clubpost() {
   const title = $("#title").val();
   let maxMembers = $("#maxMembers").val();
