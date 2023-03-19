@@ -6,7 +6,7 @@
     <table class="table table-hover club_table">
       <thead id="club_thead">
         <tr>
-          <th>Event</th>
+          <th>Club</th>
           <th>Title</th>
           <th>Writer</th>
           <th>maxMembers</th>
@@ -16,35 +16,57 @@
         </tr>
       </thead>
       <tbody>
-        <% for(let i=0; i < terms.length; i++) {%>
-          <tr id="club_tr" onclick="location.href='list/<%= terms[i].clubId%>'">
-              <td id="club_Id">
-                <%= terms[i].clubId %>
-            </td>
-            <td id="club_Title">
-              <%= terms[i].title %>
-            </td>
-            <td id="club_Writer">
-              <%= terms[i].nickName %>
-            </td>
-            <td id="club_maxMember">
-              <%= terms[i].maxMembers %>
-            </td>
-            <td id="club_Date">
-              <%= terms[i].createdAt %>
-            </td>
-            <td id="club_View">
-   
-            </td>
-            <td id="club_Likes">
-      
-            </td>
+        <% slicedData.forEach(data => { %>
+          <tr id="club_tr">
+            <td id="club_Id"><%= data.clubId %></td>
+            <td id="club_Title"><a class="postLink" href='list/<%= data.clubId%>'><%= data.title %></a></td>
+            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">작성자<%= data.userId %></td>
+            <td id="club_maxMember"><%= data.maxMembers %></td>
+            <td id="club_Date"><%= data.createdAt %></td>
+            <td id="club_View"><%= data.viewCount %></td>
+            <td id="club_Likes"><%= data.Likes %></td>
           </tr>
-          <% } %>
+          <% }) %>
       </tbody>
     </table>
   </div>
 </div>
+
+    <!-- 페이지네이션 버튼 -->
+    <div id="pagination">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <% if (unitStart - 1> 0 ) { %>
+            <li class="page-item">
+              <a class="page-link" href="?page=<%= unitStart -1 %>" tabindex="-1"
+                aria-disabled="true">이전</span>
+              </a>
+            </li>
+            <% } %>
+              <% for (let i=unitStart; i <= unitEnd; i++) { %>
+                <% if (i <= lastPage) { %>
+                  <% if ( i===page) { %>
+                    <li class="page-item active" aria-current="page">
+                      <span class="page-link">
+                        <%= i %>
+                      </span>
+                    </li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="?page=<%= i %>">
+                          <%= i %>
+                        </a></li>
+                      <% } %>
+                        <% } %>
+                          <% } %>
+                            <% if (unitEnd <=lastPage) { %>
+                              <li class="page-item">
+                                <a class="page-link" href="?page=<%= unitEnd +1 %>">다음
+                                </a>
+                              </li>
+                              <% } %> 
+        </ul>
+      </nav>
+    </div>
 
 <section id="search" class="search-wrap">
   <form action="/club/search" class="search-form">
