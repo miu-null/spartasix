@@ -23,7 +23,6 @@ import { MailerConfigService } from "./config/mailer.config.service";
 import { MailModule } from "./mail/mail.module";
 import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
-import { PaginationModule } from "./pagination/pagination.module";
 import { CacheConfigService } from "./config/redis.config.service";
 const ejsMiddleware = require("express-ejs-layouts");
 
@@ -59,7 +58,6 @@ const ejsMiddleware = require("express-ejs-layouts");
     MailModule,
     ClubCommentModule,
     EventCommentModule,
-    PaginationModule,
   ],
   controllers: [AppController],
   providers: [],
