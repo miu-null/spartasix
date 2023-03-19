@@ -1,8 +1,7 @@
 .huge-container {
-  /* display: flex; */
-  border: 2px solid red;
+  display: flex;
   margin: 4px;
-  height: 500vh;
+  height: 300vh;
   /* gap: 50px; */
   align-items: center;
   justify-content: center;
@@ -13,9 +12,9 @@
 .box {
   width: 700px;
   height: 800px;
+  position: absolute;
   justify-content: center;
   align-items: center;
-  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -27,7 +26,7 @@
   /* border: 2px solid greenyellow; */
   display: flex;
   position: absolute;
-  margin-top: -100px;
+  margin-top: -200px;
 }
 
 .member-image {
@@ -45,60 +44,73 @@
 }
 
 .huge-userbox {
-  width: 600px;
+  /* font-family: "Alfa Slab One", "Amiko", sans-serif;
+  font-size: 30px; */
+  width: 700px;
   height: 700px;
-  margin-top: -1740px;
-  border: 1px solid magenta;
+  margin-top: 510px;
+  /* border: 1px solid magenta; */
   align-items: center;
   text-align: center;
 }
 
 .userinfo-box {
-  width: 600px;
-  height: 700px;
+  width: 700px;
+  height: 650px;
   background-color: #fff9f8;
-  margin-top: 70px;
+  margin-top: 90px;
   padding: 30px;
   text-align: center;
-  display: grid;
-  font-size: 28px;
+  /* display: grid; */
+  /* font-size: 28px;
   font-style: bold;
+  font-family: "Amiko"; */
 }
 
 .huge-activities {
-  width: 600px;
+  width: 700px;
   height: 600px;
-  margin-top: 150px;
-  border: 1px solid magenta;
+  margin-top: 850px;
+  /* border: 1px solid magenta; */
   text-align: center;
   align-items: center;
 }
 
 .activities-box {
-  width: 600px;
+  width: 700px;
   height: 400px;
   background-color: #fff9f8;
-  margin-top: -65px;
+  margin-top: 20px;
   padding: 30px;
-  font-size: 18px;
+  font-size: 15px;
+  text-align: left;
   font-style: bold;
 }
 /* belong to this clubs... */
 
 .huge-clubs {
-  border: 1px solid slateblue;
+  /* border: 1px solid slateblue; */
   text-align: center;
-  margin-top: 50px;
-  width: 600px;
+  margin-top: 580px;
+  width: 700px;
   height: 400px;
+
   /* identical to box height */
 }
 
 .myclubs {
-  width: 600px;
-  height: 400px;
+  width: 700px;
+  height: 1000px;
   background-color: #fff9f8;
-  margin-top: 50px;
+  margin-top: 400px;
+}
+
+.message img {
+  width: 8%;
+  /* align-items: right; */
+  position: absolute;
+  left: 90%;
+  top: -170px;
 }
 
 /* .box-container {
