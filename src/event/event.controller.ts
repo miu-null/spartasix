@@ -81,10 +81,12 @@ export class EventController {
 
   // 전체 글 조회
   @Get("/list")
-  async getEvent(@Res() res: Response) {
-    const events = await this.eventService.getEvents();
+  async getEvent(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number, 
+    @Res() res: Response) {
+    const events = await this.eventService.getEvents(page);
     console.log("events : " + JSON.stringify(events))
-    return res.render("eventMain.ejs", { events });
+    return res.render("eventMain.ejs", { ...events });
   }
 
   //게시글 조회
@@ -139,11 +141,7 @@ export class EventController {
     @Query() term: string,
     @Res() res: Response,
   ) {
-    const searchData = await this.searchService.paginatedResults(
-      "events",
-      page,
-      term,
-    );
+    const searchData = await this.searchService.paginatedResults("events", page, term,);
     console.log("검색", searchData);
     return res.render("eventsearch.ejs", {
       term,
