@@ -70,3 +70,9 @@
 .event_title:focus {
   outline: none;
 }
+
+.postLink {
+  text-decoration:none;
+  color: black
+
+}
