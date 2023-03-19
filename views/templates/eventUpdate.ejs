@@ -1,65 +1,44 @@
-<body>
-  <div style="margin: 100px 10px 150px 10px">
-    <div>
-      <h3 style="text-align: center; margin-bottom: 150">스파르타커뮤클럽</h3>
+<div class="eventdetail_container">
+  <div class="eventdetail_button">
+    <div class="eventdetail_edit">
+      <a onclick="updateEvent()" class="new_event">수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
-
-    <div class="container-lg" style="margin-top: 200">
-      <div style="background-color: #faefe5; text-align: center">
-        <h5 style="background-color: #ffc0c0; text-align: left">
-          이벤트 게시판
-        </h5>
-        <% {%>
-        <div class="row">
-          <div class="col-8">
-            <input
-              type="text"
-              id="title2"
-              class="form-control"
-              placeholder="Enter email"
-              name="email"
-              value="<%= events.title %>"
-            />
-          </div>
-          <div class="col-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter email"
-              name="email"
-              value=" <%= events.createdateAt %>"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <input
-              type="text"
-              id="date2"
-              class="form-control"
-              placeholder="Enter email"
-              name="email"
-              value="<%= events.date %>"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <input
-              type="text"
-              id="content2"
-              class="form-control"
-              placeholder="Enter email"
-              name="email"
-              value="<%= events.content %>"
-            />
-          </div>
-        </div>
-        <% } %>
-      </div>
-      <button type="button" onclick="updateEvent('<%= events.eventPostId %>')">
-        수정하기
-      </button>
+    <div class="eventdetail_delete">
+      <a href="/events/list" class="new_event">취소</a>
     </div>
   </div>
-</body>
+  <div class="eventdetail_title">
+    <div class="eventdetail_first">
+      <div class="eventdetail_first_title">
+        <div class="first_title">
+          Title
+        </div>
+        <div class="title_text">
+          <input id="event_title" class="event_title" placeholder="<%= events.title %>">
+        </div>
+      </div>
+    </div>
+    <div class="eventdetail_second">
+      <div class="eventdetail_second_start">
+        <div class="start_date">
+          Event started at : 
+        </div>
+        <div class="col-3">
+          <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
+      </div>
+      </div>
+      <div class="eventdetail_second_end">
+        <div class="end_date">
+          Event ended at : 
+        </div>
+        <div class="col-3">
+          <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="eventdetail_body">
+    <div class="eventdetail_body_text">
+      <textarea id="event_content" class="textarea" placeholder="<%= events.content %>"></textarea>
+    </div>
+  </div>
