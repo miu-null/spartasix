@@ -1,3 +1,24 @@
+<div id="club_modal" class="club_modal">
+  <div class="modal_content_club">
+    <div class="club_wrap1">
+      <div class="club_form_wrap1">
+        <div class="club_append_container">
+          <div class="club_modal_body">
+            이 모임에 지원하시겠습니까? <br></br>
+            본인의 코딩 경력과 스타일에 대해 짧게 소개해 주시면, <br>
+            모임 주최자가 확인 후 회원정보상 의 메일 주소로 연락을 드립니다.
+          </div>
+          <div class="club_modal_text">
+            <textarea class="club_modal_textarea" placeholder="이곳에 내용을 적어주세요"></textarea>
+          </div>
+          <div>
+            <button class="club_modal_button">submit !</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
@@ -65,7 +86,7 @@
   <div class="eventdetail_body">
     <div class="eventdetail_body_button">
       <div class="eventdetail_body_button_remind">
-        <button class="remind_button">Apply</button>
+        <button class="remind_button" onclick="modal_open()">Apply</button>
       </div>
       <div class="eventdetail_body_button_report">
         <button class="report_button">report</button>
@@ -108,43 +129,3 @@
     </div>
   </div>
 </div>
-
-<!-- <form class="clubs-list">
-  <h3 style="text-align: center; margin: 50px 0px 50px 50px;">스파르타커뮤클럽</h3>
-  <div class="form-club">
-    <div class="form-category">
-      <p>모각코/모임 게시판</p>
-      <div style="float: left;">
-      </div>
-    </div>
-    <div class="article-btn">
-      <button type="button" onclick="location.href='/club/list'">
-        목록
-      </button>
-      <button type="button" onclick="location.href='/club/clubs/<%= detail.clubId%>'">
-        수정
-      </button>
-      <button type="button" onclick="clubdelete()">
-        삭제
-      </button>
-    </div>
-    <div class="article-info">
-      <span class="info-title">제목 : <%= detail.title %> </span>
-      <span class="info-date">작성일 : 표기예정 간략화 필요 </span>
-    </div>
-    <div class="info-user">
-      <button class="info-btn2">
-        모임 참여하기
-      </button>
-      <span>작성자 : 표기예정 <%= detail.userId %> </span>
-      <button class="info-btn1">
-        신고
-      </button>
-    </div>
-    <div class="form-list">
-      <h2>
-        <%= detail.content %>
-      </h2>
-    </div>
-  </div>
-</form> -->
