@@ -8,7 +8,6 @@ import { SearcherService } from './searcher.service';
 export class SearcherController {
   constructor(
     private searchService: SearcherService,
-    // private paginationService: PaginationService,
     ) {}
 
   @Get("posts")  // 통합 검색기능 
