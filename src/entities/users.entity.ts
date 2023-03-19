@@ -14,13 +14,11 @@ import { ClubCommentLikes } from "./clubcommentlikes.entity";
 import { ClubComments } from "./clubcomments.entity";
 import { ClubLikes } from "./clublikes.entity";
 import { Clubs } from "./clubs.entity";
-import { ClubSecondComments } from "./clubsecondcomments.entity";
 import { EventComments } from "./eventcomments.entity";
 import { EventCommentLikes } from "./eventcommentlikes.entity";
 import { EventLikes } from "./eventlikes.entity";
 import { EventMembers } from "./eventmembers.entity";
 import { EventPosts } from "./eventposts.entity";
-import { EventSecondComments } from "./eventsecondcomments.entity";
 
 @Entity({ schema: "Users", name: "Users" })
 export class Users {
@@ -72,16 +70,6 @@ export class Users {
     },
   )
   abusingClubCounts: AbusingClubCounts[];
-
-  @OneToMany(
-    () => EventSecondComments,
-    (eventSecondComments: EventSecondComments) => eventSecondComments.user,
-    {
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    },
-  )
-  eventSecondComments: EventSecondComments[];
 
   @OneToMany(() => EventPosts, (eventPosts: EventPosts) => eventPosts.user, {
     onUpdate: "CASCADE",
@@ -135,15 +123,6 @@ export class Users {
   )
   eventComments: EventComments[];
 
-  @OneToMany(
-    () => ClubSecondComments,
-    (clubSecondComments: ClubSecondComments) => clubSecondComments.user,
-    {
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    },
-  )
-  clubSecondComments: ClubSecondComments[];
 
   @OneToMany(() => ClubLikes, (clubLikes: ClubLikes) => clubLikes.user, {
     onUpdate: "CASCADE",
