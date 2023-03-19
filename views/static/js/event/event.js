@@ -1,3 +1,13 @@
+function event_open() {
+  $(`#event_modal1`).fadeIn();
+
+  $(document).mouseup(function (e) {
+    if ($(`#event_modal1`).has(e.target).length === 0) {
+      $(`#event_modal1`).hide();
+    }
+  });
+}
+
 function eventNew() {
   const title = $("#title").val();
   const date = $("#startDate").val();
