@@ -8,6 +8,8 @@ import {
   JoinColumn,
   OneToMany,
   ManyToMany,
+  JoinTable,
+  ManyToOne,
 } from "typeorm";
 import { AbusingClubCounts } from "./abusingclubcounts.entity";
 import { ClubComments } from "./clubcomments.entity";
@@ -16,8 +18,8 @@ import { Users } from "./users.entity";
 
 @Entity({ schema: "Clubs", name: "Clubs" })
 export class Clubs {
-  @PrimaryGeneratedColumn({ type: "int", name: "clubId" })
-  clubId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "uuid" })
+  id: number;
 
   @Column("int")
   userId: number;
@@ -66,10 +68,18 @@ export class Clubs {
   )
   abusingClubCounts: AbusingClubCounts[];
 
-  @ManyToMany(() => Users, (user) => user.clubs, {
+  // @ManyToMany(() => Users, (user) => user.clubs, {
+  //   onUpdate: "CASCADE",
+  //   onDelete: "CASCADE",
+  // })
+  // @JoinTable({ name: "userId" })
+  // // @JoinColumn({ name: "userId" })
+  // user: Users[];
+
+  @ManyToOne(() => Users, (user: Users) => user.clubs, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
+    eager: true,
   })
-  @JoinColumn({ name: "userId" })
   user: Users;
 }
