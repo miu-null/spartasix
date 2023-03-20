@@ -4,23 +4,36 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventComments } from "src/entities/eventcomments.entity";
+import { Users } from "src/entities/users.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
 export class EventCommentRepository {
   constructor(
+    @InjectRepository(Users)
+    private readonly userRepository: Repository<Users>,
     @InjectRepository(EventComments)
     private readonly eventRepository: Repository<EventComments>,
+    @InjectRepository(EventCommentLikes)
+    private readonly eventCommentLikeRepository: Repository<EventCommentLikes>,
   ) {}
 
-  async showAllComment() {
+  async showAllComment(eventPostId: number) {
     const comments = await this.eventRepository.find({
-      where: { deletedAt: null },
-      select: ["userId", "eventPostId", "content", "createdAt"],
+      where: { id: eventPostId, deletedAt: null },
+      select: [
+        "id",
+        "userId",
+        "eventPostId",
+        "content",
+        "createdAt",
+      ],
     });
 
-    return comments;
+
+    return { comments };
   }
 
   async createComment(userId: number, eventPostId: number, content: string) {
@@ -28,6 +41,7 @@ export class EventCommentRepository {
       userId,
       eventPostId,
       content,
+      class: 0,
     });
   }
 
@@ -61,15 +75,41 @@ export class EventCommentRepository {
     }
 
     await this.eventRepository.softDelete(eventCommentId);
-
   }
 
   async findCommentUserId(eventCommentId: number) {
     const comment = await this.eventRepository.findOne({
-      where: { eventCommentId, deletedAt: null },
+      where: { id: eventCommentId, deletedAt: null },
       select: ["userId", "eventPostId", "content"],
     });
 
-    return comment
+    return comment;
+  }
+
+  async showLike() {
+    const like = await this.eventCommentLikeRepository.find({
+      where: { deletedAt: null },
+    });
+    return like;
+  }
+
+  async updateLike(userId: number, commentId: number) {
+    const Like = await this.eventCommentLikeRepository.findOne({
+      where: { id: userId, eventCommentId: commentId, deletedAt: null },
+      select: ["id"],
+    });
+
+    if (Like) {
+      await this.eventCommentLikeRepository.softDelete(Like.id);
+    }
+
+    if (!Like) {
+      await this.eventCommentLikeRepository.insert({
+        userId,
+        eventCommentId: commentId,
+      });
+    }
+
+    return true;
   }
 }
