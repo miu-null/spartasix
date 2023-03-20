@@ -36,14 +36,16 @@ export class EventRepository {
     userId: number,
     title: string,
     content: string,
-    date: Date,
+    startDate: Date,
+    endDate: Date,
     postIMG: string,
   ) {
     await this.eventRepository.insert({
       userId,
       title,
       content,
-      date,
+      startDate,
+      endDate,
       postIMG,
     });
   }
@@ -53,7 +55,9 @@ export class EventRepository {
       userId: UpdateEventInfo.userId,
       title: UpdateEventInfo.title,
       content: UpdateEventInfo.content,
-      date: UpdateEventInfo.date,
+      startDate: UpdateEventInfo.startDate,
+      endDate: UpdateEventInfo.endDate,
+      postIMG: UpdateEventInfo.postIMG,
     });
     return changedInfo;
   }
