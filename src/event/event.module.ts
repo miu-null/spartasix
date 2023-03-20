@@ -11,7 +11,7 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Searcher } from "src/entities/searcher.entity";
 import { SearcherRepository } from "src/searcher/searcher.repositoy";
 import { ClubRepository } from "src/club/club.repository";
-
+import { MailService } from "src/mail/mail.service";
 
 @Module({
   imports: [
@@ -19,11 +19,13 @@ import { ClubRepository } from "src/club/club.repository";
   ],
   controllers: [EventController],
   providers: [
+    MailService,
     EventService,
     EventRepository,
     SearcherService,
     SearcherRepository,
     ClubRepository,
   ],
+  exports: [MailService],
 })
 export class EventModule {}
