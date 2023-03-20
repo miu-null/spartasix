@@ -1,0 +1,118 @@
+<!--
+  <script>
+    function setIsEditing(isEditing) {
+      console.log(isEditing)
+      isEditing = !isEditing;
+      console.log(isEditing)
+    }
+  </script> -->
+
+<!-- modal1 -->
+<!-- <div id="Appmodal" class="Appmodal">
+  <div class="app_modal">
+    <div class="application">
+      <div class="app_title">
+        모임 신청서
+      </div>
+      <div class="app_body">
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- modal2 -->
+<!-- <div id="Appmodal2" class="Appmodal2">
+  <div class="app_modal2">
+    <div class="application2">
+    </div>
+  </div>
+</div> -->
+<!--body-->
+
+<script>
+    function onUpload(e) {
+      var imageUrl = URL.createObjectURL(e.files[0])
+      document.getElementById('memberImage').src = imageUrl;
+    }
+    </script>
+    
+    <div class="huge-container">
+      <form action="/userpage/info/<%= myInfo.userId %>" method="POST" enctype="multipart/form-data">
+        <div class="box member-image-box">
+          <label for="userIMG" style="cursor: pointer;">
+            <div class="member-image">
+              <img id="memberImage" src="<%= myInfo.userIMG %>" alt="memberimage" />
+            </div>
+          </label>
+          <input id="userIMG" style="display: none;"  type="file" name="userIMG" onchange="onUpload(this)" />
+        </div>
+        <br />
+        <div class="box huge-userbox">
+          <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+            User Info
+          </p>
+          <br/>
+          <div class="box userinfo-box">
+            <br />
+            <br />
+            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+              You can call me...
+            </p>
+            <p
+              style="
+                font-family: Amiko, sans-serif;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              <input name="nickName" placeholder="닉네임 입력" value="<%= myInfo.nickName %>" />
+            </p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+              Contact
+            </p>
+            <p
+              style="
+                font-family: Amiko, sans-serif;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              <input name="email" placeholder="이메일 입력" value="<%= myInfo.email %>" />
+            </p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+              Check my GitHub !
+            </p>
+            <p
+              style="
+                font-family: Amiko, sans-serif;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              <input name="snsUrl" placeholder="깃헙 URL 입력" value="<%= myInfo.snsURL %>" />
+            </p>
+    
+            <button type="submit" style="
+              border: 0;
+              padding: 0.5rem 1rem;
+              background-color: #ea4e4e;
+              color: white;
+              ">
+              수정
+            </button>
+            <br />
+          </div>
+        </div>
+    
+      </form>
+    </div>
+    
+    </div>

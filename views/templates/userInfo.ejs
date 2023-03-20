@@ -18,15 +18,6 @@
         </p>
       </div>
       <div class="app_body">
-        <% for(let i = 0; i < myClubApps.length; i++) {%>
-
-          <!-- <font style="color: #ea4e4e; float: left; size: 14px"> -->
-            <%=myClubApps[i]%> <%=myPosts.clubPosts[i].content %>
-          <!-- </font> -->
-          <br />
-          <%=myPosts.clubPosts[i].content %>
-          
-          <% } %>
 
       </div>
     </div>
@@ -55,7 +46,9 @@
       User Info
     </p>
     <br />
-    <p style="
+    <a
+    href="/userpage/<%= myInfo.userId %>/edit"
+    style="
         font-family: Amiko, sans-serif;
         font-size: 15px;
         font-weight: bold;
@@ -63,7 +56,7 @@
         float: right;
       ">
       + edit
-    </p>
+  </a>
     <div class="box userinfo-box">
       <br />
       <br />
