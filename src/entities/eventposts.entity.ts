@@ -35,6 +35,9 @@ export class EventPosts {
   @Column("int")
   viewCount: number;
 
+  @Column("varchar")
+  postIMG: string | null;
+
   @CreateDateColumn()
   createdateAt: Date;
 

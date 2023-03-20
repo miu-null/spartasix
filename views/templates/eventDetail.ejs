@@ -1,86 +1,148 @@
-<!doctype html>
-<html lang="ko">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <div style="margin: 100px 10px 150px 10px;">
-        <div>
-            <h3 style="text-align: center; margin-bottom: 150;">스파르타커뮤클럽</h3>
-        </div>
-        
-      
-        <div class="container-lg" style="margin-top: 200;">
-            <% {%>
-            <div  style="margin-bottom: 13px;">
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='updateevent/<%= event.eventPostId%>'">수정하기</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='delete/<%= event.eventPostId%>'">삭제하기</button>
+<div id="event_modal1" class="event_modal">
+  <div class="modal_content_event">
+    <div class="event_wrap1">
+      <div class="event_form_wrap1">
+        <div class="event_append_container">
+          <div class="event_modal_body">
+            이벤트 알림을 등록합니다. <br>
+            알림을 신청한 날짜와,<br>
+            이벤트 시작 날짜로 부터 일주일 전, <br>
+            등록하신 이메일로 알림 메일이 발송됩니다.<br>
+            알림을 받아보시겠습니까?
+          </div>
+          <div class="event_modal_text">
+            <div class="event_modal_email">
+              e-mail
             </div>
-            <% } %>
-            <div style="background-color: #FAEFE5; text-align: center; margin-top: 13px; ">
-                <h5 style="background-color: #FFC0C0; text-align: left;">이벤트 게시판</h5>
-                <% {%>
-                    <div class="row">
-                        <div class="col-8">
-                            <%= event.title %>
-                        </div>
-                        <div class="col-4">
-                            <%= event.createdateAt %>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-9">
-                            <%= event.user.nickName %>
-                        </div>
-                        <div class="col-3" style="float: right;">
-                            <button type="button" class="btn btn-outline-danger">신고</button>
-                            <button type="button" class="btn btn-outline-danger">알림등록하기</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <%= event.date %>
-                        </div>
-                    </div>
-                    <div class="row" style="width: 924px; height: 700px;">
-                        <div class="col-12">
-                            <%= event.content %>
-                        </div>
-                    </div>
-                    <% } %>
+            <div class="event_modal_email_text">
+              <input id="event_modal_email">
             </div>
+          </div>
+          <div class="event_modal_button_body">
+            <button class="event_modal_button">submit !</button>
+          </div>
         </div>
+      </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-        crossorigin="anonymous"></script>
-</body>
-<script>
-    function deleteEvent() {
-        $.ajax({
-                type: "POST",
-                url: "/events/event/delete/${event.eventPostId}",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    eventPostId:eventPostId
-                }),
-                success: function (response) {
-                    alert("삭제완료");
-                    location.replace(`/events/list`);
-                }, 
-                error: function(response){
-                    console.log(response)
-                }
-            });
-        }
-</script>
-</html>
+  </div>
+</div>
+<div class="eventdetail_container">
+  <div class="eventdetail_button">
+    <div class="eventdetail_edit">
+      <a onclick="location.href='<%= events.eventPostId%>/update'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+    </div>
+    <div class="eventdetail_delete">
+      <a onclick="deleteEvent('<%= events.eventPostId %>')" class="new_event">delete</a>
+    </div>
+  </div>
+  <div class="eventdetail_title">
+    <div class="eventdetail_first">
+      <div class="eventdetail_first_id">
+        <%= events.eventPostId %>
+      </div>
+      <div class="eventdetail_first_title">
+        <div class="first_title">
+          Title
+        </div>
+        <div class="title_text">
+          <%= events.title%>
+        </div>
+      </div>
+      <div class="eventdetail_first_nickname">
+        <div class="first_nickname">
+          Writer
+        </div>
+        <div class="nickname_text">
+          <%= events.user.nickName %>
+        </div>
+      </div>
+      <div class="eventdetail_first_likes">
+        <div class="first_likes">
+          Likes
+        </div>
+        <div class="likes_text">
+          0
+        </div>
+      </div>
+    </div>
+    <div class="eventdetail_second">
+      <div class="eventdetail_second_start">
+        <div class="start_date">
+          Event started at : 
+        </div>
+        <div class="date_text">
+          <%= events.createdateAt%>
+        </div>
+      </div>
+      <div class="eventdetail_second_end">
+        <div class="end_date">
+          Event ended at : 
+        </div>
+        <div class="date_text">
+          2023.04.23
+        </div>
+      </div>
+      <div class="eventdetail_second_date">
+        <div class="second_date">
+          Date
+        </div>
+        <div class="second_date_text">
+          2023.04.03
+        </div>
+      </div>
+      <div class="eventdetail_second_view">
+        <div class="view_title">
+          View
+        </div>
+        <div class="view_text">
+          0
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="eventdetail_body">
+    <div class="eventdetail_body_button">
+      <div class="eventdetail_body_button_remind">
+        <button class="remind_button" onclick="event_open()">Remind Me</button>
+      </div>
+      <div class="eventdetail_body_button_report">
+        <button class="report_button">report</button>
+      </div>
+    </div>
+    <div class="eventdetail_body_text">
+        <%= events.content %>
+    </div>
+  <div class="eventdetail_like_container">
+    <img class="eventdetail_like_img" src="/img/likes.png" >
+  </div>
+  <div class="eventdetail_bottom">
+    <div class="eventdetail_bottom_div">
+      <div class="eventdetail_bottom_div_title">
+        Prev
+      </div>
+      <div class="eventdetail_bottom_div_body">
+        게시글 제목입니다. 
+      </div>
+      <div class="eventdetail_bottom_div_nickname">
+        작성자
+      </div>
+      <div class="eventdetail_bottom_div_date">
+        2023.04.03
+      </div>
+    </div>
+    <div class="eventdetail_bottom_div1">
+      <div class="eventdetail_bottom_div_title">
+        Next
+      </div>
+      <div class="eventdetail_bottom_div_body">
+        게시글 제목입니다. 
+      </div>
+      <div class="eventdetail_bottom_div_nickname">
+        작성자
+      </div>
+      <div class="eventdetail_bottom_div_date">
+        2023.04.03
+      </div>
+    </div>
+  </div>
+</div>

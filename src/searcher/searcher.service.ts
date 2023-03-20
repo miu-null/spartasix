@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { SearcherRepository } from './searcher.repositoy';
 import { ClubService } from 'src/club/club.service';
+import { ClubRepository } from 'src/club/club.repository';
 
 @Injectable()
 export class SearcherService {
@@ -10,7 +11,7 @@ export class SearcherService {
   }
     constructor(
         private SearcherRepository: SearcherRepository,
-        private clubService : ClubService
+        private clubRepository : ClubRepository,
         ) {}  
 
     
@@ -79,7 +80,7 @@ export class SearcherService {
             } else if (pageType === 'allposts') {
     
             } else if (pageType === 'clubs') {
-                getdata = await this.clubService.getClubs(); //테스트용 
+                getdata = await this.clubRepository.getClubs(); //테스트용 
             } else (pageType === '') 
     
         

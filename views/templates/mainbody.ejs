@@ -1,82 +1,30 @@
 <div class="main_body_container">
-    <div class="body_title">
-        <a>스파르타 커뮤클럽</a>
-    </div>
-    <div class="body_issue">
-        <div class="issue_title">
-            실시간 핫이슈
+    <div class="main_left">
+        <div class="main_title">
+            We <br>grow as <br><span style="color: #ff2727">Developers</span>
         </div>
-        <div class="issue_body">
-            <div class="issue_content">
-                1번 글
-            </div>
-            <div class="issue_content">
-                2번 글
-            </div>
-            <div class="issue_content">
-                3번 글
-            </div>
-            <div class="issue_content">
-                4번 글
-            </div>
-            <div class="issue_content">
-                5번 글
-            </div>
+        <div class="main_text">
+            우리들의 코딩모험은 부트캠프 수료 후 시작됩니다.<br>
+            개발자로서 함께 끊임없는 성장의 경험을 
+            쌓아나가고 <br>싶은 분들에게 - 스파르타 커뮤클럽이 계속되는 
+            꿈의 발걸음을 응원합니다. <br><br><br>회원으로 가입하시면 더욱 다양한 이용이 가능합니다.
+        </div>
+        <div class="main_button">
+            <button class="sign_button" onclick="location='/sign'">지금 시작하기</button>
         </div>
     </div>
-    <div class="body_news">
-        <div class="IT_news">
-            <div class="IT_news_title">
-                it 뉴스
-            </div>
-            <div class="IT_news_body">
-                <div class="IT_content">
-                    1번 글
-                </div>
-                <div class="IT_content">
-                    2번 글
-                </div>
-                <div class="IT_content">
-                    3번 글
-                </div>
-                <div class="IT_content">
-                    4번 글
-                </div>
-                <div class="IT_content">
-                    5번 글
-                </div>
-            </div>
-        </div>
-        <div class="job_news">
-            <div class="job_news_title">
-                최신 취업 정보
-            </div>
-            <div class="job_news_body">
-                <div class="job_content">
-                    1번 글
-                </div>
-                <div class="job_content">
-                    2번 글
-                </div>
-                <div class="job_content">
-                    3번 글
-                </div>
-                <div class="job_content">
-                    4번 글
-                </div>
-                <div class="job_content">
-                    5번 글
-                </div>
-            </div>
-        </div>
+    <div class="main_image">
+        <!-- <img src="https://spartacodingclub.kr/css/images/scc-og.jpg"> -->
+        <img src="https://wimg.mk.co.kr/meet/neds/2020/09/image_readtop_2020_997737_16012938134372637.jpg">
     </div>
     
-    <section id="search" class="search-wrap">
-        <form action="/search/users" class="search-form">
-            <!-- <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3"> -->
-            <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
-                aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
-        </form>
-    </section>
+
 </div>
 
+<section id="search" class="search-wrap">
+    <form action="/search/users" class="search-form">
+        <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
+            aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+    </form>
+</section>

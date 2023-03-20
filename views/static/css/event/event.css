@@ -1,0 +1,72 @@
+.event_container {
+  margin-top: 100px;
+  margin-bottom: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.new_event {
+  float: right;
+  text-decoration: none;
+  color: #ea4e4e;
+  font-weight: bold;
+}
+
+.event_table_container {
+  margin-left: 170px;
+}
+
+.event_table {
+  max-width: 1100px;
+  margin-left: 30px;
+}
+
+#event_thead {
+  border-bottom: 4px solid;
+  font-weight: bold;
+}
+
+#event_tr {
+  border-bottom: 2px solid;
+  width: 30px;
+}
+
+#Id {
+  font-weight: bold;
+}
+
+#Date {
+  font-weight: bold;
+}
+
+#View {
+  font-weight: bold;
+}
+
+#Likes {
+  font-weight: bold;
+}
+
+.textarea {
+  margin-top: -30px;
+  margin-left: -60px;
+  resize: none;
+  border: none;
+  width: 800px;
+  height: 900px;
+}
+
+.textarea:focus {
+  outline: none;
+}
+
+.event_title {
+  resize: none;
+  border: none;
+  margin-top: -10px;
+  width: 120px;
+}
+
+.event_title:focus {
+  outline: none;
+}
