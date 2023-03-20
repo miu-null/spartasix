@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post, Query, Res, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
 import { Response} from 'express';
-import { PaginationService } from 'src/pagination/pagination.service';
 import { CreateSearchDto } from './dto/create.search.dto';
 import { SearcherService } from './searcher.service';
 
@@ -9,7 +8,6 @@ import { SearcherService } from './searcher.service';
 export class SearcherController {
   constructor(
     private searchService: SearcherService,
-    // private paginationService: PaginationService,
     ) {}
 
   @Get("posts")  // 통합 검색기능 

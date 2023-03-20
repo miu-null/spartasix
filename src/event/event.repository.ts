@@ -20,20 +20,16 @@ export class EventRepository {
       .createQueryBuilder("eventUser")
       .leftJoinAndSelect("eventUser.user", "nickName")
       .getMany();
-    console.log(events);
     return events;
   } // mySQL leftjoin
 
-
   async getEventById(eventPostId) {
     const event = await this.eventRepository
-    .createQueryBuilder("eventUser")
-    .where(eventPostId)
-    .leftJoinAndSelect("eventUser.user", "nickName")
-    .getOne();
-  console.log(event);
-    return event
-
+      .createQueryBuilder("eventUser")
+      .where("eventPostId = :eventPostId", {eventPostId})
+      .leftJoinAndSelect("eventUser.user", "nickName")
+      .getOne();
+    return event;
   }
 
   async createEvent(
@@ -41,17 +37,18 @@ export class EventRepository {
     title: string,
     content: string,
     date: Date,
+    postIMG: string,
   ) {
     await this.eventRepository.insert({
       userId,
       title,
       content,
       date,
+      postIMG,
     });
   }
 
-  async updateEvent(eventPostId: number, UpdateEventInfo: UpdateEventDto) {
-    console.log(UpdateEventInfo);
+  async updateEvent(eventPostId: number, UpdateEventInfo) {
     const changedInfo = await this.eventRepository.update(eventPostId, {
       userId: UpdateEventInfo.userId,
       title: UpdateEventInfo.title,
@@ -61,7 +58,8 @@ export class EventRepository {
     return changedInfo;
   }
 
-  async deleteEvent(eventPostId: number, deleteEventDto: DeleteEventDto) {
-    await this.eventRepository.delete({ eventPostId });
+  async deleteEvent(eventPostId: number) {
+    await this.eventRepository.softDelete(eventPostId);
+    return true;
   }
 }

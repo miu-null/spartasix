@@ -40,7 +40,7 @@ export class AuthMiddleware implements NestMiddleware {
         );
         const newPayload = await this.authService.validateAcc(newAccessToken);
 
-        req.user = newPayload["id"];
+        res.user = newPayload["id"];
         next();
       } else {
         req.user = payload["id"];

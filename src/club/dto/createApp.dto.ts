@@ -1,5 +1,4 @@
 import {
-  IsNumber,
   IsString,
   IsNotEmpty,
   IsBoolean,
@@ -7,9 +6,6 @@ import {
 } from "class-validator";
 
 export class CreateAppDto {
-  @IsNumber()
-  readonly userId: number;
-
   @IsNotEmpty()
   @IsString()
   readonly application: string;

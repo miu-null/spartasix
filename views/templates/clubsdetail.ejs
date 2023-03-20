@@ -1,57 +1,131 @@
-<form class="clubs-list">
-  <h3 style="text-align: center; margin: 50px 0px 50px 50px;">스파르타커뮤클럽</h3>
-  <div class="form-club">
-    <div class="form-category">
-      <p>모각코/모임 게시판</p>
-      <div style="float: left;">
-        <!-- <button type="button" class="club-post" onclick="location.href='/club/clubspost'">글 쓰기</button> -->
+<div id="club_modal" class="club_modal">
+  <div class="modal_content_club">
+    <div class="club_wrap1">
+      <div class="club_form_wrap1">
+        <div class="club_append_container">
+          <div class="club_modal_body">
+            이 모임에 지원하시겠습니까? <br></br>
+            본인의 코딩 경력과 스타일에 대해 짧게 소개해 주시면, <br>
+            모임 주최자가 확인 후 회원정보상 의 메일 주소로 연락을 드립니다.
+          </div>
+          <div class="club_modal_text">
+            <textarea class="club_modal_textarea" placeholder="이곳에 내용을 적어주세요"></textarea>
+          </div>
+          <div>
+            <button class="club_modal_button">submit !</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="article-btn">
-      <button type="button" onclick="location.href='/club/list'">
-        목록
-      </button>
-      <button type="button" onclick="location.href='/club/clubs/<%= detail.clubId%>'">
-        수정
-      </button>
-      <button type="button" onclick="clubdelete()">
-        삭제
-      </button>
+  </div>
+</div>
+<div class="eventdetail_container">
+  <div class="eventdetail_button">
+    <div class="eventdetail_edit">
+      <a onclick="location.href='/club/club/<%= detail.clubId %>'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
-    <div class="article-info">
-      <span class="info-title">제목 : <%= detail.title %> </span>
-      <span class="info-date">작성일 : 표기예정 간략화 필요 </span>
-    </div>
-    <div class="info-user">
-      <button class="info-btn2">
-        모임 참여하기
-      </button>
-      <span>작성자 : 표기예정 <%= detail.userId %> </span>
-      <button class="info-btn1">
-        신고
-      </button>
-    </div>
-    <div class="form-list">
-      <h2>
-        <%= detail.content %>
-      </h2>
+    <div class="eventdetail_delete">
+      <a onclick="clubdelete()" class="new_event">delete</a>
     </div>
   </div>
-</form>
-<!-- <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav> -->
+  <div class="eventdetail_title">
+    <div class="eventdetail_first">
+      <div class="eventdetail_first_id">
+        <%= detail.clubId %>
+      </div>
+      <div class="eventdetail_first_title">
+        <div class="first_title">
+          Title
+        </div>
+        <div class="title_text">
+          <%= detail.title %>
+        </div>
+      </div>
+      <div class="eventdetail_first_nickname">
+        <div class="first_nickname">
+          Writer
+        </div>
+        <div class="nickname_text">
+          유저 닉네임 (필요)
+        </div>
+      </div>
+      <div class="eventdetail_first_likes">
+        <div class="first_likes">
+          Likes
+        </div>
+        <div class="likes_text">
+          개수 (필요)
+        </div>
+      </div>
+    </div>
+    <div class="eventdetail_second">
+      <div class="eventdetail_second_start">
+        
+      </div>
+      <div class="eventdetail_second_end">
+        
+      </div>
+      <div class="eventdetail_second_date">
+        <div class="second_date">
+          Date
+        </div>
+        <div class="second_date_text">
+          <%= detail.createdAt %>
+        </div>
+      </div>
+      <div class="eventdetail_second_view">
+        <div class="view_title">
+          View
+        </div>
+        <div class="view_text">
+          조회수 (필요)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="eventdetail_body">
+    <div class="eventdetail_body_button">
+      <div class="eventdetail_body_button_remind">
+        <button class="remind_button" onclick="modal_open()">Apply</button>
+      </div>
+      <div class="eventdetail_body_button_report">
+        <button class="report_button">report</button>
+      </div>
+    </div>
+    <div class="eventdetail_body_text">
+      <%= detail.content %>
+    </div>
+  <div class="eventdetail_like_container">
+    <img class="eventdetail_like_img" src="/img/likes.png" >
+  </div>
+  <div class="eventdetail_bottom">
+    <div class="eventdetail_bottom_div">
+      <div class="eventdetail_bottom_div_title">
+        Prev
+      </div>
+      <div class="eventdetail_bottom_div_body">
+        게시글 제목입니다. 
+      </div>
+      <div class="eventdetail_bottom_div_nickname">
+        작성자
+      </div>
+      <div class="eventdetail_bottom_div_date">
+        2023.04.03
+      </div>
+    </div>
+    <div class="eventdetail_bottom_div1">
+      <div class="eventdetail_bottom_div_title">
+        Next
+      </div>
+      <div class="eventdetail_bottom_div_body">
+        게시글 제목입니다. 
+      </div>
+      <div class="eventdetail_bottom_div_nickname">
+        작성자
+      </div>
+      <div class="eventdetail_bottom_div_date">
+        2023.04.03
+      </div>
+    </div>
+  </div>
+</div>

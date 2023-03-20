@@ -8,13 +8,11 @@ import { ClubComments } from "src/entities/clubcomments.entity";
 import { ClubLikes } from "src/entities/clublikes.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
-import { ClubSecondComments } from "src/entities/clubsecondcomments.entity";
 import { EventComments } from "src/entities/eventcomments.entity";
 import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventLikes } from "src/entities/eventlikes.entity";
 import { EventMembers } from "src/entities/eventmembers.entity";
 import { EventPosts } from "src/entities/eventposts.entity";
-import { EventSecondComments } from "src/entities/eventsecondcomments.entity";
 import { Users } from "src/entities/users.entity";
 
 @Injectable()
@@ -32,13 +30,11 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
         Users,
         Clubs,
         AbusingClubCounts,
-        EventSecondComments,
         EventPosts,
         EventMembers,
         EventLikes,
         EventCommentLikes,
         EventComments,
-        ClubSecondComments,
         ClubMembers,
         ClubLikes,
         ClubComments,
@@ -49,6 +45,8 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
       synchronize: this.configService.get<boolean>("DATABASE_SYNCHRONIZE"),
       autoLoadEntities: true,
       logging: "all",
+      timezone: "Asia/Seoul",
+      charset: "utf8mb4"
     };
   }
 }

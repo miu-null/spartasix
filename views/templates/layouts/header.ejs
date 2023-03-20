@@ -1,27 +1,29 @@
 <header>
-    <div class="header_title">
-        <a href="/" class="logo">육조옥마늘</a>
-    </div>
-    <div class="header_list">
-        <section id="search-wrap">
-            <div class="search">
-                <form action="/search/posts" class="search-form">
-                    <input type="search" id="term" name="term" class="form-control" placeholder="게시글 검색테스트: 제목, 내용"
-                        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                </form>
-            </div>
-        </section>
-
+    <div class="header_body">
+        <div class="header_title">
+            <a href="/" class="logo">
+                <img src="/img/로고.png" width="178">
+            </a>
+        </div>
         <div class="category">
             <ul class="navlist">
-                <li class="list"><a href="/events/list">IT 이벤트</a></li>
-                <li class="list"><a>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-                <li class="list"><a href="/club/list">모임게시판</a></li>
+                <li class="list"><a href="/events/list">Events</a></li>
+                <li><a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+                <li class="list"><a href="/club/list">Clubs</a></li>
             </ul>
         </div>
+        <div class="header_list">
+            <section id="search-wrap">
+                <div class="search">
+                    <form action="/search/posts" class="search-form">
+                        <input type="search" id="term" name="term" class="form-control1" placeholder="게시글 검색테스트: 제목, 내용"
+                            aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+                    </form>
+                </div>
+            </section>  
+        </div>
         <div class="header_button">
-            <a href="/sign" class="myButton">로그인</a>
+            <button onclick="location='/sign'" class="myButton">Log in</button>
         </div>
     </div>
 </header>

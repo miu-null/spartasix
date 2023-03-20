@@ -3,6 +3,7 @@ import {
   NestModule,
   MiddlewareConsumer,
   RequestMethod,
+  CacheModule,
 } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
@@ -22,7 +23,7 @@ import { MailerConfigService } from "./config/mailer.config.service";
 import { MailModule } from "./mail/mail.module";
 import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
-import { PaginationModule } from './pagination/pagination.module';
+import { CacheConfigService } from "./config/redis.config.service";
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
@@ -43,6 +44,11 @@ const ejsMiddleware = require("express-ejs-layouts");
       useClass: MailerConfigService,
       inject: [ConfigService],
     }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      useClass: CacheConfigService,
+      inject: [ConfigService],
+    }),
     EventModule,
     SearcherModule,
     ClubModule,
@@ -52,7 +58,6 @@ const ejsMiddleware = require("express-ejs-layouts");
     MailModule,
     ClubCommentModule,
     EventCommentModule,
-    PaginationModule,
   ],
   controllers: [AppController],
   providers: [],
@@ -71,15 +76,6 @@ export class AppModule implements NestModule {
       .apply(AuthMiddleware)
 
       .forRoutes(
-        { path: "auth/test", method: RequestMethod.POST },
-        { path: "/test", method: RequestMethod.GET },
-        { path: "club/clubspost", method: RequestMethod.POST },
-        { path: "/clubspost", method: RequestMethod.POST },
-        { path: "club/clubs/:clubId", method: RequestMethod.PUT },
-        { path: "/clubs/:clubId", method: RequestMethod.PUT },
-        { path: "club/list/:clubId", method: RequestMethod.DELETE },
-        { path: "/list/:clubId", method: RequestMethod.DELETE },
-         
         {
           path: "/eventcomment/create-comment/:id",
           method: RequestMethod.POST,
@@ -105,6 +101,18 @@ export class AppModule implements NestModule {
           path: "/clubcomment/delete-comment/:id",
           method: RequestMethod.DELETE,
         },
+        {
+          path: "/club/clubspost",
+          method: RequestMethod.POST,
+        },
+        { path: "/list/:clubId", method: RequestMethod.DELETE },
+        { path: "/club/:clubId", method: RequestMethod.POST },
+        { path: "/club/:clubspost", method: RequestMethod.POST },
+        { path: "/club/clubs/:clubId", method: RequestMethod.PUT },
+        { path: "/list/:clubid", method: RequestMethod.DELETE },
+        { path: "/events/newevent", method: RequestMethod.POST },
+        { path: "/events/list/:eventPostId", method: RequestMethod.DELETE },
+        { path: "/events/list/:eventPostId/update", method: RequestMethod.PATCH },
       );
   }
 }

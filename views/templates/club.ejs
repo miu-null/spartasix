@@ -1,40 +1,55 @@
-<form class="clubs-list">
-  <h3 style="text-align: center; margin: 50px 0px 50px 50px;">스파르타커뮤클럽</h3>
-  <div class="form-club">
-    <div class="form-category">
-      <p>모각코/모임 게시판</p>
-    </div>
-    <div class="post-btn">
-      <button type="button" class="club-post" onclick="location.href='/club/clubspost'">글 쓰기</button>
-    </div>
-    <div class="form-list">
-      <% for(let i=0; i < terms.length; i++) {%>
-        <div class="list-detail">
-          <!-- <p>
-          <%= terms[i].clubId %>
-        </p> -->
-          <p onclick="location.href='list/<%= terms[i].clubId%>'">
-            <%= terms[i].title %>
-          </p>
-          <!-- <p>
-          <%= terms[i].userId %>
-        </p> -->
-          <!-- <p>
-          <%= terms[i].maxMembers %>
-        </p> -->
-          <p>
-            <%= terms[i].createdAt %>
-          </p>
-        </div>
-        <% } %>
-    </div>
+<div class="container club_container">
+  <div>
+    <a href="clubspost" class="new_club">+ new post</a>
   </div>
-</form>
-    <section id="search" class="search-wrap">
-    <form action="/club/search" class="search-form">
-      <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시판 검색 : 제목, 내용"
-        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
-    </form>
-  </section>
+  <div class="club_table_container">
+    <table class="table table-hover club_table">
+      <thead id="club_thead">
+        <tr>
+          <th>Event</th>
+          <th>Title</th>
+          <th>Writer</th>
+          <th>maxMembers</th>
+          <th>Date</th>
+          <th>View</th>
+          <th>Likes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i=0; i < terms.length; i++) {%>
+          <tr id="club_tr" onclick="location.href='list/<%= terms[i].clubId%>'">
+              <td id="club_Id">
+                <%= terms[i].clubId %>
+            </td>
+            <td id="club_Title">
+              <%= terms[i].title %>
+            </td>
+            <td id="club_Writer">
+              <%= terms[i].nickName %>
+            </td>
+            <td id="club_maxMember">
+              <%= terms[i].maxMembers %>
+            </td>
+            <td id="club_Date">
+              <%= terms[i].createdAt %>
+            </td>
+            <td id="club_View">
+   
+            </td>
+            <td id="club_Likes">
+      
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
+<section id="search" class="search-wrap">
+  <form action="/club/search" class="search-form">
+    <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시판 검색 : 제목, 내용"
+        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+  </form>
+</section>

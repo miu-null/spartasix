@@ -1,148 +1,115 @@
-.clubs-list {
-    color: #000000;
-  }
-  .info-user button {
-    float: right;
-  }
-  .info-btn1 {
-    background: #E75252;
-    border-radius: 26px;
-    border: none;
-    color: white;
-    margin-right: 10px;
-  }
-  .info-btn2 {
-    background: #FFC793;
-    border-radius: 26px;
-    border: none;
-    color: #AA4F4F;
-    margin-right: 10px;
-  }
-  .form-list h2 {
-    margin: 30px;
-  }
-  .article-btn button {
-    margin: 5px;
-    border: none;
-    background-color: transparent;
-    color: #AA4F4F;
-    float: right;
-  }
-=======
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+.club_container {
+  margin-top: 100px;
+  margin-bottom: 150px;
   display: flex;
   flex-direction: column;
 }
-.form-club {
-  margin: auto;
-  display: flex;
-  width: 993px;
+
+.new_club {
+  float: right;
+  text-decoration: none;
+  color: #EA4E4E;
+  font-weight: bold;
+}
+
+.club_table_container {
+  margin-left: 170px;
+}
+
+.club_table {
+  max-width: 1100px;
+  margin-left: 30px;
+}
+
+
+#club_thead {
+  border-bottom: 4px solid;
+  font-weight: bold;
+}
+
+#club_tr {
+  border-bottom: 2px solid;
+  width: 30px;
+}
+
+#club_Id {
+  font-weight: bold;
+}
+
+
+#club_maxMember {
+  font-weight: bold;
+}
+
+#club_Date {
+  font-weight: bold;
+}
+
+#club_View {
+  font-weight: bold;
+}
+
+#club_Likes {
+  font-weight: bold;
+}
+
+/* The Modal (background) */
+.club_modal { 
+  position:absolute; 
+  width:100%; 
+  height:100%; 
+  top:0; 
+  left:0; 
+  display:none;
+  z-index: 50;
+}
+
+.club_wrap1 {
   height: 100%;
-  background: #fff9e2;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  width:530px; height:700px;
+  background: rgba(255, 246, 244, 0.95); 
+  position:absolute; top:15%; left:30%;
+  margin-top:-5%; margin-right: 3%;
+  text-align:center;
+  box-sizing:border-box; padding:74px 0;
+  line-height:23px; cursor:pointer;
+  display:flex;
   flex-direction: column;
-}
-.form-category {
-  width: 993px;
-  height: 80px;
-  background: #d4e7c2;
-  border-radius: 15px;
-  display: flex;
+  cursor: default;
+  transform: translate(10%,2%);
 }
 
-.form-category p {
-  /* 모각코 / 모임 게시판 */
-  font-family: "JejuGothic";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 33px;
-  color: #857373;
-  margin-top: 23px;
-  margin-left: 10px;
-}
-.form-list {
-  margin-left: 20px;
-  display: flex;
-  flex-direction: column;
-  font-family: "JejuGothic";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 33px;
-  color: #c5b493;
-}
-.list-detail {
-  margin-bottom: 20px;
-}
-.post-btn .club-post {
-  margin: 5px;
-  border: none;
-  background-color: transparent;
-  color: #aa4f4f;
-  float: right;
-}
-.article-info {
-  display: flex;
-  justify-content: space-between;
-}
-.article-info span {
-  font-family: "JejuGothic";
-  font-style: normal;
+.club_modal_body {
   font-weight: bold;
-  font-size: 25px;
-  line-height: 33px;
-  color: #000000;
-}
-.info-title {
-  margin-left: 30px;
-}
-.info-date {
-  margin-right: 30px;
-}
-.info-user {
-  margin-left: 30px;
-  margin-top: 20px;
+  color: #EA4E4E;
 }
 
-.info-user span {
-  font-family: "JejuGothic";
-  font-style: normal;
+.club_modal_text {
+  margin-top: 50px;
+}
+
+.club_modal_textarea {
+  width: 350px;
+  height: 350px;
+  resize: none;
+  border: none;
+  background-color: rgba(255, 246, 244, 0.95);
+}
+
+.club_modal_textarea:focus {
+  outline: none;
+}
+
+.club_modal_button {
+  border: 1px #EA4E4E solid;
+  background-color: #EA4E4E;
+  width: 110px;
+  height: 48px;
+  border-radius: 30px;
+  color: #FFFF;
   font-weight: bold;
-  font-size: 25px;
-  line-height: 33px;
-  color: #000000;
 }
-
-.info-user button {
-  float: right;
-}
-
-.info-btn1 {
-  background: #e75252;
-  border-radius: 26px;
-  border: none;
-  color: white;
-  margin-right: 10px;
-}
-
-.info-btn2 {
-  background: #ffc793;
-  border-radius: 26px;
-  border: none;
-  color: #aa4f4f;
-  margin-right: 10px;
-}
-
-.form-list h2 {
-  margin: 30px;
-}
-.article-btn button {
-  margin: 5px;
-  border: none;
-  background-color: transparent;
-  color: #aa4f4f;
-  float: right;
-}
-
