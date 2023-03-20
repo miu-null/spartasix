@@ -28,11 +28,14 @@ export class ClubController {
   ) {}
 
   @Get("/list")
-  async getClubs(@Res() res: Response, @Next() Next: Response) {
-    const terms = await this.clubService.getClubs();
+  async getClubs(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Res() res: Response) {
+      
+    const terms = await this.clubService.paginatedResults(page);
     console.log(terms)
     return res.render("club.ejs", {
-      terms,
+      ...terms,
     });
   }
 
