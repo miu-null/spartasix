@@ -36,7 +36,7 @@ export class UserpageService {
     const data = await this.userPageRepository.getUserInfo(userId);
     const password = data.password.length;
     return {
-      userId: data.userId,
+      userId: data.id,
       email: data.email,
       password: password,
       phone: data.phone,

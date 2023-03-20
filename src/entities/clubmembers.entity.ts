@@ -11,8 +11,8 @@ import {
 
 @Entity({ schema: "ClubMembers", name: "ClubMembers" })
 export class ClubMembers {
-  @PrimaryGeneratedColumn({ type: "int", name: "clubMemberId" })
-  clubMemberId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "uuid" })
+  id: number;
 
   @Column("int")
   userId: number;
