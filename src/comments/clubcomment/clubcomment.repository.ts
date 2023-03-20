@@ -66,8 +66,8 @@ export class ClubCommentRepository {
 
   async findCommentUserId(clubCommentId: number) {
     const comment = await this.clubRepository.findOne({
-      where: { clubCommentId, deletedAt: null },
-      select: ["userId", "clubCommentId", "content"],
+      where: { id: clubCommentId, deletedAt: null },
+      select: ["userId", "id", "content"],
     });
 
     return comment;

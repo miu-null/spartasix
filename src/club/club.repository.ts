@@ -16,7 +16,7 @@ export class ClubRepository {
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
-      select: ["clubId", "title", "maxMembers", "createdAt", "userId"],
+      select: ["id", "title", "maxMembers", "createdAt", "userId"],
     });
 
     return data;
@@ -73,14 +73,14 @@ export class ClubRepository {
 
   async getClubById(clubId: number) {
     const data = await this.clubRepository.findOne({
-      where: { clubId, deletedAt: null },
+      where: { id: clubId, deletedAt: null },
       select: [
         "title",
         "content",
         "maxMembers",
         "createdAt",
         "updatedAt",
-        "clubId",
+        "id",
       ],
     });
 
