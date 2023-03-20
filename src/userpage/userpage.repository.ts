@@ -70,51 +70,25 @@ export class UserPageRepository {
 
   // *클럽 신청서 전체보기
   async getClubApps(userId: number) {
-    const myClubs = await this.clubRepository
-      .createQueryBuilder("Clubs")
-      .where("Clubs.userId = :userId", { userId, deletedAt: null })
-      .getMany();
-    console.log(myClubs);
-    const myOwnClub = myClubs.length
-      ? await this.clubMembersRepository
-          .createQueryBuilder("ClubMembers")
-          .where("ClubMembers.clubId IN (:...clubIds)", {
-            clubIds: myClubs.map((clubapp) => clubapp.clubId),
-          })
-          .andWhere("ClubMembers.isAccepted = :isAccepted", {
-            isAccepted: false,
-          })
-          .getMany()
-      : [];
-    const userName = myOwnClub.length
-      ? await this.userRepository
-          .createQueryBuilder("Users")
-          .select("users.nickName")
-          .where("users.userId IN (:...userIds)", {
-            userIds: myOwnClub.map((clubApps) => clubApps.userId),
-          })
-          .getMany()
-      : [];
-
-    const userNamesArray = userName.map((user) => user.nickName);
-    console.log(userNamesArray);
-    return { userNamesArray, myOwnClub };
+    const myClubs = await this.clubRepository;
+    // 쿼리 수정 예정
+    return myClubs;
   }
 
   // 회원정보 조회
   async getUserInfo(userId: number) {
     return await this.userRepository.findOne({
-      // where: { id },
-      // select: [
-      //   "id",
-      //   "email",
-      //   "password",
-      //   "phone",
-      //   "nickName",
-      //   "snsURL",
-      //   "userIMG",
-      //   "createdAt",
-      // ],
+      where: { id: userId },
+      select: [
+        "id",
+        "email",
+        "password",
+        "phone",
+        "nickName",
+        "snsURL",
+        "userIMG",
+        "createdAt",
+      ],
     });
   }
 
