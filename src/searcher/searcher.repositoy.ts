@@ -46,6 +46,7 @@ export class SearcherRepository {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.eventRepository
         .createQueryBuilder('searchEvents')
+        .leftJoinAndSelect("searchEvents.user", "user")
         .where('searchEvents.title LIKE :s OR searchEvents.content LIKE :s', { s: `%${data.term}%` })
         // .orderBy("search.eventPostId", "DESC")  //최신순(내림차순)
         .getMany();
@@ -59,6 +60,7 @@ export class SearcherRepository {
       console.log(data, '리포지')
       const results = await this.clubRepository
         .createQueryBuilder('searchClubs')
+        // .leftJoinAndSelect("searchClubs.user", "user")
         .where('searchClubs.title LIKE :s OR searchClubs.content LIKE :s', { s: `%${data.term}%` })
         // .orderBy("search.clubId", "DESC")  //최신순(내림차순)
         .getMany();

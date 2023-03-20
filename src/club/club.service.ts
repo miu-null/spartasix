@@ -65,4 +65,9 @@ export class ClubService {
   async deleteClub(clubId: number) {
     await this.clubRepository.deleteClubDto(clubId);
   }
+
+  async paginatedResults(page) {
+    const data = await this.clubRepository.paginatedResults(page);
+    return data;
+}
 }
