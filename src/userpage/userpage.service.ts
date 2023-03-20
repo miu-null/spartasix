@@ -59,8 +59,8 @@ export class UserpageService {
     const { currentClub, currentClubMember } =
       await this.userPageRepository.getThisClub(userId, clubId);
     const clubInfo = [currentClub].map(
-      ({ clubId, title, maxMembers, createdAt }) => {
-        return { clubId, title, maxMembers, createdAt };
+      ({ id, title, maxMembers, createdAt }) => {
+        return { id, title, maxMembers, createdAt };
         // = club.dataValues.Clubs);
       },
     );
@@ -76,15 +76,13 @@ export class UserpageService {
 
   // 클럽 신청서 조회 // 특정 유저만
   async getClubApps(userId: number) {
-    const { userNamesArray, myOwnClub } =
-      await this.userPageRepository.getClubApps(userId);
-    const myApps = myOwnClub.map(
-      ({ clubMemberId, userId, isAccepted, createdAt }) => {
-        return { clubMemberId, userId, isAccepted, createdAt };
-      },
-    );
-
-    return { userNamesArray, myApps };
+    // const { userNamesArray, myOwnClub } =
+    //   await this.userPageRepository.getClubApps(userId);
+    // const myApps = myOwnClub.map(({ id, userId, isAccepted, createdAt }) => {
+    //   return { id, userId, isAccepted, createdAt };
+    // });
+    // return { userNamesArray, myApps };
+    return "123";
   }
 
   // 특정 신청서 조회 // 특정 유저만
@@ -94,8 +92,8 @@ export class UserpageService {
       clubMemberId,
     );
     const thisApp = [getThisApp].map(
-      ({ clubMemberId, userId, application, isAccepted, createdAt }) => {
-        return { clubMemberId, userId, application, isAccepted, createdAt };
+      ({ id, userId, application, isAccepted, createdAt }) => {
+        return { id, userId, application, isAccepted, createdAt };
       },
     );
     return thisApp;
