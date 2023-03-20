@@ -19,6 +19,7 @@ import { Response } from "express";
 import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
+import { remindEmailDto } from "./dto/remindevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -29,6 +30,15 @@ export class EventController {
     private eventService: EventService,
     private searchService: SearcherService,
   ) {}
+
+   //이벤트 리마인드
+   @Post("/remindEvent")
+   async remindEvent(@Body() data:remindEmailDto, @Res() res ){
+     const remindEvent = await this.eventService.remindEvent(
+       data.email
+     )
+     return res.json({data:remindEvent})
+   }
 
   //새글 쓰기
   @Post("/newevent")
@@ -67,7 +77,8 @@ export class EventController {
       userId,
       data.title,
       data.content,
-      data.date,
+      data.startDate,
+      data.endDate,
       data.postIMG,
     );
     return res.json(true);
@@ -100,6 +111,7 @@ export class EventController {
 
     return res.render("eventDetail.ejs", { events });
   }
+ 
 
   // 수정 페이지 렌더링
   @Get("/list/:eventPostId/update")
@@ -123,7 +135,9 @@ export class EventController {
       userId,
       title: data.title,
       content: data.content,
-      date: data.date,
+      startDate:data.startDate,
+      endDate:data.endDate,
+      postIMG: data.postIMG
     });
 
     return events;

@@ -8,11 +8,36 @@ function event_open() {
   });
 }
 
-function eventNew() {
-  const title = $("#title").val();
-  const date = $("#startDate").val();
-  const content = $("#content").val();
+function remindEvent() {
 
+  const email=$('#event_modal_email').val();
+
+  $.ajax({
+    type: "POST",
+    url: `/events/remindEvent`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    async: false,
+    data: JSON.stringify({
+      email: email,
+    }),
+    success: function (response) {
+      alert("이벤트 알림 메일을 전송했습니다.");
+    },
+    errorfunction(request, status, error){
+      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
+  });
+ 
+}
+
+function eventNew() {
+  const title = $("#eventTitle").val();
+  const startDate = $("#eventStartDate").val();
+  const endDate = $("#eventEndDate").val();
+  const content = $("#eventContent").val();
+  const postIMG = $("#eventPostImg").val();
+  
   $.ajax({
     type: "POST",
     url: "/events/newevent",
@@ -20,8 +45,10 @@ function eventNew() {
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       title: title,
-      date: date,
+      startDate: startDate,
+      endDate: endDate,
       content: content,
+      postIMG:postIMG
     }),
     success: function (response) {
       alert("작성 완료");

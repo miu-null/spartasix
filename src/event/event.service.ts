@@ -2,10 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { EventRepository } from "./event.repository";
 import { UpdateEventDto } from "src/event/dto/updateevent.dto";
 import { DeleteEventDto } from "./dto/deleteevent.dto";
+import { MailService } from "src/mail/mail.service";
 
 @Injectable()
 export class EventService {
-  constructor(private EventRepository: EventRepository) {}
+  constructor(
+    private EventRepository: EventRepository,
+    private readonly mailService: MailService,
+    ) {}
 
   async getEvents(page) {
     const event = await this.EventRepository.paginatedResults(page);
@@ -17,19 +21,25 @@ export class EventService {
   async getEventById(eventPostId) {
     return await this.EventRepository.getEventById(eventPostId);
   }
+  
+  async remindEvent(email:string){
+    return await this.mailService.remindEmail(email)
+  }
 
   async createEvent(
     userId: number,
     title: string,
     content: string,
-    date: Date,
+    startDate: Date,
+    endDate: Date,
     postIMG: string,
   ) {
     await this.EventRepository.createEvent(
       userId,
       title,
       content,
-      date,
+      startDate,
+      endDate,
       postIMG,
     );
   }

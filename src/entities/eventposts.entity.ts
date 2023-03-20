@@ -30,7 +30,10 @@ export class EventPosts {
   content: string;
 
   @Column("date")
-  date: Date;
+  startDate: Date;
+  
+  @Column("date")
+  endDate: Date;
 
   @Column("int")
   viewCount: number;
