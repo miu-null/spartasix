@@ -32,7 +32,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: `${email}`,
       from: "harucometrue7@gmail.com",
-      subject: "[스파르타 커뮤클럽] 이벤트 리마인드",
+      subject: "[스파르타 커뮤클럽] 이벤트 리마인드 알림테스트",
       text: `이벤트 기간은 ~일부터 ~일까지 입니다.`,
     })
   }
