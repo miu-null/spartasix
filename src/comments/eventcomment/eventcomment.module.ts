@@ -4,14 +4,16 @@ import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtConfigService } from "src/config/jwt.config.service";
 import { typeOrmConfigService } from "src/config/typeorm.config.service";
+import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventComments } from "src/entities/eventcomments.entity";
+import { Users } from "src/entities/users.entity";
 import { EventCommentController } from "./eventcomment.controller";
 import { EventCommentRepository } from "./eventcomment.repository";
 import { EventCommentService } from "./eventcomment.service";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([EventComments]),
+    TypeOrmModule.forFeature([Users, EventComments, EventCommentLikes]),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: typeOrmConfigService,
