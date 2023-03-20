@@ -4,11 +4,13 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
   Delete,
   Res,
   Request,
   UploadedFile,
   UseInterceptors,
+  Redirect,
 } from "@nestjs/common";
 import { Response } from "express";
 import { UserpageService } from "./userpage.service";
@@ -36,10 +38,18 @@ export class UserpageController {
     return res.render("userInfo", context);
   }
 
+  @Get("/:userId/edit")
+  // @UseGuards(AuthGuard())
+  async editUserInfo(@Param("userId") userId: number, @Res() res: Response) {
+    const myInfo = await this.userPageService.getUserInfo(userId);
+    const context = { myInfo };
+    return res.render("userInfoEdit", context);
+  }
+
   @Get("/:userId/clubs/app") // 신청서 전체조회 (완료)
-  async getClubApps(@Param("userId") userId: number, @Res() res: Response) {
+  async getClubApps(@Param("userId") userId: number) {
     const myClubApps = await this.userPageService.getClubApps(userId);
-    return res.render("userInfo", myClubApps);
+    return myClubApps;
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
@@ -51,31 +61,39 @@ export class UserpageController {
     return thisApp;
   }
 
-  @Patch("/info/:userId") // TODO 내 정보 수정하기, 본인검증로직 추가할 것
+  // multipart/form-data 로 submit할때는 method를 patch로 변경시, multer middleware를 수정해야 하는 문제가 있음
+  @Post("/info/:userId") // TODO 내 정보 수정하기, 본인검증로직 추가할 것
   @UseInterceptors(FileInterceptor("userIMG"))
+  @Redirect("", 302)
   async updateUser(
     @Param("userId") userId: number,
     @Request() req: Request, // @Body() data: UserUpdateDto,
     @Body() data: UserUpdateDto,
     @UploadedFile() uploadedFile: Express.Multer.File,
   ) {
-    AWS.config.update({
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-      },
-    });
-    const key = `${Date.now() + uploadedFile.originalname}`;
-    // AWS 객체 생성
-    const upload = await new AWS.S3()
-      .putObject({
-        Key: key,
-        Body: uploadedFile.buffer,
-        Bucket: process.env.AWS_BUCKET_NAME,
-        ACL: "public-read",
-      })
-      .promise();
-    const imgUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    const userInfo = await this.userPageService.getUserInfo(userId);
+    let imgUrl = userInfo.userIMG;
+    console.log("hello world");
+    console.log(uploadedFile);
+    if (!!uploadedFile) {
+      AWS.config.update({
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY,
+          secretAccessKey: process.env.AWS_SECRET_KEY,
+        },
+      });
+      const key = `${Date.now() + uploadedFile.originalname}`;
+      // AWS 객체 생성
+      const upload = await new AWS.S3()
+        .putObject({
+          Key: key,
+          Body: uploadedFile.buffer,
+          Bucket: process.env.AWS_BUCKET_NAME,
+          ACL: "public-read",
+        })
+        .promise();
+      imgUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    }
     Object.assign({
       statusCode: 201,
       message: `이미지 등록 성공`,
@@ -90,7 +108,10 @@ export class UserpageController {
       snsUrl: data.snsUrl,
       userIMG: imgUrl,
     });
-    return changedInfo;
+
+    return {
+      url: `/userpage/${userId}`,
+    };
   }
 
   @Get("/:userId/clubs/:clubId") // TODO 특정 클럽정보 조회
