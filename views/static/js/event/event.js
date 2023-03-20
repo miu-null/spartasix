@@ -14,7 +14,7 @@ function remindEvent() {
 
   $.ajax({
     type: "POST",
-    url: "events/remindEvent",
+    url: `/events/remindEvent`,
     dataType: "json",
     contentType: "application/json; charset=utf-8",
     async: false,
@@ -36,6 +36,7 @@ function eventNew() {
   const startDate = $("#eventStartDate").val();
   const endDate = $("#eventEndDate").val();
   const content = $("#eventContent").val();
+  const postIMG = $("#eventPostImg").val();
   
   $.ajax({
     type: "POST",
@@ -47,6 +48,7 @@ function eventNew() {
       startDate: startDate,
       endDate: endDate,
       content: content,
+      postIMG:postIMG
     }),
     success: function (response) {
       alert("작성 완료");
