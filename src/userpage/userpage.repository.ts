@@ -30,7 +30,7 @@ export class UserPageRepository {
   // 작성한 글 조회
   async getMyPosts(userId: number) {
     const clubPosts = await this.clubRepository.find({
-      where: { userId },
+      where: { id: userId },
       select: ["title", "content"],
     });
     const eventPosts = await this.eventpostRepository.find({
@@ -44,20 +44,20 @@ export class UserPageRepository {
   // 　운영중, 참여중인 모임 전체 보기
   async getMyClubs(userId: number) {
     const myOwnClub = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("clubs.userId = :userId", { userId, deletedAt: null })
+      .createQueryBuilder("Clubs")
+      .where("Clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
 
     const MyClubApp = await this.clubMembersRepository
-      .createQueryBuilder("clubMembers")
-      .where("clubMembers.userId = :userId", { userId, deletedAt: null })
-      .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: true })
+      .createQueryBuilder("ClubMembers")
+      .where("ClubMembers.userId = :userId", { userId, deletedAt: null })
+      .andWhere("ClubMembers.isAccepted = :isAccepted", { isAccepted: true })
       .getMany();
 
     const MyClub = MyClubApp.length
       ? await this.clubRepository
-          .createQueryBuilder("clubs")
-          .where("clubs.clubId IN (:...clubIds)", {
+          .createQueryBuilder("Clubs")
+          .where("Clubs.clubId IN (:...clubIds)", {
             clubIds: MyClubApp.map((clubApp) => clubApp.clubId),
           })
           .getMany()
@@ -71,24 +71,24 @@ export class UserPageRepository {
   // *클럽 신청서 전체보기
   async getClubApps(userId: number) {
     const myClubs = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("clubs.userId = :userId", { userId, deletedAt: null })
+      .createQueryBuilder("Clubs")
+      .where("Clubs.userId = :userId", { userId, deletedAt: null })
       .getMany();
     console.log(myClubs);
     const myOwnClub = myClubs.length
       ? await this.clubMembersRepository
-          .createQueryBuilder("clubMembers")
-          .where("clubMembers.clubId IN (:...clubIds)", {
+          .createQueryBuilder("ClubMembers")
+          .where("ClubMembers.clubId IN (:...clubIds)", {
             clubIds: myClubs.map((clubapp) => clubapp.clubId),
           })
-          .andWhere("clubMembers.isAccepted = :isAccepted", {
+          .andWhere("ClubMembers.isAccepted = :isAccepted", {
             isAccepted: false,
           })
           .getMany()
       : [];
     const userName = myOwnClub.length
       ? await this.userRepository
-          .createQueryBuilder("users")
+          .createQueryBuilder("Users")
           .select("users.nickName")
           .where("users.userId IN (:...userIds)", {
             userIds: myOwnClub.map((clubApps) => clubApps.userId),
@@ -104,17 +104,17 @@ export class UserPageRepository {
   // 회원정보 조회
   async getUserInfo(userId: number) {
     return await this.userRepository.findOne({
-      where: { userId },
-      select: [
-        "userId",
-        "email",
-        "password",
-        "phone",
-        "nickName",
-        "snsURL",
-        "userIMG",
-        "createdAt",
-      ],
+      // where: { id },
+      // select: [
+      //   "id",
+      //   "email",
+      //   "password",
+      //   "phone",
+      //   "nickName",
+      //   "snsURL",
+      //   "userIMG",
+      //   "createdAt",
+      // ],
     });
   }
 
@@ -135,17 +135,17 @@ export class UserPageRepository {
   // 특정 클럽정보 조회 (운영자, 참여인원 보여주기)
   async getThisClub(userId: number, clubId: number) {
     const currentClub = await this.clubRepository
-      .createQueryBuilder("clubs")
-      .where("clubs.userId = :userId", { userId, deletedAt: null })
-      .andWhere("clubs.clubId = :clubId", { clubId })
+      .createQueryBuilder("Clubs")
+      .where("Clubs.userId = :userId", { userId, deletedAt: null })
+      .andWhere("Clubs.clubId = :clubId", { clubId })
       .getOne();
     // 여기서 운영자, 클럽명(게시물 이름), 최대인원 등 확인
 
     // 여기서 확정된 참여인원 확인 - 클럽 멤버들 확인
     const currentClubMember = await this.clubMembersRepository
-      .createQueryBuilder("clubMembers")
+      .createQueryBuilder("ClubMembers")
       .where("clubId IN (:clubId)", { clubId, deletedAt: null })
-      .andWhere("clubMembers.isAccepted = :isAccepted", { isAccepted: true })
+      .andWhere("ClubMembers.isAccepted = :isAccepted", { isAccepted: true })
       .getMany();
     return { currentClub, currentClubMember };
   }
@@ -153,8 +153,8 @@ export class UserPageRepository {
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const members = await this.clubMembersRepository
-      .createQueryBuilder("members")
-      .andWhere("members.clubMemberId = :clubMemberId", { clubMemberId })
+      .createQueryBuilder("ClubMembers")
+      .andWhere("ClubMembers.clubMemberId = :clubMemberId", { clubMemberId })
       .getOne();
     return members;
   }
@@ -171,7 +171,7 @@ export class UserPageRepository {
   // 신청서 거절
   async rejectApp(userId: number, clubMemberId: number) {
     await this.clubMembersRepository
-      .createQueryBuilder("clubMembers")
+      .createQueryBuilder("ClubMembers")
       .softDelete()
       .where("clubMemberId = :clubMemberId", { clubMemberId })
       .execute();
