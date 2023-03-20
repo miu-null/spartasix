@@ -1,3 +1,10 @@
+$(document).ready(function () {
+  const eventPostId = $("#comment_show_text").data("text")
+  showComment(eventPostId);
+ 
+  showlike()
+})
+
 function event_open() {
   $(`#event_modal1`).fadeIn();
 
@@ -98,4 +105,73 @@ function deleteEvent(eventPostId) {
       console.log(response);
     },
   });
+}
+
+function showComment(eventPostId) {
+  $.ajax({
+    type: "GET",
+    url: `/eventcomment/${eventPostId}/comments`,
+    data: {},
+    async: false,
+    success: function (response) {
+      let rows = response.comments;
+      let user = response.user
+
+      console.log(response)
+
+      for(let i = 0; i < rows.length; i++) {
+        const commentId = user[i]["eventCommentId"]
+        const nickName = user[i].user["nickName"]
+        const content = rows[i]["content"]
+        let date = rows[i]["createdAt"]
+        date = date.split("T")[0]
+
+        let temp_html = `
+        <div class="comment_text_box">
+          <div class="comment_text_container">
+            <div class="comment_nickname">
+              ${nickName}
+            </div>
+            <div class="comment_content">
+              ${content}
+            </div>
+            <div class="comment_date">
+              ${date}
+            </div>
+            <div class="comment_like">
+              <div>
+              <image onclick="updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
+              </div>
+              <div data-like="" id="event_commentId" class="like_total">
+              </div>
+            </div>
+          </div>
+        </div>
+        `
+        $("#comment_show_text").append(temp_html)
+      }
+    }
+  })
+}
+
+function showlike() {
+  $.ajax({
+    type: "GET",
+    url: `/eventcomment/show_comment_like`,
+    data: {},
+    success: function (response) {
+      console.log(response)
+
+    },
+  })
+}
+
+function updateLike(commentId) {
+  $.ajax({
+    type: "POST",
+    url: `/eventcomment/update_event_like/${commentId}`,
+    data: {},
+    success: function (response) {
+    }
+  })
 }

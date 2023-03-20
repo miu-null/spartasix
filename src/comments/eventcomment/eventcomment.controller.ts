@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res } from "@nestjs/common";
 import { CreateCommentDto } from "../dto/createcomment.dto";
 import { EventCommentService } from "./eventcomment.service";
 
@@ -6,11 +6,12 @@ import { EventCommentService } from "./eventcomment.service";
 export class EventCommentController {
   constructor(private eventCommentService: EventCommentService) {}
 
-  @Get("/comments")
-  async showAllComment() {
-    const comments = await this.eventCommentService.showAllComment();
+  @Get("/:id/comments")
+  async showAllComment(@Param("id") eventPostId: number) {
 
-    return comments;
+    const comments = await this.eventCommentService.showAllComment(eventPostId);
+
+    return comments
   }
 
   @Post("/create-comment/:id")
@@ -44,6 +45,25 @@ export class EventCommentController {
   ) {
     const userId = req.user;
     await this.eventCommentService.deleteComment(userId, eventCommentId);
+
+    return true;
+  }
+
+  @Get("/show_comment_like")
+  async showLike() {
+
+    const like = await this.eventCommentService.showLike();
+    return like
+  }
+
+  @Post("/update_event_like/:commentId")
+  async updateLike(
+    @Req() req, 
+    @Param("commentId") commentId: number,
+    ) {
+    const userId = req.user;
+
+    await this.eventCommentService.updateLike(userId, commentId)
 
     return true;
   }

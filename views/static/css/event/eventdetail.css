@@ -300,3 +300,87 @@
   color: #FFFF;
   font-weight: bold;
 }
+
+.eventdetail_comment_container {
+  border-top: 4px solid;
+  margin-top: -40px;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment_body {
+  width: 100%;
+  height: 70px;
+  margin-top: 40px;
+  border: 1px solid;
+}
+
+.comment_textarea {
+  width: 100%;
+  height: 67px;
+  resize: none;
+  border: none;
+}
+
+.comment_textarea:focus {
+  outline: none;
+}
+
+.comment_input_button_box {
+  margin-left: auto;
+  margin-top: 10px;
+
+}
+
+.comment_input_button {
+  border: 1px solid #EA4E4E;
+  border-radius: 30px;
+  background-color: #ffff;
+  font-weight: bold;
+}
+
+.comment_show_text {
+  width: 100%;
+  height: 700px;
+  margin-top: 30px;
+}
+
+.comment_text_box {
+  margin: auto;
+  margin-top: 30px;
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid;
+}
+
+.comment_text_container {
+  display: flex;
+  margin-top: 30px;
+}
+
+.comment_nickname {
+  margin-left: 20px;
+  width: 50px;
+  font-weight: bold;
+}
+
+.comment_content {
+  margin-left: 40px;
+  width: 300px;
+}
+
+.comment_date {
+  margin-left: 300px;
+  width: 100px;
+}
+
+.comment_like {
+  margin-left: 80px;
+  display: flex;
+}
+
+.comment_like_img {
+  width: 20px;
+  margin-right: 10px;
+}

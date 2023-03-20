@@ -7,8 +7,8 @@ export class EventCommentService {
     private readonly eventCommentRepository: EventCommentRepository,
   ) {}
 
-  async showAllComment() {
-    const comments = await this.eventCommentRepository.showAllComment();
+  async showAllComment(eventPostId: number) {
+    const comments = await this.eventCommentRepository.showAllComment(eventPostId);
 
     return comments;
   }
@@ -25,6 +25,18 @@ export class EventCommentService {
 
   async deleteComment(userId: number, eventCommentId: number) {
     await this.eventCommentRepository.deleteComment(userId, eventCommentId);
+
+    return true;
+  }
+
+  async showLike() {
+    const like = await this.eventCommentRepository.showLike();
+
+    return like
+  }
+
+  async updateLike(userId: number, commentId: number) {
+    await this.eventCommentRepository.updateLike(userId, commentId);
 
     return true;
   }
