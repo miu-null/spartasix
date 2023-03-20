@@ -22,8 +22,8 @@ import { EventPosts } from "./eventposts.entity";
 
 @Entity({ schema: "Users", name: "Users" })
 export class Users {
-  @PrimaryGeneratedColumn({ type: "int", name: "userId" })
-  userId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "uuid" })
+  id: number;
 
   @Column("varchar", { length: 50 })
   email: string;
@@ -55,9 +55,16 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @ManyToMany(() => Clubs, (clubs) => clubs.user, {
+  // @ManyToMany(() => Clubs, (clubs) => clubs.user, {
+  //   onUpdate: "CASCADE",
+  //   onDelete: "CASCADE",
+  // })
+  // clubs: Clubs[];
+
+  @OneToMany(() => Clubs, (clubs) => clubs.user, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
+    eager: false,
   })
   clubs: Clubs[];
 
@@ -122,7 +129,6 @@ export class Users {
     },
   )
   eventComments: EventComments[];
-
 
   @OneToMany(() => ClubLikes, (clubLikes: ClubLikes) => clubLikes.user, {
     onUpdate: "CASCADE",
