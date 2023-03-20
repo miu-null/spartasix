@@ -26,6 +26,7 @@
 .main_title {
   font-weight: bold;
   font-size: 4rem;
+  line-height: normal;
 }
 
 .main_text {

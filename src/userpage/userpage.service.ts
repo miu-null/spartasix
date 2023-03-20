@@ -38,7 +38,7 @@ export class UserpageService {
     return {
       userId: data.userId,
       email: data.email,
-      password,
+      password: password,
       phone: data.phone,
       nickName: data.nickName,
       snsURL: data.snsURL,
