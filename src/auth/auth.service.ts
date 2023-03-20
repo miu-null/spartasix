@@ -46,14 +46,14 @@ export class AuthService {
       throw new UnauthorizedException("비밀번호가 올바르지 않습니다.");
     }
 
-    const accessToken = await this.AccessToken(user.userId);
+    const accessToken = await this.AccessToken(user.id);
     const refreshToken = await this.RefreshToken(user.email);
     console.log("acc   " + accessToken);
     console.log("ref   " + refreshToken);
 
     await this.redisService.setRefreshToken(
       {
-        id: user.userId.toString(),
+        id: user.id.toString(),
         email: user.email,
       },
       refreshToken,
@@ -67,7 +67,7 @@ export class AuthService {
 
     const randomPassword = await this.mailService.findPassword(email);
 
-    return {findemail, randomPassword};
+    return { findemail, randomPassword };
   }
 
   async newPassword(email: string, password: string) {

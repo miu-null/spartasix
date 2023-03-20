@@ -17,8 +17,8 @@ import { Users } from "./users.entity";
 
 @Entity({ schema: "EventPosts", name: "EventPosts" })
 export class EventPosts {
-  @PrimaryGeneratedColumn({ type: "int", name: "eventPostId" })
-  eventPostId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "uuid" })
+  id: number;
 
   @Column("int")
   userId: number;
@@ -31,7 +31,7 @@ export class EventPosts {
 
   @Column("date")
   startDate: Date;
-  
+
   @Column("date")
   endDate: Date;
 
