@@ -1,6 +1,6 @@
-import { PickType } from "@nestjs/mapped-types";
-import{ CreateEventDto } from "./createevent.dto";
+import { IsEmail } from "class-validator";
 
-export class remindEmailDto extends PickType(CreateEventDto,[
-    "email",
-]as const) {}
+export class remindEmailDto {
+  @IsEmail()
+  readonly email: string;
+}
