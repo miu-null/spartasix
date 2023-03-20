@@ -1,7 +1,7 @@
 .huge-container {
   display: flex;
   margin: 4px;
-  height: 300vh;
+  height: 340vh;
   /* gap: 50px; */
   align-items: center;
   justify-content: center;
@@ -48,7 +48,7 @@
   font-size: 30px; */
   width: 700px;
   height: 700px;
-  margin-top: 510px;
+  margin-top: 560px;
   /* border: 1px solid magenta; */
   align-items: center;
   text-align: center;
@@ -67,10 +67,19 @@
   font-family: "Amiko"; */
 }
 
+.additional-info {
+  background-color: #fff9f8;
+  align-items: center;
+  text-align: center;
+  width: 700px;
+  height: 335px;
+  margin-top: 620px;
+}
+
 .huge-activities {
   width: 700px;
   height: 600px;
-  margin-top: 850px;
+  margin-top: 1210px;
   /* border: 1px solid magenta; */
   text-align: center;
   align-items: center;
@@ -80,7 +89,7 @@
   width: 700px;
   height: 400px;
   background-color: #fff9f8;
-  margin-top: 20px;
+  margin-top: 12px;
   padding: 30px;
   font-size: 15px;
   text-align: left;
@@ -171,11 +180,11 @@
   flex-direction: column;
   gap: 12px;
 }
-
+/* 
 .message-box {
   width: 70px;
   align-self: end;
-}
+} */
 
 .edit-box {
   width: 45px;
