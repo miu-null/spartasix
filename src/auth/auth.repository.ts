@@ -30,7 +30,7 @@ export class AuthRepository {
     if (nickname) {
       throw new BadRequestException("이미 존재하는 닉네임 입니다.");
     }
-    const myphone = phone.split("-").join("")
+    const myphone = phone.split("-").join("");
 
     if (!findemail && !nickname) {
       return await this.userRepository.insert({
@@ -46,7 +46,7 @@ export class AuthRepository {
   async login(email: string) {
     const user = await this.userRepository.findOne({
       where: { email, deletedAt: null },
-      select: ["userId", "email", "password"],
+      select: ["id", "email", "password"],
     });
 
     if (!user) {
@@ -57,8 +57,7 @@ export class AuthRepository {
   }
 
   async findPassword(email: string, phone: string) {
-
-    const findphone = phone.split("-").join("")
+    const findphone = phone.split("-").join("");
 
     const user = await this.userRepository.findOne({
       where: { email, phone: findphone, deletedAt: null },
@@ -69,24 +68,22 @@ export class AuthRepository {
       throw new BadRequestException("회원이 존재하지 않습니다.");
     }
 
-    return user
+    return user;
   }
 
   async newPassword(email: string, password: string) {
     const userId = await this.userRepository.findOne({
       where: { email },
-      select: ["userId"]
-    })
+      select: ["id"],
+    });
 
-    await this.userRepository.update(
-      userId, {password: password},
-    )
+    await this.userRepository.update(userId, { password: password });
     return true;
   }
 
   async checkThisUser(userId: number) {
     const thisUser = await this.userRepository.findOne({
-      where: { userId },
+      where: { id: userId },
       select: ["email", "nickName", "snsURL", "userIMG"],
     });
     return thisUser;
@@ -94,7 +91,7 @@ export class AuthRepository {
 
   async checkMyInfo(userId: number) {
     const myInfo = await this.userRepository.findOne({
-      where: { userId },
+      where: { id: userId },
       select: ["email", "phone", "nickName", "snsURL", "userIMG"],
     });
     return myInfo;
