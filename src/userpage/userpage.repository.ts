@@ -30,14 +30,15 @@ export class UserPageRepository {
   // 작성한 글 조회
   async getMyPosts(userId: number) {
     const clubPosts = await this.clubRepository.find({
-      where: { id: userId },
+      relations: { user: true },
+      where: { user: { id: userId } },
       select: ["title", "content"],
     });
     const eventPosts = await this.eventpostRepository.find({
-      where: { userId },
+      relations: { user: true },
+      where: { user: { id: userId } },
       select: ["title"],
     });
-
     return { clubPosts, eventPosts };
   }
 
