@@ -1,9 +1,10 @@
 $(document).ready(function () {
-  const eventPostId = $("#comment_show_text").data("text")
+  const eventPostId = $("#comment_show_text").data("text");
   showComment(eventPostId);
- 
-  showlike()
-})
+
+  const clubPostId = $("#club_show_text").data("text");
+  showClubComment(clubPostId);
+});
 
 function event_open() {
   $(`#event_modal1`).fadeIn();
@@ -16,8 +17,7 @@ function event_open() {
 }
 
 function remindEvent() {
-
-  const email=$('#event_modal_email').val();
+  const email = $("#event_modal_email").val();
 
   $.ajax({
     type: "POST",
@@ -31,11 +31,19 @@ function remindEvent() {
     success: function (response) {
       alert("이벤트 알림 메일을 전송했습니다.");
     },
-    errorfunction(request, status, error){
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    }
+    errorfunction(request, status, error) {
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error,
+      );
+    },
   });
- 
 }
 
 function eventNew() {
@@ -44,7 +52,7 @@ function eventNew() {
   const endDate = $("#eventEndDate").val();
   const content = $("#eventContent").val();
   const postIMG = $("#eventPostImg").val();
-  
+
   $.ajax({
     type: "POST",
     url: "/events/newevent",
@@ -55,7 +63,7 @@ function eventNew() {
       startDate: startDate,
       endDate: endDate,
       content: content,
-      postIMG:postIMG
+      postIMG: postIMG,
     }),
     success: function (response) {
       alert("작성 완료");
@@ -114,57 +122,157 @@ function showComment(eventPostId) {
     data: {},
     async: false,
     success: function (response) {
-      let rows = response
-
-      console.log(response)
-
-      for(let i = 0; i < rows.length; i++) {
-        const commentId = rows[i]["eventCommentId"]
-        const nickName = rows[i]["user"]["nickName"]
-        const content = rows[i]["content"]
+      let rows = response;
+      console.log(response);
+      for (let i = 0; i < rows.length; i++) {
+        const commentId = rows[i]["id"];
+        const nickName = rows[i]["user"]["nickName"];
+        const content = rows[i]["content"];
         const like = rows[i]["eventCommentLikes"].length;
-        let date = rows[i]["createdAt"]
-        date = date.split("T")[0]
+        let date = rows[i]["createdAt"];
+        date = date.split("T")[0];
 
         let temp_html = `
         <div class="comment_text_box">
-          <div class="comment_text_container">
+          <div id="comment_text_container${commentId}" class="comment_text_container">
             <div class="comment_nickname">
               ${nickName}
             </div>
-            <div class="comment_content">
+            <div id="content_${commentId}" class="comment_content">
+              <div id="content_box_${commentId}" class="comment_content_box">
               ${content}
+              </div>
             </div>
             <div class="comment_date">
               ${date}
             </div>
-            <div class="comment_like">
+            <div id="comment_like${commentId}" class="comment_like">
               <div>
-              <image onclick="updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
+                <image onclick="updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
               </div>
               <div id="event_commentId" class="like_total">
                 ${like}
               </div>
             </div>
           </div>
+          <div id="event_comment_button${commentId}" class="event_comment_button">
+            <button id="comment_del_button${commentId}" class="comment_button" onclick="updateEventComment('${commentId}','${content}')">edit</button>
+            <button id="comment_del_button1${commentId}" class="comment_button" onclick="deleteEventComment(${commentId})">delete</button>
+          </div>
         </div>
-        `
-        $("#comment_show_text").append(temp_html)
+        `;
+        $("#comment_show_text").append(temp_html);
       }
-    }
-  })
+    },
+  });
 }
 
-function showlike() {
+function createEventComment(postId) {
+  const content = $("#comment_textarea").val();
+
   $.ajax({
-    type: "GET",
-    url: `/eventcomment/show_comment_like`,
+    type: "POST",
+    url: `/eventcomment/create-comment/${postId}`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      content: content,
+    }),
+    success: function (response) {
+      alert("작성 완료 !");
+      window.location.reload();
+    },
+  });
+}
+
+function updateEventComment(commentId, content) {
+  const content1 = document.querySelector(`#content_box_${commentId}`);
+  const div = document.querySelector(`#content_${commentId}`);
+
+  const delbutton = document.querySelector(`#comment_del_button${commentId}`);
+  const delbutton1 = document.querySelector(`#comment_del_button1${commentId}`);
+  const div2 = document.querySelector(`#event_comment_button${commentId}`);
+
+  const deldiv = document.querySelector(`#comment_like${commentId}`);
+  const div3 = document.querySelector(`#comment_text_container${commentId}`);
+
+  const newcontent = document.createElement("input");
+  const newbutton = document.createElement("input");
+
+  div.removeChild(content1);
+  div2.removeChild(delbutton);
+  div2.removeChild(delbutton1);
+  div3.removeChild(deldiv);
+
+  div.appendChild(newcontent);
+  div2.appendChild(newbutton);
+
+  newcontent.setAttribute("class", "new_content");
+  newcontent.setAttribute("id", `new_${commentId}`);
+  newcontent.setAttribute("type", "text");
+  newcontent.setAttribute("placeholder", `${content}`);
+
+  newbutton.setAttribute("class", "new_comment_button");
+  newbutton.setAttribute("type", "button");
+  newbutton.setAttribute("value", "edit");
+  newbutton.setAttribute("id", `new_comment`);
+
+  let update_comment = document.querySelector("#new_comment");
+  update_comment.addEventListener("click", function () {
+  const new_comment = $(`#new_${commentId}`).val();
+
+    $.ajax({
+      type: "PATCH",
+      url: `/eventcomment/update-comment/${commentId}`,
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
+        content: new_comment,
+      }),
+      success: function (response) {
+        alert("수정 완료");
+        window.location.reload();
+      },
+      error: function (request, status, error) {
+        if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
+          alert("댓글이 존재하지 않습니다.");
+          window.location.reload();
+        }
+        if (
+          request.responseJSON["message"] ===
+          "작성자만 사용할 수 있는 기능입니다."
+        ) {
+          alert("작성자만 사용할 수 있는 기능입니다.");
+          window.location.reload();
+        }
+      },
+    });
+  });
+}
+
+function deleteEventComment(eventcommentId) {
+  $.ajax({
+    type: "DELETE",
+    url: `/eventcomment/delete-comment/${eventcommentId}`,
     data: {},
     success: function (response) {
-      console.log(response)
-
+      alert("삭제 성공 !");
+      window.location.reload();
     },
-  })
+    error: function (response) {
+      if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
+        alert("댓글이 존재하지 않습니다.");
+        window.location.reload();
+      }
+      if (
+        request.responseJSON["message"] ===
+        "작성자만 사용할 수 있는 기능입니다."
+      ) {
+        alert("작성자만 사용할 수 있는 기능입니다.");
+        window.location.reload();
+      }
+    },
+  });
 }
 
 function updateLike(commentId) {
@@ -173,6 +281,12 @@ function updateLike(commentId) {
     url: `/eventcomment/update_event_like/${commentId}`,
     data: {},
     success: function (response) {
-    }
-  })
+      alert("좋아요 !");
+      window.location.reload();
+    },
+    error: function (err) {
+      alert("좋아요 취소 !");
+      window.location.reload();
+    },
+  });
 }

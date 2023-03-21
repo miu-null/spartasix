@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ClubCommentLikes } from "src/entities/clubcommentlikes.entity";
 import { ClubComments } from "src/entities/clubcomments.entity";
 import { Repository } from "typeorm";
 
@@ -12,19 +13,37 @@ export class ClubCommentRepository {
   constructor(
     @InjectRepository(ClubComments)
     private readonly clubRepository: Repository<ClubComments>,
+    @InjectRepository(ClubCommentLikes)
+    private readonly clubCommentLikeRepository: Repository<ClubCommentLikes>,
   ) {}
 
-  async showAllComment() {
+  async showAllComment(clubPostId: number) {
     const comments = await this.clubRepository.find({
-      where: { deletedAt: null },
-      select: ["userId", "clubId", "content", "createdAt"],
+      where: { clubId: clubPostId, deletedAt: null },
+      relations: {
+        user: true,
+        clubCommentLikes: true,
+      },
+      select: {
+        user: {
+          id: true,
+          nickName: true,
+        },
+        clubCommentLikes: {
+          id: true,
+        },
+        id: true,
+        clubId: true,
+        content: true,
+        createdAt: true,
+      },
     });
 
     return comments;
   }
 
   async createComment(userId: number, clubId: number, content: string) {
-    console.log("userId : "+userId)
+    console.log("userId : " + userId);
     this.clubRepository.insert({
       userId,
       clubId,
@@ -71,5 +90,27 @@ export class ClubCommentRepository {
     });
 
     return comment;
+  }
+
+  async updateLike(userId: number, commentId: number) {
+    const Like = await this.clubCommentLikeRepository.findOne({
+      where: { userId, clubCommentId: commentId, deletedAt: null },
+      select: ["id", "userId"],
+    });
+
+    if (Like) {
+      await this.clubCommentLikeRepository.softDelete(Like.id);
+
+      throw new BadRequestException();
+    }
+
+    if (!Like) {
+      await this.clubCommentLikeRepository.insert({
+        userId,
+        clubCommentId: commentId,
+      });
+
+      return true;
+    }
   }
 }

@@ -116,7 +116,6 @@ function clubApp() {
   if (!content) {
     alert("모든 항목을 작성해 주세요.");
   }
-  console.log(clubId);
   $.ajax({
     type: "POST",
     url: `/club/${clubId}`,
@@ -133,3 +132,177 @@ function clubApp() {
     },
   });
 }
+
+function showClubComment(clubPostId) {
+  $.ajax({
+    type: "GET",
+    url: `/clubcomment/${clubPostId}/comments`,
+    data: {},
+    success: function (response) {
+      console.log(response);
+      let rows = response;
+
+      for (let i = 0; i < rows.length; i++) {
+        const commentId = rows[i]["id"];
+        const nickName = rows[i]["user"]["nickName"];
+        const content = rows[i]["content"];
+        const like = rows[i]["clubCommentLikes"].length;
+        let date = rows[i]["createdAt"];
+        date = date.split("T")[0];
+
+        let temp_html = `
+        <div class="comment_text_box">
+          <div id="club_text_container${commentId}" class="comment_text_container">
+            <div class="comment_nickname">
+              ${nickName}
+            </div>
+            <div id="club_content_${commentId}" class="comment_content">
+              <div id="club_content_box_${commentId}" class="comment_content_box">
+              ${content}
+              </div>
+            </div>
+            <div class="comment_date">
+              ${date}
+            </div>
+            <div id="club_like${commentId}" class="comment_like">
+              <div>
+                <image onclick="club_updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
+              </div>
+              <div id="club_commentId" class="like_total">
+                ${like}
+              </div>
+            </div>
+          </div>
+          <div id="club_comment_button${commentId}" class="event_comment_button">
+            <button id="club_del_button${commentId}" class="comment_button" onclick="updateClubComment('${commentId}','${content}')">edit</button>
+            <button id="club_del_button1${commentId}" class="comment_button" onclick="deleteClubComment(${commentId})">delete</button>
+          </div>
+        </div>
+        `;
+        $("#club_show_text").append(temp_html);
+      }
+    },
+  });
+}
+
+function createClubComment(postId) {
+  const content = $("#club_textarea").val();
+  $.ajax({
+    type: "POST",
+    url: `/clubcomment/create-comment/${postId}`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      content: content,
+    }),
+    success: function (response) {
+      alert("작성 완료 !");
+      window.location.reload();
+    },
+  });
+}
+
+function updateClubComment(commentId, content) {
+  const content1 = document.querySelector(`#club_content_box_${commentId}`);
+  const div = document.querySelector(`#club_content_${commentId}`);
+
+  const delbutton = document.querySelector(`#club_del_button${commentId}`);
+  const delbutton1 = document.querySelector(`#club_del_button1${commentId}`);
+  const div2 = document.querySelector(`#club_comment_button${commentId}`);
+
+  const deldiv = document.querySelector(`#club_like${commentId}`);
+  const div3 = document.querySelector(`#club_text_container${commentId}`);
+
+  const newcontent = document.createElement("input");
+  const newbutton = document.createElement("input");
+
+  div.removeChild(content1);
+  div2.removeChild(delbutton);
+  div2.removeChild(delbutton1);
+  div3.removeChild(deldiv);
+
+  div.appendChild(newcontent);
+  div2.appendChild(newbutton);
+
+  newcontent.setAttribute("class", "new_content");
+  newcontent.setAttribute("id", `club_new_${commentId}`);
+  newcontent.setAttribute("type", "text");
+  newcontent.setAttribute("placeholder", `${content}`);
+
+  newbutton.setAttribute("class", "new_club_button");
+  newbutton.setAttribute("type", "button");
+  newbutton.setAttribute("value", "edit");
+  newbutton.setAttribute("id", `club_new_comment`);
+
+  let update_comment = document.querySelector("#club_new_comment");
+  update_comment.addEventListener("click", function () {
+  const new_comment = $(`#club_new_${commentId}`).val();
+
+    $.ajax({
+      type: "PATCH",
+      url: `/clubcomment/update-comment/${commentId}`,
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
+        content: new_comment,
+      }),
+      success: function (response) {
+        alert("수정 완료");
+        window.location.reload();
+      },
+      error: function (request, status, error) {
+        if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
+          alert("댓글이 존재하지 않습니다.");
+          window.location.reload();
+        }
+        if (
+          request.responseJSON["message"] ===
+          "작성자만 사용할 수 있는 기능입니다."
+        ) {
+          alert("작성자만 사용할 수 있는 기능입니다.");
+          window.location.reload();
+        }
+      },
+    });
+  });
+}
+
+function deleteClubComment(clubcommentId) {
+  $.ajax({
+    type: "DELETE",
+    url: `/clubcomment/delete-comment/${clubcommentId}`,
+    data: {},
+    success: function (response) {
+      alert("삭제 성공 !");
+      window.location.reload();
+    },
+    error: function (response) {
+      if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
+        alert("댓글이 존재하지 않습니다.");
+        window.location.reload();
+      }
+      if (
+        request.responseJSON["message"] ===
+        "작성자만 사용할 수 있는 기능입니다."
+      ) {
+        alert("작성자만 사용할 수 있는 기능입니다.");
+        window.location.reload();
+      }
+    },
+  })
+}
+  function club_updateLike(commentId) {
+    $.ajax({
+      type: "POST",
+      url: `/clubcomment/update_club_like/${commentId}`,
+      data: {},
+      success: function (response) {
+        alert("좋아요 !");
+        window.location.reload();
+      },
+      error: function (err) {
+        alert("좋아요 취소 !");
+        window.location.reload();
+      },
+    });
+  }

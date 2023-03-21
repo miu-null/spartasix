@@ -19,22 +19,22 @@
     </div>
   </div>
 </div>
-<div class="eventdetail_container">
-  <div class="eventdetail_button">
-    <div class="eventdetail_edit">
-      <a onclick="location.href='/club/clubs/<%= detail.id %>'" class="new_event"
+<div class="clubdetail_container">
+  <div class="clubdetail_button">
+    <div class="clubdetail_edit">
+      <a onclick="location.href='/club/clubs/<%= detail.id %>'" class="new_club"
         style="cursor: pointer">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
-    <div class="eventdetail_delete">
-      <a style="cursor: pointer" onclick="clubdelete()" class="new_event">delete</a>
+    <div class="clubdetail_delete">
+      <a style="cursor: pointer" onclick="clubdelete()" class="new_club">delete</a>
     </div>
   </div>
-  <div class="eventdetail_title">
-    <div class="eventdetail_first">
-      <div class="eventdetail_first_id">
+  <div class="clubdetail_title">
+    <div class="clubdetail_first">
+      <div class="clubdetail_first_id">
         <%= detail.id %>
       </div>
-      <div class="eventdetail_first_title">
+      <div class="clubdetail_first_title">
         <div class="first_title">
           Title
         </div>
@@ -42,7 +42,7 @@
           <%= detail.title %>
         </div>
       </div>
-      <div class="eventdetail_first_nickname">
+      <div class="clubdetail_first_nickname">
         <div class="first_nickname">
           Writer
         </div>
@@ -50,7 +50,7 @@
           유저 닉네임 (필요)
         </div>
       </div>
-      <div class="eventdetail_first_likes">
+      <div class="clubdetail_first_likes">
         <div class="first_likes">
           Likes
         </div>
@@ -59,14 +59,8 @@
         </div>
       </div>
     </div>
-    <div class="eventdetail_second">
-      <div class="eventdetail_second_start">
-
-      </div>
-      <div class="eventdetail_second_end">
-
-      </div>
-      <div class="eventdetail_second_date">
+    <div class="clubdetail_second">
+      <div class="clubdetail_second_date">
         <div class="second_date">
           Date
         </div>
@@ -74,7 +68,7 @@
           <%= detail.createdAt %>
         </div>
       </div>
-      <div class="eventdetail_second_view">
+      <div class="clubdetail_second_view">
         <div class="view_title">
           View
         </div>
@@ -84,20 +78,20 @@
       </div>
     </div>
   </div>
-  <div class="eventdetail_body">
-    <div class="eventdetail_body_button">
-      <div class="eventdetail_body_button_remind">
+  <div class="clubdetail_body">
+    <div class="clubdetail_body_button">
+      <div class="clubdetail_body_button_remind">
         <button class="remind_button" onclick="modal_open()">Apply</button>
       </div>
-      <div class="eventdetail_body_button_report">
+      <div class="clubdetail_body_button_report">
         <button onclick="report_modal_open()" class="report_button">report</button>
       </div>
     </div>
-    <div class="eventdetail_body_text">
+    <div class="clubdetail_body_text">
       <%= detail.content %>
     </div>
-    <div class="eventdetail_like_container">
-      <img class="eventdetail_like_img" src="/img/likes.png">
+    <div class="clubdetail_like_container">
+      <img class="clubdetail_like_img" src="/img/likes.png">
     </div>
     <div class="eventdetail_bottom">
       <!-- 이전 게시글 링크 -->
@@ -112,10 +106,10 @@
               이전 글이 존재하지 않습니다.
               <%  }%>
         </div>
-        <div class="eventdetail_bottom_div_nickname">
+        <div class="clubdetail_bottom_div_nickname">
           작성자
         </div>
-        <div class="eventdetail_bottom_div_date">
+        <div class="clubdetail_bottom_div_date">
           2023.04.03
         </div>
       </div>
@@ -132,50 +126,29 @@
             <%  }%>
         </div>
         </div>
-        <div class="eventdetail_bottom_div_nickname">
+        <div class="clubdetail_bottom_div_nickname">
           작성자
         </div>
-        <div class="eventdetail_bottom_div_date">
+        <div class="clubdetail_bottom_div_date">
           2023.04.03
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<div class="eventdetail_comment_container">
+<div class="clubdetail_comment_container">
   <div class="comment_body">
     <div class="comment_input_box">
-      <textarea class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
+      <textarea id="club_textarea" class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
     </div>
   </div>
   <div class="comment_input_button_box">
-    <button class="comment_input_button">
+    <button class="comment_input_button" onclick="createClubComment('<%= detail.id %>')">
       작성
     </button>
   </div>
-  <div class="comment_show_text">
-    <div class="comment_text_box">
-      <div class="comment_text_container">
-        <div class="comment_nickname">
-          닉네임
-        </div>
-        <div class="comment_content">
-          댓글 내용
-        </div>
-        <div class="comment_date">
-          2023.03.20
-        </div>
-        <div class="comment_like">
-          <div>
-            <image class="comment_like_img" src="/img/likes.png">
-          </div>
-          <div>
-            32
-          </div>
-        </div>
-      </div>
-    </div>
+  <div data-text="<%= detail.id %>" id="club_show_text" class="club_show_text">
+    
   </div>
 </div>
 <div id="report_modal">
