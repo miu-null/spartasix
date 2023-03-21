@@ -114,15 +114,15 @@ function showComment(eventPostId) {
     data: {},
     async: false,
     success: function (response) {
-      let rows = response.comments;
-      let user = response.user
+      let rows = response
 
       console.log(response)
 
       for(let i = 0; i < rows.length; i++) {
-        const commentId = user[i]["eventCommentId"]
-        const nickName = user[i].user["nickName"]
+        const commentId = rows[i]["eventCommentId"]
+        const nickName = rows[i]["user"]["nickName"]
         const content = rows[i]["content"]
+        const like = rows[i]["eventCommentLikes"].length;
         let date = rows[i]["createdAt"]
         date = date.split("T")[0]
 
@@ -142,7 +142,8 @@ function showComment(eventPostId) {
               <div>
               <image onclick="updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
               </div>
-              <div data-like="" id="event_commentId" class="like_total">
+              <div id="event_commentId" class="like_total">
+                ${like}
               </div>
             </div>
           </div>

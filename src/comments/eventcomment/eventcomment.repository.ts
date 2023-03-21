@@ -21,19 +21,31 @@ export class EventCommentRepository {
   ) {}
 
   async showAllComment(eventPostId: number) {
-    const comments = await this.eventRepository.find({
-      where: { id: eventPostId, deletedAt: null },
-      select: [
-        "id",
-        "userId",
-        "eventPostId",
-        "content",
-        "createdAt",
-      ],
-    });
+    const comment = await this.eventRepository.find({
+      where: {eventPostId, deletedAt: null},
+      relations: {
+        user: true,
+        eventCommentLikes: true,
+      },
+      select: {
+        user: {
+          id: true,
+          nickName: true,
+        },
+        eventCommentLikes: {
+          id: true,
+        },
+        id: true,
+        eventPostId: true,
+        content: true,
+        createdAt: true
+      }
+    })
 
 
-    return { comments };
+
+
+    return comment;
   }
 
   async createComment(userId: number, eventPostId: number, content: string) {
