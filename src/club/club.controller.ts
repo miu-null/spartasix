@@ -122,16 +122,19 @@ export class ClubController {
   ///모임게시판 검색기능
   @Get("/search")
   async searchClubs(
-    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query("page") page: number,
     @Query() term: string,
     @Res() res: Response,
   ) {
+    if (!page) {
+      page = 1;
+    }
     const searchData = await this.searchService.paginatedResults(
       "clubs",
       page,
       term,
     );
-    console.log("검색", searchData);
+    console.log("검색", searchData, term);
     return res.render("clubsearch.ejs", {
       term,
       ...searchData,

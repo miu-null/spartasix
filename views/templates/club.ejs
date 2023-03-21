@@ -18,26 +18,13 @@
       <tbody>
         <% slicedData.forEach(data=> { %>
           <tr id="club_tr">
-            <td id="club_Id">
-              <%= data.id %>
-            </td>
-            <td style="cursor: pointer" id="club_Title"><a class="postLink" href='/club/list/<%= data.id%>'>
-                <%= data.title %>
-              </a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">작성자<%= data.userId %>
-            </td>
-            <td id="club_maxMember">
-              <%= data.maxMembers %>
-            </td>
-            <td id="club_Date">
-              <%= data.createdAt %>
-            </td>
-            <td id="club_View">
-              <%= data.viewCount %>
-            </td>
-            <td id="club_Likes">
-              <%= data.Likes %>
-            </td>
+            <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
+            <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
+            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.user.nickName %></td>
+            <td id="club_maxMember"><%= data.maxMembers %></td>
+            <td id="club_Date"><%= data.createdAt %></td>
+            <td id="club_View"><%= data.viewCount %></td>
+            <td id="club_Likes"><%= data.Likes %></td>
           </tr>
           <% }) %>
       </tbody>
