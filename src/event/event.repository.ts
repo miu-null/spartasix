@@ -73,7 +73,7 @@ export class EventRepository {
     const selectedData = await this.eventRepository
       .createQueryBuilder("getEvents")
       .leftJoinAndSelect("getEvents.user", "user")
-      .orderBy("getEvents.eventPostId", "DESC") //최신순(내림차순)
+      .orderBy("getEvents.id", "DESC") //최신순(내림차순)
       .getMany();
     console.log(selectedData);
 
