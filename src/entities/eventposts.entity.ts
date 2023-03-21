@@ -29,12 +29,6 @@ export class EventPosts {
   @Column("varchar")
   content: string;
 
-  // @Column("date")
-  // startDate: Date;
-
-  // @Column("date")
-  // endDate: Date;
-
   @Column("date")
   startDate: Date;
 
