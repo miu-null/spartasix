@@ -69,7 +69,7 @@ export class EventRepository {
 
   async paginatedResults(page, term?: string) {
     ///페이지네이션
-    const take = 4;
+    const take = 5;
     const selectedData = await this.eventRepository
       .createQueryBuilder("getEvents")
       .leftJoinAndSelect("getEvents.user", "user")
