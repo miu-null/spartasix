@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
-import { Repository } from "typeorm";
+import { Repository, MoreThan, LessThan } from "typeorm";
 
 @Injectable()
 export class ClubRepository {
@@ -11,7 +11,7 @@ export class ClubRepository {
     private readonly clubRepository: Repository<Clubs>,
     @InjectRepository(ClubMembers)
     private clubmemberRepository: Repository<ClubMembers>,
-  ) { }
+  ) {}
 
   async getClubs() {
     const data = await this.clubRepository.find({
@@ -76,7 +76,7 @@ export class ClubRepository {
   }
 
   async getClubById(clubId: number) {
-    const data = await this.clubRepository.findOne({
+    const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
       select: [
         "title",
@@ -88,8 +88,26 @@ export class ClubRepository {
         "category",
       ],
     });
-
-    return data;
+    // const prevPost = await this.clubRepository
+    // .createQueryBuilder("Clubs")
+    // .where('Clubs.id < :id', {id:clubId})
+    // .orderBy('Clubs.id','DESC')
+    // .getOne();
+    // const nextPost = await this.clubRepository
+    // .createQueryBuilder("Clubs")
+    // .where('Clubs.id > :id', {id:clubId})
+    // .orderBy('Clubs.id','ASC')
+    // .getOne()
+ 
+    const prevPost = await this.clubRepository.findOne({
+      where: {id: LessThan(clubId)},
+      order: {id: 'DESC'}
+    })
+    const nextPost = await this.clubRepository.findOne({
+      where: {id: MoreThan(clubId)},
+      order: {id: 'ASC'}
+    });
+    return { prevPost, nowPost, nextPost};
   }
 
   async deleteClubDto(clubId: number) {
@@ -98,13 +116,13 @@ export class ClubRepository {
 
   //페이지네이션
   async paginatedResults(page, term?: string) {
-    const take = 5
+    const take = 5;
     const selectedData = await this.clubRepository
-    // .find({});
-    .createQueryBuilder("Clubs")
-    .leftJoinAndSelect("Clubs.user", "user")
-    .orderBy("Clubs.id", "DESC") //최신순(내림차순)
-    .getMany();
+      // .find({});
+      .createQueryBuilder("Clubs")
+      .leftJoinAndSelect("Clubs.user", "user")
+      .orderBy("Clubs.id", "DESC") //최신순(내림차순)
+      .getMany();
 
     console.log(selectedData);
 
