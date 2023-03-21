@@ -13,7 +13,7 @@ import { Users } from "./users.entity";
 
 @Entity({ schema: "ClubCommentLikes", name: "ClubCommentLikes" })
 export class ClubCommentLikes {
-  @PrimaryGeneratedColumn({ type: "int", name: "uuid" })
+  @PrimaryGeneratedColumn({ type: "int", name: "clubCommentLikeId" })
   id: number;
 
   @Column("int")
