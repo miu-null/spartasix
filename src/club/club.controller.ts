@@ -7,11 +7,11 @@ import {
   Post,
   Put,
   Res,
-  Next,
   Req,
   Query,
   ParseIntPipe,
   DefaultValuePipe,
+  Render
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -98,20 +98,14 @@ export class ClubController {
   }
 
   @Get("/list/:id")
-  async getClubsById(
-    @Param("id")
-    id: number,
-    @Res()
-    res: Response,
-  ) {
-    const terms = await this.clubService.getClubs();
+  @Render('clubsdetail.ejs')
+  async getClubsById(@Param("id")id: number,  ) {
     const detail = await this.clubService.getClubById(id);
-    console.log(detail);
-    return res.render("clubsdetail.ejs", {
-      detail,
-      terms,
-    });
-  }
+    const prevPost = detail.prevPost
+    const nextPost = detail.nextPost
+    console.log(prevPost.id)
+    return {detail, prevPost, nextPost}
+    };
 
   @Delete("/list/:id")
   async delete(@Param("id") id: number, @Res() res) {
