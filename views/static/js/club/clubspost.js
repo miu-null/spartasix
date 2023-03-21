@@ -8,10 +8,25 @@ function modal_open() {
   });
 }
 
+function report_modal_open() {
+  $(`#report_modal`).fadeIn();
+
+  $(document).mouseup(function (e) {
+    if ($(`#report_modal`).has(e.target).length === 0) {
+      $(`#report_modal`).hide();
+    }
+  });
+}
+
+function report_close() {
+  $(`#report_modal`).hide();
+}
+
 function clubpost() {
   const title = $("#club_title").val();
   const maxMembers = $("#club_maxMembers").val();
   const content = $("#club_content").val();
+  const category = $("#club_category").val();
   // maxMembers = Number(maxMembers);
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
@@ -32,6 +47,7 @@ function clubpost() {
       // maxMembers: Number(maxMembers),
       maxMembers: maxMembers,
       content: content,
+      category: category,
     }),
     success: function (response) {
       alert("작성 완료");
@@ -45,6 +61,7 @@ function clubupdate() {
   const maxMembers = $("#club_maxMembers").val();
   const content = $("#club_content").val();
   const clubId = location.pathname.split("clubs/")[1];
+  const category = $("#club_category").val();
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
   }
@@ -63,8 +80,9 @@ function clubupdate() {
     data: JSON.stringify({
       clubId: clubId,
       title: title,
-      maxMembers: maxMembers,
+      maxMemberes: maxMembers,
       content: content,
+      category: category,
     }),
     success: function (response) {
       alert("수정 완료");

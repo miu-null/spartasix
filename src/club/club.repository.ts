@@ -16,7 +16,7 @@ export class ClubRepository {
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
-      select: ["id", "title", "maxMembers", "createdAt", "userId"],
+      select: ["id", "title", "maxMembers", "createdAt", "userId", "category"],
     });
 
     return data;
@@ -27,12 +27,14 @@ export class ClubRepository {
     title: string,
     content: string,
     maxMembers: number,
+    category: string,
   ) {
     await this.clubRepository.insert({
       userId,
       title,
       content,
       maxMembers,
+      category,
     });
 
     return true;
@@ -60,12 +62,14 @@ export class ClubRepository {
     title: string,
     content: string,
     maxMembers: number,
+    category: string,
   ) {
     const data = await this.clubRepository.update(clubId, {
       userId,
       title,
       content,
       maxMembers,
+      category,
     });
 
     return true;
@@ -81,6 +85,7 @@ export class ClubRepository {
         "createdAt",
         "updatedAt",
         "id",
+        "category",
       ],
     });
 

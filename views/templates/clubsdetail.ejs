@@ -32,7 +32,7 @@
   <div class="eventdetail_title">
     <div class="eventdetail_first">
       <div class="eventdetail_first_id">
-        <%= detail.clubId %>
+        <%= detail.id %>
       </div>
       <div class="eventdetail_first_title">
         <div class="first_title">
@@ -90,7 +90,7 @@
         <button class="remind_button" onclick="modal_open()">Apply</button>
       </div>
       <div class="eventdetail_body_button_report">
-        <button class="report_button">report</button>
+        <button onclick="report_modal_open()" class="report_button">report</button>
       </div>
     </div>
     <div class="eventdetail_body_text">
@@ -131,6 +131,7 @@
     </div>
   </div>
 </div>
+
 <div class="eventdetail_comment_container">
   <div class="comment_body">
     <div class="comment_input_box">
@@ -166,40 +167,47 @@
     </div>
   </div>
 </div>
-<div id="report_wrap">
-  <div id="repot_top">
-    <h3>🚨신고하기</h3>
-  </div>
-  <div id="repot_body">
-    <dl>
-      <dt>제목</dt>
-      <dt>
-        <%= detail.title %>
-      </dt>
-    </dl>
-    <dl>
-      <dt>작성자 닉네임</dt>
-      <dt>작성자 닉네임 표시 필요</dt>
-    </dl>
-    <dl>
-      <dt>신고자 닉네임</dt>
-      <dt>신고자 닉네임 표시 필요</dt>
-    </dl>
-    <dl>
-      <dt>신고자 사유</dt>
-      <input placeholder="ex:욕설/비방,도배,음란성,기타 등등">
-    </dl>
-    <textarea id="report_content"></textarea>
-    <div id="report_help">
-      <div id="report_help_content">
-        "신고시에는 정확한 신고 내용과, 그에 해당되는 게시물내 문제되는 부분을 정확하게 함께 남겨주셔야 확인 후 조치 가능하오니 참고 부탁드립니다. 감사합니다."
+<div id="report_modal">
+  <div id="report_wrap">
+    <div id="report_top">
+      <h3>🚨신고하기</h3>
+    </div>
+    <div id="report_body">
+      <dl>
+        <dt>제목</dt>
+        <dt style="color:gray;">
+          <%= detail.title %>
+        </dt>
+      </dl>
+      <dl>
+        <dt>작성자 닉네임</dt>
+        <dt style="color:gray;">작성자 닉네임 표시 필요</dt>
+      </dl>
+      <dl>
+        <dt>신고자 닉네임</dt>
+        <dt style="color:gray; float: center;">신고자 닉네임 표시 필요</dt>
+      </dl>
+      <dl>
+        <dt>신고자 사유</dt>
+        <input placeholder="ex:욕설/비방,도배,음란성,기타 등등">
+      </dl>
+      <dt>신고 내용</dt>
+      <textarea id="report_content"></textarea>
+      <div id="report_help">
+        <div id="report_help_content">
+          <span>
+            "신고시에는 정확한 신고 내용과, 그에 해당되는 게시물내 문제되는 부분을 정확하게 함께 남겨주셔야 확인 후 조치 가능하오니 참고 부탁드립니다. 감사합니다."
+          </span>
+        </div>
       </div>
-    </div>
-    <div id="report_submit">
-      <a>신고하기</a>
-    </div>
-    <div id="report_close">
-      <a>닫기</a>
+      <div id="report_modal_button">
+        <div id="report_submit">
+          <button>신고하기</button>
+        </div>
+        <div id="report_close">
+          <button onclick="report_close()">취소</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
