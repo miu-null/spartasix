@@ -25,13 +25,13 @@ export class ClubController {
   constructor(
     private readonly clubService: ClubService,
     private readonly searchService: SearcherService,
-  ) {}
+  ) { }
 
   @Get("/list")
   async getClubs(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response) {
-      
+
     const terms = await this.clubService.paginatedResults(page);
     console.log(terms)
     return res.render("club.ejs", {
@@ -57,15 +57,15 @@ export class ClubController {
   }
 
   // 신청서 작성
-  @Post("/:clubId")
+  @Post("/:id")
   async createApp(
-    @Param("clubId") clubId: number,
+    @Param("id") id: number,
     @Body() data: CreateAppDto,
     @Req() req,
   ) {
     const userId = req.user;
     const createNew = await this.clubService.createApp(
-      clubId,
+      id,
       userId,
       data.application,
       data.isAccepted,
@@ -73,20 +73,20 @@ export class ClubController {
     return createNew;
   }
 
-  @Get("/club/:clubId")
+  @Get("/clubs/:id")
   async updateclub(@Res() res: Response) {
     return res.render("clubupdate.ejs");
   }
 
-  @Put("/clubs/:clubId")
+  @Put("/clubs/:id")
   async updateClub(
-    @Param("clubId") clubid: number,
+    @Param("id") id: number,
     @Body() data: UpdateClubDto,
     @Req() req,
   ) {
     const userId = req.user;
     const update = await this.clubService.updateClub(
-      clubid,
+      id,
       userId,
       data.title,
       data.content,
@@ -95,15 +95,15 @@ export class ClubController {
     return update;
   }
 
-  @Get("/list/:clubId")
+  @Get("/list/:id")
   async getClubsById(
-    @Param("clubId")
-    clubId: number,
+    @Param("id")
+    id: number,
     @Res()
     res: Response,
   ) {
     const terms = await this.clubService.getClubs();
-    const detail = await this.clubService.getClubById(clubId);
+    const detail = await this.clubService.getClubById(id);
     console.log(detail);
     return res.render("clubsdetail.ejs", {
       detail,
@@ -111,9 +111,9 @@ export class ClubController {
     });
   }
 
-  @Delete("/list/:clubid")
-  async delete(@Param("clubid") clubid: number, @Res() res) {
-    const club = await this.clubService.deleteClub(clubid);
+  @Delete("/list/:id")
+  async delete(@Param("id") id: number, @Res() res) {
+    const club = await this.clubService.deleteClub(id);
     return res.json(true);
   }
 

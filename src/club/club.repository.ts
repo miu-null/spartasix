@@ -11,7 +11,7 @@ export class ClubRepository {
     private readonly clubRepository: Repository<Clubs>,
     @InjectRepository(ClubMembers)
     private clubmemberRepository: Repository<ClubMembers>,
-  ) {}
+  ) { }
 
   async getClubs() {
     const data = await this.clubRepository.find({
