@@ -1,8 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { getRepositoryToken, InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateSearchDto } from "./dto/create.search.dto";
-import { Searcher } from "../entities/searcher.entity";
 import { Users } from "../entities/users.entity";
 import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/eventposts.entity";
@@ -11,8 +9,6 @@ import { EventPosts } from "../entities/eventposts.entity";
 @Injectable()
 export class SearcherRepository {
   constructor(
-    @InjectRepository(Searcher)
-    private readonly searcherRepository: Repository<Searcher>,
     @InjectRepository(Users)
     private readonly userSearchRepository: Repository<Users>,
     @InjectRepository(Clubs)
@@ -27,13 +23,15 @@ export class SearcherRepository {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const clubs = await this.clubRepository
         .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.clubId", "DESC")  //최신순(내림차순)
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       const events = await this.eventRepository
         .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.eventPostId", "DESC")  //최신순(내림차순)
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       const results = {events, clubs}
       console.log(results);
@@ -45,10 +43,10 @@ export class SearcherRepository {
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.eventRepository
-        .createQueryBuilder('searchEvents')
-        .leftJoinAndSelect("searchEvents.user", "user")
-        .where('searchEvents.title LIKE :s OR searchEvents.content LIKE :s', { s: `%${data.term}%` })
-        // .orderBy("search.eventPostId", "DESC")  //최신순(내림차순)
+        .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
+        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       console.log(results);
       return results
@@ -59,22 +57,22 @@ export class SearcherRepository {
     {
       console.log(data, '리포지')
       const results = await this.clubRepository
-        .createQueryBuilder('searchClubs')
-        // .leftJoinAndSelect("searchClubs.user", "user")
-        .where('searchClubs.title LIKE :s OR searchClubs.content LIKE :s', { s: `%${data.term}%` })
-        // .orderBy("search.clubId", "DESC")  //최신순(내림차순)
+        .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
+        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       return results
     }
   }
 
 
-  async findUsers(data: any) : Promise<Users[]>{
+  async findUsers(data: any) : Promise<Users[]>{ // 유저 검색
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.userSearchRepository
-        .createQueryBuilder('searchUsers')
-        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
+        .createQueryBuilder('search')
+        .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
         .getMany();
       console.log(results, '레포지토리 통과');
       return results
@@ -86,23 +84,14 @@ export class SearcherRepository {
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.userSearchRepository
-        .createQueryBuilder('searchUsers')
-        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
-        .orderBy("searchUsers.userId", "DESC")
+        .createQueryBuilder('search')
+        .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")
         .take(4)
         .skip(0)
         .getMany();
       console.log(results);
       return results
     }
-  }
-
-
-  async ArticleCreate(createSearchDto : CreateSearchDto) : Promise<Searcher> {
-    const {title, content} = createSearchDto
-    const article = this.searcherRepository.create(createSearchDto)
-
-    await this.searcherRepository.save(article);
-    return article
   }
 }

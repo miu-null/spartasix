@@ -96,7 +96,7 @@ export class EventController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number, 
     @Res() res: Response) {
     const events = await this.eventService.getEvents(page);
-    console.log("events : " + JSON.stringify(events))
+    console.log("events : ", events)
     return res.render("eventMain.ejs", { ...events });
   }
 
