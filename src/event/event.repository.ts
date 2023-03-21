@@ -13,7 +13,7 @@ export class EventRepository {
     private readonly userRepository: Repository<Users>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-  ) {}
+  ) { }
 
   // async getEvents() {// 아래 페이지네이션 함수 참고
   //   const events = await this.eventRepository
