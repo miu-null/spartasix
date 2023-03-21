@@ -11,4 +11,7 @@ export class CreateClubDto {
   @Type(() => Number)
   @IsNumber()
   readonly maxMembers: number;
+
+  @IsString()
+  readonly category: string;
 }
