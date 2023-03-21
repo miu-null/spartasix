@@ -98,12 +98,13 @@ export class ClubRepository {
 
   //페이지네이션
   async paginatedResults(page, term?: string) {
-    const take = 4;
-    const selectedData = await this.clubRepository.find({});
-    // .where("Clubs.userId = :userId")
-    // .leftJoinAndSelect("Clubs.user", "user")
-    // .orderBy("Clubs.clubId", "DESC") //최신순(내림차순)
-    // .getMany();
+    const take = 5
+    const selectedData = await this.clubRepository
+    // .find({});
+    .createQueryBuilder("Clubs")
+    .leftJoinAndSelect("Clubs.user", "user")
+    .orderBy("Clubs.id", "DESC") //최신순(내림차순)
+    .getMany();
 
     console.log(selectedData);
 
