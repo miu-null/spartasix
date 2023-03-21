@@ -17,7 +17,7 @@ import { Users } from "./users.entity";
 
 @Entity({ schema: "EventPosts", name: "EventPosts" })
 export class EventPosts {
-  @PrimaryGeneratedColumn({ type: "int", name: "eventPostId" })
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
   @Column("int")
@@ -42,7 +42,7 @@ export class EventPosts {
   postIMG: string | null;
 
   @CreateDateColumn()
-  createdateAt: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   updateAt: Date | null;
