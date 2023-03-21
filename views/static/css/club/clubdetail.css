@@ -14,7 +14,6 @@
   margin-right: 20px;
 }
 
-
 .eventdetail_title {
   border-top: 4px solid;
   margin-top: 10px;
@@ -88,6 +87,7 @@
   width: 100%;
   margin-top: 5px;
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .eventdetail_second_start {
@@ -228,4 +228,3 @@
 .eventdetail_bottom_div_date {
   margin-left: 60px;
 }
-

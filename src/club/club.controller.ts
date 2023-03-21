@@ -52,6 +52,7 @@ export class ClubController {
       data.title,
       data.content,
       data.maxMembers,
+      data.category,
     );
     return post;
   }
@@ -91,6 +92,7 @@ export class ClubController {
       data.title,
       data.content,
       data.maxMembers,
+      data.category,
     );
     return update;
   }
