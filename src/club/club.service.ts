@@ -3,7 +3,7 @@ import { ClubRepository } from "./club.repository";
 import _ from "lodash";
 @Injectable()
 export class ClubService {
-  constructor(private readonly clubRepository: ClubRepository) {}
+  constructor(private readonly clubRepository: ClubRepository) { }
 
   async getClubs() {
     const data = await this.clubRepository.getClubs();
@@ -23,13 +23,13 @@ export class ClubService {
   }
 
   async createApp(
-    clubId: number,
+    id: number,
     userId: number,
     application: string,
     isAccepted: boolean,
   ) {
     const data = await this.clubRepository.createApp(
-      clubId,
+      id,
       userId,
       application,
       isAccepted,
@@ -38,15 +38,15 @@ export class ClubService {
   }
 
   async updateClub(
-    clubId: number,
+    id: number,
     userId: number,
     title: string,
     content: string,
     maxMembers: number,
   ) {
-    console.log(clubId, title, content, maxMembers);
+    console.log(id, title, content, maxMembers);
     const data = await this.clubRepository.updateClub(
-      clubId,
+      id,
       userId,
       title,
       content,
@@ -56,18 +56,18 @@ export class ClubService {
     return data;
   }
 
-  async getClubById(clubId: number) {
-    const data = await this.clubRepository.getClubById(clubId);
+  async getClubById(id: number) {
+    const data = await this.clubRepository.getClubById(id);
 
     return data;
   }
 
-  async deleteClub(clubId: number) {
-    await this.clubRepository.deleteClubDto(clubId);
+  async deleteClub(id: number) {
+    await this.clubRepository.deleteClubDto(id);
   }
 
   async paginatedResults(page) {
     const data = await this.clubRepository.paginatedResults(page);
     return data;
-}
+  }
 }

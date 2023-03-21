@@ -9,10 +9,10 @@
             모임 주최자가 확인 후 회원정보상 의 메일 주소로 연락을 드립니다.
           </div>
           <div class="club_modal_text">
-            <textarea class="club_modal_textarea" placeholder="이곳에 내용을 적어주세요"></textarea>
+            <textarea id="club_modal_textarea" class="club_modal_textarea" placeholder="이곳에 내용을 적어주세요"></textarea>
           </div>
           <div>
-            <button class="club_modal_button">submit !</button>
+            <button class="club_modal_button" onclick="clubApp()">submit !</button>
           </div>
         </div>
       </div>
@@ -22,10 +22,11 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='/club/club/<%= detail.clubId %>'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      <a onclick="location.href='/club/clubs/<%= detail.id %>'" class="new_event"
+        style="cursor: pointer">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
-      <a onclick="clubdelete()" class="new_event">delete</a>
+      <a style="cursor: pointer" onclick="clubdelete()" class="new_event">delete</a>
     </div>
   </div>
   <div class="eventdetail_title">
@@ -60,10 +61,10 @@
     </div>
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
-        
+
       </div>
       <div class="eventdetail_second_end">
-        
+
       </div>
       <div class="eventdetail_second_date">
         <div class="second_date">
@@ -95,36 +96,37 @@
     <div class="eventdetail_body_text">
       <%= detail.content %>
     </div>
-  <div class="eventdetail_like_container">
-    <img class="eventdetail_like_img" src="/img/likes.png" >
-  </div>
-  <div class="eventdetail_bottom">
-    <div class="eventdetail_bottom_div">
-      <div class="eventdetail_bottom_div_title">
-        Prev
-      </div>
-      <div class="eventdetail_bottom_div_body">
-        게시글 제목입니다. 
-      </div>
-      <div class="eventdetail_bottom_div_nickname">
-        작성자
-      </div>
-      <div class="eventdetail_bottom_div_date">
-        2023.04.03
-      </div>
+    <div class="eventdetail_like_container">
+      <img class="eventdetail_like_img" src="/img/likes.png">
     </div>
-    <div class="eventdetail_bottom_div1">
-      <div class="eventdetail_bottom_div_title">
-        Next
+    <div class="eventdetail_bottom">
+      <div class="eventdetail_bottom_div">
+        <div class="eventdetail_bottom_div_title">
+          Prev
+        </div>
+        <div class="eventdetail_bottom_div_body">
+          게시글 제목입니다.
+        </div>
+        <div class="eventdetail_bottom_div_nickname">
+          작성자
+        </div>
+        <div class="eventdetail_bottom_div_date">
+          2023.04.03
+        </div>
       </div>
-      <div class="eventdetail_bottom_div_body">
-        게시글 제목입니다. 
-      </div>
-      <div class="eventdetail_bottom_div_nickname">
-        작성자
-      </div>
-      <div class="eventdetail_bottom_div_date">
-        2023.04.03
+      <div class="eventdetail_bottom_div1">
+        <div class="eventdetail_bottom_div_title">
+          Next
+        </div>
+        <div class="eventdetail_bottom_div_body">
+          게시글 제목입니다.
+        </div>
+        <div class="eventdetail_bottom_div_nickname">
+          작성자
+        </div>
+        <div class="eventdetail_bottom_div_date">
+          2023.04.03
+        </div>
       </div>
     </div>
   </div>
@@ -154,13 +156,50 @@
         </div>
         <div class="comment_like">
           <div>
-          <image class="comment_like_img" src="/img/likes.png">
+            <image class="comment_like_img" src="/img/likes.png">
           </div>
           <div>
             32
           </div>
         </div>
       </div>
-    </div> 
+    </div>
+  </div>
+</div>
+<div id="report_wrap">
+  <div id="repot_top">
+    <h3>🚨신고하기</h3>
+  </div>
+  <div id="repot_body">
+    <dl>
+      <dt>제목</dt>
+      <dt>
+        <%= detail.title %>
+      </dt>
+    </dl>
+    <dl>
+      <dt>작성자 닉네임</dt>
+      <dt>작성자 닉네임 표시 필요</dt>
+    </dl>
+    <dl>
+      <dt>신고자 닉네임</dt>
+      <dt>신고자 닉네임 표시 필요</dt>
+    </dl>
+    <dl>
+      <dt>신고자 사유</dt>
+      <input placeholder="ex:욕설/비방,도배,음란성,기타 등등">
+    </dl>
+    <textarea id="report_content"></textarea>
+    <div id="report_help">
+      <div id="report_help_content">
+        "신고시에는 정확한 신고 내용과, 그에 해당되는 게시물내 문제되는 부분을 정확하게 함께 남겨주셔야 확인 후 조치 가능하오니 참고 부탁드립니다. 감사합니다."
+      </div>
+    </div>
+    <div id="report_submit">
+      <a>신고하기</a>
+    </div>
+    <div id="report_close">
+      <a>닫기</a>
+    </div>
   </div>
 </div>
