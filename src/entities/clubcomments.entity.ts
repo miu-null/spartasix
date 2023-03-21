@@ -15,7 +15,7 @@ import { Users } from "./users.entity";
 
 @Entity({ schema: "ClubComments", name: "ClubComments" })
 export class ClubComments {
-  @PrimaryGeneratedColumn({ type: "int", name: "clubCommentId" })
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
   @Column("int")

@@ -31,14 +31,12 @@ export class EventController {
     private searchService: SearcherService,
   ) {}
 
-   //이벤트 리마인드
-   @Post("/remindEvent")
-   async remindEvent(@Body() data:remindEmailDto, @Res() res ){
-     const remindEvent = await this.eventService.remindEvent(
-       data.email
-     )
-     return res.json({data:remindEvent})
-   }
+  //이벤트 리마인드
+  @Post("/remindEvent")
+  async remindEvent(@Body() data: remindEmailDto, @Res() res) {
+    const remindEvent = await this.eventService.remindEvent(data.email);
+    return res.json({ data: remindEvent });
+  }
 
   //새글 쓰기
   @Post("/newevent")
@@ -93,10 +91,11 @@ export class EventController {
   // 전체 글 조회
   @Get("/list")
   async getEvent(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number, 
-    @Res() res: Response) {
+    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response,
+  ) {
     const events = await this.eventService.getEvents(page);
-    console.log("events : ", events)
+    console.log("events : ", events);
     return res.render("eventMain.ejs", { ...events });
   }
 
@@ -107,11 +106,10 @@ export class EventController {
     @Param("eventPostId") eventPostId: number,
   ) {
     const events = await this.eventService.getEventById(eventPostId);
-    events.createdateAt = new Date(events.createdateAt);
+    events.createdAt = new Date(events.createdAt);
 
     return res.render("eventDetail.ejs", { events });
   }
- 
 
   // 수정 페이지 렌더링
   @Get("/list/:eventPostId/update")
@@ -135,9 +133,9 @@ export class EventController {
       userId,
       title: data.title,
       content: data.content,
-      startDate:data.startDate,
-      endDate:data.endDate,
-      postIMG: data.postIMG
+      startDate: data.startDate,
+      endDate: data.endDate,
+      postIMG: data.postIMG,
     });
 
     return events;
@@ -155,7 +153,11 @@ export class EventController {
     @Query() term: string,
     @Res() res: Response,
   ) {
-    const searchData = await this.searchService.paginatedResults("events", page, term,);
+    const searchData = await this.searchService.paginatedResults(
+      "events",
+      page,
+      term,
+    );
     console.log("검색", searchData);
     return res.render("eventsearch.ejs", {
       term,
