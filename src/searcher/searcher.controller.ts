@@ -79,14 +79,4 @@ export class SearcherController {
     }
   }
 
-
-
-  @Post() // 테스트용 게시글 작성하기 기능
-  async create(
-    @Body() createSearchDto: CreateSearchDto
-  ) {
-    console.log(createSearchDto, '컨트롤러');
-    return await this.searchService.Articlecreate(createSearchDto);
-  }
-
 }

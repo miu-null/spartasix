@@ -8,19 +8,18 @@ import { SearcherService } from "src/searcher/searcher.service";
 import { Clubs } from "src/entities/clubs.entity";
 import { Users } from "src/entities/users.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
-import { Searcher } from "src/entities/searcher.entity";
 import { SearcherRepository } from "src/searcher/searcher.repositoy";
 import { ClubRepository } from "src/club/club.repository";
 import { MailService } from "src/mail/mail.service";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts, Searcher]),
+    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts]),
   ],
   controllers: [EventController],
   providers: [
     MailService,
-    EventService,
+    EventService, 
     EventRepository,
     SearcherService,
     SearcherRepository,
