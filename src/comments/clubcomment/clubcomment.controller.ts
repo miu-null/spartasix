@@ -15,9 +15,9 @@ import { ClubCommentService } from "./clubcomment.service";
 export class ClubCommentController {
   constructor(private readonly clubCommentService: ClubCommentService) {}
 
-  @Get("/comments")
-  async showAllComment() {
-    const comments = await this.clubCommentService.showAllComment();
+  @Get("/:id/comments")
+  async showAllComment(@Param("id") clubPostId: number) {
+    const comments = await this.clubCommentService.showAllComment(clubPostId);
 
     return comments;
   }
@@ -55,6 +55,20 @@ export class ClubCommentController {
   async deleteComment(@Param("id") clubCommentId: number, @Req() req) {
     const userId = req.user;
     await this.clubCommentService.deleteComment(userId, clubCommentId);
+
+    return true;
+  }
+
+  @Post("/update_club_like/:commentId")
+  async updateLike(
+    @Req() req, 
+    @Param("commentId") commentId: number,
+    ) {
+      console.log("hello")
+      console.log(commentId)
+    const userId = req.user;
+
+    await this.clubCommentService.updateLike(userId, commentId)
 
     return true;
   }

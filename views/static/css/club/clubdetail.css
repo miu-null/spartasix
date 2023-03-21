@@ -1,4 +1,4 @@
-.eventdetail_container {
+.clubdetail_container {
   padding-top: 8%;
   width: 50%;
   height: 100%;
@@ -7,14 +7,14 @@
   flex-direction: column;
 }
 
-.eventdetail_button {
+.clubdetail_button {
   display: flex;
   margin-bottom: 5px;
   margin-left: auto;
   margin-right: 20px;
 }
 
-.eventdetail_title {
+.clubdetail_title {
   border-top: 4px solid;
   margin-top: 10px;
   display: flex;
@@ -23,18 +23,18 @@
   border-bottom: 1px solid;
 }
 
-.eventdetail_first {
+.clubdetail_first {
   display: flex;
   margin-top: 10px;
 }
 
-.eventdetail_first_id {
+.clubdetail_first_id {
   width: 50px;
   font-weight: bold;
   text-align: center;
 }
 
-.eventdetail_first_title {
+.clubdetail_first_title {
   width: 500px;
   display: flex;
 }
@@ -50,7 +50,7 @@
   text-align: center;
 }
 
-.eventdetail_first_nickname {
+.clubdetail_first_nickname {
   width: 270px;
   display: flex;
 }
@@ -66,7 +66,7 @@
   text-align: center;
 }
 
-.eventdetail_first_likes {
+.clubdetail_first_likes {
   display: flex;
 }
 
@@ -82,7 +82,7 @@
   font-weight: bold;
 }
 
-.eventdetail_second {
+.clubdetail_second {
   display: flex;
   width: 100%;
   margin-top: 5px;
@@ -90,7 +90,7 @@
   justify-content: space-between;
 }
 
-.eventdetail_second_start {
+.clubdetail_second_start {
   margin-left: 20px;
   display: flex;
 }
@@ -104,7 +104,7 @@
   font-weight: bold;
 }
 
-.eventdetail_second_end {
+.clubdetail_second_end {
   display: flex;
 }
 
@@ -114,7 +114,7 @@
   font-weight: bold;
 }
 
-.eventdetail_second_date {
+.clubdetail_second_date {
   display: flex;
   margin-left: 10px;
   font-weight: bold;
@@ -124,7 +124,7 @@
   margin-left: 15px;
 }
 
-.eventdetail_second_view {
+.clubdetail_second_view {
   display: flex;
   margin-left: 130px;
   font-weight: bold;
@@ -139,18 +139,18 @@
   text-align: center;
 }
 
-.eventdetail_body {
+.clubdetail_body {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
 }
 
-.eventdetail_body_button {
+.clubdetail_body_button {
   display: flex;
   margin-left: auto;
 }
 
-.eventdetail_body_button_remind {
+.clubdetail_body_button_remind {
   margin-right: 10px;
 }
 
@@ -171,23 +171,23 @@
   width: 100px;
 }
 
-.eventdetail_body_text {
+.clubdetail_body_text {
   margin: auto;
   margin-top: 100px;
   width: 80%;
   height: 500px;
 }
 
-.eventdetail_like_container {
+.clubdetail_like_container {
   text-align: center;
 }
 
-.eventdetail_like_img {
+.clubdetail_like_img {
   width: 30px;
   margin: auto;
 }
 
-.eventdetail_bottom {
+.clubdetail_bottom {
   display: flex;
   flex-direction: column;
   border-top: 1px solid;
@@ -199,32 +199,223 @@
   margin-bottom: 100px;
 }
 
-.eventdetail_bottom_div {
+.clubdetail_bottom_div {
   display: flex;
   margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid;
 }
 
-.eventdetail_bottom_div1 {
+.clubdetail_bottom_div1 {
   display: flex;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.eventdetail_bottom_div_title {
+.clubdetail_bottom_div_title {
   margin-left: 30px;
   width: 70px;
 }
 
-.eventdetail_bottom_div_body {
+.clubdetail_bottom_div_body {
   margin-left: 200px;
 }
 
-.eventdetail_bottom_div_nickname {
+.clubdetail_bottom_div_nickname {
   margin-left: 300px;
 }
 
-.eventdetail_bottom_div_date {
+.clubdetail_bottom_div_date {
   margin-left: 60px;
+}
+
+/* The Modal (background) */
+.club_modal { 
+  position:absolute; 
+  width:100%; 
+  height:100%; 
+  top:0; 
+  left:0; 
+  display:none;
+  z-index: 50;
+}
+
+.club_wrap1 {
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  width:530px; height:700px;
+  background: rgba(255, 246, 244, 0.95); 
+  position:absolute; top:15%; left:30%;
+  margin-top:-5%; margin-right: 3%;
+  text-align:center;
+  box-sizing:border-box; padding:74px 0;
+  line-height:23px; cursor:pointer;
+  display:flex;
+  flex-direction: column;
+  cursor: default;
+  transform: translate(10%,2%);
+}
+
+.club_modal_body {
+  font-weight: bold;
+  color: #EA4E4E;
+}
+
+.club_modal_text {
+  margin-top: 150px;
+  display: flex;
+  margin-left: 150px;
+}
+
+.club_modal_email {
+  font-weight: bold;
+}
+
+#club_modal_email {
+  border-radius: 0px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  height: 10px;
+  width: 200px;
+  background-color: rgba(255, 246, 244, 0.95);
+}
+
+#club_modal_email:focus {
+  outline: none;
+}
+
+.club_modal_button_body {
+  margin-top: 100px;
+}
+
+.club_modal_button {
+  border: 1px #EA4E4E solid;
+  background-color: #EA4E4E;
+  width: 140px;
+  height: 48px;
+  border-radius: 30px;
+  color: #FFFF;
+  font-weight: bold;
+}
+
+.clubdetail_comment_container {
+  margin: auto;
+  width: 50%;
+  border-top: 4px solid;
+  margin-top: -95px;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment_body {
+  width: 100%;
+  height: 70px;
+  margin-top: 20px;
+  border: 1px solid;
+}
+
+.comment_textarea {
+  width: 100%;
+  height: 67px;
+  resize: none;
+  border: none;
+}
+
+.comment_textarea:focus {
+  outline: none;
+}
+
+.comment_input_button_box {
+  margin-left: auto;
+  margin-top: 10px;
+
+}
+
+.comment_input_button {
+  border: 1px solid #EA4E4E;
+  border-radius: 30px;
+  background-color: #EA4E4E;
+  font-weight: bold;
+  color: #ffff;
+}
+
+.comment_show_text {
+  width: 100%;
+  height: 700px;
+  margin-top: 30px;
+}
+
+.comment_text_box {
+  margin: auto;
+  margin-top: 30px;
+  width: 100%;
+  height: 80px;
+  border-top: 1px solid;
+}
+
+.comment_text_container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.comment_nickname {
+  margin-left: 20px;
+  width: 50px;
+  font-weight: bold;
+}
+
+.comment_content {
+  margin-left: 40px;
+  width: 280px;
+}
+
+.comment_date {
+  margin-left: 220px;
+  width: 140px;
+}
+
+.comment_like {
+  margin-left: 80px;
+  display: flex;
+}
+
+.comment_like_img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.club_comment_button {
+  margin-top: 7px;
+  float: right;
+}
+
+.comment_button {
+  border: none;
+  background-color: #ffff;
+  color: #EA4E4E;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.new_content {
+  border: none;
+  border-bottom: 1px solid;
+  border-radius: 0;
+}
+
+.new_content:focus {
+  outline: none;
+}
+
+.new_club_button {
+  margin-top: -5px;
+  border: none;
+  background-color: #ffff;
+  color: #EA4E4E;
+  font-weight: bold;
+  font-size: 1rem;
 }

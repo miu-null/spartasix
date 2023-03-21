@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtConfigService } from 'src/config/jwt.config.service';
 import { typeOrmConfigService } from 'src/config/typeorm.config.service';
+import { ClubCommentLikes } from 'src/entities/clubcommentlikes.entity';
 import { ClubComments } from 'src/entities/clubcomments.entity';
 import { ClubCommentController } from './clubcomment.controller';
 import { ClubCommentRepository } from './clubcomment.repository';
@@ -11,7 +12,7 @@ import { ClubCommentService } from './clubcomment.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ClubComments]),
+    TypeOrmModule.forFeature([ClubComments,ClubCommentLikes]),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: typeOrmConfigService,
