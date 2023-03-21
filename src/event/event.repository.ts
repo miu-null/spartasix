@@ -26,7 +26,7 @@ export class EventRepository {
   async getEventById(eventPostId) {
     const event = await this.eventRepository
       .createQueryBuilder("eventUser")
-      .where("eventPostId = :eventPostId", { eventPostId })
+      // .where("eventPostId = :eventPostId", { eventPostId })
       .leftJoinAndSelect("eventUser.user", "nickName")
       .getOne();
     return event;
