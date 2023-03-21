@@ -35,12 +35,16 @@ export class EventController {
    @Post("/remindEvent")
    async remindEvent(@Body() data:remindEmailDto, @Res() res ){
      const remindEvent = await this.eventService.remindEvent(
-       data.email
+       data.email,
+       data.postIMG,
+       data.startDate,
+       data.endDate,
+       data.title,
      )
      return res.json({data:remindEvent})
    }
 
-  //새글 쓰기
+  //글 생성
   @Post("/newevent")
   @UseInterceptors(FileInterceptor("postIMG"))
   async createUser(
@@ -55,6 +59,9 @@ export class EventController {
         secretAccessKey: process.env.AWS_SECRET_KEY,
       },
     });
+
+    console.log('uploadedFile:', uploadedFile,'originalname:',uploadedFile.originalname)
+
     const key = `${Date.now() + uploadedFile.originalname}`;
     // AWS 객체 생성
     const upload = await new AWS.S3()

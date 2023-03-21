@@ -31,7 +31,7 @@ export class EventRepository {
       .getOne();
     return event;
   }
-
+  //글 생성
   async createEvent(
     userId: number,
     title: string,

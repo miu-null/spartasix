@@ -8,6 +8,7 @@ function event_open() {
   });
 }
 
+// 메일 알림
 function remindEvent() {
 
   const email=$('#event_modal_email').val();
@@ -31,12 +32,14 @@ function remindEvent() {
  
 }
 
+//글 생성
 function eventNew() {
   const title = $("#eventTitle").val();
   const startDate = $("#eventStartDate").val();
   const endDate = $("#eventEndDate").val();
   const content = $("#eventContent").val();
   const postIMG = $("#eventPostImg").val();
+  console.log('새글 입력값:',title,startDate,endDate,content,postIMG)
   
   $.ajax({
     type: "POST",
@@ -56,6 +59,8 @@ function eventNew() {
     },
   });
 }
+
+
 
 function updateEvent(eventPostId) {
   const title = $("#title2").val();

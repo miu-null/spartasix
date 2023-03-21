@@ -22,10 +22,10 @@ export class EventService {
     return await this.EventRepository.getEventById(eventPostId);
   }
   
-  async remindEvent(email:string){
-    return await this.mailService.remindEmail(email)
+  async remindEvent(email:string,postIMG:string,startDate:Date,endDate:Date,title:string){
+    return await this.mailService.remindEmail(email,postIMG,startDate,endDate,title)
   }
-
+  //글 생성
   async createEvent(
     userId: number,
     title: string,
