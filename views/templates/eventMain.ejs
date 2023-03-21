@@ -32,8 +32,8 @@
                 <tbody>
                     <% slicedData.forEach(data => { %>
                     <tr id="event_tr">
-                      <td id="Id"><a class="postLink" href='list/<%= data.eventPostId%>'><%= data.eventPostId %></a></td>
-                      <td id="Title"><a class="postLink" href='list/<%= data.eventPostId%>'><%= data.title %></a></td>
+                      <td id="Id"><a class="postLink" href='<%= data.eventPostId%>'><%= data.eventPostId %></a></td>
+                      <td id="Title"><a class="postLink" href='<%= data.eventPostId%>'><%= data.title %></a></td>
                       <td id="Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></a></td>
                       <td id="Date"><%= data.createdateAt %></td>
                       <td id="View"><%= data.viewCount %></td>

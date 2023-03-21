@@ -19,8 +19,8 @@
         <% slicedData.forEach(data => { %>
           <tr id="club_tr">
             <td id="club_Id"><%= data.clubId %></td>
-            <td id="club_Title"><a class="postLink" href='list/<%= data.clubId%>'><%= data.title %></a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">작성자<%= data.userId %></td>
+            <td id="club_Title"><a class="postLink" href='<%= data.Id%>'><%= data.title %></a></td>
+            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></td>
             <td id="club_maxMember"><%= data.maxMembers %></td>
             <td id="club_Date"><%= data.createdAt %></td>
             <td id="club_View"><%= data.viewCount %></td>
