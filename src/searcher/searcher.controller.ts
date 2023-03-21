@@ -10,18 +10,31 @@ export class SearcherController {
     private searchService: SearcherService,
     ) {}
 
-  @Get("posts")  // 통합 검색기능 
-  async searchAllPosts(@Query() term,  @Res() res: Response): Promise<void> {
+  @Get("all")  // 통합 검색기능 
+  async searchAllPosts(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query() term,  
+    @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findAllPosts(term);
       const events = terms.events
       const clubs = terms.clubs
+      const dums = terms.dums
+      // const results = {events, clubs, dums}
+      const userData = await this.searchService.paginatedResults('users', page, term)
+      const eventdata = await this.searchService.paginatedResults('events', page, term)
+      const clubdata = await this.searchService.paginatedResults('clubs', page, term)
+      console.log(userData)
 
-
-      return res.render("searchAllPost.ejs", {
-        title: "검색결과",
+      return res.render("searchAll.ejs", {
         events,
         clubs,
+        dums,
+        term,
+        // results,
+        ...userData,
+        ...eventdata,
+        ...clubdata,
       })
 
     } catch (err) {
@@ -57,7 +70,6 @@ export class SearcherController {
     }
   }
 
-
   @Get("/users")  // 유저 검색 기능, 페이지네이션 테스트
   async searchUsers(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
@@ -77,16 +89,6 @@ export class SearcherController {
     } catch (err) {
       console.error(err.message);
     }
-  }
-
-
-
-  @Post() // 테스트용 게시글 작성하기 기능
-  async create(
-    @Body() createSearchDto: CreateSearchDto
-  ) {
-    console.log(createSearchDto, '컨트롤러');
-    return await this.searchService.Articlecreate(createSearchDto);
   }
 
 }
