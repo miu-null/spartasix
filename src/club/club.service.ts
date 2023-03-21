@@ -17,8 +17,15 @@ export class ClubService {
     title: string,
     content: string,
     maxMembers: number,
+    category: string,
   ) {
-    await this.clubRepository.createClub(userId, title, content, maxMembers);
+    await this.clubRepository.createClub(
+      userId,
+      title,
+      content,
+      maxMembers,
+      category,
+    );
     return true;
   }
 
@@ -43,14 +50,16 @@ export class ClubService {
     title: string,
     content: string,
     maxMembers: number,
+    category: string,
   ) {
-    console.log(id, title, content, maxMembers);
+    console.log(id, title, content, maxMembers, category);
     const data = await this.clubRepository.updateClub(
       id,
       userId,
       title,
       content,
       maxMembers,
+      category,
     );
 
     return data;

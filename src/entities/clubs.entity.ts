@@ -33,6 +33,12 @@ export class Clubs {
   @Column("varchar")
   content: string;
 
+  @Column("int")
+  viewCount: number;
+
+  @Column("varchar")
+  category: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
