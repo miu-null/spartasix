@@ -22,7 +22,7 @@ import { EventPosts } from "./eventposts.entity";
 
 @Entity({ schema: "Users", name: "Users" })
 export class Users {
-  @PrimaryGeneratedColumn({ type: "int", name: "uuid" })
+  @PrimaryGeneratedColumn({ type: "int", name: "userId" })
   id: number;
 
   @Column("varchar", { length: 50 })
