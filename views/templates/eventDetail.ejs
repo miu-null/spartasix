@@ -29,16 +29,16 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= events.eventPostId%>/update'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      <a onclick="location.href='<%= events.id %>/update'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
-      <a onclick="deleteEvent('<%= events.eventPostId %>')" class="new_event">delete</a>
+      <a onclick="deleteEvent('<%= events.id %>')" class="new_event">delete</a>
     </div>
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
       <div class="eventdetail_first_id">
-        <%= events.eventPostId %>
+        <%= events.id %>
       </div>
       <div class="eventdetail_first_title">
         <div class="first_title">
@@ -157,7 +157,7 @@
       작성
     </button>
   </div>
-  <div data-text="<%= events.eventPostId %>" id="comment_show_text" class="comment_show_text">
+  <div data-text="<%= events.id %>" id="comment_show_text" class="comment_show_text">
 
   </div>
 </div>
