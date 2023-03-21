@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSearchDto } from './dto/create.search.dto';
 import { SearcherRepository } from './searcher.repositoy';
 import { ClubService } from 'src/club/club.service';
 import { ClubRepository } from 'src/club/club.repository';
 
+
 @Injectable()
 export class SearcherService {
-    searchArticle(createSearchDto: CreateSearchDto) {
-    throw new Error('Method not implemented.');
-  }
     constructor(
         private SearcherRepository: SearcherRepository,
         private clubRepository : ClubRepository,
@@ -46,17 +43,9 @@ export class SearcherService {
         console.log(term, '서비스 반환')
         return results
     }
-
-    // 유저 검색
-    async findUsersCount(term: any) {
-        console.log(term, '서비스')
-        const results = await this.SearcherRepository.findUsersCount(term);
-        console.log(term, '서비스 반환')
-        return results
-    }
     
         //페이지네이션 적용 전, 게시판 및 유저 데이터 선택
-    async selectData(pageType : string, page: number, term : any=null) {
+    async selectData(pageType : string, page:number, term : any) {
         let getdata
         if (pageType === 'users') {
             getdata = await this.SearcherRepository.findUsers(term);
@@ -64,20 +53,15 @@ export class SearcherService {
             getdata = await this.SearcherRepository.findEventPosts(term);
         } else if (pageType === 'clubs') {
             getdata = await this.SearcherRepository.findClubPosts(term);
-        } else if (pageType === 'allposts') {
-
-        } else if (pageType === 'clubs') {
-            getdata = await this.clubRepository.getClubs(); //테스트용 
-        } else (pageType === '') 
-
-    
-    return getdata;
+        } else {
+        } return getdata;
     }
     
     //페이지네이션용 함수
-    async paginatedResults(pageType : string, page:number, term: string=null) {
-        const take: number = 4;
+    async paginatedResults(pageType : string, page, term: string) {
+        const take: number = 5;
         const seletedData = await this.selectData(pageType, page, term);
+        const searchCount = seletedData.length
 
         const totalDataCount = seletedData.length; //불러온 데이터 목록 수
         const startIndex = (page - 1) * take;
@@ -90,19 +74,13 @@ export class SearcherService {
         const numOfUnits = Math.floor((page - 1) / unitSize); //<1 2 3> 페이지는 0 번째 index
         const unitStart = numOfUnits * unitSize + 1; //0번째 묶음의 시작은 1페이지, 1번째 묶음 시작은 4페이지...
         const unitEnd = unitStart + (unitSize - 1); //0번째 묶음의 끝은 3페이지, 1번째 묶음 끝은 6페이지
-        const paginatedDemand = {
-        page,
-        slicedData,
-        lastPage,
-        unitStart,
-        unitEnd,
-        };
+        const paginatedDemand = {page, slicedData, lastPage, unitStart, unitEnd, searchCount};
 
         return {
         ...paginatedDemand,
         };
     }
-    
+
     
 }
 

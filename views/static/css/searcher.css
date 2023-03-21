@@ -10,7 +10,6 @@
   height: 500vh;
 }
 
-/* 검색창 */
 .search {
   position: relative;
   width: 300px;
@@ -24,11 +23,9 @@ input {
   font-size: 14px;
 }
 
-/* 검색창 돋보기 */
-.search img {
-  position: absolute;
-  width: 17px;
-  top: 10px;
-  right: 12px;
-  margin: 0;
+
+.searchCount {
+  position: relative;
+  width: 730px;
+  margin: auto;
 }
