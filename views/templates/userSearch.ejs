@@ -15,11 +15,11 @@
       <tbody>
         <% slicedData.forEach(data=> { %>
           <tr id="club_tr">
-            <td id="club_Id">이벤트</td>
+            <td id="club_Id">유저</td>
             <td id="club_Title"><a class="postLink" href='/events/list/<%= data.eventPostId%>'>
                 <%= data.title %>
               </a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">작성자<%= data.userId %>
+            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName %>
             </td>
             <td id="club_Date">
               <%= data.createdateAt %>

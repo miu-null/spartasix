@@ -10,18 +10,31 @@ export class SearcherController {
     private searchService: SearcherService,
     ) {}
 
-  @Get("posts")  // 통합 검색기능 
-  async searchAllPosts(@Query() term,  @Res() res: Response): Promise<void> {
+  @Get("all")  // 통합 검색기능 
+  async searchAllPosts(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number,
+    @Query() term,  
+    @Res() res: Response): Promise<void> {
     try {
       const terms = await this.searchService.findAllPosts(term);
       const events = terms.events
       const clubs = terms.clubs
+      const dums = terms.dums
+      // const results = {events, clubs, dums}
+      const userData = await this.searchService.paginatedResults('users', page, term)
+      const eventdata = await this.searchService.paginatedResults('events', page, term)
+      const clubdata = await this.searchService.paginatedResults('clubs', page, term)
+      console.log(userData)
 
-
-      return res.render("searchAllPost.ejs", {
-        title: "검색결과",
+      return res.render("searchAll.ejs", {
         events,
         clubs,
+        dums,
+        term,
+        // results,
+        ...userData,
+        ...eventdata,
+        ...clubdata,
       })
 
     } catch (err) {
@@ -56,7 +69,6 @@ export class SearcherController {
       console.error(err.message);
     }
   }
-
 
   @Get("/users")  // 유저 검색 기능, 페이지네이션 테스트
   async searchUsers(

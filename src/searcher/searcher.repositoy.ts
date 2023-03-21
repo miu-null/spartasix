@@ -23,11 +23,13 @@ export class SearcherRepository {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const clubs = await this.clubRepository
         .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
         .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       const events = await this.eventRepository
         .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
         .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
@@ -41,10 +43,10 @@ export class SearcherRepository {
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.eventRepository
-        .createQueryBuilder('searchEvents')
-        .leftJoinAndSelect("searchEvents.user", "user")
-        .where('searchEvents.title LIKE :s OR searchEvents.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("searchEvents.id", "DESC")  //최신순(내림차순)
+        .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
+        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       console.log(results);
       return results
@@ -55,10 +57,10 @@ export class SearcherRepository {
     {
       console.log(data, '리포지')
       const results = await this.clubRepository
-        .createQueryBuilder('searchClubs')
-        .leftJoinAndSelect("searchClubs.user", "user")
-        .where('searchClubs.title LIKE :s OR searchClubs.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("searchClubs.id", "DESC")  //최신순(내림차순)
+        .createQueryBuilder('search')
+        .leftJoinAndSelect("search.user", "user")
+        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")  //최신순(내림차순)
         .getMany();
       return results
     }
@@ -69,8 +71,8 @@ export class SearcherRepository {
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.userSearchRepository
-        .createQueryBuilder('searchUsers')
-        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
+        .createQueryBuilder('search')
+        .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
         .getMany();
       console.log(results, '레포지토리 통과');
       return results
@@ -82,9 +84,9 @@ export class SearcherRepository {
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
       const results = await this.userSearchRepository
-        .createQueryBuilder('searchUsers')
-        .where('searchUsers.email LIKE :s OR searchUsers.nickName LIKE :s', { s: `%${data.term}%` })
-        .orderBy("searchUsers.id", "DESC")
+        .createQueryBuilder('search')
+        .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
+        .orderBy("search.id", "DESC")
         .take(4)
         .skip(0)
         .getMany();
