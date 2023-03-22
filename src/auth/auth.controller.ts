@@ -2,11 +2,13 @@ import {
   Body,
   CACHE_MANAGER,
   Controller,
+  Get,
   Inject,
   Patch,
   Post,
   Req,
   Res,
+  UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/createuser.dto";
@@ -14,6 +16,7 @@ import { loginDto } from "./dto/login.dto";
 import { Cache } from "cache-manager";
 import { findPasswordDto } from "./dto/findpassword.dto";
 import { MailService } from "src/mail/mail.service";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller("auth")
 export class AuthController {
@@ -38,9 +41,11 @@ export class AuthController {
   @Post("/sign-in")
   async login(@Body() data: loginDto, @Res() res, @Req() req) {
     const user = await this.authService.login(data.email, data.password);
+    // res.setHeader('Content-Type','application/json; charset=utf-8');
+    // res.setHeader("Authorization", "Bearer " + user.accessToken + user.refreshToken)
     res.cookie("accessToken", user.accessToken);
     res.cookie("refreshToken", user.refreshToken);
-    return res.json(true);
+    return res.json(user)
   }
 
   @Post("/find-password")
@@ -58,5 +63,22 @@ export class AuthController {
     await this.authService.newPassword(data.email, data.password);
 
     return true;
+  }
+
+  @Get("/test")
+  @UseGuards(AuthGuard())
+  async test() {
+    const a = "1"
+
+    return a
+  }
+
+  @Get("/new-accessToken")
+  async newAccessToken(@Req() req, next: Function) {
+    const header = req.headers.cookie;
+    const newpayload = await this.authService.newAccessToken(header);
+
+    req.user = newpayload["id"];
+    
   }
 }

@@ -199,6 +199,10 @@ function createClubComment(postId) {
       alert("작성 완료 !");
       window.location.reload();
     },
+    error: function (response) {
+      console.log(response)
+      alert("로그인 후 이용가능한 기능입니다.")
+    }
   });
 }
 
