@@ -33,9 +33,10 @@ export class ClubController {
     @Res() res: Response) {
 
     const terms = await this.clubService.paginatedResults(page);
-    console.log(terms)
+    const sortPosts = await this.searchService.getPopularClubs();
     return res.render("club.ejs", {
       ...terms,
+      sortPosts,
     });
   }
 
