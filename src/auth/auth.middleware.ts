@@ -6,6 +6,7 @@ import {
   Req,
   UnauthorizedException,
 } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { RedisService } from "src/redis/redis.service";
 import { AuthService } from "./auth.service";
 
@@ -14,40 +15,24 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(
     private authService: AuthService,
     private redisService: RedisService,
+    private jwtService: JwtService,
   ) {}
 
   async use(req: any, res: any, next: Function) {
     const token = req.headers.cookie;
     const accesstoken = token.split(";")[0].split("=")[1];
-    const refreshtoken = token.split(";")[1].split("=")[1];
 
     if (!accesstoken) {
-      throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+      throw new BadRequestException("로그인 후 이용 가능한 기능입니다.");
     }
 
     const payload = await this.authService.validateAcc(accesstoken);
 
-    try {
-      if (!payload) {
-        const user = await this.redisService.getRefreshToken(refreshtoken);
-
-        if (!user) {
-          throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
-        }
-
-        const newAccessToken = await this.authService.AccessToken(
-          Number(user["userId"]),
-        );
-        const newPayload = await this.authService.validateAcc(newAccessToken);
-
-        res.user = newPayload["id"];
-        next();
-      } else {
-        req.user = payload["id"];
-        next();
-      }
-    } catch (error) {
-      throw new BadRequestException();
+    if (!payload) {
+      throw new BadRequestException("로그인 후 이용 가능한 기능 입니다.")
     }
+
+    req.user = payload["id"];
+    next();
   }
 }

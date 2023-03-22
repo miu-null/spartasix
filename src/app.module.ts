@@ -124,6 +124,10 @@ export class AppModule implements NestModule {
           path: "/clubcomment/update_club_like/:commentId",
           method: RequestMethod.POST,
         },
+        {
+          path: "/auth/test",
+          method: RequestMethod.GET,
+        },
       );
-  }
+   }
 }

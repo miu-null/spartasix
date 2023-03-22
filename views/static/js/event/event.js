@@ -182,6 +182,17 @@ function createEventComment(postId) {
       alert("작성 완료 !");
       window.location.reload();
     },
+    error: function (request) {
+      if(request.responseJSON["message"] === "로그인 후 이용 가능한 기능 입니다.") {
+        $.ajax({
+          type: "GET",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+  
+          },
+        })
+      }
+    }
   });
 }
 

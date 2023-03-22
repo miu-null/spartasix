@@ -74,7 +74,6 @@ function sign_in() {
     url: "auth/sign-in",
     dataType: "json",
     contentType: "application/json; charset=utf-8",
-    async: false,
     data: JSON.stringify({
       email: email,
       password: password,
@@ -82,6 +81,7 @@ function sign_in() {
     success: function (response) {
       alert(response);
       window.location.replace("/");
+      
     },
   });
 }
@@ -187,4 +187,18 @@ function checkpass(randompassword) {
       });
     }
   });
+}
+
+function test() {
+  $.ajax({
+    type: "GET",
+    url: "/auth/test",
+    success: function (response) {
+      console.log(response)
+    },
+    error: function (request) {
+      console.log(request.responseJSON["message"])
+      
+    }
+  })
 }
