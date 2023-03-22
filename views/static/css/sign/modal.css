@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.modal { 
+.sign_modal { 
   position:absolute; 
   width:100%; 
   height:100%; 
@@ -10,7 +10,7 @@
   z-index: 50;
 }
 
-.wrap1 {
+.sign_wrap1 {
   height: 100%;
   width: 100%;
   background-position: center;
@@ -29,7 +29,7 @@
   transform: translate(10%,2%);
 }
 
-.form-wrap1 {
+.sign_form-wrap1 {
   width: 380px;
   height: 600px;
   position: relative;
@@ -39,7 +39,7 @@
   overflow: hidden;
 }
 
-.button-wrap1 {
+.sign_button-wrap1 {
   width: 280px;
   margin: 35px auto;
   position: relative;
@@ -47,47 +47,23 @@
   border-radius: 30px;
 }
 
-.togglebtn1 {
+.sign_togglebtn1 {
   padding: 10px 30px;
-  cursor: pointer;
   background: transparent;
   border: 0;
   outline: none;
   position: relative;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
 }
 
-#btn1 {
-  top: 0;
-  left: 0;
-  position: absolute;
-  width: 130px;
-  height: 100%;
-  background: linear-gradient(to right, #f9528a, #ff105f);
-  border-radius: 30px;
-  transition: 0.5s;
-}
-
-.social-icons1 {
-  margin: 30px auto;
-  text-align: center;
-  border-radius: 70%;
-}
-
-.social-icons1 img {
-  width: 30px;
-  cursor: pointer;
-  border-radius: 70%;
-}
-
-.input-group1 {
+.sign_input-group1 {
   top: 180px;
   position: absolute;
   width: 280px;
   transition: 0.5s;
 }
 
-.input-field1 {
+.sign_input-field1 {
   width: 100%;
   padding: 10px 0;
   margin: 5px 0;
@@ -97,7 +73,7 @@
   background: transparent;
 }
 
-.submit12 {
+.sign_submit12 {
   width: 85%;
   padding: 10px 30px;
   cursor: pointer;
@@ -110,47 +86,6 @@
   border-radius: 30px;
 }
 
-.submit11 {
-  width: 85%;
-  padding: 10px 30px;
-  cursor: pointer;
-  display: block;
-  margin: auto;
-  margin-top: 40px;
-  background: linear-gradient(to right, #f9528a, #ff105f);
-  border: 0;
-  outline: none;
-  border-radius: 30px;
-}
-
-span {
-  color: #777;
-  font-size: 12px;
-  bottom: 68px;
-  position: absolute;
-}
-
-#log_password1 {
-  margin-bottom: -30px;
-}
-
-#login1 {
+#sign_login1 {
   left: 50px;
-}
-
-#register1 {
-  left: 450px;
-}
-
-.find_tag1 {
-  display: flex;
-  padding: 60px;
-}
-
-a {
-  margin: auto;
-  font-size: 0.8rem;
-  position: relative;
-  text-decoration: none;
-  color: #000000;
 }

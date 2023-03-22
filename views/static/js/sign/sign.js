@@ -111,7 +111,7 @@ function find_password() {
 function checkpass(randompassword) {
   const button = document.querySelector("#div-check"); // 인증 번호 넣을 div
   const subbutton = document.querySelector("#onsubmit"); // 지울 버튼
-  const form = document.querySelector("#register1"); // 최상위 form
+  const form = document.querySelector("#login1"); // 최상위 form
   const textinput = document.createElement("input");
   const textbutton = document.createElement("input");
 
