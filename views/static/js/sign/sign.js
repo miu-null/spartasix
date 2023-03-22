@@ -79,7 +79,7 @@ function sign_in() {
       password: password,
     }),
     success: function (response) {
-      alert(response);
+      alert("로그인 성공 !");
       window.location.replace("/");
       
     },
@@ -198,7 +198,14 @@ function test() {
     },
     error: function (request) {
       console.log(request.responseJSON["message"])
-      
+
+        $.ajax({
+          type: "GET",
+          url: "/auth/new-accessToken",
+          async: false,
+          success: function(response) {
+          }
+        })
     }
   })
 }

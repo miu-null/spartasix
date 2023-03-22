@@ -16,7 +16,6 @@ import { loginDto } from "./dto/login.dto";
 import { Cache } from "cache-manager";
 import { findPasswordDto } from "./dto/findpassword.dto";
 import { MailService } from "src/mail/mail.service";
-import { AuthGuard } from "@nestjs/passport";
 
 @Controller("auth")
 export class AuthController {
@@ -39,7 +38,7 @@ export class AuthController {
   }
 
   @Post("/sign-in")
-  async login(@Body() data: loginDto, @Res() res, @Req() req) {
+  async login(@Body() data: loginDto, @Res() res) {
     const user = await this.authService.login(data.email, data.password);
     // res.setHeader('Content-Type','application/json; charset=utf-8');
     // res.setHeader("Authorization", "Bearer " + user.accessToken + user.refreshToken)
@@ -65,20 +64,21 @@ export class AuthController {
     return true;
   }
 
-  @Get("/test")
-  @UseGuards(AuthGuard())
-  async test() {
-    const a = "1"
-
-    return a
-  }
-
-  @Get("/new-accessToken")
-  async newAccessToken(@Req() req, next: Function) {
+  @Post("/new-accessToken")
+  async newAccessToken(@Req() req: any, @Res() res) {
     const header = req.headers.cookie;
     const newpayload = await this.authService.newAccessToken(header);
+    console.log(header)
 
-    req.user = newpayload["id"];
-    
+    if (newpayload) {
+      res.clearCookie("accessToken", newpayload.accessToken);
+      res.clearCookie("refreshToken", newpayload.refreshtoken);
+  
+      res.cookie("accessToken", newpayload.newAccessToken);
+      res.cookie("refreshToken", newpayload.refreshtoken);
+
+      return res.json(newpayload)
+    }
+
   }
 }

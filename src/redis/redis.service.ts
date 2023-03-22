@@ -11,7 +11,6 @@ export class RedisService {
     user: { id: string; email: string },
     refreshToken: string,
   ) {
-    console.log("redis")
     await this.cacheManager.set(refreshToken, {
       userId: user.id,
       email: user.email,

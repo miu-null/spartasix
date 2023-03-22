@@ -112,16 +112,19 @@ export class AuthService {
   }
 
   async newAccessToken(header: string) {
+    const accessToken = header.split(";")[0].split("=")[1];
     const refreshtoken = header.split(";")[1].split("=")[1];
     const user = await this.redisService.getRefreshToken(refreshtoken);
 
     if (!user) {
-      throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+      throw new BadRequestException("로그인 후 이용 가능한 기능입니다.");
     }
-    
+    console.log("user : ", user["userId"])
     const newAccessToken = await this.AccessToken(Number(user["userId"]));
-    const newPayload = await this.validateAcc(newAccessToken);
 
-    return newPayload;
+
+    const Header = {newAccessToken, refreshtoken, accessToken}
+
+    return Header;
   }
 }
