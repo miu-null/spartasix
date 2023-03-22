@@ -15,21 +15,27 @@ export class EventRepository {
     private readonly eventRepository: Repository<EventPosts>,
   ) {}
 
-  // async getEvents() {// 아래 페이지네이션 함수 참고
-  //   const events = await this.eventRepository
-  //     .createQueryBuilder("eventUser")
-  //     .leftJoinAndSelect("eventUser.user", "nickName")
-  //     .getMany();
-  //   return events;
-  // } // mySQL leftjoin
-
   async getEventById(eventPostId: number) {
-    const event = await this.eventRepository
+    const nowPost = await this.eventRepository
       .createQueryBuilder("eventPost")
-      .where("eventPost.id = :eventPostId", { eventPostId })
       .leftJoinAndSelect("eventPost.user", "nickName")
+      .where("eventPost.id = :eventPostId", { eventPostId })
       .getOne();
-    return event;
+  
+    const prevPost = await this.eventRepository
+    .createQueryBuilder("eventPost")
+    .leftJoinAndSelect("eventPost.user", "nickName")
+    .where("eventPost.id < :eventPostId", { eventPostId })
+    .orderBy('eventPost.id','DESC')
+    .getOne();
+    const nextPost = await this.eventRepository
+    .createQueryBuilder("eventPost")
+    .leftJoinAndSelect("eventPost.user", "nickName")
+    .where("eventPost.id > :eventPostId", { eventPostId })
+    .orderBy('eventPost.id','ASC')
+    .getOne()
+
+    return {prevPost, nowPost, nextPost}
   }
 
   async createEvent(
