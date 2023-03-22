@@ -100,12 +100,17 @@
       <img class="eventdetail_like_img" src="/img/likes.png">
     </div>
     <div class="eventdetail_bottom">
+      <!-- 이전 게시글 링크 -->
       <div class="eventdetail_bottom_div">
         <div class="eventdetail_bottom_div_title">
           Prev
         </div>
         <div class="eventdetail_bottom_div_body">
-          게시글 제목입니다.
+          <% if (prevPost) { %>
+            <a href="<%= prevPost.id %>">게시글 제목입니다.</a>
+            <% } else {%>
+              이전 글이 존재하지 않습니다.
+              <%  }%>
         </div>
         <div class="eventdetail_bottom_div_nickname">
           작성자
@@ -114,12 +119,18 @@
           2023.04.03
         </div>
       </div>
+      <!-- 다음 게시글 링크 -->
       <div class="eventdetail_bottom_div1">
         <div class="eventdetail_bottom_div_title">
           Next
         </div>
         <div class="eventdetail_bottom_div_body">
-          게시글 제목입니다.
+          <% if (nextPost) { %>
+            <a href="<%= nextPost.id %>">게시글 제목입니다.</a>
+            <% } else {%>
+            다음 글이 존재하지 않습니다.
+            <%  }%>
+        </div>
         </div>
         <div class="eventdetail_bottom_div_nickname">
           작성자

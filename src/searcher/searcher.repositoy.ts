@@ -21,77 +21,50 @@ export class SearcherRepository {
   async findAllPosts(data: any): Promise<any> {  //통합검색
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
-      const clubs = await this.clubRepository
-        .createQueryBuilder('search')
-        .leftJoinAndSelect("search.user", "user")
-        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.id", "DESC")  //최신순(내림차순)
-        .getMany();
-      const events = await this.eventRepository
-        .createQueryBuilder('search')
-        .leftJoinAndSelect("search.user", "user")
-        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.id", "DESC")  //최신순(내림차순)
-        .getMany();
-      const results = {events, clubs}
+      const clubs = await this.findClubPosts(data)
+      const events = await this.findEventPosts(data)
+      const users = await this.findUsers(data)
+      const results = {events, clubs, users}
       console.log(results);
       return results
     }
   }
 
-  async findEventPosts(data: any): Promise<EventPosts[]> { //event 게시글 검색 검색
+  async findEventPosts(data?: any): Promise<EventPosts[]>  { //event 게시글 검색 검색
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
-      const results = await this.eventRepository
-        .createQueryBuilder('search')
-        .leftJoinAndSelect("search.user", "user")
-        .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.id", "DESC")  //최신순(내림차순)
-        .getMany();
-      console.log(results);
-      return results
+      const events= await this.eventRepository
+      .createQueryBuilder('search')
+      .leftJoinAndSelect('search.user', 'user')
+      .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
+      .orderBy("search.id", "DESC")  //최신순(내림차순)
+      .getMany()
+      return events
     }
   }
-
-  async findClubPosts(data: any) : Promise<Clubs[]> { //clubs 게시글 검색
+  
+  async findClubPosts(data?: any) : Promise<Clubs[]> { //clubs 게시글 검색
     {
       console.log(data, '리포지')
-      const results = await this.clubRepository
+      const clubs = await this.clubRepository
         .createQueryBuilder('search')
-        .leftJoinAndSelect("search.user", "user")
+        .leftJoinAndSelect('search.user', 'user')
         .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
         .orderBy("search.id", "DESC")  //최신순(내림차순)
-        .getMany();
-      return results
+        .getMany()
+      return clubs
     }
   }
 
 
-  async findUsers(data: any) : Promise<Users[]>{ // 유저 검색
+  async findUsers(data?: any) : Promise<Users[]>{ // 유저 검색
     {
       console.log(`%${data.term}%`, data, "리포지토리 진입");
-      const results = await this.userSearchRepository
+      const users = await this.userSearchRepository
         .createQueryBuilder('search')
         .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
-        .getMany();
-      console.log(results, '레포지토리 통과');
-      return results
-    }
-  }
-
-
-  async findUsersCount(data: any) : Promise<Users[]>{
-    {
-      console.log(`%${data.term}%`, data, "리포지토리 진입");
-      const results = await this.userSearchRepository
-        .createQueryBuilder('search')
-        .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.id", "DESC")
-        .take(4)
-        .skip(0)
-        .getMany();
-      console.log(results);
-      return results
+        .getMany()
+      return users
     }
   }
 }

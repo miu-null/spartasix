@@ -1,39 +1,31 @@
 <div class="container event_container">
-
+  <div class="searchCount" id="searchCount">검색결과 : 총<%= searchCount %>건</div>
   <div class="event_table_container">
     <table class="table table-hover event_table">
-      <thead id="event_thead">
-        <tr>
-          <th>구분</th>
-          <th>Title</th>
-          <th>Writer</th>
-          <th>⏰Date</th>
-          <th>View</th>
-          <th>Likes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% slicedData.forEach(data=> { %>
-          <tr id="club_tr">
-            <td id="club_Id">유저</td>
-            <td id="club_Title"><a class="postLink" href='/events/list/<%= data.eventPostId%>'>
-                <%= data.title %>
-              </a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName %>
-            </td>
-            <td id="club_Date">
-              <%= data.createdateAt %>
-            </td>
-            <td id="club_View">
-              <%= data.viewCount %>
-            </td>
-            <td id="club_Likes">
-              <%= data.Likes %>
-            </td>
-          </tr>
-          <% }) %>
-      </tbody>
+        <thead id="event_thead">
+            <tr>
+                <th>구분</th>
+                <th>닉네임</th>
+                <th>GITHUB</th>
+                <th>좋아요</th>
+                <th>가입일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% slicedData.forEach(data=> { %>
+                <tr id="club_tr">
+                    <td id="club_Id"> 유저 </td>
+                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.nickName%><img src="<%= data.userIMG %>"width="40"></a></td>
+                    <td id="club_Likes"><%= data.snsURL %>
+                    <td id="club_Likes"><%= data.Likes %></td>
+                    <td id="club_Date"><%= data.createdAt %></td>
+
+                  </td>
+                </tr>
+                <% }) %>
+        </tbody>
     </table>
+</div>
 
     <!-- 페이지네이션 버튼 -->
     <div id="pagination">
