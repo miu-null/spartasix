@@ -105,7 +105,7 @@ export class EventCommentRepository {
     if (Like) {
       await this.eventCommentLikeRepository.softDelete(Like.id);
 
-      throw new BadRequestException();
+      throw new BadRequestException("좋아요 취소");
     }
 
     if (!Like) {

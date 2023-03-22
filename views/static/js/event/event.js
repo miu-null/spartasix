@@ -6,6 +6,11 @@ $(document).ready(function () {
   showClubComment(clubPostId);
 });
 
+// let show_comment = document.querySelector("#eventTitle");
+// show_comment.addEventListener("click", function () {
+
+// })
+
 function event_open() {
   $(`#event_modal1`).fadeIn();
 
@@ -31,17 +36,34 @@ function remindEvent() {
     success: function (response) {
       alert("이벤트 알림 메일을 전송했습니다.");
     },
-    errorfunction(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error,
-      );
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "POST",
+              url: `/events/remindEvent`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              async: false,
+              data: JSON.stringify({
+                email: email,
+              }),
+              success: function (response) {
+                alert("이벤트 알림 메일을 전송했습니다.");
+              },
+            });
+          },
+        });
+      }
     },
   });
 }
@@ -69,6 +91,39 @@ function eventNew() {
       alert("작성 완료");
       window.location.replace("/events/list");
     },
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "POST",
+              url: "/events/newevent",
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              data: JSON.stringify({
+                title: title,
+                startDate: startDate,
+                endDate: endDate,
+                content: content,
+                postIMG: postIMG,
+              }),
+              success: function (response) {
+                alert("작성 완료");
+                window.location.replace("/events/list");
+              },
+            });
+          },
+        });
+      }
+    },
   });
 }
 
@@ -95,6 +150,37 @@ function updateEvent(eventPostId) {
       alert("수정 완료");
       window.location.replace(`/events/list/${eventPostId}`);
     },
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "PATCH",
+              url: `/events/list/${eventPostId}/update`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              data: JSON.stringify({
+                title: title,
+                content: content,
+                date: date,
+              }),
+              success: function (response) {
+                alert("수정 완료");
+                window.location.replace(`/events/list/${eventPostId}`);
+              },
+            });
+          },
+        });
+      }
+    },
   });
 }
 
@@ -109,8 +195,32 @@ function deleteEvent(eventPostId) {
       alert("삭제완료");
       window.location.replace("/events/list");
     },
-    error: function (response) {
-      console.log(response);
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "DELETE",
+              url: `/events/list/${eventPostId}`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              data: {},
+              success: function (response) {
+                alert("삭제완료");
+                window.location.replace("/events/list");
+              },
+            });
+          },
+        });
+      }
     },
   });
 }
@@ -120,10 +230,8 @@ function showComment(eventPostId) {
     type: "GET",
     url: `/eventcomment/${eventPostId}/comments`,
     data: {},
-    async: false,
     success: function (response) {
       let rows = response;
-      console.log(response);
       for (let i = 0; i < rows.length; i++) {
         const commentId = rows[i]["id"];
         const nickName = rows[i]["user"]["nickName"];
@@ -175,6 +283,7 @@ function createEventComment(postId) {
     url: `/eventcomment/create-comment/${postId}`,
     dataType: "json",
     contentType: "application/json; charset=utf-8",
+    async: false,
     data: JSON.stringify({
       content: content,
     }),
@@ -183,16 +292,35 @@ function createEventComment(postId) {
       window.location.reload();
     },
     error: function (request) {
-      if(request.responseJSON["message"] === "로그인 후 이용 가능한 기능 입니다.") {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
-          type: "GET",
+          type: "POST",
           url: "/auth/new-accessToken",
           success: function (response) {
-  
+            $.ajax({
+              type: "POST",
+              url: `/eventcomment/create-comment/${postId}`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              async: false,
+              data: JSON.stringify({
+                content: content,
+              }),
+              success: function (response) {
+                alert("작성 완료 !");
+                window.location.reload();
+              },
+            });
           },
-        })
+        });
       }
-    }
+    },
   });
 }
 
@@ -230,7 +358,7 @@ function updateEventComment(commentId, content) {
 
   let update_comment = document.querySelector("#new_comment");
   update_comment.addEventListener("click", function () {
-  const new_comment = $(`#new_${commentId}`).val();
+    const new_comment = $(`#new_${commentId}`).val();
 
     $.ajax({
       type: "PATCH",
@@ -244,7 +372,7 @@ function updateEventComment(commentId, content) {
         alert("수정 완료");
         window.location.reload();
       },
-      error: function (request, status, error) {
+      error: function (request) {
         if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
           alert("댓글이 존재하지 않습니다.");
           window.location.reload();
@@ -255,6 +383,35 @@ function updateEventComment(commentId, content) {
         ) {
           alert("작성자만 사용할 수 있는 기능입니다.");
           window.location.reload();
+        }
+
+        if (
+          request.responseJSON["message"] ===
+          "로그인 후 이용 가능한 기능입니다."
+        ) {
+          alert("로그인 후 이용 가능한 기능입니다.");
+        }
+
+        if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+          $.ajax({
+            type: "POST",
+            url: "/auth/new-accessToken",
+            success: function (response) {
+              $.ajax({
+                type: "PATCH",
+                url: `/eventcomment/update-comment/${commentId}`,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                  content: new_comment,
+                }),
+                success: function (response) {
+                  alert("수정 완료");
+                  window.location.reload();
+                },
+              });
+            },
+          });
         }
       },
     });
@@ -270,7 +427,7 @@ function deleteEventComment(eventcommentId) {
       alert("삭제 성공 !");
       window.location.reload();
     },
-    error: function (response) {
+    error: function (request) {
       if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
         alert("댓글이 존재하지 않습니다.");
         window.location.reload();
@@ -281,6 +438,30 @@ function deleteEventComment(eventcommentId) {
       ) {
         alert("작성자만 사용할 수 있는 기능입니다.");
         window.location.reload();
+      }
+
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "DELETE",
+              url: `/eventcomment/delete-comment/${eventcommentId}`,
+              data: {},
+              success: function (response) {
+                alert("삭제 성공 !");
+                window.location.reload();
+              },
+            });
+          },
+        });
       }
     },
   });
@@ -296,8 +477,34 @@ function updateLike(commentId) {
       window.location.reload();
     },
     error: function (err) {
-      alert("좋아요 취소 !");
-      window.location.reload();
+      if (request.responseJSON["message"] === "좋아요 취소") {
+        alert("좋아요 취소 !");
+        window.location.reload();
+      }
+
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: `/eventcomment/update_event_like/${commentId}`,
+          data: {},
+          success: function (response) {
+            alert("좋아요 !");
+            window.location.reload();
+          },
+          error: function (err) {
+            if (request.responseJSON["message"] === "좋아요 취소") {
+              alert("좋아요 취소 !");
+              window.location.reload();
+            }
+          },
+        });
+      }
     },
   });
 }
