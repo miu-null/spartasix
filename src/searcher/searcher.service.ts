@@ -1,17 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { SearcherRepository } from './searcher.repositoy';
-import { ClubService } from 'src/club/club.service';
-import { ClubRepository } from 'src/club/club.repository';
-
 
 @Injectable()
 export class SearcherService {
     constructor(
         private SearcherRepository: SearcherRepository,
-        private clubRepository : ClubRepository,
         ) {}  
 
-    
     //게시글 통합검색
     async findAllPosts(term : any) {;
         console.log(term, '서비스')
@@ -44,7 +39,7 @@ export class SearcherService {
         return results
     }
     
-        //페이지네이션 적용 전, 게시판 및 유저 데이터 선택
+    //페이지네이션 적용 전, 게시판 및 유저 데이터 선택
     async selectData(pageType : string, page:number, term : any) {
         let getdata
         if (pageType === 'users') {
@@ -80,6 +75,30 @@ export class SearcherService {
         ...paginatedDemand,
         };
     }
+
+    //인기글 관련 : 모든 게시글
+    async getAllPosts() {
+          const posts = await this.SearcherRepository.getAllPosts();
+          return { posts };
+        }
+
+    //인기글 관련 : 조회수 순
+    async getPopularPosts() {
+          const popularPosts = await this.SearcherRepository.getPopularPosts();
+          return { popularPosts };
+        }
+
+    // 클럽 인기글 2개
+    async getPopularClubs() {
+        const sortPosts = await this.SearcherRepository.getPopularClubs()
+        return sortPosts;
+        }
+
+    // 이벤트 인기글 2개
+    async getPopularEvents() {
+        const sortPosts = await this.SearcherRepository.getPopularEvents()
+        return sortPosts;
+        }
 
     
 }

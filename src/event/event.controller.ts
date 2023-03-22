@@ -96,8 +96,12 @@ export class EventController {
     @Res() res: Response,
   ) {
     const events = await this.eventService.getEvents(page);
-    console.log("events : ", events);
-    return res.render("eventMain.ejs", { ...events });
+    const sortPosts = await this.searchService.getPopularEvents();
+    // console.log("events : ", events);
+    return res.render("eventMain.ejs", {
+       ...events,
+       sortPosts 
+      });
   }
 
   //게시글 상세 조회

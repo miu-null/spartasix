@@ -120,6 +120,54 @@
   </div>
 
 
+  <div class="event_table_container">
+    <table class="table table-hover event_table">
+        <thead id="event_thead">
+            <tr>
+                <th>인기글</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>⏰Date</th>
+                <th>View</th>
+                <th>Likes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (popularPosts.length) { %>
+            <% popularPosts.forEach(data=> { %>
+                <tr id="club_tr">
+                    <% if (data.maxMembers) { %>
+                        <td id="club_Id">클럽</td>
+                    <td id="club_Title"><a class="postLink" href='/club/list/<%= data.id%>'><%= data.title %></a></td>
+                    <% } else { %>
+                        <td id="club_Id">이벤트</td>
+                        <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'><%= data.title %></a></td>
+                        <% } %>
+                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName%>
+                    </td>
+                    <td id="club_Date">
+                        <%= data.createdAt %>
+                    </td>
+                    <td id="club_View">
+                        <%= data.viewCount %>
+                    </td>
+                    <td id="club_Likes">
+                        <%= data.Likes %>
+                    </td>
+                    <% }) %>
+                    <% } else { %>
+                      <td id="club_Likes">인기글이 없습니다.</td>
+                      <% } %>
+                    </tr>   
+        </tbody>
+    </table>
+</div>
+
+
+        
+
+
+
 
 
 <!-- <section id="search" class="search-wrap">
