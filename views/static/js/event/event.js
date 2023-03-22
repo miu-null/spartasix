@@ -6,11 +6,6 @@ $(document).ready(function () {
   showClubComment(clubPostId);
 });
 
-// let show_comment = document.querySelector("#eventTitle");
-// show_comment.addEventListener("click", function () {
-
-// })
-
 function event_open() {
   $(`#event_modal1`).fadeIn();
 
