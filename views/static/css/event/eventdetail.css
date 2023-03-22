@@ -147,6 +147,8 @@
 .eventdetail_body_button {
   display: flex;
   margin-left: auto;
+  margin-top: 1%;
+  margin-left: 79%;
 }
 
 .eventdetail_body_button_remind {
@@ -158,8 +160,8 @@
   border: 1px solid #f23232;
   background-color: white;
   text-align: center;
-  width: 71px;
-  height: 27px;
+  width: 85px;
+  height: 29px;
   font-size: 9px;
   letter-spacing: 0.5px;
 }
@@ -170,13 +172,16 @@
   background-color: #f23232;
   color: white;
   text-align: center;
-  width: 71px;
-  height: 27px;
+  width: 85px;
+  height: 29px;
   font-size: 9px;
   letter-spacing: 0.5px;
 }
 
 .eventdetail_body_text {
+  font-family: "Amiko";
+  font-size: 15px;
+  font-weight: 500;
   margin: auto;
   margin-top: 100px;
   width: 80%;
@@ -223,7 +228,7 @@
 }
 
 .eventdetail_bottom_div_body {
-  margin-left: 200px;
+  margin-left: 5px;
 }
 
 .eventdetail_bottom_div_nickname {
@@ -348,6 +353,10 @@
   border-radius: 30px;
   background-color: #ffff;
   font-weight: bold;
+  width: 60px;
+  height: 30px;
+  font-family: "Amiko";
+  font-size: 12px;
 }
 
 .comment_show_text {
