@@ -76,13 +76,13 @@ export class UserpageService {
 
   // 클럽 신청서 조회 // 특정 유저만
   async getClubApps(userId: number) {
-    // const { userNamesArray, myOwnClub } =
-    //   await this.userPageRepository.getClubApps(userId);
-    // const myApps = myOwnClub.map(({ id, userId, isAccepted, createdAt }) => {
-    //   return { id, userId, isAccepted, createdAt };
-    // });
-    // return { userNamesArray, myApps };
-    return "123";
+    const { myOwnClubs } = await this.userPageRepository.getClubApps(userId);
+    const myApps = myOwnClubs.map(
+      ({ id, user, userId, isAccepted, createdAt }) => {
+        return { id, userId, isAccepted, nickName: user.nickName, createdAt };
+      },
+    );
+    return { myApps };
   }
 
   // 특정 신청서 조회 // 특정 유저만
