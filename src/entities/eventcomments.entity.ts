@@ -34,7 +34,7 @@ export class EventComments {
   createdAt: Date;
 
   @UpdateDateColumn()
-  updateAt: Date | null;
+  updatedAt: Date | null;
 
   @DeleteDateColumn()
   deletedAt: Date | null;
