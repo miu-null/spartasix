@@ -33,7 +33,8 @@ export class Clubs {
   @Column("varchar")
   content: string;
 
-  @Column("int")
+    // @Column({type:"int", default:0}) //default 값을 0으로 설정하여 조회수 초기화
+  @Column("int") 
   viewCount: number;
   
   @Column("varchar")

@@ -35,6 +35,13 @@ export class EventRepository {
     .orderBy('eventPost.id','ASC')
     .getOne()
 
+    await this.eventRepository
+    .createQueryBuilder()
+    .update(EventPosts)
+    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
+    .where('id = :id', { id: eventPostId })
+    .execute(); // 쿼리 실행
+
     return {prevPost, nowPost, nextPost}
   }
 
