@@ -66,11 +66,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ejsMiddleware)
-      .exclude(
-        { path: "sign", method: RequestMethod.GET },
-        { path: "sign", method: RequestMethod.POST },
-        "sign/(.*)",
-      )
       .forRoutes("/");
     consumer
       .apply(AuthMiddleware)
