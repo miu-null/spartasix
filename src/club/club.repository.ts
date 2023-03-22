@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository, MoreThan, LessThan } from "typeorm";
+// import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 
 @Injectable()
 export class ClubRepository {
@@ -11,12 +12,22 @@ export class ClubRepository {
     private readonly clubRepository: Repository<Clubs>,
     @InjectRepository(ClubMembers)
     private clubmemberRepository: Repository<ClubMembers>,
-  ) {}
+    // @InjectRepository(AbusingClubCounts)
+    // private abusingClubRepository: Repository<AbusingClubCounts>,
+  ) { }
 
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
-      select: ["id", "title", "maxMembers", "createdAt", "userId", "category"],
+      select: [
+        "id",
+        "title",
+        "maxMembers",
+        "createdAt",
+        "userId",
+        "category",
+        "viewCount",
+      ],
     });
 
     return data;
@@ -86,6 +97,7 @@ export class ClubRepository {
         "updatedAt",
         "id",
         "category",
+        "viewCount",
       ],
     });
     // const prevPost = await this.clubRepository
@@ -98,16 +110,16 @@ export class ClubRepository {
     // .where('Clubs.id > :id', {id:clubId})
     // .orderBy('Clubs.id','ASC')
     // .getOne()
- 
+
     const prevPost = await this.clubRepository.findOne({
-      where: {id: LessThan(clubId)},
-      order: {id: 'DESC'}
+      where: { id: LessThan(clubId) },
+      order: { id: 'DESC' }
     })
     const nextPost = await this.clubRepository.findOne({
-      where: {id: MoreThan(clubId)},
-      order: {id: 'ASC'}
+      where: { id: MoreThan(clubId) },
+      order: { id: 'ASC' }
     });
-    return { prevPost, nowPost, nextPost};
+    return { prevPost, nowPost, nextPost };
   }
 
   async deleteClubDto(clubId: number) {
@@ -143,4 +155,12 @@ export class ClubRepository {
       ...paginatedDemand,
     };
   }
+  // async createAbusing(clubId: number, userId: number) {
+  //   const data = await this.abusingClubRepository.insert({
+  //     clubId,
+  //     userId,
+  //   });
+
+  //   return data;
+  // }
 }
