@@ -48,6 +48,7 @@ export class ClubCommentRepository {
       userId,
       clubId,
       content,
+      class: 0,
     });
   }
 
@@ -86,7 +87,7 @@ export class ClubCommentRepository {
   async findCommentUserId(clubCommentId: number) {
     const comment = await this.clubRepository.findOne({
       where: { id: clubCommentId, deletedAt: null },
-      select: ["userId", "id", "content"],
+      select: ["userId", "clubId", "content"],
     });
 
     return comment;
@@ -95,13 +96,13 @@ export class ClubCommentRepository {
   async updateLike(userId: number, commentId: number) {
     const Like = await this.clubCommentLikeRepository.findOne({
       where: { userId, clubCommentId: commentId, deletedAt: null },
-      select: ["id", "userId"],
+      select: ["id"],
     });
 
     if (Like) {
       await this.clubCommentLikeRepository.softDelete(Like.id);
 
-      throw new BadRequestException();
+      throw new BadRequestException("좋아요 취소");
     }
 
     if (!Like) {
