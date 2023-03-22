@@ -88,16 +88,7 @@ export class ClubRepository {
         "category",
       ],
     });
-    // const prevPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id < :id', {id:clubId})
-    // .orderBy('Clubs.id','DESC')
-    // .getOne();
-    // const nextPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id > :id', {id:clubId})
-    // .orderBy('Clubs.id','ASC')
-    // .getOne()
+
  
     const prevPost = await this.clubRepository.findOne({
       where: {id: LessThan(clubId)},

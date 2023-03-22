@@ -102,9 +102,9 @@ export class ClubController {
   async getClubsById(@Param("id")id: number,  ) {
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.prevPost
+    const nowPost = detail.nowPost
     const nextPost = detail.nextPost
-    console.log(prevPost.id)
-    return {detail, prevPost, nextPost}
+    return {detail, prevPost, nowPost, nextPost}
     };
 
   @Delete("/list/:id")
