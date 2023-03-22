@@ -153,6 +153,9 @@ export class EventController {
     @Query() term: string,
     @Res() res: Response,
   ) {
+    if (!page) {
+      page = 1;
+    }
     const searchData = await this.searchService.paginatedResults(
       "events",
       page,
