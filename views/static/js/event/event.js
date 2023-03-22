@@ -409,6 +409,22 @@ function updateEventComment(commentId, content) {
                   alert("수정 완료");
                   window.location.reload();
                 },
+                error: function (request) {
+                  if (
+                    request.responseJSON["message"] ===
+                    "댓글이 존재하지 않습니다."
+                  ) {
+                    alert("댓글이 존재하지 않습니다.");
+                    window.location.reload();
+                  }
+                  if (
+                    request.responseJSON["message"] ===
+                    "작성자만 사용할 수 있는 기능입니다."
+                  ) {
+                    alert("작성자만 사용할 수 있는 기능입니다.");
+                    window.location.reload();
+                  }
+                },
               });
             },
           });
@@ -459,6 +475,22 @@ function deleteEventComment(eventcommentId) {
                 alert("삭제 성공 !");
                 window.location.reload();
               },
+              error: function (request) {
+                if (
+                  request.responseJSON["message"] ===
+                  "댓글이 존재하지 않습니다."
+                ) {
+                  alert("댓글이 존재하지 않습니다.");
+                  window.location.reload();
+                }
+                if (
+                  request.responseJSON["message"] ===
+                  "작성자만 사용할 수 있는 기능입니다."
+                ) {
+                  alert("작성자만 사용할 수 있는 기능입니다.");
+                  window.location.reload();
+                }
+              },
             });
           },
         });
@@ -476,7 +508,7 @@ function updateLike(commentId) {
       alert("좋아요 !");
       window.location.reload();
     },
-    error: function (err) {
+    error: function (request) {
       if (request.responseJSON["message"] === "좋아요 취소") {
         alert("좋아요 취소 !");
         window.location.reload();
@@ -491,17 +523,23 @@ function updateLike(commentId) {
       if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
-          url: `/eventcomment/update_event_like/${commentId}`,
-          data: {},
+          url: "/auth/new-accessToken",
           success: function (response) {
-            alert("좋아요 !");
-            window.location.reload();
-          },
-          error: function (err) {
-            if (request.responseJSON["message"] === "좋아요 취소") {
-              alert("좋아요 취소 !");
-              window.location.reload();
-            }
+            $.ajax({
+              type: "POST",
+              url: `/eventcomment/update_event_like/${commentId}`,
+              data: {},
+              success: function (response) {
+                alert("좋아요 !");
+                window.location.reload();
+              },
+              error: function (response) {
+                if (request.responseJSON["message"] === "좋아요 취소") {
+                  alert("좋아요 취소 !");
+                  window.location.reload();
+                }
+              },
+            });
           },
         });
       }
