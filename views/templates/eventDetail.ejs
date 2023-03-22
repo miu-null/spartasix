@@ -4,22 +4,22 @@
       <div class="event_form_wrap1">
         <div class="event_append_container">
           <div class="event_modal_body">
-            이벤트 알림을 등록합니다. <br>
-            알림을 신청한 날짜와,<br>
-            이벤트 시작 날짜로 부터 일주일 전, <br>
-            등록하신 이메일로 알림 메일이 발송됩니다.<br>
+            이벤트 알림을 등록합니다. <br />
+            알림을 신청한 날짜와,<br />
+            이벤트 시작 날짜로 부터 일주일 전, <br />
+            등록하신 이메일로 알림 메일이 발송됩니다.<br />
             알림을 받아보시겠습니까?
           </div>
           <div class="event_modal_text">
-            <div class="event_modal_email">
-              e-mail
-            </div>
+            <div class="event_modal_email">e-mail</div>
             <div class="event_modal_email_text">
-              <input id="event_modal_email">
+              <input id="event_modal_email" />
             </div>
           </div>
           <div class="event_modal_button_body">
-            <button class="event_modal_button" onclick="remindEvent()">submit !</button>
+            <button class="event_modal_button" onclick="remindEvent()">
+              submit !
+            </button>
           </div>
         </div>
       </div>
@@ -29,7 +29,9 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= events.id %>/update'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      <a onclick="location.href='<%= events.id %>/update'" class="new_event"
+        >edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a
+      >
     </div>
     <div class="eventdetail_delete">
       <a onclick="deleteEvent('<%= events.id %>')" class="new_event">delete</a>
@@ -37,66 +39,36 @@
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
-      <div class="eventdetail_first_id">
-        <%= events.id %>
-      </div>
+      <div class="eventdetail_first_id"><%= events.id %></div>
       <div class="eventdetail_first_title">
-        <div class="first_title">
-          Title
-        </div>
-        <div class="title_text">
-          <%= events.title%>
-        </div>
+        <div class="first_title">Title</div>
+        <div class="title_text"><%= events.title%></div>
       </div>
       <div class="eventdetail_first_nickname">
-        <div class="first_nickname">
-          Writer
-        </div>
-        <div class="nickname_text">
-          <%= events.user.nickName %>
-        </div>
+        <div class="first_nickname">Writer</div>
+        <div class="nickname_text"><%= events.user.nickName %></div>
       </div>
       <div class="eventdetail_first_likes">
-        <div class="first_likes">
-          Likes
-        </div>
-        <div class="likes_text">
-          0
-        </div>
+        <div class="first_likes">Likes</div>
+        <div class="likes_text">0</div>
       </div>
     </div>
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
-        <div class="start_date">
-          Event started at : 
-        </div>
-        <div class="date_text">
-          <%= events.createdateAt%>
-        </div>
+        <div class="start_date">Event started at :</div>
+        <div class="date_text"><%= events.createdateAt%></div>
       </div>
       <div class="eventdetail_second_end">
-        <div class="end_date">
-          Event ended at : 
-        </div>
-        <div class="date_text">
-          2023.04.23
-        </div>
+        <div class="end_date">Event ended at :</div>
+        <div class="date_text">2023.04.23</div>
       </div>
       <div class="eventdetail_second_date">
-        <div class="second_date">
-          Date
-        </div>
-        <div class="second_date_text">
-          2023.04.03
-        </div>
+        <div class="second_date">Date</div>
+        <div class="second_date_text">2023.04.03</div>
       </div>
       <div class="eventdetail_second_view">
-        <div class="view_title">
-          View
-        </div>
-        <div class="view_text">
-          0
-        </div>
+        <div class="view_title">View</div>
+        <div class="view_text">0</div>
       </div>
     </div>
   </div>
@@ -109,57 +81,43 @@
         <button class="report_button">report</button>
       </div>
     </div>
-    <div class="eventdetail_body_text">
-        <%= events.content %>
+    <div class="eventdetail_body_text"><%= events.content %></div>
+    <div class="eventdetail_like_container">
+      <img class="eventdetail_like_img" src="/img/likes.png" />
     </div>
-  <div class="eventdetail_like_container">
-    <img class="eventdetail_like_img" src="/img/likes.png" >
-  </div>
-  <!-- 이전 게시물 링크 -->
-  <div class="eventdetail_bottom">
-    <div class="eventdetail_bottom_div">
-      <div class="eventdetail_bottom_div_title">
-        Prev
+    <!-- 이전 게시물 링크 -->
+    <div class="eventdetail_bottom">
+      <div class="eventdetail_bottom_div">
+        <div class="eventdetail_bottom_div_title">Prev</div>
+        <div class="eventdetail_bottom_div_body">게시글 제목입니다.</div>
+        <div class="eventdetail_bottom_div_nickname">작성자</div>
+        <div class="eventdetail_bottom_div_date">2023.04.03</div>
       </div>
-      <div class="eventdetail_bottom_div_body">
-        게시글 제목입니다.
-      </div>
-      <div class="eventdetail_bottom_div_nickname">
-        작성자
-      </div>
-      <div class="eventdetail_bottom_div_date">
-        2023.04.03
-      </div>
-    </div>
-    <!-- 다음 게시물 링크 -->
-    <div class="eventdetail_bottom_div1">
-      <div class="eventdetail_bottom_div_title">
-        Next
-      </div>
-      <div class="eventdetail_bottom_div_body">
-        게시글 제목입니다. 
-      </div>
-      <div class="eventdetail_bottom_div_nickname">
-        작성자
-      </div>
-      <div class="eventdetail_bottom_div_date">
-        2023.04.03
+      <!-- 다음 게시물 링크 -->
+      <div class="eventdetail_bottom_div1">
+        <div class="eventdetail_bottom_div_title">Next</div>
+        <div class="eventdetail_bottom_div_body">게시글 제목입니다.</div>
+        <div class="eventdetail_bottom_div_nickname">작성자</div>
+        <div class="eventdetail_bottom_div_date">2023.04.03</div>
       </div>
     </div>
   </div>
-</div>
-<div class="eventdetail_comment_container">
-  <div class="comment_body">
-    <div class="comment_input_box">
-      <textarea class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
+  <div class="eventdetail_comment_container">
+    <div class="comment_body">
+      <div class="comment_input_box">
+        <textarea
+          class="comment_textarea"
+          placeholder="댓글을 입력해 주세요."
+        ></textarea>
+      </div>
     </div>
-  </div>
-  <div class="comment_input_button_box">
-    <button class="comment_input_button">
-      작성
-    </button>
-  </div>
-  <div data-text="<%= events.id %>" id="comment_show_text" class="comment_show_text">
-
+    <div class="comment_input_button_box">
+      <button class="comment_input_button">add</button>
+    </div>
+    <div
+      data-text="<%= events.id %>"
+      id="comment_show_text"
+      class="comment_show_text"
+    ></div>
   </div>
 </div>
