@@ -6,7 +6,7 @@
         <table class="table table-hover event_table">
             <thead id="event_thead">
                 <tr>
-                    <th>구분</th>
+                    <th>유저</th>
                     <th>닉네임</th>
                     <th>GITHUB</th>
                     <th>좋아요</th>
@@ -14,6 +14,7 @@
                 </tr>
             </thead>
             <tbody>
+                <% if (users.length) { %>
                 <% users.forEach(data=> { %>
                     <tr id="club_tr">
                         <td id="club_Id"> 유저 </td>
@@ -21,10 +22,11 @@
                         <td id="club_Likes"><a class="postLink" href="http://<%= data.snsURL %>"><%= data.snsURL %>
                         <td id="club_Likes"><%= data.Likes %></td>
                         <td id="club_Date"><%= data.createdAt %></td>
-  
-                      </td>
-                    </tr>
-                    <% }) %>
+                        <% }) %>
+                        <% } else { %>
+                          <td id="club_Likes">검색 결과가 없습니다.</td>
+                          <% } %>
+                        </tr>    
             </tbody>
         </table>
     </div>
@@ -36,7 +38,7 @@
       <table class="table table-hover event_table">
           <thead id="event_thead">
               <tr>
-                  <th>구 분</th>
+                  <th>행사</th>
                   <th>제목</th>
                   <th>작성자</th>
                   <th>⏰Date</th>
@@ -45,6 +47,7 @@
               </tr>
           </thead>
           <tbody>
+            <% if (events.length) { %>
               <% events.forEach(data=> { %>
                   <tr id="club_tr">
                       <td id="club_Id">이벤트</td>
@@ -63,8 +66,11 @@
                       <td id="club_Likes">
                           <%= data.Likes %>
                       </td>
-                  </tr>
-                  <% }) %>
+                      <% }) %>
+                      <% } else { %>
+                        <td id="club_Likes">검색 결과가 없습니다.</td>
+                        <% } %>
+                      </tr>    
           </tbody>
       </table>
   </div>
@@ -76,7 +82,7 @@
       <table class="table table-hover event_table">
           <thead id="event_thead">
               <tr>
-                  <th>구분</th>
+                  <th>모임</th>
                   <th>제목</th>
                   <th>작성자</th>
                   <th>⏰Date</th>
@@ -85,6 +91,7 @@
               </tr>
           </thead>
           <tbody>
+            <% if (clubs.length) { %>
               <% clubs.forEach(data=> { %>
                   <tr id="club_tr">
                       <td id="club_Id">클럽</td>
@@ -103,8 +110,11 @@
                       <td id="club_Likes">
                           <%= data.Likes %>
                       </td>
-                  </tr>
-                  <% }) %>
+                      <% }) %>
+                      <% } else { %>
+                        <td id="club_Likes">검색 결과가 없습니다.</td>
+                        <% } %>
+                      </tr>   
           </tbody>
       </table>
   </div>
