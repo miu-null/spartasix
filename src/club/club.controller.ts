@@ -7,11 +7,11 @@ import {
   Post,
   Put,
   Res,
-  Next,
   Req,
   Query,
   ParseIntPipe,
   DefaultValuePipe,
+  Render
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -98,20 +98,14 @@ export class ClubController {
   }
 
   @Get("/list/:id")
-  async getClubsById(
-    @Param("id")
-    id: number,
-    @Res()
-    res: Response,
-  ) {
-    const terms = await this.clubService.getClubs();
+  @Render('clubsdetail.ejs')
+  async getClubsById(@Param("id")id: number,  ) {
     const detail = await this.clubService.getClubById(id);
-    console.log(detail);
-    return res.render("clubsdetail.ejs", {
-      detail,
-      terms,
-    });
-  }
+    const prevPost = detail.prevPost
+    const nextPost = detail.nextPost
+    console.log(prevPost.id)
+    return {detail, prevPost, nextPost}
+    };
 
   @Delete("/list/:id")
   async delete(@Param("id") id: number, @Res() res) {
@@ -122,16 +116,19 @@ export class ClubController {
   ///모임게시판 검색기능
   @Get("/search")
   async searchClubs(
-    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query("page") page: number,
     @Query() term: string,
     @Res() res: Response,
   ) {
+    if (!page) {
+      page = 1;
+    }
     const searchData = await this.searchService.paginatedResults(
       "clubs",
       page,
       term,
     );
-    console.log("검색", searchData);
+    console.log("검색", searchData, term);
     return res.render("clubsearch.ejs", {
       term,
       ...searchData,

@@ -67,7 +67,7 @@ export class ClubService {
 
   async getClubById(id: number) {
     const data = await this.clubRepository.getClubById(id);
-
+    console.log(data, '@@@@서비스')
     return data;
   }
 
