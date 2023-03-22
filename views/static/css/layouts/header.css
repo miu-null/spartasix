@@ -22,7 +22,7 @@
 }
 
 .category {
-  font-family: 'Amiko', sans-serif;
+  font-family: "Amiko", sans-serif;
 }
 
 .header_list {
@@ -48,16 +48,16 @@
 
 .header_button {
   width: 90px;
-  margin-top: 16px;
+  margin-top: 8px;
   margin-right: 315px;
-  font-family: 'Amiko', sans-serif;
+  font-family: "Amiko", sans-serif;
 }
 
 .myButton {
   border: 1px solid #ff0000;
   border-radius: 30px;
   background-color: #ffff;
-  font-size: 15px;
+  font-size: 12px;
   width: 90px;
   height: 32px;
 }
@@ -71,6 +71,7 @@
 .search {
   width: 300px;
   margin-right: 10px;
+  margin-top: -7px;
 }
 
 .form-control1 {
@@ -89,10 +90,8 @@
   margin-top: 15px;
 }
 
-
-input::-webkit-search-cancel-button
-{
-	display:none;
+input::-webkit-search-cancel-button {
+  display: none;
 }
 
 /* 검색창 돋보기 */
