@@ -13,7 +13,7 @@ export class EventRepository {
     private readonly userRepository: Repository<Users>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-  ) { }
+  ) {}
 
   // async getEvents() {// 아래 페이지네이션 함수 참고
   //   const events = await this.eventRepository
@@ -23,11 +23,11 @@ export class EventRepository {
   //   return events;
   // } // mySQL leftjoin
 
-  async getEventById(eventPostId) {
+  async getEventById(eventPostId: number) {
     const event = await this.eventRepository
-      .createQueryBuilder("eventUser")
-      .where("eventPostId = :eventPostId", { eventPostId })
-      .leftJoinAndSelect("eventUser.user", "nickName")
+      .createQueryBuilder("eventPost")
+      .where("eventPost.id = :eventPostId", { eventPostId })
+      .leftJoinAndSelect("eventPost.user", "nickName")
       .getOne();
     return event;
   }
