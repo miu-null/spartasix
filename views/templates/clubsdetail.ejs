@@ -117,6 +117,7 @@
             <% } else {%>
             글이 존재하지 않습니다.
               <%  }%>
+
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (nextPost) { %>
@@ -179,10 +180,18 @@
           <% if (prevPost) { %>
             <%= prevPost.createdAt %>
             <% } %>
+
         </div>
+      </div>
+      <div class="eventdetail_bottom_div_nickname">
+        작성자
+      </div>
+      <div class="eventdetail_bottom_div_date">
+        2023.04.03
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- 댓글란 -->
@@ -235,15 +244,13 @@
       </dl>
       <dl>
         <dt>작성자 닉네임</dt>
-        <dt style="color:gray;">작성자 닉네임 표시 필요</dt>
-      </dl>
-      <dl>
-        <dt>신고자 닉네임</dt>
-        <dt style="color:gray; float: center;">신고자 닉네임 표시 필요</dt>
+        <dt style="color:gray;">
+          <%= detail.nickName %>
+        </dt>
       </dl>
       <dl>
         <dt>신고자 사유</dt>
-        <input placeholder="ex:욕설/비방,도배,음란성,기타 등등">
+        <input id="reprot_reason" placeholder="ex:욕설/비방,도배,음란성,기타 등등">
       </dl>
       <dt>신고 내용</dt>
       <textarea id="report_content"></textarea>
@@ -256,7 +263,7 @@
       </div>
       <div id="report_modal_button">
         <div id="report_submit">
-          <button>신고하기</button>
+          <button onclick="report_submit()">신고하기</button>
         </div>
         <div id="report_close">
           <button onclick="report_close()">취소</button>

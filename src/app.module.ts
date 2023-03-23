@@ -25,6 +25,7 @@ import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
 import { CacheConfigService } from "./config/redis.config.service";
 import { SearcherService } from "./searcher/searcher.service";
+
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
