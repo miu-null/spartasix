@@ -1,15 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { ClubRepository } from "./club.repository";
 import _ from "lodash";
+import { userInfo } from "os";
 @Injectable()
 export class ClubService {
   constructor(private readonly clubRepository: ClubRepository) { }
-
-  async getClubs() {
-    const data = await this.clubRepository.getClubs();
-
-    return data;
-  }
 
   // users  import 필요? (작성,수정,삭제)
   async createClub(
@@ -79,4 +74,20 @@ export class ClubService {
     const data = await this.clubRepository.paginatedResults(page);
     return data;
   }
+  // async reportClub(
+  //   id: number,
+  //   userId: number,
+  //   clubId: number,
+  //   reportReason: string,
+  //   reportContent: string,
+  // ) {
+  //   const data = await this.clubRepository.reportClub(
+  //     id,
+  //     userId,
+  //     clubId,
+  //     reportReason,
+  //     reportContent,
+  //   );
+  //   return data;
+  // }
 }
