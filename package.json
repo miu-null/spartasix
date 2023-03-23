@@ -57,7 +57,8 @@
     "redis": "^4.6.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.12"
+    "typeorm": "^0.3.12",
+    "typeorm-cursor-pagination": "^0.10.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
