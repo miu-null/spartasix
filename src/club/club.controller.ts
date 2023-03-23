@@ -34,9 +34,10 @@ export class ClubController {
     @Res() res: Response) {
 
     const terms = await this.clubService.paginatedResults(page);
-    console.log(terms)
+    const sortPosts = await this.searchService.getPopularClubs();
     return res.render("club.ejs", {
       ...terms,
+      sortPosts,
     });
   }
 
@@ -103,10 +104,11 @@ export class ClubController {
   async getClubsById(@Param("id") id: number,) {
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.prevPost
+    const nowPost = detail.nowPost
     const nextPost = detail.nextPost
-    console.log(prevPost.id)
-    return { detail, prevPost, nextPost }
-  };
+    return {detail, prevPost, nowPost, nextPost}
+    };
+
 
   @Delete("/list/:id")
   async delete(@Param("id") id: number, @Res() res) {

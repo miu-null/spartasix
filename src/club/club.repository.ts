@@ -16,6 +16,7 @@ export class ClubRepository {
     // private abusingClubRepository: Repository<AbusingClubCounts>,
   ) { }
 
+
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
@@ -32,6 +33,7 @@ export class ClubRepository {
 
     return data;
   }
+
 
   async createClub(
     userId: number,
@@ -86,7 +88,8 @@ export class ClubRepository {
     return true;
   }
 
-  async getClubById(clubId: number) {
+// 게시글 상세 조회시 액션
+  async getClubById(clubId: number) { 
     const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
       select: [
@@ -100,18 +103,8 @@ export class ClubRepository {
         "viewCount",
       ],
     });
-    // const prevPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id < :id', {id:clubId})
-    // .orderBy('Clubs.id','DESC')
-    // .getOne();
-    // const nextPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id > :id', {id:clubId})
-    // .orderBy('Clubs.id','ASC')
-    // .getOne()
 
-    const prevPost = await this.clubRepository.findOne({
+const prevPost = await this.clubRepository.findOne({
       where: { id: LessThan(clubId) },
       order: { id: 'DESC' }
     })
@@ -119,9 +112,20 @@ export class ClubRepository {
       where: { id: MoreThan(clubId) },
       order: { id: 'ASC' }
     });
+
+
+    //함수 호출시 조회수 +1씩 업데이트
+    await this.clubRepository
+    .createQueryBuilder()
+    .update(Clubs)
+    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 기존상태에서 +1
+    .where('id = :id', { id: clubId })
+    .execute();
+
     return { prevPost, nowPost, nextPost };
   }
 
+  //게시글 소프트 삭제 
   async deleteClubDto(clubId: number) {
     await this.clubRepository.softDelete(clubId);
   }

@@ -35,6 +35,7 @@ export class EventPosts {
   @Column("date")
   endDate: Date;
 
+    // @Column({type:"int", default:0}) //default 값을 0으로 설정하여 조회수 초기화
   @Column("int")
   viewCount: number;
 
@@ -45,7 +46,7 @@ export class EventPosts {
   createdAt: Date;
 
   @UpdateDateColumn()
-  updateAt: Date | null;
+  updatedAt: Date | null;
 
   @DeleteDateColumn()
   deletedAt: Date | null;
