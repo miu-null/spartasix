@@ -28,13 +28,7 @@ export class EventCommentService {
 
     return true;
   }
-
-  async showLike() {
-    const like = await this.eventCommentRepository.showLike();
-
-    return like
-  }
-
+  
   async updateLike(userId: number, commentId: number) {
     await this.eventCommentRepository.updateLike(userId, commentId);
 

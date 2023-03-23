@@ -102,6 +102,31 @@ function update_accepted(userId, clubMemberId) {
       alert("수락 완료 !");
       window.location.reload();
     },
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "PATCH",
+              url: `/userpage/${userId}/clubs/app/${clubMemberId}`,
+              async: false,
+              success: function (res) {
+                alert("수락 완료 !");
+                window.location.reload();
+              },
+            });
+          },
+        });
+      }
+    }
   });
 }
 
@@ -114,6 +139,31 @@ function delete_accepted(userId, clubMemberId) {
       alert("거절 완료 !");
       window.location.reload();
     },
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "DELETE",
+              url: `/userpage/${userId}/clubs/app/${clubMemberId}`,
+              async: false,
+              success: function (res) {
+                alert("거절 완료 !");
+                window.location.reload();
+              },
+            });
+          },
+        });
+      }
+    }
   });
 }
 

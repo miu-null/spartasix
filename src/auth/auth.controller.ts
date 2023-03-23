@@ -2,11 +2,13 @@ import {
   Body,
   CACHE_MANAGER,
   Controller,
+  Get,
   Inject,
   Patch,
   Post,
   Req,
   Res,
+  UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/createuser.dto";
@@ -36,11 +38,13 @@ export class AuthController {
   }
 
   @Post("/sign-in")
-  async login(@Body() data: loginDto, @Res() res, @Req() req) {
+  async login(@Body() data: loginDto, @Res() res) {
     const user = await this.authService.login(data.email, data.password);
+    // res.setHeader('Content-Type','application/json; charset=utf-8');
+    // res.setHeader("Authorization", "Bearer " + user.accessToken + user.refreshToken)
     res.cookie("accessToken", user.accessToken);
     res.cookie("refreshToken", user.refreshToken);
-    return res.json(true);
+    return res.json(user)
   }
 
   @Post("/find-password")
@@ -58,5 +62,23 @@ export class AuthController {
     await this.authService.newPassword(data.email, data.password);
 
     return true;
+  }
+
+  @Post("/new-accessToken")
+  async newAccessToken(@Req() req: any, @Res() res) {
+    const header = req.headers.cookie;
+    const newpayload = await this.authService.newAccessToken(header);
+    console.log(header)
+
+    if (newpayload) {
+      res.clearCookie("accessToken", newpayload.accessToken);
+      res.clearCookie("refreshToken", newpayload.refreshtoken);
+  
+      res.cookie("accessToken", newpayload.newAccessToken);
+      res.cookie("refreshToken", newpayload.refreshtoken);
+
+      return res.json(newpayload)
+    }
+
   }
 }

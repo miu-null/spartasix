@@ -1,83 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIGN</title>
-
-  <!-- css -->
-  <link rel="stylesheet" href="css/sign/sign.css">
-  <link rel="stylesheet" href="css/sign/modal.css">
-  <!-- js -->
-  <script type="text/javascript" src="js/sign/sign.js"></script>
-
-  <!-- jquery-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
-</head>
-
-<body>
   <!-- modal -->
-  <div id="modal" class="modal">
+  <div id="modal" class="sign_modal">
     <div class="modal_content">
-      <div class="wrap1">
-        <div class="form-wrap1">
-          <div class="button-wrap1">
+      <div class="sign_wrap1">
+        <div class="sign_form-wrap1">
+          <div class="sign_button-wrap1">
             <div id="btn1"></div>
-              <button type="button" class="togglebtn1" onclick="login1()">아이디 찾기</button>
-              <button type="button" class="togglebtn1" onclick="register1()">비밀번호 찾기</button>
+              <button type="button" class="sign_togglebtn1" onclick="register1()">비밀번호 찾기</button>
             </div>
-            <form id="login1" action="" class="input-group1">
-              <input type="text" id="find_email" class="input-field1" placeholder="phone">
-              <input type="text" id="find_password" class="input-field1" placeholder="Password">
-              <button type="button" class="submit11" onclick="find_id()">핸드폰 인증</button>
-            </form>
-            <form id="register1" action="" class="input-group1">
-              <input type="text" id="email1" class="input-field1" placeholder="Email" onchage="validEmail(this)">
-              <input type="text" id="phone1"  class="input-field1" placeholder="phone" oninput="hypenTel(this)" maxlength="13">
+            <form id="sign_login1" action="" class="sign_input-group1">
+              <input type="text" id="email1" class="sign_input-field1" placeholder="Email" onchage="validEmail(this)">
+              <input type="text" id="phone1"  class="sign_input-field1" placeholder="phone" oninput="hypenTel(this)" maxlength="13">
               <div id="div-check"></div>
-              <button type="button" id="onsubmit" class="submit12" onclick="find_password()">이메일 인증</button>
+              <button type="button" id="onsubmit" class="sign_submit12" onclick="find_password()">이메일 인증</button>
             </form>
           </div>
         </div>
       </div>
   </div>
   <!-- body -->
-  <div class="wrap">
-    <div class="form-wrap">
-      <div class="button-wrap">
-        <div id="btn"></div>
-        <button type="button" class="togglebtn" onclick="login()">로그인</button>
-        <button type="button" class="togglebtn" onclick="register()">회원가입</button>
+  <div class="sign_wrap">
+    <div class="sign_form-wrap">
+      <div class="sign_button-wrap">
+        <div id="sign_btn"></div>
+        <button type="button" class="sign_togglebtn" onclick="login()">로그인</button>
+        <button type="button" class="sign_togglebtn" onclick="register()">회원가입</button>
       </div>
-      <div class="social-icons">
-        <img src="img/네이버.png" alt="네이버">
-        <img src="img/카카오.png" alt="twitter">
-      </div>
-      <form id="login" action="" class="input-group">
-        <input type="text" id="log_email" class="input-field" placeholder="Email">
-        <input type="text" id="log_password" class="input-field" placeholder="Password">
+      <form id="sign_login" action="" class="sign_input-group">
+        <input type="text" id="log_email" class="sign_input-field" placeholder="Email">
+        <input type="text" id="log_password" class="sign_input-field" placeholder="Password">
         <div class="find_tag">
-          <a class="find" onclick="modal_open()">아이디 / 비밀번호 찾기</a>
+          <a class="sign_find" onclick="modal_open()">비밀번호 찾기</a>
         </div>
-        <button type="button" class="submit1" onclick="sign_in()">로그인</button>
+        <button type="button" class="sign_submit1" onclick="sign_in()">로그인</button>
       </form>
-      <form id="register" action="" class="input-group">
-        <input type="text" id="email" class="input-field" placeholder="Email" onchage="validEmail(this)">
-        <input type="text" id="password"  class="input-field" placeholder="password" required>
-        <input type="text" id="password_chk"  class="input-field" placeholder="confirm Password">
-        <input type="text" id="nickname"  class="input-field" placeholder="nickname">
-        <input type="text" id="phone"  class="input-field" placeholder="phone" oninput="hypenTel(this)" maxlength="13">
-        <button type="button" class="submit" onclick="sign_up()">회원가입</button>
+      <form id="sign_register" action="" class="sign_input-group">
+        <input type="text" id="email" class="sign_input-field" placeholder="Email" onchage="validEmail(this)">
+        <input type="text" id="password"  class="sign_input-field" placeholder="password" required>
+        <input type="text" id="password_chk"  class="sign_input-field" placeholder="confirm Password">
+        <input type="text" id="nickname"  class="sign_input-field" placeholder="nickname">
+        <input type="text" id="phone"  class="sign_input-field" placeholder="phone" oninput="hypenTel(this)" maxlength="13">
+        <button type="button" class="sign_submit" onclick="sign_up()">회원가입</button>
       </form>
     </div>
   </div>
   <script>
-    var x = document.getElementById("login");
-    var y = document.getElementById("register");
-    var z = document.getElementById("btn");
+    var x = document.getElementById("sign_login");
+    var y = document.getElementById("sign_register");
+    var z = document.getElementById("sign_btn");
     function login() {
       x.style.left = "50px";
       y.style.left = "450px";
@@ -89,21 +59,3 @@
       z.style.left = "120px";
     }
   </script>
-  <script>
-    var a = document.getElementById("login1");
-    var b = document.getElementById("register1");
-    var c = document.getElementById("btn1");
-    function login1() {
-      a.style.left = "50px";
-      b.style.left = "400px";
-      c.style.left = "0";
-    }
-    function register1() {
-      a.style.left = "-400px";
-      b.style.left = "50px";
-      c.style.left = "100px";
-    }
-  </script>
-</body>
-
-</html>

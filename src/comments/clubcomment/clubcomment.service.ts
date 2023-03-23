@@ -5,8 +5,8 @@ import { ClubCommentRepository } from "./clubcomment.repository";
 export class ClubCommentService {
   constructor(private readonly clubCommentRepository: ClubCommentRepository) {}
 
-  async showAllComment() {
-    const comments = await this.clubCommentRepository.showAllComment();
+  async showAllComment(clubPostId: number) {
+    const comments = await this.clubCommentRepository.showAllComment(clubPostId);
 
     return comments;
   }
@@ -27,6 +27,12 @@ export class ClubCommentService {
 
   async deleteComment(userId: number, clubCommentId: number) {
     await this.clubCommentRepository.deleteComment(userId, clubCommentId);
+
+    return true;
+  }
+
+  async updateLike(userId: number, commentId: number) {
+    await this.clubCommentRepository.updateLike(userId, commentId);
 
     return true;
   }

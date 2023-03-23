@@ -49,18 +49,13 @@ export class EventCommentController {
     return true;
   }
 
-  @Get("/show_comment_like")
-  async showLike() {
-
-    const like = await this.eventCommentService.showLike();
-    return like
-  }
-
   @Post("/update_event_like/:commentId")
   async updateLike(
     @Req() req, 
     @Param("commentId") commentId: number,
     ) {
+      console.log("hello")
+      console.log(commentId)
     const userId = req.user;
 
     await this.eventCommentService.updateLike(userId, commentId)
