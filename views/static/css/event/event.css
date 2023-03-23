@@ -3,13 +3,17 @@
   margin-bottom: 150px;
   display: flex;
   flex-direction: column;
+  font-family: "Alfa Slab One";
+  font-weight: normal;
+  font-size: small;
+  letter-spacing: 0.3px;
 }
 
 .new_event {
   float: right;
   text-decoration: none;
   color: #ea4e4e;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .event_table_container {
@@ -72,7 +76,6 @@
 }
 
 .postLink {
-  text-decoration:none;
-  color: black
-
+  text-decoration: none;
+  color: black;
 }
