@@ -19,6 +19,7 @@ import { UpdateClubDto } from "./dto/updateclub.dto";
 import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
+import { ReportDefinition } from "aws-sdk/clients/cur";
 
 @Controller("club")
 export class ClubController {
@@ -100,13 +101,14 @@ export class ClubController {
 
   @Get("/list/:id")
   @Render('clubsdetail.ejs')
-  async getClubsById(@Param("id")id: number,  ) {
+  async getClubsById(@Param("id") id: number,) {
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.prevPost
     const nowPost = detail.nowPost
     const nextPost = detail.nextPost
     return {detail, prevPost, nowPost, nextPost}
     };
+
 
   @Delete("/list/:id")
   async delete(@Param("id") id: number, @Res() res) {
@@ -135,4 +137,20 @@ export class ClubController {
       ...searchData,
     });
   }
+  // @Post("/list/report/:id")
+  // async reportClub(
+  //   @Param("id") id: number,
+  //   @Body data: ReportClubDto,
+  //   @Req() req,
+  // ) {
+  //   const userId = req.user;
+  //   const reportPost = await this.clubService.reportClub(
+  //     id,
+  //     userId,
+  //     clubId,
+  //     reportReason,
+  //     reportContent,
+  //   );
+  //   return reportPost;
+  // }
 }
