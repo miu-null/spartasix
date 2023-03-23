@@ -108,6 +108,7 @@ export class ClubController {
     const prevPost = detail.prevPost
     const nowPost = detail.nowPost
     const nextPost = detail.nextPost
+    console.log("detail : ", detail)
     return {detail, prevPost, nowPost, nextPost}
     };
 

@@ -3,6 +3,7 @@ $(document).ready(function () {
   showComment(eventPostId);
 
   const clubPostId = $("#club_show_text").data("text");
+  console.log(clubPostId)
   showClubComment(clubPostId);
 });
 
@@ -528,7 +529,7 @@ function updateLike(commentId) {
                 alert("좋아요 !");
                 window.location.reload();
               },
-              error: function (response) {
+              error: function (request) {
                 if (request.responseJSON["message"] === "좋아요 취소") {
                   alert("좋아요 취소 !");
                   window.location.reload();

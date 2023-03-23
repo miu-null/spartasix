@@ -1,4 +1,4 @@
-function modal_open() {
+function sign_modal_open() {
   $(`#modal`).fadeIn();
 
   $(document).mouseup(function (e) {
