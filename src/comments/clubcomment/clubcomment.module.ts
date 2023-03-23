@@ -25,6 +25,7 @@ import { ClubCommentService } from './clubcomment.service';
     }),
   ],
   controllers: [ClubCommentController],
-  providers: [ClubCommentService,ClubCommentRepository]
+  providers: [ClubCommentService, ClubCommentRepository],
+  exports: []
 })
 export class ClubCommentModule {}

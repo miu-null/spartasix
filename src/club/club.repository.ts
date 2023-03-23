@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository, MoreThan, LessThan } from "typeorm";
-// import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 
 @Injectable()
 export class ClubRepository {
@@ -12,28 +11,16 @@ export class ClubRepository {
     private readonly clubRepository: Repository<Clubs>,
     @InjectRepository(ClubMembers)
     private clubmemberRepository: Repository<ClubMembers>,
-    // @InjectRepository(AbusingClubCounts)
-    // private abusingClubRepository: Repository<AbusingClubCounts>,
-  ) { }
-
+  ) {}
 
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
-      select: [
-        "id",
-        "title",
-        "maxMembers",
-        "createdAt",
-        "userId",
-        "category",
-        "viewCount",
-      ],
+      select: ["id", "title", "maxMembers", "createdAt", "userId", "category"],
     });
 
     return data;
   }
-
 
   async createClub(
     userId: number,
@@ -88,8 +75,7 @@ export class ClubRepository {
     return true;
   }
 
-// 게시글 상세 조회시 액션
-  async getClubById(clubId: number) { 
+  async getClubById(clubId: number) {
     const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
       select: [
@@ -100,32 +86,30 @@ export class ClubRepository {
         "updatedAt",
         "id",
         "category",
-        "viewCount",
       ],
     });
-
-const prevPost = await this.clubRepository.findOne({
-      where: { id: LessThan(clubId) },
-      order: { id: 'DESC' }
+    // const prevPost = await this.clubRepository
+    // .createQueryBuilder("Clubs")
+    // .where('Clubs.id < :id', {id:clubId})
+    // .orderBy('Clubs.id','DESC')
+    // .getOne();
+    // const nextPost = await this.clubRepository
+    // .createQueryBuilder("Clubs")
+    // .where('Clubs.id > :id', {id:clubId})
+    // .orderBy('Clubs.id','ASC')
+    // .getOne()
+ 
+    const prevPost = await this.clubRepository.findOne({
+      where: {id: LessThan(clubId)},
+      order: {id: 'DESC'}
     })
     const nextPost = await this.clubRepository.findOne({
-      where: { id: MoreThan(clubId) },
-      order: { id: 'ASC' }
+      where: {id: MoreThan(clubId)},
+      order: {id: 'ASC'}
     });
-
-
-    //함수 호출시 조회수 +1씩 업데이트
-    await this.clubRepository
-    .createQueryBuilder()
-    .update(Clubs)
-    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 기존상태에서 +1
-    .where('id = :id', { id: clubId })
-    .execute();
-
-    return { prevPost, nowPost, nextPost };
+    return { prevPost, nowPost, nextPost};
   }
 
-  //게시글 소프트 삭제 
   async deleteClubDto(clubId: number) {
     await this.clubRepository.softDelete(clubId);
   }
@@ -159,12 +143,4 @@ const prevPost = await this.clubRepository.findOne({
       ...paginatedDemand,
     };
   }
-  // async createAbusing(clubId: number, userId: number) {
-  //   const data = await this.abusingClubRepository.insert({
-  //     clubId,
-  //     userId,
-  //   });
-
-  //   return data;
-  // }
 }

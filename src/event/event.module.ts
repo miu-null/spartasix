@@ -11,10 +11,21 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { SearcherRepository } from "src/searcher/searcher.repositoy";
 import { ClubRepository } from "src/club/club.repository";
 import { MailService } from "src/mail/mail.service";
+import { EventComments } from "src/entities/eventcomments.entity";
+import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
+import { EventCommentService } from "src/comments/eventcomment/eventcomment.service";
+import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.repository";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts]),
+    TypeOrmModule.forFeature([
+      Clubs,
+      Users,
+      ClubMembers,
+      EventPosts,
+      EventComments,
+      EventCommentLikes,
+    ]),
   ],
   controllers: [EventController],
   providers: [
@@ -24,7 +35,9 @@ import { MailService } from "src/mail/mail.service";
     SearcherService,
     SearcherRepository,
     ClubRepository,
+    EventCommentService,
+    EventCommentRepository
   ],
-  exports: [MailService],
+  exports: [MailService, EventCommentService, EventCommentRepository],
 })
-export class EventModule { }
+export class EventModule {}
