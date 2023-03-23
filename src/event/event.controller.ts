@@ -50,53 +50,53 @@ export class EventController {
 
   //글 생성
   @Post("/newevent")
-  // @UseInterceptors(FileInterceptor("postIMG"))
+  @UseInterceptors(FileInterceptor("file"))
   async createUser(
     @Req() req,
     @Res() res: Response,
     @Body() data: CreateEventDto,
-    // @UploadedFile() uploadedFile: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
   ) {
     console.log('controller test')
     console.log("data:::::",data)
-    console.log("req:::::",req)
-    // AWS.config.update({
-    //   credentials: {
-    //     accessKeyId: process.env.AWS_ACCESS_KEY,
-    //     secretAccessKey: process.env.AWS_SECRET_KEY,
-    //   },
-    // });
+    console.log("file:::::",file)
+    
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
 
-    // console.log('uploadedFile:', uploadedFile, 'originalname:', uploadedFile.originalname)
-    // const key = `${Date.now() + uploadedFile.originalname}`;
-    // // AWS 객체 생성
-    // const upload = await new AWS.S3()
-    //   .putObject({
-    //     Key: key,
-    //     Body: uploadedFile.buffer,
-    //     Bucket: process.env.AWS_BUCKET_NAME,
-    //     ACL: "public-read",
-    //   })
-    //   .promise();
-    // const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    console.log('uploadedFile:', file, 'originalname:', file.originalname)
+    const key = `${Date.now() + file.originalname}`;
+    // AWS 객체 생성
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key,
+        Body: file.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME,
+        ACL: "public-read",
+      })
+      .promise();
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
     
 
     
-    // Object.assign({
-    //   statusCode: 201,
-    //   message: `이미지 등록 성공`,
-    //   data: { url: postIMG },
-    // });
+    Object.assign({
+      statusCode: 201,
+      message: `이미지 등록 성공`,
+      data: { url: postIMG },
+    });
 
-    // const userId = req.userId;
-    // const event = await this.eventService.createEvent(
-    //   userId,
-    //   data.title,
-    //   data.content,
-    //   data.startDate,
-    //   data.endDate,
-    //   data.postIMG,
-    // );
+    const userId = req.userId;
+    const event = await this.eventService.createEvent(
+      userId,
+      data.title,
+      data.content,
+      data.startDate,
+      data.endDate,
+    );
     return res.json(true);
   }
 

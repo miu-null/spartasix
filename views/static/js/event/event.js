@@ -4,14 +4,14 @@ $(document).ready(function () {
   showlike()
 })
 
-function dateValidate(){
+function dateValidate() {
   let startDate = new Date($("#eventStartDate").val());
   let endDate = new Date($("#eventEndDate").val());
-  console.log("startDate:",startDate,"endDate:",endDate)
+  console.log("startDate:", startDate, "endDate:", endDate)
 
-  if(startDate > endDate) {
+  if (startDate > endDate) {
     alert("종료 날짜는 시작 날짜보다 커야 합니다.");
-}
+  }
 }
 
 function event_open() {
@@ -32,7 +32,7 @@ function remindEvent() {
   const endDate = document.getElementById("event_endDate").innerText;
   // const postImg = document.getElementById("event_postIMG").val; 파일정보 빼오는법 찾아야함.
 
-  console.log('info:',id,title, email, startDate, endDate)
+  console.log('info:', id, title, email, startDate, endDate)
 
   $.ajax({
     type: "POST",
@@ -41,8 +41,8 @@ function remindEvent() {
     contentType: "application/json; charset=utf-8",
     async: false,
     data: JSON.stringify({
-      id:id,
-      title:title,
+      id: id,
+      title: title,
       email: email,
       startDate: startDate,
       endDate: endDate,
@@ -51,11 +51,11 @@ function remindEvent() {
     success: function (response) {
       alert("이벤트 알림 메일을 전송했습니다.");
     },
-    errorfunction(request, status, error){
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    errorfunction(request, status, error) {
+      alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
     }
   });
- 
+
 }
 
 
@@ -88,7 +88,7 @@ function showComment(id) {
 
       console.log(response)
 
-      for(let i = 0; i < rows.length; i++) {
+      for (let i = 0; i < rows.length; i++) {
         const commentId = user[i]["eventCommentId"]
         const nickName = user[i].user["nickName"]
         const content = rows[i]["content"]
@@ -151,25 +151,13 @@ function updateLike(commentId) {
 function eventNew() {
 
   const formData = new FormData();
-  formData.append("title", document.getElementById("eventTitle"));
-  formData.append("startDate", document.getElementById("eventStartDate") ); 
-  formData.append("endDate", document.getElementById("eventEndDate"));
-  formData.append("content", document.getElementById("eventContent") ); 
-  formData.append("postIMG", document.getElementById("eventPostImg"));
+  formData.append("title", $("#title").val());
+  formData.append("startDate", $("#eventStartDate").val());
+  formData.append("endDate", $("#eventEndDate").val());
+  formData.append("content", $("#eventContent").val());
+  formData.append("file", $("#eventPostImg")[0].files[0]);
   console.log(FormData)
 
-  // formData.append("title",$("#eventTitle").val());
-  // formData.append("startDate",$("#eventStartDate").val() ); 
-  // formData.append("endDate", $("#eventEndDate").val());
-  // formData.append("content",$("#eventContent").val() ); 
-  // formData.append("postIMG", $("#eventPostImg").val());
-
-  // const title = $("#eventTitle").val();
-  // const startDate = $("#eventStartDate").val();
-  // const endDate = $("#eventEndDate").val();
-  // const content = $("#eventContent").val();
-  // const postIMG = $("#eventPostImg").val();
-  
   $.ajax({
     type: "POST",
     url: "/events/newevent",
