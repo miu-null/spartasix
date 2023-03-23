@@ -7,6 +7,11 @@
       console.log(isEditing)
     }
   </script> -->
+  <script>
+    $(document).ready(function(){
+      show_userPosts(<%= myInfo.userId %>, null, null);
+    });
+    </script>
 
 <!-- modal1 -->
 <div id="Appmodal" class="Appmodal">
@@ -133,36 +138,7 @@
       </p>
 
       <div class="box activities-box">
-        <p style="font-family: Alfa Slab One; font-size: 17px">Clubs
-        </p>
-        <br />
-
-
-        <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
-        <font style="color: #ea4e4e; float: left; size: 12px">
-          <%=myPosts.clubPosts[i].title%></font>
-        <br />
-        <%=myPosts.clubPosts[i].content %>
-        <br /><br />
-
-        <% } %>
-        <br />
-        <br />
-        <br />
-        <p style="font-family: Alfa Slab One; font-size: 17px">Events</p>
-        <br />
-
-
-        <% for(let i = 0; i < myPosts.eventPosts.length; i++) {%>
-        <font style="color: #ea4e4e; float: left; size: 12px">
-          <%=myPosts.eventPosts[i].title%></font>
-        <br />
-        <%=myPosts.eventPosts[i].content %>
-        <br /><br />
-
-        <% } %>
-
-        <br />
+<div id = "clubPosts"> </div>
       </div>
       <div class="box huge-clubs">
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
@@ -172,7 +148,7 @@
         <br />
         <div class="box myclubs">
           <div class="box message">
-            <img src= "/img/message.png" onclick="modal_open1(<%= myInfo.userId %>)">
+            <img src= "/img/message.png" onclick="modal_open1(<%#= myInfo.userId %>)">
           </div>
           <br />
           <br />
@@ -182,16 +158,16 @@
           <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
             My Clubs
           </p>
-          <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
+          <%# for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
           <p style="
                 font-family: Amiko, sans-serif;
                 font-size: 20px;
                 font-weight: normal;
                 color: #ea4e4e;
               ">
-            <%=myPosts.clubPosts[i].title%>
+            <%#=myPosts.clubPosts[i].title%>
             <br />
-            <% } %>
+            <%# } %>
           </p>
           <br />
           <br />
@@ -201,20 +177,20 @@
           <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
             I'm in
           </p>
+          <%# for(let i = 0; i < myClubs.MyClub.length; i++) {%>
+            <p style="
+              font-family: Amiko, sans-serif;
+              font-size: 20px;
+              font-weight: normal;
+              color: #ea4e4e;
+              ">
+              <%#= myClubs.MyClub[i].title %>
+            </p>
+            </p>
+            <%# } %>
 
-          <% for(let i = 0; i < myClubs.MyClub.length; i++) {%>
-          <p style="
-            font-family: Amiko, sans-serif;
-            font-size: 20px;
-            font-weight: normal;
-            color: #ea4e4e;
-            ">
-            <%= myClubs.MyClub[i].title %>
-          </p>
 
 
-          </p>
-          <% } %>
         </div>
       </div>
     </div>
