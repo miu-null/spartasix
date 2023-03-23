@@ -388,7 +388,7 @@ function updateClubComment(commentId, content) {
         alert("수정 완료");
         window.location.reload();
       },
-      error: function (request, status, error) {
+      error: function (request) {
         if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
           alert("댓글이 존재하지 않습니다.");
           window.location.reload();
@@ -459,7 +459,7 @@ function deleteClubComment(clubcommentId) {
       alert("삭제 성공 !");
       window.location.reload();
     },
-    error: function (response) {
+    error: function (request) {
       if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
         alert("댓글이 존재하지 않습니다.");
         window.location.reload();
@@ -491,7 +491,7 @@ function deleteClubComment(clubcommentId) {
                 alert("삭제 성공 !");
                 window.location.reload();
               },
-              error: function (response) {
+              error: function (request) {
                 if (
                   request.responseJSON["message"] ===
                   "댓글이 존재하지 않습니다."
@@ -523,7 +523,7 @@ function club_updateLike(commentId) {
       alert("좋아요 !");
       window.location.reload();
     },
-    error: function (err) {
+    error: function (request) {
       if (request.responseJSON["message"] === "좋아요 취소") {
         alert("좋아요 취소 !");
         window.location.reload();
@@ -548,7 +548,7 @@ function club_updateLike(commentId) {
                 alert("좋아요 !");
                 window.location.reload();
               },
-              error: function (err) {
+              error: function (request) {
                 if (request.responseJSON["message"] === "좋아요 취소") {
                   alert("좋아요 취소 !");
                   window.location.reload();
@@ -582,8 +582,36 @@ function report_submit() {
       alert("신고 완료");
       window.location.replace(`http://localhost:3000/club/list/${id}`);
     },
-    error: function (error) {
-      alert("ERROR");
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "POST",
+              url: `/list/report/${id}`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              data: JSON.stringify({
+                reportReason: reportReason,
+                reportContent: reportContent,
+                clubId: clubId,
+              }),
+              success: function (response) {
+                alert("신고 완료");
+                window.location.replace(`http://localhost:3000/club/list/${id}`);
+              },
+            });
+          },
+        });
+      }
     },
   });
 }
