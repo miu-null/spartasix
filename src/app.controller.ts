@@ -5,15 +5,21 @@ import { SearcherService } from "./searcher/searcher.service";
 @Controller()
 export class AppController {
   constructor(@Inject(SearcherService)
-    private readonly SearcherService: SearcherService
+    private readonly searchService: SearcherService
 
   ) {}
 
   @Get("/") // 메인페이지 바디
   @Render("mainbody")
   async mainpage(@Res() res: Response) {
-    const posts = this.SearcherService.getPopularPosts()
-    return posts 
+    const sortPosts = await this.searchService.getPopularPosts()
+    const dateSet = await this.searchService.getTimeFormat() //날짜 조정
+    console.log('앱컨트롤러',sortPosts)
+  
+    return {
+      ...dateSet,
+      sortPosts
+    }
   }
 
   @Get("sign")

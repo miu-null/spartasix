@@ -5,10 +5,7 @@ import {
   DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  JoinColumn,
   OneToMany,
-  ManyToMany,
-  JoinTable,
   ManyToOne,
 } from "typeorm";
 import { AbusingClubCounts } from "./abusingclubcounts.entity";
@@ -74,14 +71,6 @@ export class Clubs {
     },
   )
   abusingClubCounts: AbusingClubCounts[];
-
-  // @ManyToMany(() => Users, (user) => user.clubs, {
-  //   onUpdate: "CASCADE",
-  //   onDelete: "CASCADE",
-  // })
-  // @JoinTable({ name: "userId" })
-  // // @JoinColumn({ name: "userId" })
-  // user: Users[];
 
   @ManyToOne(() => Users, (user: Users) => user.clubs, {
     onUpdate: "CASCADE",
