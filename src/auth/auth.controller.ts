@@ -47,6 +47,18 @@ export class AuthController {
     return res.json(user)
   }
 
+  @Post("/sign-out")
+  async logout(@Req() req, @Res() res) {
+    const header = req.headers.cookie;
+    const accessToken = header.split(";")[0].split("=")[1];
+    const refreshtoken = header.split(";")[1].split("=")[1];
+
+    res.clearCookie("accessToken", accessToken);
+    res.clearCookie("refreshToken", refreshtoken);
+
+    return res.json(true);
+  }
+
   @Post("/find-password")
   async findPassword(@Body() data: findPasswordDto, @Res() res) {
     const randomPassword = await this.authService.findPassword(
