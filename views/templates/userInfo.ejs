@@ -9,20 +9,19 @@
   </script> -->
 
 <!-- modal1 -->
- <div id="Appmodal" class="Appmodal">
+<div id="Appmodal" class="Appmodal">
   <div class="app_modal">
     <div class="application">
       <div class="app_title">
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Applications
+          Applications
         </p>
       </div>
-      <div class="app_body">
-
-      </div>
+      <div class="app_body"></div>
+      <div class="app_action"></div>
     </div>
   </div>
-</div> 
+</div>
 
 <!-- modal2 -->
 <!-- <div id="Appmodal2" class="Appmodal2">
@@ -46,9 +45,7 @@
       User Info
     </p>
     <br />
-    <a
-    href="/userpage/<%= myInfo.userId %>/edit"
-    style="
+    <a href="/userpage/<%= myInfo.userId %>/edit" style="
         font-family: Amiko, sans-serif;
         font-size: 15px;
         font-weight: bold;
@@ -56,7 +53,7 @@
         float: right;
       ">
       + edit
-  </a>
+    </a>
     <div class="box userinfo-box">
       <br />
       <br />
@@ -102,26 +99,33 @@
       <br />
     </div>
     <div class="box additional-info">
-      <br /> <br />
+      <br />
+      <br />
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        P*word <br> 
-        <p style="
-        font-family: Amiko, sans-serif;
-        font-size: 20px;
-        font-weight: bold;
-      "><%= myInfo.password %></p>
-      <br /> <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Cell-phone Number <br> 
-        <p style="
-        font-family: Amiko, sans-serif;
-        font-size: 20px;
-        font-weight: bold;
-      "><%= myInfo.phone %></p>
-    
-    
-    </div>
+        P*word <br />
+      </p>
 
+      <p style="
+          font-family: Amiko, sans-serif;
+          font-size: 20px;
+          font-weight: bold;
+        ">
+        <%= myInfo.password %>
+      </p>
+      <br />
+      <br />
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+        Cell-phone Number <br />
+      </p>
+
+      <p style="
+          font-family: Amiko, sans-serif;
+          font-size: 20px;
+          font-weight: bold;
+        ">
+        <%= myInfo.phone %>
+      </p>
+    </div>
 
     <div class="box huge-activities">
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
@@ -129,27 +133,35 @@
       </p>
 
       <div class="box activities-box">
+        <p style="font-family: Alfa Slab One; font-size: 17px">Clubs
+        </p>
         <br />
+
 
         <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
-
-        <!-- <font style="color: #ea4e4e; float: left; size: 14px"> -->
-          <%=myPosts.clubPosts[i].title%> <%=myPosts.clubPosts[i].content %>
-        <!-- </font> -->
+        <font style="color: #ea4e4e; float: left; size: 12px">
+          <%=myPosts.clubPosts[i].title%></font>
         <br />
         <%=myPosts.clubPosts[i].content %>
-        
+        <br /><br />
+
         <% } %>
         <br />
-        2023-03-02
         <br />
         <br />
-        <font style="color: #ea4e4e"> 웹의 새로운 미래 컨퍼런스 </font>
+        <p style="font-family: Alfa Slab One; font-size: 17px">Events</p>
         <br />
-        더 넓은 확장성을 기대하는 개발자 여러분, 앞으로 웹은 어떤 모습으로
-        미래를 ...
+
+
+        <% for(let i = 0; i < myPosts.eventPosts.length; i++) {%>
+        <font style="color: #ea4e4e; float: left; size: 12px">
+          <%=myPosts.eventPosts[i].title%></font>
         <br />
-        2023-03-15
+        <%=myPosts.eventPosts[i].content %>
+        <br /><br />
+
+        <% } %>
+
         <br />
       </div>
       <div class="box huge-clubs">
@@ -160,31 +172,27 @@
         <br />
         <div class="box myclubs">
           <div class="box message">
-          <img src= "/img/message.png" onclick="modal_open1()">
+            <img src= "/img/message.png" onclick="modal_open1(<%= myInfo.userId %>)">
           </div>
           <br />
           <br />
           <br />
           <br />
-      
+
           <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
             My Clubs
           </p>
+          <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
           <p style="
-              font-family: Amiko, sans-serif;
-              font-size: 20px;
-              font-weight: normal;
-              color: #ea4e4e;
-            ">
-            자바스크립트 3명 타세요!! 면접 준비합시다!
+                font-family: Amiko, sans-serif;
+                font-size: 20px;
+                font-weight: normal;
+                color: #ea4e4e;
+              ">
+            <%=myPosts.clubPosts[i].title%>
+            <br />
+            <% } %>
           </p>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <br />
           <br />
           <br />
@@ -193,63 +201,23 @@
           <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
             I'm in
           </p>
+
+          <% for(let i = 0; i < myClubs.MyClub.length; i++) {%>
           <p style="
-              font-family: Amiko, sans-serif;
-              font-size: 20px;
-              font-weight: normal;
-              color: #ea4e4e;
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: normal;
+            color: #ea4e4e;
             ">
-            맛잘알 김선생과 떠나는 우당탕탕 맛있는 node.js
+            <%= myClubs.MyClub[i].title %>
           </p>
+
+
+          </p>
+          <% } %>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="box-container">
-  <div class="box image-info-box">
-    <div class="image-box">
-      <div class="member-photo">
-        <img src="<%= myInfo.userIMG %>" alt="Member Photo">
-      </div>
-    </div>
-    <div class="info-box">
-      <% let isEditing = false; %>
-      <h5> 회 원 정 보
-        <button onclick="() => " class="edit-box"> <%= isEditing ? "확인" : "수정" %> </button>
-      </h5>
-      <div class="userBio_container">
-        <div>
-          Name :&nbsp  <br>
-          E-mail :&nbsp<br>
-          <br><br>
-          Social media :&nbsp<%= myInfo.snsURL %>
-        </div>
-      </div>
-    </div>
-  </div> -->
-<!-- <div class="post-column">
-    <button class="message-box" onclick="modal_open1(); selectApp('<%= myInfo.userId %>');">쪽지함</button>
-    <div class="box post-box">
-      <div class="userPosts_container">
-        <div>
-          <% for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
-          <p class="clubPost">
-          <h5>제목 : <%=myPosts.clubPosts[i].title %></h5>
-          <h5>내용 : <%= myPosts.clubPosts[i].content %></h5>
-          </p>
-          <% } %>
-          <% for(let i = 0; i < myPosts.eventPosts.length; i++) {%>
-          <p class="eventPost">
-          <h5>제목 : <%=myPosts.eventPosts[i].title %></h5>
-          <h5>내용 : <%= myPosts.eventPosts[i].content %></h5>
-          </p>
-          <% } %>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-<!-- </div> -->
 </div>

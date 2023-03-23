@@ -3,13 +3,16 @@
   margin-bottom: 150px;
   display: flex;
   flex-direction: column;
+  font-family: "Alfa Slab One";
+  font-size: small;
+  letter-spacing: 0.3px;
+  font-weight: bolder;
 }
 
 .new_club {
   float: right;
   text-decoration: none;
   color: #ea4e4e;
-  font-weight: bold;
 }
 
 .club_table_container {
@@ -22,8 +25,7 @@
 }
 
 #club_thead {
-  border-bottom: 4px solid;
-  font-weight: bold;
+  border-bottom: 3px solid;
 }
 
 #club_tr {
@@ -32,23 +34,23 @@
 }
 
 #club_Id {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 #club_maxMember {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 #club_Date {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 #club_View {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 #club_Likes {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 /* The Modal (background) */

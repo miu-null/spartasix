@@ -38,6 +38,9 @@ export class UserpageController {
     return res.render("userInfo", context);
   }
 
+  // @Post("/:userId")
+  // async getUserInfo(@Param("userId") userId:number, @)
+
   @Get("/:userId/edit")
   // @UseGuards(AuthGuard())
   async editUserInfo(@Param("userId") userId: number, @Res() res: Response) {

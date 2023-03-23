@@ -5,6 +5,10 @@
   margin: auto;
   display: flex;
   flex-direction: column;
+  font-family: "Alfa Slab One";
+  font-size: small;
+  letter-spacing: 0.3px;
+  font-weight: bolder;
 }
 
 .clubdetail_button {
@@ -164,11 +168,14 @@
 .report_button {
   border-radius: 30px;
   border: 1px solid #f23232;
-  font-weight: bold;
+  /* font-weight: bold; */
   background-color: #f23232;
   color: white;
   text-align: center;
-  width: 100px;
+  width: 71px;
+  height: 27px;
+  font-size: 9px;
+  letter-spacing: 0.2px;
 }
 
 .clubdetail_body_text {

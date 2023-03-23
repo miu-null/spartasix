@@ -195,16 +195,17 @@ function clubdelete() {
 
 function clubApp() {
   const clubId = location.pathname.split("list/")[1];
-  const content = $("#club_modal_textarea").val();
-  if (!content) {
+  const application = $("#club_modal_textarea").val();
+  if (!application) {
     alert("모든 항목을 작성해 주세요.");
   }
   $.ajax({
     type: "POST",
     url: `/club/${clubId}`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
-      clubId: clubId,
-      content: content,
+      application: application,
     }),
     success: function (response) {
       alert("신청 완료");
@@ -557,6 +558,32 @@ function club_updateLike(commentId) {
           },
         });
       }
+    },
+  });
+}
+
+function report_submit() {
+  const reportReason = $("#reprot_reason").val();
+  const reportContent = $("#report_content").val();
+  const id = location.pathname.split("list/")[1];
+  const clubId = location.pathname.split("list/")[1];
+  console.log(reportContent, reprotReason);
+  $.ajax({
+    type: "POST",
+    url: `/list/report/${id}`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      reportReason: reportReason,
+      reportContent: reportContent,
+      clubId: clubId,
+    }),
+    success: function (response) {
+      alert("신고 완료");
+      window.location.replace(`http://localhost:3000/club/list/${id}`);
+    },
+    error: function (error) {
+      alert("ERROR");
     },
   });
 }

@@ -19,7 +19,7 @@ import { MailService } from "src/mail/mail.service";
   controllers: [EventController],
   providers: [
     MailService,
-    EventService, 
+    EventService,
     EventRepository,
     SearcherService,
     SearcherRepository,
@@ -27,4 +27,4 @@ import { MailService } from "src/mail/mail.service";
   ],
   exports: [MailService],
 })
-export class EventModule {}
+export class EventModule { }

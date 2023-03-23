@@ -1,5 +1,6 @@
-function modal_open1() {
+function modal_open1(userId) {
   $(`#Appmodal`).fadeIn();
+  selectApp(userId);
   $(document).mouseup(function (e) {
     if ($(`#Appmodal`).has(e.target).length === 0) {
       $(`#Appmodal`).hide();
@@ -30,23 +31,25 @@ function selectApp(userId) {
 
       console.log(rows);
 
+      let full_html = "";
+
       for (let i = 0; i < rows.length; i++) {
-        let nickname = res["userNamesArray"][i];
-        let clubMemberId = rows[i]["clubMemberId"];
+        let nickname = rows[i]["nickName"];
+        let clubMemberId = rows[i]["id"];
         let userId = rows[i]["userId"];
         let date = rows[i]["createdAt"];
         date = date.split("T")[0];
 
         let temp_html = `
-        <div class="app_body_container" onclick="modal_open2(); show_one_user(${userId}, ${clubMemberId}, '${nickname}');">
+        <div class="app_body_container" onclick="show_one_user(${userId}, ${clubMemberId}, '${nickname}');">
           <div class="member_name">
             <div class="member_body_name">
-              ${nickname}
+              ${clubMemberId}
             </div>
           </div>
           <div class="member_body">
             <div class="member_body_content">
-              내용
+              ${nickname}
             </div>
           </div>
           <div class="member_date">
@@ -56,9 +59,10 @@ function selectApp(userId) {
           </div>
         </div>
         `;
-
-        $(".app_body").append(temp_html);
+        full_html += temp_html;
       }
+
+      $(".app_body").html(full_html);
     },
   });
 }
@@ -69,23 +73,22 @@ function show_one_user(userId, clubMemberId, nickname) {
     url: `/userpage/${userId}/clubs/app/${clubMemberId}`,
     async: false,
     success: function (res) {
-      console.log(res);
-
       let temp_html = `
-      <div class="app_title2">
-          ${nickname}
-      </div>
       <div class="app_body2">
         <div class="app_body2_content">
-          ${res[0]["application"]}
+          ${res["application"]}
         </div>
+		<div class="app_body2_from">
+		  <span class="from_label">From</span>
+		  <span class="nickname">${res["nickName"]}</span>
+		</div>
       </div>
       <div class="app_button2">
-        <button type="button" class="app_btn" onclick="update_accepted(${userId}, ${clubMemberId})">수락</button>
-        <button type="button" class="app_btn" onclick="delete_accepted(${userId}, ${clubMemberId})">거절</button>
+        <button type="button" class="app_btn app_btn_confirm" onclick="update_accepted(${userId}, ${clubMemberId})">Accept!</button>
+        <button type="button" class="app_btn app_btn_reject" onclick="delete_accepted(${userId}, ${clubMemberId})">Mehh-</button>
       </div>
       `;
-      $(".application2").append(temp_html);
+      $(".app_action").html(temp_html);
     },
   });
 }

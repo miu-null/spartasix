@@ -28,7 +28,10 @@ export class UserpageService {
 
   //　운영중, 참여중인 모임 조회
   async getMyClubs(userId: number) {
-    return await this.userPageRepository.getMyClubs(userId);
+    const { myOwnClub, MyClub } = await this.userPageRepository.getMyClubs(
+      userId,
+    );
+    return { myOwnClub, MyClub };
   }
 
   // 회원정보 조회
@@ -78,8 +81,15 @@ export class UserpageService {
   async getClubApps(userId: number) {
     const { myOwnClubs } = await this.userPageRepository.getClubApps(userId);
     const myApps = myOwnClubs.map(
-      ({ id, user, userId, isAccepted, createdAt }) => {
-        return { id, userId, isAccepted, nickName: user.nickName, createdAt };
+      ({ id, user, userId, application, isAccepted, createdAt }) => {
+        return {
+          id,
+          userId,
+          isAccepted,
+          application,
+          nickName: user.nickName,
+          createdAt,
+        };
       },
     );
     return { myApps };
@@ -87,16 +97,12 @@ export class UserpageService {
 
   // 특정 신청서 조회 // 특정 유저만
   async getThisApp(userId: number, clubMemberId: number) {
-    const getThisApp = await this.userPageRepository.getThisApp(
+    const { application, user } = await this.userPageRepository.getThisApp(
       userId,
       clubMemberId,
     );
-    const thisApp = [getThisApp].map(
-      ({ id, userId, application, isAccepted, createdAt }) => {
-        return { id, userId, application, isAccepted, createdAt };
-      },
-    );
-    return thisApp;
+    application["nickName"] = user.nickName;
+    return application;
   }
 
   // 신청서 수락 // 특정 유저만
