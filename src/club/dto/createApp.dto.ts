@@ -1,13 +1,9 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsBoolean,
-  IsOptional,
-} from "class-validator";
+import { IsString, IsNotEmpty, IsBoolean, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
 
 export class CreateAppDto {
-  @IsNotEmpty()
   @IsString()
+  @Type(() => String)
   readonly application: string;
 
   @IsOptional()

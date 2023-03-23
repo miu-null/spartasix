@@ -10,13 +10,20 @@ import { SearcherRepository } from "src/searcher/searcher.repositoy";
 import { ClubRepository } from "./club.repository";
 import { EventRepository } from "src/event/event.repository";
 import { EventPosts } from "src/entities/eventposts.entity";
+import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts]),
+    TypeOrmModule.forFeature([
+      Clubs,
+      Users,
+      ClubMembers,
+      EventPosts,
+      AbusingClubCounts,
+    ]),
   ],
   controllers: [ClubController],
-  providers: [ClubService, ClubRepository, SearcherService, SearcherRepository, EventRepository],
-  exports: [ClubService, ClubRepository, ],
+  providers: [ClubService, ClubRepository, SearcherService, SearcherRepository],
+  exports: [ClubService, ClubRepository],
 })
-export class ClubModule {}
+export class ClubModule { }

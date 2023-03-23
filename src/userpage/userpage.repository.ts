@@ -37,8 +37,9 @@ export class UserPageRepository {
     const eventPosts = await this.eventpostRepository.find({
       relations: { user: true },
       where: { user: { id: userId } },
-      select: ["title"],
+      select: ["title", "content"],
     });
+
     return { clubPosts, eventPosts };
   }
 
@@ -150,14 +151,18 @@ export class UserPageRepository {
 
   // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
-    const members = await this.clubMembersRepository.findOne({
+    const application = await this.clubMembersRepository.findOne({
       where: { id: clubMemberId },
     });
-    return members;
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    return { application, user };
   }
   // 신청서 수락
   async getThisMember(userId: number, clubMemberId: number) {
-    const thisApp = await this.getThisApp(userId, clubMemberId);
+    const { application: thisApp } = await this.getThisApp(
+      userId,
+      clubMemberId,
+    );
     if (thisApp) {
       thisApp.isAccepted = true;
       await this.clubMembersRepository.save(thisApp);
@@ -169,7 +174,7 @@ export class UserPageRepository {
     await this.clubMembersRepository
       .createQueryBuilder("ClubMembers")
       .softDelete()
-      .where("clubMemberId = :clubMemberId", { clubMemberId })
+      .where("id = :clubMemberId", { clubMemberId })
       .execute();
   }
 }
