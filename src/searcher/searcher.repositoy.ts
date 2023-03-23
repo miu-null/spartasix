@@ -6,6 +6,7 @@ import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/eventposts.entity";
 // import { JwtService } from "@nestjs/jwt";
 
+
 @Injectable()
 export class SearcherRepository {
   constructor(
@@ -15,7 +16,6 @@ export class SearcherRepository {
     private readonly clubRepository: Repository<Clubs>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-
   ) {}
     //통합검색
   async findAllPosts(data: any): Promise<any> {  
@@ -101,10 +101,9 @@ export class SearcherRepository {
       .orderBy('sort.viewCount', 'DESC')
       .limit(2)
       .getMany();
+      console.log(sortPosts,'리포지토리')
     return sortPosts;
   }
-
   
-
-
+  
 }

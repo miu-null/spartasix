@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Post, Query, Res, ParseIntPipe, DefaultValuePipe, Render, Injectable } from '@nestjs/common';
+import { Controller, Get,  Query, Res, ParseIntPipe, DefaultValuePipe, Render} from '@nestjs/common';
 import { Response} from 'express';
 import { SearcherService } from './searcher.service';
-
 
 @Controller("search")
 export class SearcherController {
@@ -22,16 +21,20 @@ export class SearcherController {
       const results = {events, clubs, users}
 
       const popularPosts = await this.searchService.getPopularPosts(); //인기글
+      const dateSet = await this.searchService.getTimeFormat() //날짜 조정
+      
       return res.render("searchAll.ejs", {
         term,
         ...results,
         ...popularPosts,
+        ...dateSet,
       })
 
     } catch (err) {
       console.error(err.message);
     }
   }
+
 
   @Get("users")  // 유저 검색 기능, 페이지네이션 테스트
   @Render('userSearch.ejs')
