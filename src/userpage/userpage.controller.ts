@@ -20,6 +20,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { Express } from "express";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { AuthMiddleware } from "src/auth/auth.middleware";
 
 @Controller("userpage")
 export class UserpageController {
@@ -30,17 +31,32 @@ export class UserpageController {
   @Get("/:userId")
   // @UseGuards(AuthGuard())
   async getUserInfo(@Param("userId") userId: number, @Res() res: Response) {
-    const myPosts = await this.userPageService.getMyPosts(userId);
-    const myClubs = await this.userPageService.getMyClubs(userId);
     const myInfo = await this.userPageService.getUserInfo(userId);
-    const myApps = await this.userPageService.getClubApps(userId);
-    const context = { myPosts, myClubs, myInfo, myApps };
-    return res.render("userInfo", context);
+    return res.render("userInfo", { myInfo });
   }
 
-  // @Post("/:userId")
-  // async getUserInfo(@Param("userId") userId:number, @)
+  // 유저 게시물 조회
+  @Get("/:userId/post")
+  // @UseGuards(AuthGuard())
+  async getUserPost(
+    @Param("userId") userId: number,
+    // , @Res() res: Response
+  ) {
+    const myPosts = await this.userPageService.getMyPosts(userId);
+    return myPosts;
+  }
 
+  // 유저 클럽정보 조회
+  @Get("/:userId/clubs")
+  async getUserClubs(
+    @Param("userId") userId: number,
+    // , @Res() res: Response
+  ) {
+    const myClubs = await this.userPageService.getMyClubs(userId);
+    return myClubs;
+  }
+
+  // 유저정보 수정
   @Get("/:userId/edit")
   // @UseGuards(AuthGuard())
   async editUserInfo(@Param("userId") userId: number, @Res() res: Response) {
@@ -49,23 +65,8 @@ export class UserpageController {
     return res.render("userInfoEdit", context);
   }
 
-  @Get("/:userId/clubs/app") // 신청서 전체조회 (완료)
-  async getClubApps(@Param("userId") userId: number) {
-    const myClubApps = await this.userPageService.getClubApps(userId);
-    return myClubApps;
-  }
-
-  @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
-  async getThisApp(
-    @Param("userId") userId: number,
-    @Param("clubMemberId") clubMemberId: number,
-  ) {
-    const thisApp = await this.userPageService.getThisApp(userId, clubMemberId);
-    return thisApp;
-  }
-
   // multipart/form-data 로 submit할때는 method를 patch로 변경시, multer middleware를 수정해야 하는 문제가 있음
-  @Post("/info/:userId") // TODO 내 정보 수정하기, 본인검증로직 추가할 것
+  @Post("/:userId/edit") // TODO 내 정보 수정하기, 본인검증로직 추가할 것
   @UseInterceptors(FileInterceptor("userIMG"))
   @Redirect("", 302)
   async updateUser(
@@ -124,6 +125,23 @@ export class UserpageController {
   ) {
     const thisClub = await this.userPageService.getThisClub(userId, clubId);
     return thisClub;
+  }
+
+  // 유저 신청서 조회
+  @Get("/:userId/clubs/app")
+  // @UseGuards(AuthGuard())
+  async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
+    const myApps = await this.userPageService.getClubApps(userId);
+    return myApps;
+  }
+
+  @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
+  async getThisApp(
+    @Param("userId") userId: number,
+    @Param("clubMemberId") clubMemberId: number,
+  ) {
+    const thisApp = await this.userPageService.getThisApp(userId, clubMemberId);
+    return thisApp;
   }
 
   @Patch("/:userId/clubs/app/:clubMemberId") // 모임신청 수락 - 모임신청 테이블의 isAccepted true (완료)
