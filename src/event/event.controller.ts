@@ -96,13 +96,17 @@ export class EventController {
     @Res() res: Response,
   ) {
     const events = await this.eventService.getEvents(page);
-    const sortPosts = await this.searchService.getPopularEvents();
-    // console.log("events : ", events);
+    const sortPosts = await this.searchService.getPopularEvents()
+    const dateSet = await this.searchService.getTimeFormat() //날짜 조정
     return res.render("eventMain.ejs", {
        ...events,
-       sortPosts 
+       ...dateSet,
+       sortPosts
       });
   }
+
+
+
 
   //게시글 상세 조회
   @Get("/list/:eventPostId")

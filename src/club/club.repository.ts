@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository, MoreThan, LessThan } from "typeorm";
-// import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
+import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 
 @Injectable()
 export class ClubRepository {
@@ -12,8 +12,8 @@ export class ClubRepository {
     private readonly clubRepository: Repository<Clubs>,
     @InjectRepository(ClubMembers)
     private clubmemberRepository: Repository<ClubMembers>,
-    // @InjectRepository(AbusingClubCounts)
-    // private abusingClubRepository: Repository<AbusingClubCounts>,
+    @InjectRepository(AbusingClubCounts)
+    private abusingClubRepository: Repository<AbusingClubCounts>,
   ) { }
 
 
@@ -159,12 +159,12 @@ const prevPost = await this.clubRepository.findOne({
       ...paginatedDemand,
     };
   }
-  // async createAbusing(clubId: number, userId: number) {
-  //   const data = await this.abusingClubRepository.insert({
-  //     clubId,
-  //     userId,
-  //   });
+  async createAbusing(clubId: number, userId: number) {
+    const data = await this.abusingClubRepository.insert({
+      clubId,
+      userId,
+    });
 
-  //   return data;
-  // }
+    return data;
+  }
 }
