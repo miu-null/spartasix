@@ -46,6 +46,23 @@
   font-size: 15px;
 }
 
+.navlist1 {
+  font-family: "Amiko", sans-serif;
+  list-style: none;
+  margin-top: 10px;
+  float: left;
+  display: flex;
+}
+
+.list1 {
+  float: left;
+}
+
+.list1 a {
+  color: #000000;
+  font-size: 15px;
+}
+
 .header_button {
   width: 90px;
   margin-top: 8px;
