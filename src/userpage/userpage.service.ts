@@ -17,12 +17,6 @@ export class UserpageService {
     const { clubPosts, eventPosts } = await this.userPageRepository.getMyPosts(
       userId,
     );
-    clubPosts.sort((a: any, b: any) => {
-      return a.createdAt - b.createdAt;
-    });
-    eventPosts.sort((a: any, b: any) => {
-      return a.createdAt - b.createdAt;
-    });
     return { clubPosts, eventPosts };
   }
 
@@ -31,7 +25,10 @@ export class UserpageService {
     const { myOwnClub, MyClub } = await this.userPageRepository.getMyClubs(
       userId,
     );
-    return { myOwnClub, MyClub };
+    return {
+      myOwnClub,
+      MyClub,
+    };
   }
 
   // 회원정보 조회
