@@ -318,7 +318,9 @@
 }
 
 .eventdetail_comment_container {
+  margin: auto;
   border-top: 4px solid;
+  width: 50%;
   margin-top: -95px;
   height: 1000px;
   display: flex;
