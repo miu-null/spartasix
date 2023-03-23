@@ -40,9 +40,9 @@
                   <td id="Date">
                     <% const postDate=new Date(data.createdAt); %>
                     <% if (isSameDay(postDate, currentDate)) { %>
-                        <%= format(postDate, 'KK:mm', { locale: ko } ) %>
+                        <%= format(postDate, 'KK:mm', { timeZone: ko } ) %>
                             <% } else { %>
-                                <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
+                                <%= format(postDate, 'yyyy-MM-dd', { timeZone: ko } ) %>
                                     <% } %>
                   </td>
                   <% }) %>

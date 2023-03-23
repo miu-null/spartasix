@@ -124,13 +124,11 @@ export class SearcherService {
     }
 
     async getTimeFormat() {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        console.log(timeZone); // 서버 시간대 출력
-
+        const serverTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const currentDate=new Date();
-        const ko = koLocale
+        const ko = 'Asia/Seoul'
 
-        const dateSet = {isSameDay, format, currentDate, ko}
+        const dateSet = {isSameDay, format, currentDate, ko, serverTimezone}
         
         return dateSet
     }
