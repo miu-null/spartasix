@@ -86,7 +86,7 @@ export class Clubs {
   @ManyToOne(() => Users, (user: Users) => user.clubs, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
-    eager: true,
+    // eager: true,
   })
   user: Users;
 }

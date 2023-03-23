@@ -59,7 +59,7 @@ export class AuthService {
       refreshToken,
     );
 
-    return { accessToken, refreshToken };
+    return { user, accessToken, refreshToken };
   }
 
   async findPassword(email: string, phone: string) {
