@@ -242,58 +242,6 @@ function clubApp() {
   });
 }
 
-function showClubComment(clubPostId) {
-  $.ajax({
-    type: "GET",
-    url: `/clubcomment/${clubPostId}/comments`,
-    data: {},
-    success: function (response) {
-      console.log(response);
-      let rows = response;
-
-      for (let i = 0; i < rows.length; i++) {
-        const commentId = rows[i]["id"];
-        const nickName = rows[i]["user"]["nickName"];
-        const content = rows[i]["content"];
-        const like = rows[i]["clubCommentLikes"].length;
-        let date = rows[i]["createdAt"];
-        date = date.split("T")[0];
-
-        let temp_html = `
-        <div class="comment_text_box">
-          <div id="club_text_container${commentId}" class="comment_text_container">
-            <div class="comment_nickname">
-              ${nickName}
-            </div>
-            <div id="club_content_${commentId}" class="comment_content">
-              <div id="club_content_box_${commentId}" class="comment_content_box">
-              ${content}
-              </div>
-            </div>
-            <div class="comment_date">
-              ${date}
-            </div>
-            <div id="club_like${commentId}" class="comment_like">
-              <div>
-                <image onclick="club_updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
-              </div>
-              <div id="club_commentId" class="like_total">
-                ${like}
-              </div>
-            </div>
-          </div>
-          <div id="club_comment_button${commentId}" class="event_comment_button">
-            <button id="club_del_button${commentId}" class="comment_button" onclick="updateClubComment('${commentId}','${content}')">edit</button>
-            <button id="club_del_button1${commentId}" class="comment_button" onclick="deleteClubComment(${commentId})">delete</button>
-          </div>
-        </div>
-        `;
-        $("#club_show_text").append(temp_html);
-      }
-    },
-  });
-}
-
 function createClubComment(postId) {
   const content = $("#club_textarea").val();
   $.ajax({
