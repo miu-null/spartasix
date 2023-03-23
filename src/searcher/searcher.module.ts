@@ -22,7 +22,7 @@ import { EventPosts } from 'src/entities/eventposts.entity';
     inject: [ConfigService],
   }),
 ],
-  exports : [TypeOrmModule ],
+  exports : [TypeOrmModule, SearcherService, SearcherRepository],
   controllers: [SearcherController],
   providers: [SearcherService, SearcherRepository, ClubRepository, EventRepository]
 })

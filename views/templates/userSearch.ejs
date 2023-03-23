@@ -4,7 +4,7 @@
     <table class="table table-hover event_table">
         <thead id="event_thead">
             <tr>
-                <th>구분</th>
+                <th>유저검색</th>
                 <th>닉네임</th>
                 <th>GITHUB</th>
                 <th>좋아요</th>
@@ -12,6 +12,7 @@
             </tr>
         </thead>
         <tbody>
+          <% if (slicedData.length) { %>
             <% slicedData.forEach(data=> { %>
                 <tr id="club_tr">
                     <td id="club_Id"> 유저 </td>
@@ -21,8 +22,11 @@
                     <td id="club_Date"><%= data.createdAt %></td>
 
                   </td>
-                </tr>
                 <% }) %>
+                <% } else { %>
+                  <td id="club_Likes">검색 결과가 없습니다.</td>
+                  <% } %>
+                </tr>  
         </tbody>
     </table>
 </div>

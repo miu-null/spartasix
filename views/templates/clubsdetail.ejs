@@ -99,50 +99,102 @@
     <div class="eventdetail_like_container">
       <img class="eventdetail_like_img" src="/img/likes.png">
     </div>
+
+    <!-- 하단 이전, 현재, 다음 게시물 표기 -->
     <div class="eventdetail_bottom">
-      <!-- 이전 게시글 링크 -->
+      <!-- 다음 게시글 링크 -->
       <div class="eventdetail_bottom_div">
         <div class="eventdetail_bottom_div_title">
-          Prev
-        </div>
-        <div class="eventdetail_bottom_div_body">
-          <% if (prevPost) { %>
-            <a href="<%= prevPost.id %>">게시글 제목입니다.</a>
+          <% if (nextPost) { %>
+            <a href="<%= nextPost.id %>">다음글</a>
             <% } else {%>
-              이전 글이 존재하지 않습니다.
+              다음글
               <%  }%>
-        </div>
-        <div class="eventdetail_bottom_div_nickname">
-          작성자
-        </div>
-        <div class="eventdetail_bottom_div_date">
-          2023.04.03
-        </div>
-      </div>
-      <!-- 다음 게시글 링크 -->
-      <div class="eventdetail_bottom_div1">
-        <div class="eventdetail_bottom_div_title">
-          Next
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (nextPost) { %>
-            <a href="<%= nextPost.id %>">게시글 제목입니다.</a>
+            <a href="<%= nextPost.id %>"><%= nextPost.title %></a>
             <% } else {%>
-            다음 글이 존재하지 않습니다.
-            <%  }%>
-        </div>
+            글이 존재하지 않습니다.
+              <%  }%>
+
         </div>
         <div class="eventdetail_bottom_div_nickname">
-          작성자
+          <% if (nextPost) { %>
+            <%= nextPost.user.nickName %>
+            <% } else {%>
+              <%  }%>
         </div>
         <div class="eventdetail_bottom_div_date">
-          2023.04.03
+          <% if (nextPost) { %>
+            <%= nextPost.createdAt %>
+            <% } else {%>
+              <%  }%>
         </div>
+      </div>
+      <!-- 현재 글 표기 굵은 글씨 처리 필요 -->
+      <div class="eventdetail_bottom_div">
+        <div class="eventdetail_bottom_div_title">
+          현재 글
+        </div>
+        <div class="eventdetail_bottom_div_body">
+            <% if (nowPost) { %>
+              <%= nowPost.title %>
+              <% } %>
+        </div>
+        <div class="eventdetail_bottom_div_nickname">
+          <% if (nowPost) { %>
+            <%= nowPost.user.nickName %>
+            <% } else {%>
+              <%  }%>
+        </div>
+        <div class="eventdetail_bottom_div_date">
+          <% if (nowPost) { %>
+            <%= nowPost.createdAt %>
+            <% } %>
+        </div>
+      </div>
+      <!-- 이전 게시글 링크 -->
+      <div class="eventdetail_bottom_div1">
+        <div class="eventdetail_bottom_div_title">
+          <% if (prevPost) { %>
+            <a href="<%= prevPost.id %>">이전글</a>
+            <% } else {%>
+              이전글
+              <%  }%>
+        </div>
+        <div class="eventdetail_bottom_div_body">
+            <% if (prevPost) { %>
+              <a href="<%= prevPost.id %>"><%= prevPost.title %></a>
+              <% } else {%>
+                글이 존재하지 않습니다.
+                <%  }%>
+        </div>
+        <div class="eventdetail_bottom_div_nickname">
+          <% if (prevPost) { %>
+            <%= prevPost.user.nickName %>
+            <% } else {%>
+              <%  }%>
+        </div>
+        <div class="eventdetail_bottom_div_date">
+          <% if (prevPost) { %>
+            <%= prevPost.createdAt %>
+            <% } %>
+
+        </div>
+      </div>
+      <div class="eventdetail_bottom_div_nickname">
+        작성자
+      </div>
+      <div class="eventdetail_bottom_div_date">
+        2023.04.03
       </div>
     </div>
   </div>
 </div>
+</div>
 
+<!-- 댓글란 -->
 <div class="eventdetail_comment_container">
   <div class="comment_body">
     <div class="comment_input_box">
@@ -192,15 +244,13 @@
       </dl>
       <dl>
         <dt>작성자 닉네임</dt>
-        <dt style="color:gray;">작성자 닉네임 표시 필요</dt>
-      </dl>
-      <dl>
-        <dt>신고자 닉네임</dt>
-        <dt style="color:gray; float: center;">신고자 닉네임 표시 필요</dt>
+        <dt style="color:gray;">
+          <%= detail.nickName %>
+        </dt>
       </dl>
       <dl>
         <dt>신고자 사유</dt>
-        <input placeholder="ex:욕설/비방,도배,음란성,기타 등등">
+        <input id="reprot_reason" placeholder="ex:욕설/비방,도배,음란성,기타 등등">
       </dl>
       <dt>신고 내용</dt>
       <textarea id="report_content"></textarea>
@@ -213,7 +263,7 @@
       </div>
       <div id="report_modal_button">
         <div id="report_submit">
-          <button>신고하기</button>
+          <button onclick="report_submit()">신고하기</button>
         </div>
         <div id="report_close">
           <button onclick="report_close()">취소</button>

@@ -14,6 +14,7 @@ import {
   Req,
   UploadedFile,
   UseInterceptors,
+  Render,
 } from "@nestjs/common";
 import { Response } from "express";
 import { EventService } from "./event.service";
@@ -95,20 +96,31 @@ export class EventController {
     @Res() res: Response,
   ) {
     const events = await this.eventService.getEvents(page);
-    console.log("events : ", events);
-    return res.render("eventMain.ejs", { ...events });
+    const sortPosts = await this.searchService.getPopularEvents();
+    // console.log("events : ", events);
+    return res.render("eventMain.ejs", {
+       ...events,
+       sortPosts 
+      });
   }
 
-  //게시글 조회
+  //게시글 상세 조회
   @Get("/list/:eventPostId")
+  @Render("eventDetail.ejs")
   async getEventById(
     @Res() res: Response,
     @Param("eventPostId") eventPostId: number,
   ) {
-    const events = await this.eventService.getEventById(eventPostId);
+    let postDetail = await this.eventService.getEventById(eventPostId);
+    const events = postDetail.nowPost
+    
     events.createdAt = new Date(events.createdAt);
 
-    return res.render("eventDetail.ejs", { events });
+    const prevPost = postDetail.prevPost
+    const nowPost = postDetail.nowPost
+    const nextPost = postDetail.nextPost
+
+    return {events, nextPost, nowPost, prevPost };
   }
 
   // 수정 페이지 렌더링
@@ -153,6 +165,9 @@ export class EventController {
     @Query() term: string,
     @Res() res: Response,
   ) {
+    if (!page) {
+      page = 1;
+    }
     const searchData = await this.searchService.paginatedResults(
       "events",
       page,
