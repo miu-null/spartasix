@@ -15,6 +15,8 @@ const hypenTel = (target) => {
 };
 
 function sign_up() {
+  const reg = new RegExp(/^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/);
+
   const email = $("#email").val();
   const nickname = $("#nickname").val();
   const password = $("#password").val();
@@ -24,6 +26,12 @@ function sign_up() {
   if (!email || !password || !nickname || !phone || !confirmpassword) {
     alert("모든 항목을 작성해 주세요.");
   }
+
+  if( !reg.test(password) ) {
+    alert("비밀번호는 최소8글자, 하나이상의 문자 및 숫자, 특수문자가 들어가야 합니다. ");
+    return false;
+  }
+
 
   $.ajax({
     type: "POST",
