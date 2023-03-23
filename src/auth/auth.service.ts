@@ -59,7 +59,7 @@ export class AuthService {
       refreshToken,
     );
 
-    return { ...user, accessToken, refreshToken };
+    return { accessToken, refreshToken };
   }
 
   async findPassword(email: string, phone: string) {
@@ -109,5 +109,22 @@ export class AuthService {
     } catch (error) {
       return false;
     }
+  }
+
+  async newAccessToken(header: string) {
+    const accessToken = header.split(";")[0].split("=")[1];
+    const refreshtoken = header.split(";")[1].split("=")[1];
+    const user = await this.redisService.getRefreshToken(refreshtoken);
+
+    if (!user) {
+      throw new BadRequestException("로그인 후 이용 가능한 기능입니다.");
+    }
+    console.log("user : ", user["userId"])
+    const newAccessToken = await this.AccessToken(Number(user["userId"]));
+
+
+    const Header = {newAccessToken, refreshtoken, accessToken}
+
+    return Header;
   }
 }

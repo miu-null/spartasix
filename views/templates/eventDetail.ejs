@@ -180,12 +180,20 @@
 <div class="eventdetail_comment_container">
   <div class="comment_body">
     <div class="comment_input_box">
-      <textarea class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
+      <textarea id="comment_textarea" class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
     </div>
     <div
       data-text="<%= events.id %>"
       id="comment_show_text"
       class="comment_show_text"
     ></div>
+  </div>
+  <div class="comment_input_button_box">
+    <button class="comment_input_button" onclick="createEventComment('<%= events.id %>')">
+      작성
+    </button>
+  </div>
+  <div data-text="<%= events.id %>" id="comment_show_text" class="comment_show_text">
+
   </div>
 </div>

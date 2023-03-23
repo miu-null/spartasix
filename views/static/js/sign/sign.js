@@ -74,14 +74,14 @@ function sign_in() {
     url: "auth/sign-in",
     dataType: "json",
     contentType: "application/json; charset=utf-8",
-    async: false,
     data: JSON.stringify({
       email: email,
       password: password,
     }),
     success: function (response) {
-      alert(response);
+      alert("로그인 성공 !");
       window.location.replace("/");
+      
     },
   });
 }
@@ -111,7 +111,7 @@ function find_password() {
 function checkpass(randompassword) {
   const button = document.querySelector("#div-check"); // 인증 번호 넣을 div
   const subbutton = document.querySelector("#onsubmit"); // 지울 버튼
-  const form = document.querySelector("#register1"); // 최상위 form
+  const form = document.querySelector("#login1"); // 최상위 form
   const textinput = document.createElement("input");
   const textbutton = document.createElement("input");
 
@@ -187,4 +187,25 @@ function checkpass(randompassword) {
       });
     }
   });
+}
+
+function test() {
+  $.ajax({
+    type: "GET",
+    url: "/auth/test",
+    success: function (response) {
+      console.log(response)
+    },
+    error: function (request) {
+      console.log(request.responseJSON["message"])
+
+        $.ajax({
+          type: "GET",
+          url: "/auth/new-accessToken",
+          async: false,
+          success: function(response) {
+          }
+        })
+    }
+  })
 }

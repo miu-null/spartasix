@@ -17,7 +17,6 @@ export class CacheConfigService implements CacheOptionsFactory {
       host: this.configService.get<string>("REDIS_HOST"),
       port: this.configService.get<number>("REDIS_PORT"),
       ttl: this.configService.get<number>("REDIS_TTL"),
-      connectTimeout: 10000,
     };
   }
 }

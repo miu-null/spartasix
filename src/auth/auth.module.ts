@@ -2,7 +2,6 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { CacheModule, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
-import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtConfigService } from "src/config/jwt.config.service";
 import { MailerConfigService } from "src/config/mailer.config.service";

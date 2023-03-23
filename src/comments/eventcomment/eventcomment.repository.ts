@@ -21,19 +21,28 @@ export class EventCommentRepository {
   ) {}
 
   async showAllComment(eventPostId: number) {
-    const comments = await this.eventRepository.find({
-      where: { id: eventPostId, deletedAt: null },
-      select: [
-        "id",
-        "userId",
-        "eventPostId",
-        "content",
-        "createdAt",
-      ],
+    const comment = await this.eventRepository.find({
+      where: { eventPostId, deletedAt: null },
+      relations: {
+        user: true,
+        eventCommentLikes: true,
+      },
+      select: {
+        user: {
+          id: true,
+          nickName: true,
+        },
+        eventCommentLikes: {
+          id: true,
+        },
+        id: true,
+        eventPostId: true,
+        content: true,
+        createdAt: true,
+      },
     });
 
-
-    return { comments };
+    return comment;
   }
 
   async createComment(userId: number, eventPostId: number, content: string) {
@@ -45,18 +54,18 @@ export class EventCommentRepository {
     });
   }
 
-  async updateComment(userId: number, eventCommentId: number, content: string) {
-    const comment = await this.findCommentUserId(eventCommentId);
+  async updateComment(userId: number, id: number, content: string) {
+    const comment = await this.findCommentUserId(id);
 
     if (!comment) {
       throw new BadRequestException("댓글이 존재하지 않습니다.");
     }
 
     if (userId !== comment.userId) {
-      throw new UnauthorizedException("작성자만 사용할 수 있는 기능입니다.");
+      throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
     }
 
-    const updateComment = await this.eventRepository.update(eventCommentId, {
+    const updateComment = await this.eventRepository.update(id, {
       content,
     });
 
@@ -71,7 +80,7 @@ export class EventCommentRepository {
     }
 
     if (userId !== comment.userId) {
-      throw new UnauthorizedException("작성자만 사용할 수 있는 기능입니다.");
+      throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
     }
 
     await this.eventRepository.softDelete(eventCommentId);
@@ -86,21 +95,17 @@ export class EventCommentRepository {
     return comment;
   }
 
-  async showLike() {
-    const like = await this.eventCommentLikeRepository.find({
-      where: { deletedAt: null },
-    });
-    return like;
-  }
-
   async updateLike(userId: number, commentId: number) {
+    console.log(userId, commentId);
     const Like = await this.eventCommentLikeRepository.findOne({
-      where: { id: userId, eventCommentId: commentId, deletedAt: null },
+      where: { userId, eventCommentId: commentId, deletedAt: null },
       select: ["id"],
     });
 
     if (Like) {
       await this.eventCommentLikeRepository.softDelete(Like.id);
+
+      throw new BadRequestException("좋아요 취소");
     }
 
     if (!Like) {
@@ -108,8 +113,8 @@ export class EventCommentRepository {
         userId,
         eventCommentId: commentId,
       });
-    }
 
-    return true;
+      return true;
+    }
   }
 }
