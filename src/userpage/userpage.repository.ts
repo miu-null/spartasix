@@ -30,14 +30,16 @@ export class UserPageRepository {
   // 작성한 글 조회
   async getMyPosts(userId: number) {
     const clubPosts = await this.clubRepository.find({
-      relations: { user: true },
-      where: { user: { id: userId } },
+      // relations: { user: true },
+      where: { userId },
       select: ["title", "content"],
+      // order: { id: "DESC" },
     });
     const eventPosts = await this.eventpostRepository.find({
-      relations: { user: true },
-      where: { user: { id: userId } },
+      // relations: { user: true },
+      where: { userId },
       select: ["title", "content"],
+      // order: { id: "DESC" },
     });
 
     return { clubPosts, eventPosts };
@@ -59,6 +61,7 @@ export class UserPageRepository {
         id: In(MyClubApp.map((clubApp) => clubApp.clubId)),
       },
     });
+    console.log(myOwnClub, MyClub);
     return {
       myOwnClub,
       MyClub,

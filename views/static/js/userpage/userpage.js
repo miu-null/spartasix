@@ -126,7 +126,7 @@ function update_accepted(userId, clubMemberId) {
           },
         });
       }
-    }
+    },
   });
 }
 
@@ -163,7 +163,65 @@ function delete_accepted(userId, clubMemberId) {
           },
         });
       }
-    }
+    },
+  });
+}
+
+function show_userPosts(userId, prev, next) {
+  $.ajax({
+    type: "GET",
+    url: `/userpage/${userId}/post`,
+    async: false,
+    success: function (res) {
+      let clubPosts = res.clubPosts;
+      let eventPosts = res.eventPosts;
+      let rows = [];
+      console.log(res);
+
+      let full_html = "";
+      rows = clubPosts;
+      full_html += `
+      <p style="font-family: Alfa Slab One; font-size: 17px">Clubs
+      </p>
+      <br />
+      `;
+      for (let i = 0; i < rows.length; i++) {
+        full_html += `<div class = "clubPosts">`;
+        let title = rows[i]["title"];
+        let content = rows[i]["content"];
+        let temp_html = `
+          <font style="color: #ea4e4e; float: left; size: 12px">
+           ${title} </font>
+        <br /> ${content} 
+        <br /><br /> `;
+
+        full_html += temp_html;
+        full_html += `</div>`;
+      }
+
+      rows = eventPosts;
+      full_html += `
+      <p style="font-family: Alfa Slab One; font-size: 17px">Events
+      </p>
+      <br />
+      `;
+      for (let i = 0; i < rows.length; i++) {
+        full_html += `<div class = "eventPosts">`;
+
+        let title = rows[i]["title"];
+        let content = rows[i]["content"];
+        let temp_html = `
+          <font style="color: #ea4e4e; float: left; size: 12px">
+           ${title} </font>
+        <br /> ${content} 
+        <br /><br /> `;
+
+        full_html += temp_html;
+        full_html += `</div>`;
+      }
+
+      $("#clubPosts").html(full_html);
+    },
   });
 }
 
