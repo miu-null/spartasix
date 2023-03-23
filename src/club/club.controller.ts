@@ -103,11 +103,12 @@ export class ClubController {
   @Render('clubsdetail.ejs')
   async getClubsById(@Param("id") id: number,) {
     const detail = await this.clubService.getClubById(id);
-    const prevPost = detail.prevPost
-    const nowPost = detail.nowPost
-    const nextPost = detail.nextPost
-    console.log("detail : ", detail)
-    return {detail, prevPost, nowPost, nextPost}
+    const prevPost = detail.data.prevPost
+    const nowPost = detail.data.nowPost
+    const nextPost = detail.data.nextPost
+    const comments = detail.comments
+    console.log("detail : ", comments)
+    return {detail, prevPost, nowPost, nextPost, comments}
     };
 
 
