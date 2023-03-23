@@ -21,7 +21,14 @@
                         <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.nickName%><img src="<%= data.userIMG %>"width="40"></a></td>
                         <td id="club_Likes"><a class="postLink" href="http://<%= data.snsURL %>"><%= data.snsURL %>
                         <td id="club_Likes"><%= data.Likes %></td>
-                        <td id="club_Date"><%= data.createdAt %></td>
+                        <td id="club_Date">
+                            <% const postDate=new Date(data.createdAt); %>
+                            <% if (isSameDay(postDate, currentDate)) { %>
+                                <%= format(postDate, 'KK:mm', { locale: ko } ) %>
+                                    <% } else { %>
+                                        <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
+                                            <% } %>
+                                            </td>
                         <% }) %>
                         <% } else { %>
                           <td id="club_Likes">검색 결과가 없습니다.</td>
@@ -58,8 +65,13 @@
                               <%= data.user.nickName %>
                       </td>
                       <td id="club_Date">
-                          <%= data.createdAt %>
-                      </td>
+                        <% const postDate=new Date(data.createdAt); %>
+                        <% if (isSameDay(postDate, currentDate)) { %>
+                            <%= format(postDate, 'HH:mm' ) %>
+                                <% } else { %>
+                                    <%= format(postDate, 'yyyy-MM-dd' ) %>
+                                        <% } %>
+                    </td>
                       <td id="club_View">
                           <%= data.viewCount %>
                       </td>
@@ -102,7 +114,12 @@
                                   %>
                       </td>
                       <td id="club_Date">
-                          <%= data.createdAt %>
+                        <% const postDate=new Date(data.createdAt); %>
+                            <% if (isSameDay(postDate, currentDate)) { %>
+                                <%= format(postDate, 'kk:mm') %>
+                                    <% } else { %>
+                                        <%= format(postDate, 'yyyy-MM-dd',  ) %>
+                                            <% } %>
                       </td>
                       <td id="club_View">
                           <%= data.viewCount %>
@@ -124,7 +141,7 @@
     <table class="table table-hover event_table">
         <thead id="event_thead">
             <tr>
-                <th>인기글</th>
+                <th>🔥인기글🔥</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>⏰Date</th>
@@ -146,7 +163,12 @@
                     <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName%>
                     </td>
                     <td id="club_Date">
-                        <%= data.createdAt %>
+                        <% const postDate=new Date(data.createdAt); %>
+                            <% if (isSameDay(postDate, currentDate)) { %>
+                                <%= format(postDate, 'kk:mm' ) %>
+                                    <% } else { %>
+                                        <%= format(postDate, 'yyyy-MM-dd' ) %>
+                                            <% } %>
                     </td>
                     <td id="club_View">
                         <%= data.viewCount %>

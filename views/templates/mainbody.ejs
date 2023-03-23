@@ -24,7 +24,7 @@
             <thead id="event_thead">
                 <tr>
                     <th></th>
-                    <th>인기글</th>
+                    <th>🔥인기글🔥</th>
                     <th></th>
                     <th>작성자</th>
                     <th>⏰Date</th>
@@ -33,9 +33,9 @@
                 </tr>
             </thead>
             <tbody>
-                <% if (popularPosts.length) { %>
-                    <% const maxViewCount = Math.max(...popularPosts.map(data => data.viewCount)) %>
-                    <% popularPosts.forEach(data => { %>
+                <% if (sortPosts.length) { %>
+                    <% const maxViewCount = Math.max(...sortPosts.map(data => data.viewCount)) %>
+                    <% sortPosts.forEach(data => { %>
                         <tr id="club_tr">
                             <td><% if (data.viewCount === maxViewCount) { %>
                                 🥇
@@ -55,14 +55,18 @@
                                                 <%= data.nickName%>
                                         </td>
                                         <td id="club_Date">
-                                            5시간 전
+                                            <% const postDate=new Date(data.createdAt); %>
+                                            <% if (isSameDay(postDate, currentDate)) { %>
+                                                <%= format(postDate, 'KK:mm', { locale: ko } ) %>
+                                                    <% } else { %>
+                                                        <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
+                                                            <% } %>
                                         </td>
                                         <td id="club_View">
                                             <%= data.viewCount %>
                                         </td>
                                         <td id="club_Likes">
                                             <%= data.Likes %>
-
                                         </td>
                                         <% }) %>
                                             <% } else { %>

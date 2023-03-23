@@ -35,8 +35,10 @@ export class ClubController {
 
     const terms = await this.clubService.paginatedResults(page);
     const sortPosts = await this.searchService.getPopularClubs();
+    const dateSet = await this.searchService.getTimeFormat() //날짜 표기 조정
     return res.render("club.ejs", {
       ...terms,
+      ...dateSet,
       sortPosts,
     });
   }

@@ -13,9 +13,10 @@ import { ClubRepository } from 'src/club/club.repository';
 import { EventRepository } from 'src/event/event.repository';
 import { Users } from 'src/entities/users.entity';
 import { EventPosts } from 'src/entities/eventposts.entity';
-
+import { AbusingClubCounts } from 'src/entities/abusingclubcounts.entity';
+import { AbusingEventCounts } from 'src/entities/abusingeventcounts.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, EventPosts, Clubs, ClubMembers]),
+  imports: [TypeOrmModule.forFeature([Users, EventPosts, Clubs, ClubMembers, AbusingClubCounts]),
   JwtModule.registerAsync({
     imports: [ConfigModule],
     useClass: JwtConfigService,
