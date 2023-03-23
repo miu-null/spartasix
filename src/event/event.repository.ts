@@ -13,7 +13,7 @@ export class EventRepository {
     private readonly userRepository: Repository<Users>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-  ) {}
+  ) { }
 
   // async getEvents() {// 아래 페이지네이션 함수 참고
   //   const events = await this.eventRepository
@@ -23,15 +23,15 @@ export class EventRepository {
   //   return events;
   // } // mySQL leftjoin
 
-  async getEventById(eventPostId: number) {
+  async getEventById(id) {
     const event = await this.eventRepository
       .createQueryBuilder("eventPost")
-      .where("eventPost.id = :eventPostId", { eventPostId })
+      .where("eventPost.id = :id", { id })
       .leftJoinAndSelect("eventPost.user", "nickName")
       .getOne();
     return event;
   }
-
+  //글 생성
   async createEvent(
     userId: number,
     title: string,
@@ -50,8 +50,8 @@ export class EventRepository {
     });
   }
 
-  async updateEvent(eventPostId: number, UpdateEventInfo) {
-    const changedInfo = await this.eventRepository.update(eventPostId, {
+  async updateEvent(id: number, UpdateEventInfo) {
+    const changedInfo = await this.eventRepository.update(id, {
       userId: UpdateEventInfo.userId,
       title: UpdateEventInfo.title,
       content: UpdateEventInfo.content,
@@ -62,14 +62,14 @@ export class EventRepository {
     return changedInfo;
   }
 
-  async deleteEvent(eventPostId: number) {
-    await this.eventRepository.softDelete(eventPostId);
+  async deleteEvent(id: number) {
+    await this.eventRepository.softDelete(id);
     return true;
   }
 
   async paginatedResults(page, term?: string) {
     ///페이지네이션
-    const take = 5;
+    const take = 4;
     const selectedData = await this.eventRepository
       .createQueryBuilder("getEvents")
       .leftJoinAndSelect("getEvents.user", "user")

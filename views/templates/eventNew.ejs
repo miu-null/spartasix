@@ -1,53 +1,57 @@
+<!-- <form enctype="multipart/form-data" method="POST" action="/events/newevent"> -->
 <div class="eventdetail_container">
-    <div class="eventdetail_button">
-      <div class="eventdetail_edit">
-        <a onclick="eventNew()" class="new_event">작성&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
-      </div>
-      <div class="eventdetail_delete">
-        <a href="/events/list" class="new_event">취소</a>
+  <div class="eventdetail_button">
+    <div class="eventdetail_edit">
+      <button type="button" name="submit" onclick="eventNew()" class="new_event_button">
+        작성&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      </button>
+    </div>
+    <div class="eventdetail_delete">
+      <a href="/events/list" class="new_event">취소</a>
+    </div>
+  </div>
+  <div class="eventdetail_title">
+    <div class="eventdetail_first">
+      <div class="eventdetail_first_title">
+        <div class="first_title">
+          Title
+        </div>
+        <div class="title_text">
+          <input id="title" name="eventTitle" class="event_title" placeholder="title">
+        </div>
       </div>
     </div>
-    <div class="eventdetail_title">
-      <div class="eventdetail_first">
-        <div class="eventdetail_first_title">
-          <div class="first_title">
-            Title
-          </div>
-          <div class="title_text">
-            <input id="eventTitle" class="event_title" placeholder="title">
-          </div>
+    <div class="eventdetail_second">
+      <div class="eventdetail_second_start">
+        <div class="event_start_date">
+          Event started at :
+        </div>
+        <div class="col-3">
+          <input type="date" name="eventStartDate" id="eventStartDate" class="form-control" placeholder="이벤트 시작 기간" onchange="dateValidate()">
         </div>
       </div>
-      <div class="eventdetail_second">
-        <div class="eventdetail_second_start">
-          <div class="event_start_date">
-            Event started at : 
-          </div>
-          <div class="col-3">
-            <input type="date" id="eventStartDate" class="form-control" placeholder="이벤트 시작 기간">
+      <div class="eventdetail_second_end">
+        <div class="event_end_date">
+          Event ended at :
         </div>
+        <div class="col-3">
+          <input type="date" name="eventEndDate" id="eventEndDate" class="form-control" placeholder="이벤트 시작 기간" onchange="dateValidate()">
         </div>
-        <div class="eventdetail_second_end">
-          <div class="event_end_date">
-            Event ended at : 
-          </div>
-          <div class="col-3">
-            <input type="date" id="eventEndDate" class="form-control" placeholder="이벤트 시작 기간">
-        </div>
-        </div>
-      </div>
-      <div class="eventdetail_third">
-        <div class="first_file">
-          image
-        </div>
-          <div class="col-8">
-            <input type="file" id="eventPostImg" accept="image/*" placeholder="img" >
-          </div>
       </div>
     </div>
-    <div class="eventdetail_body">
-      <div class="eventdetail_body_text">
-        <textarea id="eventContent"  class="textarea" placeholder="content"></textarea>
+    <div class="eventdetail_third">
+      <div class="first_file">
+        image
+      </div>
+      <div class="col-8">
+        <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" placeholder="img">
       </div>
     </div>
- 
+  </div>
+  <div class="eventdetail_body">
+    <div class="eventdetail_body_text">
+      <textarea id="eventContent" name="eventContent" class="textarea" placeholder="content"></textarea>
+    </div>
+  </div>
+</div>
+<!-- </form> -->

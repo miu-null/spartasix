@@ -1,23 +1,27 @@
 import { IsString, IsOptional,IsDate, IsEmail } from "class-validator";
 
 export class CreateEventDto {
-  @IsString()
+  @IsOptional()
+  // @IsString()
   readonly title: string;
 
-  @IsString()
-  readonly content: string;
-
-  @IsString()
+  @IsOptional()
+  // @IsString()
   readonly startDate: Date;
 
-  @IsString()
+  @IsOptional()
+  // @IsString()
   readonly endDate: Date;
 
   @IsOptional()
-  @IsString()
+  // @IsString()
+  readonly content: string;
+
+  @IsOptional()
+  // @IsString()
   readonly postIMG?: string;
   
   @IsOptional()
-  @IsEmail()
+  // @IsEmail()
   readonly email: string;
 }

@@ -23,127 +23,146 @@ import { remindEmailDto } from "./dto/remindevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
+import * as multerS3 from 'multer-s3';
+import { FilesInterceptor } from '@nestjs/platform-express/multer/interceptors/files.interceptor';
+
+
 
 @Controller("events")
 export class EventController {
   constructor(
     private eventService: EventService,
     private searchService: SearcherService,
-  ) {}
+  ) { }
 
   //이벤트 리마인드
   @Post("/remindEvent")
   async remindEvent(@Body() data: remindEmailDto, @Res() res) {
-    const remindEvent = await this.eventService.remindEvent(data.email);
-    return res.json({ data: remindEvent });
+    console.log(data)
+    const remindEvent = await this.eventService.remindEvent(
+      data.email,
+      data.startDate,
+      data.endDate,
+      data.title,
+    )
+    return res.json({ data: remindEvent })
   }
 
-  //새글 쓰기
+  //글 생성
   @Post("/newevent")
-  @UseInterceptors(FileInterceptor("postIMG"))
+  // @UseInterceptors(FileInterceptor("postIMG"))
   async createUser(
     @Req() req,
     @Res() res: Response,
     @Body() data: CreateEventDto,
-    @UploadedFile() uploadedFile: Express.Multer.File,
+    // @UploadedFile() uploadedFile: Express.Multer.File,
   ) {
-    AWS.config.update({
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-      },
-    });
-    const key = `${Date.now() + uploadedFile.originalname}`;
-    // AWS 객체 생성
-    const upload = await new AWS.S3()
-      .putObject({
-        Key: key,
-        Body: uploadedFile.buffer,
-        Bucket: process.env.AWS_BUCKET_NAME,
-        ACL: "public-read",
-      })
-      .promise();
-    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
-    Object.assign({
-      statusCode: 201,
-      message: `이미지 등록 성공`,
-      data: { url: postIMG },
-    });
+    console.log('controller test')
+    console.log("data:::::",data)
+    console.log("req:::::",req)
+    // AWS.config.update({
+    //   credentials: {
+    //     accessKeyId: process.env.AWS_ACCESS_KEY,
+    //     secretAccessKey: process.env.AWS_SECRET_KEY,
+    //   },
+    // });
 
-    const userId = req.userId;
-    const event = await this.eventService.createEvent(
-      userId,
-      data.title,
-      data.content,
-      data.startDate,
-      data.endDate,
-      data.postIMG,
-    );
+    // console.log('uploadedFile:', uploadedFile, 'originalname:', uploadedFile.originalname)
+    // const key = `${Date.now() + uploadedFile.originalname}`;
+    // // AWS 객체 생성
+    // const upload = await new AWS.S3()
+    //   .putObject({
+    //     Key: key,
+    //     Body: uploadedFile.buffer,
+    //     Bucket: process.env.AWS_BUCKET_NAME,
+    //     ACL: "public-read",
+    //   })
+    //   .promise();
+    // const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    
+
+    
+    // Object.assign({
+    //   statusCode: 201,
+    //   message: `이미지 등록 성공`,
+    //   data: { url: postIMG },
+    // });
+
+    // const userId = req.userId;
+    // const event = await this.eventService.createEvent(
+    //   userId,
+    //   data.title,
+    //   data.content,
+    //   data.startDate,
+    //   data.endDate,
+    //   data.postIMG,
+    // );
     return res.json(true);
   }
 
-  // 작성 페이지 렌더링
+  // 이벤트 작성 페이지 렌더링
   @Get("/newevent")
   async getNewEvent(@Res() res: Response) {
     return res.render("eventNew.ejs");
   }
 
-  // 전체 글 조회
+  // 전체 이벤트 조회
   @Get("/list")
   async getEvent(
-    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Res() res: Response,
-  ) {
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response) {
     const events = await this.eventService.getEvents(page);
-    console.log("events : ", events);
+    console.log("events : ", events)
     return res.render("eventMain.ejs", { ...events });
   }
 
-  //게시글 조회
-  @Get("/list/:eventPostId")
+  //특정 이벤트 조회 페이지
+  @Get("/list/:id")
   async getEventById(
     @Res() res: Response,
-    @Param("eventPostId") eventPostId: number,
+    @Param("id") id: number,
   ) {
-    const events = await this.eventService.getEventById(eventPostId);
+    const events = await this.eventService.getEventById(id);
+    console.log(events)
     events.createdAt = new Date(events.createdAt);
 
     return res.render("eventDetail.ejs", { events });
   }
 
-  // 수정 페이지 렌더링
-  @Get("/list/:eventPostId/update")
+
+  // 이벤트 수정 페이지 렌더링
+  @Get("/list/:id/updatepage")
   async getUpdateEvent(
     @Res() res: Response,
-    @Param("eventPostId") eventPostId: number,
+    @Param("id") id: number,
   ) {
-    const events = await this.eventService.getEventById(eventPostId);
+    const events = await this.eventService.getEventById(id);
     return res.render("eventUpdate.ejs", { events });
   }
 
   // 게시글 수정
-  @Patch("/list/:eventPostId/update")
+  @Patch("/list/:id/update")
   async updateEvent(
-    @Param("eventPostId") eventPostId: number,
+    @Param("id") id: number,
     @Req() req,
     @Body() data: UpdateEventDto,
   ) {
     const userId = req.user;
-    const events = await this.eventService.updateEvent(eventPostId, {
+    const events = await this.eventService.updateEvent(id, {
       userId,
       title: data.title,
       content: data.content,
       startDate: data.startDate,
       endDate: data.endDate,
-      postIMG: data.postIMG,
+      postIMG: data.postIMG
     });
 
     return events;
   }
 
-  @Delete("/list/:eventPostId")
-  async deleteArticle(@Param("eventPostId") eventPostId: number) {
-    const deleteEvent = await this.eventService.deleteEvent(eventPostId);
+  @Delete("delete/list/:id")
+  async deleteArticle(@Param("id") id: number) {
+    const deleteEvent = await this.eventService.deleteEvent(id);
     return true;
   }
 
@@ -153,11 +172,7 @@ export class EventController {
     @Query() term: string,
     @Res() res: Response,
   ) {
-    const searchData = await this.searchService.paginatedResults(
-      "events",
-      page,
-      term,
-    );
+    const searchData = await this.searchService.paginatedResults("events", page, term,);
     console.log("검색", searchData);
     return res.render("eventsearch.ejs", {
       term,

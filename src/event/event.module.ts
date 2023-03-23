@@ -11,10 +11,11 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { SearcherRepository } from "src/searcher/searcher.repositoy";
 import { ClubRepository } from "src/club/club.repository";
 import { MailService } from "src/mail/mail.service";
+import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts]),
+    TypeOrmModule.forFeature([Clubs, Users, ClubMembers, EventPosts,AbusingClubCounts]),
   ],
   controllers: [EventController],
   providers: [

@@ -15,11 +15,14 @@
               e-mail
             </div>
             <div class="event_modal_email_text">
-              <input id="event_modal_email">
+              <input type="text" id="event_modal_email">
             </div>
           </div>
           <div class="event_modal_button_body">
-            <button class="event_modal_button" onclick="remindEvent()">submit !</button>
+            <button class="event_modal_button" 
+            onclick="remindEvent()"
+            >
+            submit !</button>
           </div>
         </div>
       </div>
@@ -29,7 +32,7 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= events.id %>/update'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      <a onclick="location.href='<%= events.id%>/updatepage'" class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
       <a onclick="deleteEvent('<%= events.id %>')" class="new_event">delete</a>
@@ -37,14 +40,14 @@
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
-      <div class="eventdetail_first_id">
+      <div class="eventdetail_first_id" id="event_id">
         <%= events.id %>
       </div>
       <div class="eventdetail_first_title">
         <div class="first_title">
           Title
         </div>
-        <div class="title_text">
+        <div class="title_text"  id="event_title">
           <%= events.title%>
         </div>
       </div>
@@ -61,42 +64,51 @@
           Likes
         </div>
         <div class="likes_text">
-          0
+           0
         </div>
       </div>
     </div>
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
         <div class="start_date">
-          Event started at : 
+          Event start date : 
         </div>
-        <div class="date_text">
-          <%= events.createdateAt%>
+        <div class="date_text" id="event_startDate">
+          <%= events.startDate%>
         </div>
       </div>
       <div class="eventdetail_second_end">
         <div class="end_date">
-          Event ended at : 
+          Event end date : 
         </div>
-        <div class="date_text">
-          2023.04.23
+        
+        <div class="date_text" id="event_endDate">
+          <%= events.endDate%>
         </div>
       </div>
-      <div class="eventdetail_second_date">
+      <!-- <div class="eventdetail_second_date">
         <div class="second_date">
           Date
         </div>
         <div class="second_date_text">
           2023.04.03
         </div>
-      </div>
+      </div> -->
       <div class="eventdetail_second_view">
         <div class="view_title">
           View
         </div>
         <div class="view_text">
-          0
+          <%= events.viewCount%>
         </div>
+      </div>
+    </div>
+    <div class="eventdetail_third">
+      <div class="first_file">
+        image
+      </div>
+      <div class="col-8">
+        <img src="<%= events.userIMG %>" name="eventPostImg" id="eventPostImg" alt="eventPostImg" />
       </div>
     </div>
   </div>
@@ -109,20 +121,19 @@
         <button class="report_button">report</button>
       </div>
     </div>
-    <div class="eventdetail_body_text">
+    <div class="eventdetail_body_text" id="event_content">
         <%= events.content %>
     </div>
   <div class="eventdetail_like_container">
     <img class="eventdetail_like_img" src="/img/likes.png" >
   </div>
-  <!-- 이전 게시물 링크 -->
   <div class="eventdetail_bottom">
     <div class="eventdetail_bottom_div">
       <div class="eventdetail_bottom_div_title">
         Prev
       </div>
       <div class="eventdetail_bottom_div_body">
-        게시글 제목입니다.
+        게시글 제목입니다. 
       </div>
       <div class="eventdetail_bottom_div_nickname">
         작성자
@@ -131,7 +142,6 @@
         2023.04.03
       </div>
     </div>
-    <!-- 다음 게시물 링크 -->
     <div class="eventdetail_bottom_div1">
       <div class="eventdetail_bottom_div_title">
         Next

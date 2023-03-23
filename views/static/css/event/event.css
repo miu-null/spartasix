@@ -76,3 +76,12 @@
   color: black
 
 }
+
+.new_event_button {
+  float: right;
+  text-decoration: none;
+  color: #ea4e4e;
+  font-weight: bold;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+}

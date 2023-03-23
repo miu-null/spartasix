@@ -22,11 +22,17 @@ export class AbusingClubCounts {
   @Column("int")
   clubId: number;
 
+  @Column("varchar")
+  reportReason: string;
+  
+  @Column("varchar")
+  reportContent: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
-  updateAt: Date | null;
+  updatedAt: Date | null;
 
   @DeleteDateColumn()
   deletedAt: Date | null;
