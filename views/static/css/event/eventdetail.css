@@ -14,7 +14,6 @@
   margin-right: 20px;
 }
 
-
 .eventdetail_title {
   border-top: 4px solid;
   margin-top: 10px;
@@ -148,6 +147,8 @@
 .eventdetail_body_button {
   display: flex;
   margin-left: auto;
+  margin-top: 1%;
+  margin-left: 79%;
 }
 
 .eventdetail_body_button_remind {
@@ -157,21 +158,30 @@
 .remind_button {
   border-radius: 30px;
   border: 1px solid #f23232;
-  font-weight: bold;
   background-color: white;
+  text-align: center;
+  width: 85px;
+  height: 29px;
+  font-size: 9px;
+  letter-spacing: 0.5px;
 }
 
 .report_button {
   border-radius: 30px;
   border: 1px solid #f23232;
-  font-weight: bold;
   background-color: #f23232;
   color: white;
   text-align: center;
-  width: 100px;
+  width: 85px;
+  height: 29px;
+  font-size: 9px;
+  letter-spacing: 0.5px;
 }
 
 .eventdetail_body_text {
+  font-family: "Amiko";
+  font-size: 15px;
+  font-weight: 500;
   margin: auto;
   margin-top: 100px;
   width: 80%;
@@ -218,7 +228,7 @@
 }
 
 .eventdetail_bottom_div_body {
-  margin-left: 200px;
+  margin-left: 5px;
 }
 
 .eventdetail_bottom_div_nickname {
@@ -230,13 +240,13 @@
 }
 
 /* The Modal (background) */
-.event_modal { 
-  position:absolute; 
-  width:100%; 
-  height:100%; 
-  top:0; 
-  left:0; 
-  display:none;
+.event_modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
   z-index: 50;
 }
 
@@ -246,22 +256,28 @@
   background-position: center;
   background-size: cover;
   position: absolute;
-  width:530px; height:700px;
-  background: rgba(255, 246, 244, 0.95); 
-  position:absolute; top:15%; left:30%;
-  margin-top:-5%; margin-right: 3%;
-  text-align:center;
-  box-sizing:border-box; padding:74px 0;
-  line-height:23px; cursor:pointer;
-  display:flex;
+  width: 530px;
+  height: 700px;
+  background: rgba(255, 246, 244, 0.95);
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  margin-top: -5%;
+  margin-right: 3%;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 74px 0;
+  line-height: 23px;
+  cursor: pointer;
+  display: flex;
   flex-direction: column;
   cursor: default;
-  transform: translate(10%,2%);
+  transform: translate(10%, 2%);
 }
 
 .event_modal_body {
   font-weight: bold;
-  color: #EA4E4E;
+  color: #ea4e4e;
 }
 
 .event_modal_text {
@@ -292,12 +308,12 @@
 }
 
 .event_modal_button {
-  border: 1px #EA4E4E solid;
-  background-color: #EA4E4E;
+  border: 1px #ea4e4e solid;
+  background-color: #ea4e4e;
   width: 140px;
   height: 48px;
   border-radius: 30px;
-  color: #FFFF;
+  color: #ffff;
   font-weight: bold;
 }
 
@@ -330,14 +346,17 @@
 .comment_input_button_box {
   margin-left: auto;
   margin-top: 10px;
-
 }
 
 .comment_input_button {
-  border: 1px solid #EA4E4E;
+  border: 1px solid #ea4e4e;
   border-radius: 30px;
   background-color: #ffff;
   font-weight: bold;
+  width: 60px;
+  height: 30px;
+  font-family: "Amiko";
+  font-size: 12px;
 }
 
 .comment_show_text {

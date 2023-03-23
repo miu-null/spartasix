@@ -1,8 +1,8 @@
 /* The Modal (background) */
 .Appmodal {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
   /* background: rgba(0, 0, 0, 0.2); */
   top: 0;
   left: 0;
@@ -13,18 +13,18 @@
 .app_modal {
   background-position: center;
   background-size: cover;
-  position: fixed;
+  position: relative;
   background: #fffaf5;
   display: flex;
-  top: 15%;
-  left: 30%;
-  margin-top: -5%;
-  margin-right: 3%;
+  margin: 0 auto;
+  margin-top: 3rem;
+  max-width: 613px;
+  width: 100%;
+  height: calc(100vh - 6rem);
+  overflow-y: scroll;
   text-align: center;
   box-sizing: border-box;
   padding: 34px;
-  width: 613px;
-  height: 1045px;
   border: 1px solid #000000;
 }
 
@@ -52,28 +52,29 @@
 
 .app_body {
   width: 100%;
+  margin-top: 44px;
   height: 90%;
 }
 
 .app_body_container {
   margin: auto;
-  margin-top: 2%;
+  margin-top: 16px;
   display: flex;
   width: 90%;
-  height: 60px;
-  border: 3px solid #000000;
+  height: 32px;
   border-radius: 10px;
   cursor: pointer;
+  margin-top: 16px;
 }
 
 .member_name {
   width: 20%;
   height: 100%;
-  border-right: 3px solid;
 }
 
 .member_body_name {
-  margin-top: 15px;
+  font-family: "Alfa Slab One", "Amiko", sans-serif;
+  margin-top: 8px;
   font-weight: bold;
 }
 
@@ -81,22 +82,22 @@
   width: 60%;
   height: 100%;
   margin: auto;
-  border-right: 3px solid;
 }
 
 .member_body_content {
-  margin-top: 15px;
+  margin-top: 8px;
   font-weight: bold;
 }
 
 .member_date {
-  width: 20%;
+  width: 30%;
   height: 100%;
   margin: auto;
 }
 
 .member_body_date {
-  margin-top: 15px;
+  font-family: "Alfa Slab One", "Amiko", sans-serif;
+  margin-top: 8px;
   font-weight: bold;
 }
 
@@ -137,29 +138,58 @@
 
 .app_body2 {
   width: 100%;
-  height: 50%;
-  border-bottom: 2px solid;
-  margin: auto;
-  margin-top: 10%;
+  max-width: 320px;
+  margin-top: 80px;
+  border-top: 2px solid;
+  margin-left: auto;
+  margin-right: auto;
   font-size: 1.3rem;
   font-weight: bold;
 }
 
+.app_body2_content {
+  padding: 80px 0px;
+}
+
+.app_body2_from {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.app_body2_from .from_label {
+  font-family: "Alfa Slab One", "Amiko", sans-serif;
+}
+
+.app_body2_from .nickname {
+  margin-left: 8px;
+}
+
 .app_button2 {
   width: 100%;
-  height: 20%;
+  margin-bottom: 32px;
   margin-top: 1%;
   display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
 }
 
 .app_btn {
-  width: 20%;
-  height: 40px;
+  padding: 16px 32px;
+  font-family: "Alfa Slab One", "Amiko", sans-serif;
   cursor: pointer;
-  display: block;
-  margin: auto;
   background-color: rgb(238, 207, 170);
   border: 0;
   outline: none;
   border-radius: 30px;
+}
+
+.app_btn_confirm {
+  background-color: #ea4e4e;
+  color: white;
+}
+
+.app_btn_reject {
+  background-color: #d9d9d9;
 }
