@@ -35,7 +35,7 @@ export class Clubs {
 
   @Column("int")
   viewCount: number;
-  
+
   @Column("varchar")
   category: string;
 

@@ -24,6 +24,7 @@ import { MailModule } from "./mail/mail.module";
 import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
 import { CacheConfigService } from "./config/redis.config.service";
+
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
