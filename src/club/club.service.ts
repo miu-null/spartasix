@@ -2,9 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { ClubRepository } from "./club.repository";
 import _ from "lodash";
 import { userInfo } from "os";
+import { ClubCommentService } from "src/comments/clubcomment/clubcomment.service";
 @Injectable()
 export class ClubService {
-  constructor(private readonly clubRepository: ClubRepository) { }
+  constructor(
+    private readonly clubRepository: ClubRepository,
+    private readonly clubCommentService: ClubCommentService
+    ) { }
 
   // users  import 필요? (작성,수정,삭제)
   async createClub(
@@ -63,7 +67,9 @@ export class ClubService {
   async getClubById(id: number) {
     const data = await this.clubRepository.getClubById(id);
     console.log(data, '@@@@서비스')
-    return data;
+
+    const comments = await this.clubCommentService.showAllComment(id);
+    return {data, comments};
   }
 
   async deleteClub(id: number) {
