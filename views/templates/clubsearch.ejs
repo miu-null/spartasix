@@ -1,7 +1,7 @@
 <div class="container club_container">
   <div>
     <a href="clubspost" class="new_club">+ new post</a>
-    <div class="searchCount" id="searchCount">검색결과 : 총 <%= searchCount %>건</div>
+    <div class="searchCount" id="searchCount">검색결과 : 총 <%= slicedData.length %>건</div>
   </div>
   <div class="club_table_container">
     <table class="table table-hover club_table">
@@ -18,6 +18,7 @@
       </thead>
       
       <tbody>
+        <% if (slicedData.length) { %>
         <% slicedData.forEach(data => { %>
           <tr id="club_tr">
             <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
@@ -27,8 +28,11 @@
             <td id="club_Date"><%= data.createdAt %></td>
             <td id="club_View"><%= data.viewCount %></td>
             <td id="club_Likes"><%= data.Likes %></td>
-          </tr>
           <% }) %>
+          <% } else { %>
+            <td id="club_Likes">검색 결과가 없습니다.</td>
+            <% } %>
+          </tr>            
       </tbody>
     </table>
   </div>

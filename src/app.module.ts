@@ -24,6 +24,7 @@ import { MailModule } from "./mail/mail.module";
 import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
 import { CacheConfigService } from "./config/redis.config.service";
+import { SearcherService } from "./searcher/searcher.service";
 
 const ejsMiddleware = require("express-ejs-layouts");
 
@@ -61,7 +62,7 @@ const ejsMiddleware = require("express-ejs-layouts");
     EventCommentModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [SearcherService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
