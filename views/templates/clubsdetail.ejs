@@ -195,12 +195,12 @@
     </div>
   </div>
   <div class="comment_input_button_box">
-    <button class="comment_input_button" onclick="createClubComment('<%= detail.id %>')">
+    <button class="comment_input_button" onclick="createClubComment(' <%= detail.nowPost.id %>')">
       작성
     </button>
   </div>
-  <div data-text="<%= detail.id %>" id="club_show_text" class="club_show_text">
-    
+  <div data-text="<%= detail.nowPost.id %>" id="club_show_text" class="club_show_text">
+
   </div>
 </div>
 <div id="report_modal">
