@@ -20,7 +20,7 @@ import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate, reformAllPostsDate } from "../../views/static/js/filter";
+import { reformPostDate } from "../../views/static/js/filter";
 
 @Controller("club")
 export class ClubController {
@@ -36,12 +36,11 @@ export class ClubController {
 
     const terms = await this.clubService.paginatedResults(page);
     const sortPosts = await this.searchService.getPopularClubs();
-    const dateSet = await this.searchService.reformAllPostsDate() //날짜 표기 조정
-    console.log('클럽 컨트롤러',dateSet)
+    
     return res.render("club.ejs", {
       ...terms,
-      ...dateSet,
       sortPosts,
+      reformPostDate,
     });
   }
 
@@ -114,12 +113,9 @@ export class ClubController {
     const nextPost = detail.data.nextPost
     const comments = detail.comments
     const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
-    const dateSet = await this.searchService.reformAllPostsDate()
-    
     console.log("detail : ", comments)
     return {
       ...postSet,
-      ...dateSet,
       }
     };
 

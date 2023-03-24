@@ -62,7 +62,7 @@
     <div class="clubdetail_second">
       <div class="clubdetail_second_date">
         <div class="second_date">
-          Date
+          작성일
         </div>
         <div class="second_date_text">
           <%= reformPostDate(nowPost.createdAt) %>
@@ -117,7 +117,7 @@
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (nextPost) { %>
-            <%= nextPost.nickName %>
+            <%= nextPost.user.nickName %>
             <% } else {%>
               <%  }%>
         </div>
@@ -139,7 +139,7 @@
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (nowPost) { %>
-            <%= nowPost.nickName %>
+            <%= nowPost.user.nickName %>
             <% } else {%>
               <%  }%>
         </div>
@@ -167,7 +167,7 @@
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (prevPost) { %>
-            <%= prevPost.nickName %>
+            <%= prevPost.user.nickName %>
             <% } else {%>
               <%  }%>
         </div>
@@ -176,11 +176,6 @@
           <%= reformPostDate(prevPost.createdAt) %>
           <% } %>
         </div>
-      </div>
-      <div class="eventdetail_bottom_div_nickname">
-        작성자
-      </div>
-      <div class="eventdetail_bottom_div_date">
       </div>
     </div>
   </div>

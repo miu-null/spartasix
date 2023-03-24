@@ -1,6 +1,8 @@
 import { Controller, Get, Inject, Res, Render} from "@nestjs/common";
 import { Response } from "express";
 import { SearcherService } from "./searcher/searcher.service";
+import { reformPostDate } from "../views/static/js/filter";
+
 
 @Controller()
 export class AppController {
@@ -13,12 +15,9 @@ export class AppController {
   @Render("mainbody")
   async mainpage(@Res() res: Response) {
     const sortPosts = await this.searchService.getPopularPosts()
-    const dateSet = await this.searchService.reformAllPostsDate() //날짜 조정
-    console.log('앱컨트롤러',sortPosts)
-  
     return {
-      ...dateSet,
-      sortPosts
+      sortPosts,
+      reformPostDate
     }
   }
 

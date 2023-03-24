@@ -103,14 +103,6 @@ export class SearcherService {
     async getPopularEvents() {
         const sortPosts = await this.SearcherRepository.getPopularEvents()
         return sortPosts;
-    }
-
-    //작성일 가입일 조정 (목록)
-    async reformAllPostsDate() {
-        const currentDate=new Date();
-        const dateSet = {isSameDay, format, currentDate}
-        return dateSet
-    }
-        
+    }    
 }                    
 

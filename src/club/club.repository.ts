@@ -97,10 +97,12 @@ export class ClubRepository {
  
     const prevPost = await this.clubRepository.findOne({
       where: {id: LessThan(clubId)},
+      relations : {user : true},
       order: {id: 'DESC'}
     })
     const nextPost = await this.clubRepository.findOne({
       where: {id: MoreThan(clubId)},
+      relations : {user : true},
       order: {id: 'ASC'}
     });
         await this.clubRepository

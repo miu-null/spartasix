@@ -99,11 +99,10 @@ export class EventController {
   ) {
     const events = await this.eventService.getEvents(page);
     const sortPosts = await this.searchService.getPopularEvents()
-    const dateSet = await this.searchService.reformAllPostsDate() //날짜 표기 조정
     return res.render("eventMain.ejs", {
        ...events,
-       ...dateSet,
-       sortPosts
+       sortPosts,
+       reformPostDate
       });
   }
 
