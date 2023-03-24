@@ -4,14 +4,14 @@ export class UpdateEventDto {
     @IsString()
     readonly title: string;
   
+    @IsString()
+    readonly startDate: Date;
+
+    @IsString()
+    readonly endDate: Date;
+
     @IsOptional()
     @IsString()
     readonly content: string;
-
-    @IsDate()
-    readonly startDate: Date;
-
-    @IsDate()
-    readonly endDate: Date;
   
 }

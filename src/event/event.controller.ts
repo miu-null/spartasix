@@ -86,14 +86,9 @@ export class EventController {
     console.log("upload::::::",upload)
     console.log("postIMG::::::",postIMG)
 
-    Object.assign({
-      statusCode: 201,
-      message: `이미지 등록 성공`,
-      data: { url: postIMG },
-    });
 
-    const userId = req.userId;
-    console.log('글작성시 userId:::::::',userId)
+    const userId = req.user;
+
     const event = await this.eventService.createEvent(
       userId,
       data.title,
@@ -146,12 +141,37 @@ export class EventController {
 
   // 게시글 수정
   @Patch("/list/:id/update")
+  @UseInterceptors(FileInterceptor("file"))
   async updateEvent(
     @Param("id") id: number,
     @Req() req,
     @Body() data: UpdateEventDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
+
     console.log(':::::::in update controller::::::::')
+    console.log('id:::::',id)
+
+
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
+
+    const key = `${Date.now() + file.originalname}`;
+    // AWS 객체 생성
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key, //경로
+        Body: file.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME, 
+        ACL: "public-read",
+      })
+      .promise();
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    
     const userId = req.user;
     const events = await this.eventService.updateEvent(id, {
       userId,
