@@ -1,14 +1,7 @@
 const { isSameDay } = require("date-fns");
 const { format } = require("date-fns-tz");
 
-//작성일 가입일 조정 (목록)
-function reformAllPostsDate() {
-  const currentDate = new Date();
-  const dateSet = { isSameDay, format, currentDate };
-  return dateSet;
-}
-
-// 게시글 상세보기에서 사용할 날짜 형식 변경(게시글, 댓글, 이전다음 글 안내)
+// 게시글 정보 조회시 날짜 형식 변경(게시판, 게시글, 댓글, 이전다음 글 안내)
 function reformPostDate(postObjDate) {
   const currentDate = new Date();
 
@@ -23,5 +16,4 @@ function reformPostDate(postObjDate) {
 
 module.exports = {
   reformPostDate,
-  reformAllPostsDate,
 };
