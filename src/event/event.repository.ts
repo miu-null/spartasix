@@ -39,7 +39,7 @@ export class EventRepository {
     content: string,
     startDate: Date,
     endDate: Date,
-   
+    postIMG: string,
   ) {
     await this.eventRepository.insert({
       userId,
@@ -47,7 +47,7 @@ export class EventRepository {
       content,
       startDate,
       endDate,
-      
+      postIMG
     });
   }
 

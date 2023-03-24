@@ -1,3 +1,9 @@
+<script>
+  function onUpload(e) {
+    var imageUrl = URL.createObjectURL(e.files[0])
+    document.getElementById('nowimage').src = imageUrl;
+  }
+  </script>
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
@@ -16,8 +22,7 @@
           Title
         </div>
         <div class="title_text">
-          <input id="event_title" class="event_title" value="<%= events.title %>">
-
+          <input id="eventUpdateTitle" class="event_title" value="<%= events.title %>">
         </div>
       </div>
     </div>
@@ -27,7 +32,7 @@
           Event started at :
         </div>
         <div class="col-3">
-          <input type="date" id="eventStartDate" class="form-control" value="이벤트 시작 기간">
+          <input type="date" id="eventUpdateStartDate" class="form-control" value="<%= events.startDate %>">
         </div>
       </div>
       <div class="eventdetail_second_end">
@@ -35,7 +40,7 @@
           Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="eventEndDate" class="form-control" value="이벤트 시작 기간">
+          <input type="date" id="eventUpdateEndDate" class="form-control" value="<%= events.endDate %>">
         </div>
       </div>
     </div>
@@ -44,13 +49,14 @@
         image
       </div>
       <div class="col-8">
-        <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" src="https://spartasix.s3.amazonaws.com/1679577455604aaa.jpg">
+        <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*" onchange="onUpload(this)">
       </div>
     </div>
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
-      <p><textarea id="eventContent" class="textarea" value="<%= events.content %>"></textarea></p>
+      <img class="eventImg" id="nowimage" src="<%= events.postIMG %>" >
+      <p><textarea id="eventUpdateContent" class="textarea" value="<%= events.content %>"></textarea></p>
     </div>
   </div>
 </div>

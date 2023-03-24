@@ -175,16 +175,16 @@ function eventNew() {
 
 function updateEvent(id) {
   const formData = new FormData();
-  formData.append("title", $("#event_title").val());
-  formData.append("startDate", $("#eventStartDate").val());
-  formData.append("endDate", $("#eventEndDate").val());
-  formData.append("content", $("#eventContent").val());
-  formData.append("file", $("#eventPostImg")[0].files[0]);
+  formData.append("title", $("#eventUpdateTitle").val());
+  formData.append("startDate", $("#eventUpdateStartDate").val());
+  formData.append("endDate", $("#eventUpdateEndDate").val());
+  formData.append("content", $("#eventUpdateContent").val());
+  formData.append("file", $("#eventUpdateImg")[0].files[0]);
   console.log(FormData)
 
 
   $.ajax({
-    type: "POST",
+    type: "PATCH",
     url: `/events/list/${id}/update`,
     data: formData,
     enctype: "multipart/form-data",

@@ -32,7 +32,7 @@ export class EventService {
     content: string,
     startDate: Date,
     endDate: Date,
-    
+    postIMG:string,
   ) {
     await this.EventRepository.createEvent(
       userId,
@@ -40,7 +40,7 @@ export class EventService {
       content,
       startDate,
       endDate,
-     
+      postIMG,
     );
   }
 

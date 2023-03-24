@@ -92,7 +92,7 @@ export class EventController {
       data: { url: postIMG },
     });
 
-    const userId = req.userId;
+    const userId = req.user;
     console.log('글작성시 userId:::::::',userId)
     const event = await this.eventService.createEvent(
       userId,
@@ -100,6 +100,7 @@ export class EventController {
       data.content,
       data.startDate,
       data.endDate,
+      postIMG,
     );
     return res.json(true);
   }
@@ -125,12 +126,13 @@ export class EventController {
   async getEventById(
     @Res() res: Response,
     @Param("id") id: number,
-  ) {
-    const events = await this.eventService.getEventById(id);
-    console.log(events)
-    events.createdAt = new Date(events.createdAt);
+  ) {    
 
-    return res.render("eventDetail.ejs", { events });
+    const events = await this.eventService.getEventById(id);
+    events.createdAt = new Date(events.createdAt);
+    let imgUrl = events.postIMG;
+   
+    return res.render("eventDetail.ejs", { events,imgUrl });
   }
 
 
@@ -140,18 +142,45 @@ export class EventController {
     @Res() res: Response,
     @Param("id") id: number,
   ) {
+ 
     const events = await this.eventService.getEventById(id);
+    let imgUrl = events.postIMG;
+    console.log('imgUrl:::::',imgUrl)
     return res.render("eventUpdate.ejs", { events });
   }
 
   // 게시글 수정
   @Patch("/list/:id/update")
+  @UseInterceptors(FileInterceptor("file"))
   async updateEvent(
     @Param("id") id: number,
     @Req() req,
     @Body() data: UpdateEventDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
+
     console.log(':::::::in update controller::::::::')
+    console.log('id:::::',id)
+
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
+
+    const key = `${Date.now() + file.originalname}`;
+    // AWS 객체 생성
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key, //경로
+        Body: file.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME, 
+        ACL: "public-read",
+      })
+      .promise();
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+
     const userId = req.user;
     const events = await this.eventService.updateEvent(id, {
       userId,
@@ -159,6 +188,7 @@ export class EventController {
       content: data.content,
       startDate: data.startDate,
       endDate: data.endDate,
+      postIMG:postIMG
     });
 
     return events;
