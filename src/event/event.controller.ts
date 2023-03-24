@@ -38,6 +38,7 @@ export class EventController {
   //이벤트 리마인드
   @Post("/remindEvent")
   async remindEvent(@Body() data: remindEmailDto, @Res() res) {
+    
     console.log(data)
     const remindEvent = await this.eventService.remindEvent(
       data.email,
