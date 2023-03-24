@@ -1,9 +1,9 @@
-import { IsDate, IsNumber, IsString,IsOptional} from 'class-validator';
+import { IsDate, IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class UpdateEventDto {
     @IsString()
     readonly title: string;
-  
+
     @IsString()
     readonly startDate: Date;
 
@@ -13,5 +13,8 @@ export class UpdateEventDto {
     @IsOptional()
     @IsString()
     readonly content: string;
-  
+
+    @IsOptional()
+    @IsString()
+    readonly postIMG?: string;
 }

@@ -27,7 +27,8 @@
           Event started at :
         </div>
         <div class="col-3">
-          <input type="date" id="eventUpdateStartDate" class="form-control" value="이벤트 시작 기간">
+          <!-- <input type="date" id="eventUpdateStartDate" class="form-control"> -->
+          <input type="date" id="eventUpdateStartDate" class="form-control" value="<%= events.startDate %>">
         </div>
       </div>
       <div class="eventdetail_second_end">
@@ -35,7 +36,8 @@
           Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="eventUpdateEndDate" class="form-control" value="이벤트 시작 기간">
+          <!-- <input type="date" id="eventUpdateEndDate" class="form-control"> -->
+          <input type="date" id="eventUpdateEndDate" class="form-control" value="<%= events.endDate %>">
         </div>
       </div>
     </div>
@@ -44,7 +46,8 @@
         image
       </div>
       <div class="col-8">
-        <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*" src="https://spartasix.s3.amazonaws.com/1679577455604aaa.jpg">
+        <!-- <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*"> -->
+        <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*" src="<%= events.postIMG %>">
       </div>
     </div>
   </div>

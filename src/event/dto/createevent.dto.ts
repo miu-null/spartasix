@@ -18,4 +18,8 @@ export class CreateEventDto {
   @IsOptional()
   @IsEmail()
   readonly email: string;
+
+  @IsOptional()
+  @IsString()
+  readonly postIMG?: string;
 }

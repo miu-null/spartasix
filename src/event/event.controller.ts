@@ -95,6 +95,7 @@ export class EventController {
       data.content,
       data.startDate,
       data.endDate,
+      postIMG,
     );
     return res.json(true);
   }
@@ -125,7 +126,11 @@ export class EventController {
     console.log(events)
     events.createdAt = new Date(events.createdAt);
 
-    return res.render("eventDetail.ejs", { events });
+    const eventInfo = await this.eventService.getEventById(id)
+    let imgUrl = eventInfo.postIMG;
+    console.log('imgUrl:::::',imgUrl)
+
+    return res.render("eventDetail.ejs", { events,imgUrl });
   }
 
 
@@ -135,8 +140,12 @@ export class EventController {
     @Res() res: Response,
     @Param("id") id: number,
   ) {
+    const eventInfo = await this.eventService.getEventById(id)
+    let imgUrl = eventInfo.postIMG;
+    console.log('imgUrl:::::',imgUrl)
+
     const events = await this.eventService.getEventById(id);
-    return res.render("eventUpdate.ejs", { events });
+    return res.render("eventUpdate.ejs", { events,imgUrl });
   }
 
   // 게시글 수정
@@ -151,6 +160,8 @@ export class EventController {
 
     console.log(':::::::in update controller::::::::')
     console.log('id:::::',id)
+
+ 
 
 
     AWS.config.update({
@@ -179,6 +190,7 @@ export class EventController {
       content: data.content,
       startDate: data.startDate,
       endDate: data.endDate,
+      postIMG:postIMG
     });
 
     return events;
