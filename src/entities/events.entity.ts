@@ -91,6 +91,6 @@ export class EventPosts {
   eventComments: EventComments[];
 
   @ManyToOne(() => Users, (user: Users) => user.eventPosts)
-  @JoinColumn({ name: "id" })
+  @JoinColumn({ name: "userId" })
   user: Users;
 }
