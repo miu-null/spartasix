@@ -103,21 +103,21 @@ export class ClubController {
 
   @Get("/list/:id")
   @Render('clubsdetail.ejs')
-  async getClubsById(@Param("id") id: number,) {
+  async getClubsById(@Param("id") id: number) {
     const detail = await this.clubService.getClubById(id);
-    const prevPost = detail.data.prevPost
-    const nowPost = detail.data.nowPost
-    const nextPost = detail.data.nextPost
-    const comments = detail.comments
-    console.log("detail : ", comments)
-    return {detail, prevPost, nowPost, nextPost, comments}
-    };
-
+    const prevPost = detail.data.prevPost;
+    const nowPost = detail.data.nowPost;
+    const nextPost = detail.data.nextPost;
+    const comments = detail.comments;
+    console.log("detail : ", comments);
+    return { detail, prevPost, nowPost, nextPost, comments };
+  }
 
   @Delete("/list/:id")
-  async delete(@Param("id") id: number, @Res() res) {
-    const club = await this.clubService.deleteClub(id);
-    return res.json(true);
+  async delete(@Param("id") id: number, @Req() req) {
+    const userId = req.user;
+    await this.clubService.deleteClub(userId, id);
+    return true;
   }
 
   ///모임게시판 검색기능

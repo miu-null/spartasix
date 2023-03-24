@@ -7,7 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "../entities/clubmembers.entity";
 import { Clubs } from "../entities/clubs.entity";
-import { EventPosts } from "../entities/eventposts.entity";
+import { EventPosts } from "../entities/events.entity";
 import { Users } from "../entities/users.entity";
 import { In, Raw, Repository } from "typeorm";
 
@@ -25,7 +25,7 @@ export class UserPageRepository {
     @InjectRepository(EventPosts)
     private readonly eventpostRepository: Repository<EventPosts>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   // 작성한 글 조회
   async getMyPosts(userId: number) {
