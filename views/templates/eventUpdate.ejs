@@ -1,3 +1,10 @@
+<script>
+  function onUpload(e) {
+    var imageUrl = URL.createObjectURL(e.files[0])
+    document.getElementById('memberImage').src = imageUrl;
+  }
+  </script>
+
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
@@ -47,12 +54,13 @@
       </div>
       <div class="col-8">
         <!-- <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*"> -->
-        <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*" src="<%= events.postIMG %>">
+        <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*">
       </div>
     </div>
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
+      <img class="eventImg" src="<%= events.postIMG %>" >
       <p><textarea id="eventUpdateContent" class="textarea" value="<%= events.content %>"></textarea></p>
     </div>
   </div>
