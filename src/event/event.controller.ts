@@ -58,6 +58,8 @@ export class EventController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     console.log('controller test')
+    console.log("newevent req:::::",req)
+    console.log("newevent req end:::::")
     console.log("data:::::",data)
     console.log("file:::::",file)
     
@@ -73,16 +75,17 @@ export class EventController {
     // AWS 객체 생성
     const upload = await new AWS.S3()
       .putObject({
-        Key: key,
+        Key: key, //경로
         Body: file.buffer,
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: process.env.AWS_BUCKET_NAME, 
         ACL: "public-read",
       })
       .promise();
     const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
     
+    console.log("upload::::::",upload)
+    console.log("postIMG::::::",postIMG)
 
-    
     Object.assign({
       statusCode: 201,
       message: `이미지 등록 성공`,
@@ -90,6 +93,7 @@ export class EventController {
     });
 
     const userId = req.userId;
+    console.log('글작성시 userId:::::::',userId)
     const event = await this.eventService.createEvent(
       userId,
       data.title,
@@ -147,6 +151,7 @@ export class EventController {
     @Req() req,
     @Body() data: UpdateEventDto,
   ) {
+    console.log(':::::::in update controller::::::::')
     const userId = req.user;
     const events = await this.eventService.updateEvent(id, {
       userId,
@@ -154,7 +159,6 @@ export class EventController {
       content: data.content,
       startDate: data.startDate,
       endDate: data.endDate,
-      postIMG: data.postIMG
     });
 
     return events;

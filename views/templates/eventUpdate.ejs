@@ -1,11 +1,12 @@
-<form enctype="multipart/form-data" method="POST" action="/events/list/<%= events.id %>/update">
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <button class="update_event">수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+      <button class="update_event" onclick="updateEvent('<%= events.id %>')" value="<%= events.id %>">수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+
     </div>
     <div class="eventdetail_delete">
       <a href="/events/list" class="new_event">취소</a>
+      
     </div>
   </div>
   <div class="eventdetail_title">
@@ -26,7 +27,7 @@
           Event started at :
         </div>
         <div class="col-3">
-          <input type="date" id="startDate" class="form-control" value="이벤트 시작 기간">
+          <input type="date" id="eventStartDate" class="form-control" value="이벤트 시작 기간">
         </div>
       </div>
       <div class="eventdetail_second_end">
@@ -34,7 +35,7 @@
           Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="endDate" class="form-control" value="이벤트 시작 기간">
+          <input type="date" id="eventEndDate" class="form-control" value="이벤트 시작 기간">
         </div>
       </div>
     </div>
@@ -43,13 +44,13 @@
         image
       </div>
       <div class="col-8">
-        <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" src="<%= events.postIMG %>">
+        <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" src="https://spartasix.s3.amazonaws.com/1679577455604aaa.jpg">
       </div>
     </div>
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
-      <p><textarea id="event_content" class="textarea" value="<%= events.content %>"></textarea></p>
+      <p><textarea id="eventContent" class="textarea" value="<%= events.content %>"></textarea></p>
     </div>
   </div>
 </div>

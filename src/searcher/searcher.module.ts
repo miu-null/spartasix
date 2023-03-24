@@ -12,7 +12,7 @@ import { ClubMembers } from 'src/entities/clubmembers.entity';
 import { ClubRepository } from 'src/club/club.repository';
 import { EventRepository } from 'src/event/event.repository';
 import { Users } from 'src/entities/users.entity';
-import { EventPosts } from 'src/entities/eventposts.entity';
+import { EventPosts } from 'src/entities/events.entity';
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 
 @Module({

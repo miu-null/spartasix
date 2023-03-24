@@ -9,7 +9,7 @@ import { SearcherService } from "src/searcher/searcher.service";
 import { SearcherRepository } from "src/searcher/searcher.repositoy";
 import { ClubRepository } from "./club.repository";
 import { EventRepository } from "src/event/event.repository";
-import { EventPosts } from "src/entities/eventposts.entity";
+import { EventPosts } from "src/entities/events.entity";
 
 @Module({
   imports: [

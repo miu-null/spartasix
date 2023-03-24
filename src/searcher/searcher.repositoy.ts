@@ -3,7 +3,7 @@ import { getRepositoryToken, InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Users } from "../entities/users.entity";
 import { Clubs } from "../entities/clubs.entity";
-import { EventPosts } from "../entities/eventposts.entity";
+import { EventPosts } from "../entities/events.entity";
 // import { JwtService } from "@nestjs/jwt";
 
 @Injectable()

@@ -161,8 +161,6 @@ function eventNew() {
   $.ajax({
     type: "POST",
     url: "/events/newevent",
-    // dataType: "json",
-    // contentType: "application/json; charset=utf-8",
     data: formData,
     enctype: "multipart/form-data",
     processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
@@ -173,39 +171,46 @@ function eventNew() {
     },
   });
 
-  //    data: JSON.stringify({
-  //   title: title,
-  //   startDate: startDate,
-  //   endDate: endDate,
-  //   content: content,
-  //   postIMG:postIMG
-  // }),
 }
 
-// function updateEvent(id) {
-//   const title =document.getElementById("#event_title").innerText;
-//   //const title = $("#event_title").innerText();
-//   const startDate = $("#startDate").val();
-//   const endDate = $("#endDate").val();
-//   const content = $("#event_content").innerText();
-//   const eventPostImg = $("#eventPostImg").val();
-//   console.log(title,startDate,endDate,content,eventPostImg)
+function updateEvent(id) {
+  const formData = new FormData();
+  formData.append("title", $("#event_title").val());
+  formData.append("startDate", $("#eventStartDate").val());
+  formData.append("endDate", $("#eventEndDate").val());
+  formData.append("content", $("#eventContent").val());
+  formData.append("file", $("#eventPostImg")[0].files[0]);
+  console.log(FormData)
 
-//   $.ajax({
-//     type: "PATCH",
-//     url: `/events/list/${id}/update`,
-//     dataType: "json",
-//     contentType: "application/json; charset=utf-8",
-//     data: JSON.stringify({
-//       title: title,
-//       content: content,
-//       startDate:startDate,
-//       endDate:endDate,
-//       eventPostImg:eventPostImg,
-//     }),
-//     success: function (response) {
-//       alert("수정 완료");
-//       window.location.replace(`/events/list/${id}`);
-//     },
-//   });
-// }
+
+  $.ajax({
+    type: "POST",
+    url: `/events/list/${id}/update`,
+    data: formData,
+    enctype: "multipart/form-data",
+    processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
+    contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
+    success: function (response) {
+      alert("작성 완료");
+      window.location.replace(`/events/list/${id}`);
+    },
+  });
+
+  // $.ajax({
+  //   type: "PATCH",
+  //   url: `/events/list/${id}/update`,
+  //   dataType: "json",
+  //   contentType: "application/json; charset=utf-8",
+  //   data: JSON.stringify({
+  //     title: title,
+  //     content: content,
+  //     startDate:startDate,
+  //     endDate:endDate,
+  //     eventPostImg:eventPostImg,
+  //   }),
+  //   success: function (response) {
+  //     alert("수정 완료");
+  //     window.location.replace(`/events/list/${id}`);
+  //   },
+  // });
+}

@@ -4,11 +4,9 @@ export class UpdateEventDto {
     @IsString()
     readonly title: string;
   
+    @IsOptional()
     @IsString()
     readonly content: string;
-  
-    @IsString()
-    readonly date: Date;
 
     @IsDate()
     readonly startDate: Date;
@@ -16,7 +14,4 @@ export class UpdateEventDto {
     @IsDate()
     readonly endDate: Date;
   
-    @IsOptional()
-    @IsString()
-    readonly postIMG?: string;
 }
