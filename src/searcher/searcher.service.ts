@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { SearcherRepository } from './searcher.repositoy';
 import { isSameDay} from 'date-fns'
 import { format, utcToZonedTime } from 'date-fns-tz'; 
-import koLocale from 'date-fns/locale/ko';
 
 @Injectable()
 export class SearcherService {
@@ -106,34 +105,12 @@ export class SearcherService {
         return sortPosts;
     }
 
-
-
-
-    //작성일 가입일 조정 date-fns
-    async getTimeFormat123123(Settings) {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        console.log(timeZone); // 서버 시간대 출력
-
+    //작성일 가입일 조정 (목록)
+    async reformAllPostsDate() {
         const currentDate=new Date();
-        const ko = koLocale
-        const DDD = Settings.map(data => ({
-            ...data, createdAt: utcToZonedTime(data.createdAt, timeZone)}))
-        const dateSet = {isSameDay, format, currentDate, ko, DDD}
-        
+        const dateSet = {isSameDay, format, currentDate}
         return dateSet
     }
-
-    async getTimeFormat() {
-        const serverTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const currentDate=new Date();
-        const ko = 'Asia/Seoul'
-
-        const dateSet = {isSameDay, format, currentDate, ko, serverTimezone}
         
-        return dateSet
-    }
-
-
-
-}
+}                    
 

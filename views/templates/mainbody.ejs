@@ -54,14 +54,12 @@
                                         <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
                                                 <%= data.nickName%>
                                         </td>
-                                        <td id="club_Date">
-                                            <% const postDate=new Date(data.createdAt); %>
+                                        <td id="club_Date"><% const postDate=new Date(data.createdAt.setHours(data.createdAt.getHours()+9)) ; %>
                                             <% if (isSameDay(postDate, currentDate)) { %>
-                                                <%= format(postDate, 'KK:mm', { timeZone: ko } ) %>
+                                                <%= format(postDate, 'kk:mm' ) %>
                                                     <% } else { %>
-                                                        <%= format(postDate, 'yyyy-MM-dd', { timeZone: ko } ) %>
-                                                            <% } %>
-                                        </td>
+                                                        <%= format(postDate, 'yyyy-MM-dd') %>
+                                                            <% } %></td>
                                         <td id="club_View">
                                             <%= data.viewCount %>
                                         </td>
