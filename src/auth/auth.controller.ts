@@ -40,11 +40,22 @@ export class AuthController {
   @Post("/sign-in")
   async login(@Body() data: loginDto, @Res() res) {
     const user = await this.authService.login(data.email, data.password);
-    // res.setHeader('Content-Type','application/json; charset=utf-8');
-    // res.setHeader("Authorization", "Bearer " + user.accessToken + user.refreshToken)
-    res.cookie("accessToken", user.accessToken);
-    res.cookie("refreshToken", user.refreshToken);
-    return res.json(user)
+
+    res.cookie("accessToken", user.accessToken, {httpOnly: true});
+    res.cookie("refreshToken", user.refreshToken, {httpOnly: true});
+    return res.json(user.user["id"])
+  }
+
+  @Post("/logout")
+  async logout(@Req() req, @Res() res) {
+    const header = req.headers.cookie;
+    const accessToken = header.split(";")[0].split("=")[1];
+    const refreshtoken = header.split(";")[1].split("=")[1];
+
+    res.clearCookie("accessToken", accessToken);
+    res.clearCookie("refreshToken", refreshtoken);
+
+    return res.json(true);
   }
 
   @Post("/find-password")
@@ -79,6 +90,5 @@ export class AuthController {
 
       return res.json(newpayload)
     }
-
   }
 }

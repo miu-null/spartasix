@@ -242,58 +242,6 @@ function clubApp() {
   });
 }
 
-function showClubComment(clubPostId) {
-  $.ajax({
-    type: "GET",
-    url: `/clubcomment/${clubPostId}/comments`,
-    data: {},
-    success: function (response) {
-      console.log(response);
-      let rows = response;
-
-      for (let i = 0; i < rows.length; i++) {
-        const commentId = rows[i]["id"];
-        const nickName = rows[i]["user"]["nickName"];
-        const content = rows[i]["content"];
-        const like = rows[i]["clubCommentLikes"].length;
-        let date = rows[i]["createdAt"];
-        date = date.split("T")[0];
-
-        let temp_html = `
-        <div class="comment_text_box">
-          <div id="club_text_container${commentId}" class="comment_text_container">
-            <div class="comment_nickname">
-              ${nickName}
-            </div>
-            <div id="club_content_${commentId}" class="comment_content">
-              <div id="club_content_box_${commentId}" class="comment_content_box">
-              ${content}
-              </div>
-            </div>
-            <div class="comment_date">
-              ${date}
-            </div>
-            <div id="club_like${commentId}" class="comment_like">
-              <div>
-                <image onclick="club_updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
-              </div>
-              <div id="club_commentId" class="like_total">
-                ${like}
-              </div>
-            </div>
-          </div>
-          <div id="club_comment_button${commentId}" class="event_comment_button">
-            <button id="club_del_button${commentId}" class="comment_button" onclick="updateClubComment('${commentId}','${content}')">edit</button>
-            <button id="club_del_button1${commentId}" class="comment_button" onclick="deleteClubComment(${commentId})">delete</button>
-          </div>
-        </div>
-        `;
-        $("#club_show_text").append(temp_html);
-      }
-    },
-  });
-}
-
 function createClubComment(postId) {
   const content = $("#club_textarea").val();
   $.ajax({
@@ -388,7 +336,7 @@ function updateClubComment(commentId, content) {
         alert("수정 완료");
         window.location.reload();
       },
-      error: function (request, status, error) {
+      error: function (request) {
         if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
           alert("댓글이 존재하지 않습니다.");
           window.location.reload();
@@ -459,7 +407,7 @@ function deleteClubComment(clubcommentId) {
       alert("삭제 성공 !");
       window.location.reload();
     },
-    error: function (response) {
+    error: function (request) {
       if (request.responseJSON["message"] === "댓글이 존재하지 않습니다.") {
         alert("댓글이 존재하지 않습니다.");
         window.location.reload();
@@ -491,7 +439,7 @@ function deleteClubComment(clubcommentId) {
                 alert("삭제 성공 !");
                 window.location.reload();
               },
-              error: function (response) {
+              error: function (request) {
                 if (
                   request.responseJSON["message"] ===
                   "댓글이 존재하지 않습니다."
@@ -523,7 +471,7 @@ function club_updateLike(commentId) {
       alert("좋아요 !");
       window.location.reload();
     },
-    error: function (err) {
+    error: function (request) {
       if (request.responseJSON["message"] === "좋아요 취소") {
         alert("좋아요 취소 !");
         window.location.reload();
@@ -548,7 +496,7 @@ function club_updateLike(commentId) {
                 alert("좋아요 !");
                 window.location.reload();
               },
-              error: function (err) {
+              error: function (request) {
                 if (request.responseJSON["message"] === "좋아요 취소") {
                   alert("좋아요 취소 !");
                   window.location.reload();
@@ -582,8 +530,36 @@ function report_submit() {
       alert("신고 완료");
       window.location.replace(`http://localhost:3000/club/list/${id}`);
     },
-    error: function (error) {
-      alert("ERROR");
+    error: function (request) {
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "POST",
+              url: `/list/report/${id}`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              data: JSON.stringify({
+                reportReason: reportReason,
+                reportContent: reportContent,
+                clubId: clubId,
+              }),
+              success: function (response) {
+                alert("신고 완료");
+                window.location.replace(`http://localhost:3000/club/list/${id}`);
+              },
+            });
+          },
+        });
+      }
     },
   });
 }

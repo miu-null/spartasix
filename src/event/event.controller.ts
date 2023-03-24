@@ -116,15 +116,16 @@ export class EventController {
     @Param("eventPostId") eventPostId: number,
   ) {
     let postDetail = await this.eventService.getEventById(eventPostId);
-    const events = postDetail.nowPost
+    const events = postDetail.data.nowPost
     
     events.createdAt = new Date(events.createdAt);
 
-    const prevPost = postDetail.prevPost
-    const nowPost = postDetail.nowPost
-    const nextPost = postDetail.nextPost
-
-    return {events, nextPost, nowPost, prevPost };
+    const prevPost = postDetail.data.prevPost
+    const nowPost = postDetail.data.nowPost
+    const nextPost = postDetail.data.nextPost
+    const comments = postDetail.comments
+    console.log("comments : ", comments)
+    return {events, nextPost, nowPost, prevPost, comments };
   }
 
   // 수정 페이지 렌더링

@@ -1,11 +1,3 @@
-$(document).ready(function () {
-  const eventPostId = $("#comment_show_text").data("text");
-  showComment(eventPostId);
-
-  const clubPostId = $("#club_show_text").data("text");
-  showClubComment(clubPostId);
-});
-
 function event_open() {
   $(`#event_modal1`).fadeIn();
 
@@ -215,56 +207,6 @@ function deleteEvent(eventPostId) {
             });
           },
         });
-      }
-    },
-  });
-}
-
-function showComment(eventPostId) {
-  $.ajax({
-    type: "GET",
-    url: `/eventcomment/${eventPostId}/comments`,
-    data: {},
-    success: function (response) {
-      let rows = response;
-      for (let i = 0; i < rows.length; i++) {
-        const commentId = rows[i]["id"];
-        const nickName = rows[i]["user"]["nickName"];
-        const content = rows[i]["content"];
-        const like = rows[i]["eventCommentLikes"].length;
-        let date = rows[i]["createdAt"];
-        date = date.split("T")[0];
-
-        let temp_html = `
-        <div class="comment_text_box">
-          <div id="comment_text_container${commentId}" class="comment_text_container">
-            <div class="comment_nickname">
-              ${nickName}
-            </div>
-            <div id="content_${commentId}" class="comment_content">
-              <div id="content_box_${commentId}" class="comment_content_box">
-              ${content}
-              </div>
-            </div>
-            <div class="comment_date">
-              ${date}
-            </div>
-            <div id="comment_like${commentId}" class="comment_like">
-              <div>
-                <image onclick="updateLike(${commentId})" class="comment_like_img" src="/img/likes.png">
-              </div>
-              <div id="event_commentId" class="like_total">
-                ${like}
-              </div>
-            </div>
-          </div>
-          <div id="event_comment_button${commentId}" class="event_comment_button">
-            <button id="comment_del_button${commentId}" class="comment_button" onclick="updateEventComment('${commentId}','${content}')">edit</button>
-            <button id="comment_del_button1${commentId}" class="comment_button" onclick="deleteEventComment(${commentId})">delete</button>
-          </div>
-        </div>
-        `;
-        $("#comment_show_text").append(temp_html);
       }
     },
   });
@@ -528,7 +470,7 @@ function updateLike(commentId) {
                 alert("좋아요 !");
                 window.location.reload();
               },
-              error: function (response) {
+              error: function (request) {
                 if (request.responseJSON["message"] === "좋아요 취소") {
                   alert("좋아요 취소 !");
                   window.location.reload();

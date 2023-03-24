@@ -1,4 +1,4 @@
-function modal_open() {
+function sign_modal_open() {
   $(`#modal`).fadeIn();
 
   $(document).mouseup(function (e) {
@@ -15,6 +15,8 @@ const hypenTel = (target) => {
 };
 
 function sign_up() {
+  const reg = new RegExp(/^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/);
+
   const email = $("#email").val();
   const nickname = $("#nickname").val();
   const password = $("#password").val();
@@ -24,6 +26,12 @@ function sign_up() {
   if (!email || !password || !nickname || !phone || !confirmpassword) {
     alert("모든 항목을 작성해 주세요.");
   }
+
+  if( !reg.test(password) ) {
+    alert("비밀번호는 최소8글자, 하나이상의 문자 및 숫자, 특수문자가 들어가야 합니다. ");
+    return false;
+  }
+
 
   $.ajax({
     type: "POST",
@@ -79,11 +87,38 @@ function sign_in() {
       password: password,
     }),
     success: function (response) {
+      const obj = {
+        value: response,
+        expire: Date.now() + 432000000
+      }
+      const objString = JSON.stringify(obj)
+      window.localStorage.setItem("team_sparta_header", objString);
+
       alert("로그인 성공 !");
       window.location.replace("/");
-      
+
     },
+    error: function (request) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("회원이 존재하지 않습니다.")
+      }
+
+      if (request.responseJSON["message"] === "비밀번호가 올바르지 않습니다.") {
+        alert("비밀번호가 올바르지 않습니다.")
+      }
+    }
   });
+}
+
+function logout() {
+  $.ajax({
+    type: "POST",
+    url: "/auth/logout",
+    success: function (response) {
+      window.localStorage.removeItem("team_sparta_header");
+      window.location.reload();
+    }
+  })
 }
 
 function find_password() {
