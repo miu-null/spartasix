@@ -2,9 +2,21 @@ $(document).ready(function () {
   const id = $("#comment_show_text").data("text")
   showComment(id);
   showlike()
+
+  console.log(":::::::textarea:::::::",eventUpdateContent)
 })
 
 function dateValidate() {
+  let startDate = new Date($("#eventUpdateStartDate").val());
+  let endDate = new Date($("#eventUpdateEndDate").val());
+  console.log("startDate:", startDate, "endDate:", endDate)
+
+  if (startDate > endDate) {
+    alert("종료 날짜는 시작 날짜보다 커야 합니다.");
+  }
+}
+
+function updateDateValidate() {
   let startDate = new Date($("#eventStartDate").val());
   let endDate = new Date($("#eventEndDate").val());
   console.log("startDate:", startDate, "endDate:", endDate)
@@ -46,10 +58,10 @@ function remindEvent() {
       email: email,
       startDate: startDate,
       endDate: endDate,
-
     }),
     success: function (response) {
       alert("이벤트 알림 메일을 전송했습니다.");
+      window.location.replace("/events/list");
     },
     errorfunction(request, status, error) {
       alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

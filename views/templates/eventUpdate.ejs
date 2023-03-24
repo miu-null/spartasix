@@ -32,7 +32,7 @@
           Event started at :
         </div>
         <div class="col-3">
-          <input type="date" id="eventUpdateStartDate" class="form-control" value="<%= events.startDate %>">
+          <input type="date" id="eventUpdateStartDate" class="form-control" value="<%= events.startDate %>" onchange="updateDateValidate()">
         </div>
       </div>
       <div class="eventdetail_second_end">
@@ -40,7 +40,7 @@
           Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="eventUpdateEndDate" class="form-control" value="<%= events.endDate %>">
+          <input type="date" id="eventUpdateEndDate" class="form-control" value="<%= events.endDate %>"  onchange="updateDateValidate()">
         </div>
       </div>
     </div>
