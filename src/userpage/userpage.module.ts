@@ -9,7 +9,7 @@ import { JwtConfigService } from "src/config/jwt.config.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Users } from "src/entities/users.entity";
 import { Clubs } from "src/entities/clubs.entity";
-import { EventPosts } from "src/entities/eventposts.entity";
+import { EventPosts } from "src/entities/events.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 
 @Module({

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { EventPosts } from "src/entities/eventposts.entity";
+import { EventPosts } from "src/entities/events.entity";
 import { Users } from "../entities/users.entity";
 import { Repository } from "typeorm";
 import { UpdateEventDto } from "src/event/dto/updateevent.dto";

@@ -21,13 +21,15 @@ export class SearcherController {
       const results = {events, clubs, users}
 
       const popularPosts = await this.searchService.getPopularPosts(); //인기글
-      const dateSet = await this.searchService.getTimeFormat() //날짜 조정
+      const dateSet = await this.searchService.reformAllPostsDate() //날짜 표기 조정
+      console.log('서치통합', popularPosts)
       
       return res.render("searchAll.ejs", {
         term,
         ...results,
         ...popularPosts,
         ...dateSet,
+        popularPosts
       })
 
     } catch (err) {

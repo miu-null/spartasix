@@ -37,14 +37,12 @@
                   <td id="Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></a></td>
                   <td id="View"><%= data.viewCount %></td>
                   <td id="Likes"><%= data.Likes %></td>
-                  <td id="Date">
-                    <% const postDate=new Date(data.createdAt); %>
+                  <td id="Date"><% const postDate=new Date(data.createdAt.setHours(data.createdAt.getHours()+9)) ; %>
                     <% if (isSameDay(postDate, currentDate)) { %>
-                        <%= format(postDate, 'KK:mm', { timeZone: ko } ) %>
+                        <%= format(postDate, 'kk:mm' ) %>
                             <% } else { %>
-                                <%= format(postDate, 'yyyy-MM-dd', { timeZone: ko } ) %>
-                                    <% } %>
-                  </td>
+                                <%= format(postDate, 'yyyy-MM-dd') %>
+                                    <% } %></td>
                   <% }) %>
                   <% } else { %>
                     <td id="club_Likes"> 인기글이 없습니다.</td>
@@ -81,14 +79,12 @@
                       <td id="Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
                       <td id="Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
                       <td id="Writer"><a class="postLink" href="/userpage/<%= data.user.id %>"><%= data.user.nickName %></a></td>
-                      <td id="Date">
-                        <% const postDate=new Date(data.createdAt); %>
+                      <td id="Date"><% const postDate=new Date(data.createdAt.setHours(data.createdAt.getHours()+9)) ; %>
                         <% if (isSameDay(postDate, currentDate)) { %>
-                            <%= format(postDate, 'KK:mm', { timeZone: 'Asia/Seoul' } ) %>
+                            <%= format(postDate, 'kk:mm' ) %>
                                 <% } else { %>
-                                    <%= format(postDate, 'yyyy-MM-dd', { timeZone: 'Asia/Seoul' } ) %>
-                                        <% } %>
-                                    </td>
+                                    <%= format(postDate, 'yyyy-MM-dd') %>
+                                        <% } %></td>
                       <td id="View"><%= data.viewCount %></td>
                       <td id="Likes"><%= data.Likes %></td>
                     </tr>

@@ -13,7 +13,7 @@ export class AppController {
   @Render("mainbody")
   async mainpage(@Res() res: Response) {
     const sortPosts = await this.searchService.getPopularPosts()
-    const dateSet = await this.searchService.getTimeFormat() //날짜 조정
+    const dateSet = await this.searchService.reformAllPostsDate() //날짜 조정
     console.log('앱컨트롤러',sortPosts)
   
     return {

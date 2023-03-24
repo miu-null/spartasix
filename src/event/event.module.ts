@@ -3,7 +3,7 @@ import { EventController } from "./event.controller";
 import { EventService } from "./event.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { EventRepository } from "./event.repository";
-import { EventPosts } from "src/entities/eventposts.entity";
+import { EventPosts } from "src/entities/events.entity";
 import { SearcherService } from "src/searcher/searcher.service";
 import { Clubs } from "src/entities/clubs.entity";
 import { Users } from "src/entities/users.entity";
