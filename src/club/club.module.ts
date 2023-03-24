@@ -11,6 +11,10 @@ import { ClubRepository } from "./club.repository";
 import { EventRepository } from "src/event/event.repository";
 import { EventPosts } from "src/entities/eventposts.entity";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
+import { ClubCommentService } from "src/comments/clubcomment/clubcomment.service";
+import { ClubCommentRepository } from "src/comments/clubcomment/clubcomment.repository";
+import { ClubComments } from "src/entities/clubcomments.entity";
+import { ClubCommentLikes } from "src/entities/clubcommentlikes.entity";
 
 @Module({
   imports: [
@@ -20,10 +24,12 @@ import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
       ClubMembers,
       EventPosts,
       AbusingClubCounts,
+      ClubComments,
+      ClubCommentLikes
     ]),
   ],
   controllers: [ClubController],
-  providers: [ClubService, ClubRepository, SearcherService, SearcherRepository],
-  exports: [ClubService, ClubRepository],
+  providers: [ClubService, ClubRepository, SearcherService, SearcherRepository, ClubCommentService, ClubCommentRepository],
+  exports: [ClubService, ClubRepository, ClubCommentService, ClubCommentRepository],
 })
 export class ClubModule { }

@@ -22,7 +22,7 @@
 <div class="clubdetail_container">
   <div class="clubdetail_button">
     <div class="clubdetail_edit">
-      <a onclick="location.href='/club/clubs/<%= detail.id %>'" class="new_club"
+      <a onclick="location.href='/club/clubs/<%= detail.data.id %>'" class="new_club"
         style="cursor: pointer">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="clubdetail_delete">
@@ -103,27 +103,29 @@
             <a href="<%= nextPost.id %>">다음글</a>
             <% } else {%>
               다음글
-              <%  }%>
+              <% }%>
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (nextPost) { %>
-            <a href="<%= nextPost.id %>"><%= nextPost.title %></a>
+            <a href="<%= nextPost.id %>">
+              <%= nextPost.title %>
+            </a>
             <% } else {%>
-            글이 존재하지 않습니다.
-              <%  }%>
+              글이 존재하지 않습니다.
+              <% }%>
 
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (nextPost) { %>
             <%= nextPost.user.nickName %>
-            <% } else {%>
-              <%  }%>
+              <% } else {%>
+                <% }%>
         </div>
         <div class="eventdetail_bottom_div_date">
           <% if (nextPost) { %>
             <%= nextPost.createdAt %>
-            <% } else {%>
-              <%  }%>
+              <% } else {%>
+                <% }%>
         </div>
       </div>
       <!-- 현재 글 표기 굵은 글씨 처리 필요 -->
@@ -132,20 +134,20 @@
           현재 글
         </div>
         <div class="eventdetail_bottom_div_body">
-            <% if (nowPost) { %>
-              <%= nowPost.title %>
+          <% if (nowPost) { %>
+            <%= nowPost.title %>
               <% } %>
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (nowPost) { %>
             <%= nowPost.user.nickName %>
-            <% } else {%>
-              <%  }%>
+              <% } else {%>
+                <% }%>
         </div>
         <div class="eventdetail_bottom_div_date">
           <% if (nowPost) { %>
             <%= nowPost.createdAt %>
-            <% } %>
+              <% } %>
         </div>
       </div>
       <!-- 이전 게시글 링크 -->
@@ -155,25 +157,27 @@
             <a href="<%= prevPost.id %>">이전글</a>
             <% } else {%>
               이전글
-              <%  }%>
+              <% }%>
         </div>
         <div class="eventdetail_bottom_div_body">
-            <% if (prevPost) { %>
-              <a href="<%= prevPost.id %>"><%= prevPost.title %></a>
-              <% } else {%>
-                글이 존재하지 않습니다.
-                <%  }%>
+          <% if (prevPost) { %>
+            <a href="<%= prevPost.id %>">
+              <%= prevPost.title %>
+            </a>
+            <% } else {%>
+              글이 존재하지 않습니다.
+              <% }%>
         </div>
         <div class="eventdetail_bottom_div_nickname">
           <% if (prevPost) { %>
             <%= prevPost.user.nickName %>
-            <% } else {%>
-              <%  }%>
+              <% } else {%>
+                <% }%>
         </div>
         <div class="eventdetail_bottom_div_date">
           <% if (prevPost) { %>
             <%= prevPost.createdAt %>
-            <% } %>
+              <% } %>
         </div>
       </div>
       <div class="eventdetail_bottom_div_nickname">
@@ -195,12 +199,42 @@
     </div>
   </div>
   <div class="comment_input_button_box">
-    <button class="comment_input_button" onclick="createClubComment('<%= detail.id %>')">
+    <button class="comment_input_button" onclick="createClubComment(' <%= detail.data.nowPost.id %>')">
       작성
     </button>
   </div>
-  <div data-text="<%= detail.id %>" id="club_show_text" class="club_show_text">
-    
+  <div id="club_show_text" class="club_show_text">
+    <% for (let i = 0; i < comments.length; i++ ) { %>
+    <div class="comment_text_box">
+      <div id="club_text_container<%= comments[i].id %>" class="comment_text_container">
+        <div class="comment_nickname">
+         <%= comments[i].user.nickName %>
+        </div>
+        <div id="club_content_<%= comments[i].id %>" class="comment_content">
+          <div id="club_content_box_<%= comments[i].id %>" class="comment_content_box">
+            <%= comments[i].content %>
+          </div>
+        </div>
+        <div class="comment_date">
+          <%= comments[i].createdAt %>
+        </div>
+        <div id="club_like<%= comments[i].id %>" class="comment_like">
+          <div>
+            <image onclick="club_updateLike('<%= comments[i].id %>')" class="comment_like_img" src="/img/likes.png">
+          </div>
+          <div id="club_commentId" class="like_total">
+            <%= comments[i].clubCommentLikes.length %>
+          </div>
+        </div>
+      </div>
+      <div id="club_comment_button<%= comments[i].id %>" class="event_comment_button">
+        <button id="club_del_button<%= comments[i].id %>" class="comment_button"
+          onclick="updateClubComment('<%= comments[i].id %>',' <%= comments[i].content %>')">edit</button>
+        <button id="club_del_button1<%= comments[i].id %>" class="comment_button"
+          onclick="deleteClubComment('<%= comments[i].id %>')">delete</button>
+      </div>
+    </div>
+    <% } %>
   </div>
 </div>
 <div id="report_modal">

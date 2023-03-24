@@ -3,12 +3,14 @@ import { EventRepository } from "./event.repository";
 import { UpdateEventDto } from "src/event/dto/updateevent.dto";
 import { DeleteEventDto } from "./dto/deleteevent.dto";
 import { MailService } from "src/mail/mail.service";
+import { EventCommentService } from "src/comments/eventcomment/eventcomment.service";
 
 @Injectable()
 export class EventService {
   constructor(
     private EventRepository: EventRepository,
     private readonly mailService: MailService,
+    private readonly eventCommentService: EventCommentService,
     ) {}
 
   async getEvents(page) {
@@ -19,7 +21,11 @@ export class EventService {
   }
 
   async getEventById(eventPostId) {
-    return await this.EventRepository.getEventById(eventPostId);
+    const data = await this.EventRepository.getEventById(eventPostId);
+
+    const comments = await this.eventCommentService.showAllComment(eventPostId);
+
+    return {data, comments}
   }
   
   async remindEvent(email:string){
