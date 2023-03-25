@@ -64,11 +64,11 @@ export class ClubService {
     return data;
   }
 
-  async getClubById(id: number) {
-    const data = await this.clubRepository.getClubById(id);
+  async getClubById(clubId: number) {
+    const data = await this.clubRepository.getClubById(clubId);
     console.log(data, '@@@@서비스')
 
-    const comments = await this.clubCommentService.showAllComment(id);
+    const comments = await this.clubCommentService.showAllComment(clubId);
     return {data, comments};
   }
 
