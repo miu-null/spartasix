@@ -133,11 +133,11 @@ export class EventController {
   ) {
     let postDetail = await this.eventService.getEventById(id);
     const nowPost = postDetail.data.nowPost
-    let imgUrl = nowPost.postIMG;
-    nowPost.createdAt = new Date(nowPost.createdAt);
     const prevPost = postDetail.data.prevPost
     const nextPost = postDetail.data.nextPost
     const comments = postDetail.comments
+    let imgUrl = nowPost.postIMG;
+    // nowPost.createdAt = new Date(nowPost.createdAt);
     const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate, imgUrl}
     console.log("comments : ", comments)
     
