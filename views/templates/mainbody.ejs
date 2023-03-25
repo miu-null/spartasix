@@ -38,7 +38,7 @@
                     <% sortPosts.forEach(data => { %>
                         <tr id="club_tr">
                             <td><% if (data.viewCount === maxViewCount) { %>
-                                🥇
+                                🏅
                               <% }%></td>
                             <% if (data.maxMembers) { %>
                                 <td id="club_Id">클럽</td>
@@ -52,16 +52,9 @@
                                         </a></td>
                                     <% } %>
                                         <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
-                                                <%= data.nickName%>
+                                                <%= data.user.nickName%>
                                         </td>
-                                        <td id="club_Date">
-                                            <% const postDate=new Date(data.createdAt); %>
-                                            <% if (isSameDay(postDate, currentDate)) { %>
-                                                <%= format(postDate, 'KK:mm', { locale: ko } ) %>
-                                                    <% } else { %>
-                                                        <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
-                                                            <% } %>
-                                        </td>
+                                        <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
                                         <td id="club_View">
                                             <%= data.viewCount %>
                                         </td>

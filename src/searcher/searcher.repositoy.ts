@@ -4,8 +4,6 @@ import { Repository } from "typeorm";
 import { Users } from "../entities/users.entity";
 import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/events.entity";
-// import { JwtService } from "@nestjs/jwt";
-
 
 @Injectable()
 export class SearcherRepository {
@@ -20,11 +18,11 @@ export class SearcherRepository {
   //통합검색
   async findAllPosts(data: any): Promise<any> {
     {
-      const clubs = await this.findClubPosts(data)
-      const events = await this.findEventPosts(data)
-      const users = await this.findUsers(data)
-      const results = { events, clubs, users }
-      console.log(results);
+      const clubs = await (await this.findClubPosts(data)).slice(0, 4)
+      const events = await (await this.findEventPosts(data)).slice(0,4)
+      const users = await (await this.findUsers(data)).slice(0,4)
+      const results = {clubs, events, users}
+      
       return results
     }
   }
@@ -68,8 +66,8 @@ export class SearcherRepository {
 
   //게시글 통합 조회: 모든 게시글 통합 조회
   async getAllPosts(): Promise<(Clubs | EventPosts)[]> {
-    const clubPosts = await this.clubRepository.find();
-    const eventPosts = await this.eventRepository.find();
+    const clubPosts = await this.clubRepository.find({relations : {user : true},})
+    const eventPosts = await this.eventRepository.find({relations : {user : true},});
     const allPosts = [...clubPosts, ...eventPosts];   // 두 배열을 하나로 합치기
     return allPosts;
   }
@@ -86,7 +84,7 @@ export class SearcherRepository {
   //클럽 인기글 조회: 조회순 정렬 최상위 2개만
   async getPopularClubs(): Promise<Clubs[]> {
     const clubPosts = await (await this.clubRepository
-      .find())
+      .find({relations : {user : true},}))
       .sort((postA, postB) => postB.viewCount - postA.viewCount)
       .slice(0, 2)
     const sortPosts = [...clubPosts];
