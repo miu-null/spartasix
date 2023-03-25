@@ -29,7 +29,7 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= nowPost.id %>/update'"
+      <a onclick="location.href='<%= events.id %>/updatepage'"
         class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
@@ -38,20 +38,14 @@
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
-      <div class="eventdetail_first_id">
-        <%= nowPost.id %>
-      </div>
+      <div class="eventdetail_first_id" id="event_id"><%= events.id %></div>
       <div class="eventdetail_first_title">
-        <div class="first_title">Title</div>
-        <div class="title_text">
-          <%= nowPost.title%>
-        </div>
+        <div class="first_title" >Title</div>
+        <div class="title_text"id="event_title"><%= events.title%></div>
       </div>
       <div class="eventdetail_first_nickname">
         <div class="first_nickname">Writer</div>
-        <div class="nickname_text">
-          <%= nowPost.user.nickName %>
-        </div>
+        <div class="nickname_text"><%= events.user.nickName %></div>
       </div>
       <div class="eventdetail_first_likes">
         <div class="first_likes">Likes</div>
@@ -60,22 +54,16 @@
     </div>
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
-        <div class="start_date">시작일</div>
-        <div class="date_text">
-          2023-03-20
-        </div>
+        <div class="start_date">Event started at :</div>
+        <div class="date_text" id="event_startDate"><%= events.startDate%></div>
       </div>
       <div class="eventdetail_second_end">
-        <div class="end_date">종료일</div>
-        <div class="date_text">2023-03-20</div>
-      </div>
-      <div class="eventdetail_second_date">
-        <div class="second_date">작성일</div>
-        <div class="second_date_text"><%= reformPostDate(nowPost.createdAt) %></div>
+        <div class="end_date">Event ended at :</div>
+        <div class="date_text" id="event_endDate"><%= events.endDate%></div>
       </div>
       <div class="eventdetail_second_view">
         <div class="view_title">View</div>
-        <div class="view_text">0</div>
+        <div class="view_text"><%= events.viewCount%></div>
       </div>
     </div>
   </div>
@@ -86,6 +74,11 @@
       </div>
       <div class="eventdetail_body_button_report">
         <button class="report_button">report</button>
+      </div>
+    </div>
+    <div class="eventdetail_third">
+      <div class="col-8">
+        <img class="eventImg" src="<%= events.postIMG %>" name="eventPostImg" id="eventPostImg" alt="eventPostImg" />
       </div>
     </div>
     <div class="eventdetail_body_text">

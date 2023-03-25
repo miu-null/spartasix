@@ -42,7 +42,13 @@ export class EventRepository {
       .where('id = :id', { id: eventPostId })
       .execute(); // 쿼리 실행
 
-    return { prevPost, nowPost, nextPost }
+    const event = await this.eventRepository
+    .createQueryBuilder("eventPost")
+    .where("eventPost.id = :eventPostId", { eventPostId })
+    .leftJoinAndSelect("eventPost.user", "nickName")
+    .getOne();
+
+    return {prevPost, nowPost, nextPost, event}
   }
 
   async createEvent(
@@ -63,8 +69,8 @@ export class EventRepository {
     });
   }
 
-  async updateEvent(eventPostId: number, UpdateEventInfo) {
-    const changedInfo = await this.eventRepository.update(eventPostId, {
+  async updateEvent(id: number, UpdateEventInfo) {
+    const changedInfo = await this.eventRepository.update(id, {
       userId: UpdateEventInfo.userId,
       title: UpdateEventInfo.title,
       content: UpdateEventInfo.content,

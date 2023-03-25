@@ -14,22 +14,19 @@ export class EventService {
     ) {}
 
   async getEvents(page) {
-    const event = await this.EventRepository.paginatedResults(page);
-    // const eventlist = event.map({ eventId, nickName });
-    // return eventlist;
-    return event;
+    const events = await this.EventRepository.paginatedResults(page);
+    return events;
   }
 
-  async getEventById(eventPostId) {
-    const data = await this.EventRepository.getEventById(eventPostId);
-
-    const comments = await this.eventCommentService.showAllComment(eventPostId);
+  async getEventById(id) {
+    const data = await this.EventRepository.getEventById(id);
+    const comments = await this.eventCommentService.showAllComment(id);
 
     return {data, comments}
   }
   
-  async remindEvent(email:string){
-    return await this.mailService.remindEmail(email)
+  async remindEvent(email:string,startDate:Date,endDate:Date,title:string){
+    return await this.mailService.remindEmail(email,startDate,endDate,title)
   }
 
   async createEvent(
@@ -50,16 +47,16 @@ export class EventService {
     );
   }
 
-  async updateEvent(eventPostId: number, updateEventInfo) {
+  async updateEvent(id: number, updateEventInfo) {
     const eventPost = await this.EventRepository.updateEvent(
-      eventPostId,
+      id,
       updateEventInfo,
     );
     return true;
   }
 
-  async deleteEvent(eventPostId: number) {
-    await this.EventRepository.deleteEvent(eventPostId);
+  async deleteEvent(id: number) {
+    await this.EventRepository.deleteEvent(id);
     return true;
   }
 }
