@@ -35,50 +35,68 @@ export class EventController {
   //이벤트 리마인드
   @Post("/remindEvent")
   async remindEvent(@Body() data: remindEmailDto, @Res() res) {
-    const remindEvent = await this.eventService.remindEvent(data.email);
+    const remindEvent = await this.eventService.remindEvent(
+      data.email,
+      data.startDate,
+      data.endDate,
+      data.title,
+    )
     return res.json({ data: remindEvent });
   }
 
   //새글 쓰기
   @Post("/newevent")
-  @UseInterceptors(FileInterceptor("postIMG"))
+  @UseInterceptors(FileInterceptor("file"))
   async createUser(
     @Req() req,
     @Res() res: Response,
     @Body() data: CreateEventDto,
-    @UploadedFile() uploadedFile: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log('controller test')
+    console.log("newevent req:::::",req)
+    console.log("newevent req end:::::")
+    console.log("datatitle:::::",data.title)
+    console.log("file:::::",file)
+
     AWS.config.update({
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY,
         secretAccessKey: process.env.AWS_SECRET_KEY,
       },
     });
-    const key = `${Date.now() + uploadedFile.originalname}`;
+    const key = `${Date.now() + file.originalname}`;
     // AWS 객체 생성
     const upload = await new AWS.S3()
       .putObject({
         Key: key,
-        Body: uploadedFile.buffer,
+        Body: file.buffer,
         Bucket: process.env.AWS_BUCKET_NAME,
         ACL: "public-read",
       })
       .promise();
+
     const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+
+    console.log("upload::::::",upload)
+    console.log("postIMG::::::",postIMG)
+
     Object.assign({
       statusCode: 201,
       message: `이미지 등록 성공`,
       data: { url: postIMG },
     });
 
-    const userId = req.userId;
+    const userId = req.user;
+    console.log('글작성시 userId:::::::',userId)
+
     const event = await this.eventService.createEvent(
       userId,
       data.title,
       data.content,
       data.startDate,
       data.endDate,
-      data.postIMG,
+      postIMG,
     );
     return res.json(true);
   }
@@ -109,15 +127,15 @@ export class EventController {
 
 
   //게시글 상세 조회
-  @Get("/list/:eventPostId")
+  @Get("/list/:id")
   @Render("eventDetail.ejs")
   async getEventById(
     @Res() res: Response,
-    @Param("eventPostId") eventPostId: number,
+    @Param("id") id: number,
   ) {
-    let postDetail = await this.eventService.getEventById(eventPostId);
+    let postDetail = await this.eventService.getEventById(id);
     const events = postDetail.data.nowPost
-    
+    let imgUrl = events.postIMG;
     events.createdAt = new Date(events.createdAt);
 
     const prevPost = postDetail.data.prevPost
@@ -125,35 +143,66 @@ export class EventController {
     const nextPost = postDetail.data.nextPost
     const comments = postDetail.comments
     console.log("comments : ", comments)
-    return {events, nextPost, nowPost, prevPost, comments };
+    return {events, imgUrl, nextPost, nowPost, prevPost, comments };
   }
 
   // 수정 페이지 렌더링
-  @Get("/list/:eventPostId/update")
+  @Get("/list/:id/updatepage")
   async getUpdateEvent(
     @Res() res: Response,
-    @Param("eventPostId") eventPostId: number,
+    @Param("id") id: number,
   ) {
-    const events = await this.eventService.getEventById(eventPostId);
-    return res.render("eventUpdate.ejs", { events });
+    const events = await this.eventService.getEventById(id);
+    const event = events.data.event
+    let imgUrl = event.postIMG
+    console.log('imgUrl:::::',imgUrl)
+    console.log(':::::::in update controller::::::::')
+    console.log('id:::::',id)
+    return res.render("eventUpdate.ejs", { events,event});
   }
 
   // 게시글 수정
-  @Patch("/list/:eventPostId/update")
+  @Patch("/list/:id/update")
+  @UseInterceptors(FileInterceptor("file"))
   async updateEvent(
-    @Param("eventPostId") eventPostId: number,
+    @Param("id") id: number,
     @Req() req,
     @Body() data: UpdateEventDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
+  
+
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
+
+    const key = `${Date.now() + file.originalname}`;
+    // AWS 객체 생성
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key, //경로
+        Body: file.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME, 
+        ACL: "public-read",
+      })
+      .promise();
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+
+
     const userId = req.user;
-    const events = await this.eventService.updateEvent(eventPostId, {
+    const events = await this.eventService.updateEvent(id, {
       userId,
       title: data.title,
       content: data.content,
       startDate: data.startDate,
       endDate: data.endDate,
-      postIMG: data.postIMG,
+      postIMG:postIMG
     });
+    console.log('수정하기페이지!!!!!!!!!!!')
+    console.log('userId',userId,'postIMG',postIMG)
 
     return events;
   }

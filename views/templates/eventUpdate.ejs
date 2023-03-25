@@ -1,7 +1,14 @@
+<script>
+  function onUpload(e) {
+    var imageUrl = URL.createObjectURL(e.files[0])
+    document.getElementById('nowimage').src = imageUrl;
+  }
+  </script>
+
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="updateEvent()" class="new_event">수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      <a class="new_event" onclick="updateEvent('<%= event.id %>')">수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
       <a href="/events/list" class="new_event">취소</a>
@@ -14,31 +21,42 @@
           Title
         </div>
         <div class="title_text">
-          <input id="event_title" class="event_title" placeholder="<%= events.title %>">
+          <input id="event_title" class="event_title" value="<%= event.title %>">
+
         </div>
       </div>
     </div>
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
         <div class="start_date">
-          Event started at : 
+          Event started at :
         </div>
         <div class="col-3">
-          <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
-      </div>
+          <input type="date" id="startDate" class="form-control" value="<%= event.startDate %>"onchange="dateValidate()">
+        </div>
       </div>
       <div class="eventdetail_second_end">
         <div class="end_date">
-          Event ended at : 
+          Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="startDate" class="form-control" placeholder="이벤트 시작 기간">
+          <input type="date" id="endDate" class="form-control" value="<%= event.endDate %>"onchange="dateValidate()">
+        </div>
       </div>
+    </div>
+    <div class="eventdetail_third">
+      <div class="first_file">
+        image
+      </div>
+      <div class="col-8">
+        <input type="file" onchange="onUpload(this)" name="eventPostImg" id="eventPostImg" accept="image/*" value="<%= event.postIMG %>">
       </div>
     </div>
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
-      <textarea id="event_content" class="textarea" placeholder="<%= events.content %>"></textarea>
+      <img class="eventImg" id="nowimage" src="<%= event.postIMG %>">
+      <p><textarea id="event_content" class="textarea" value=""><%= event.content %></textarea></p>
     </div>
   </div>
+</div>
