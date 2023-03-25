@@ -64,12 +64,12 @@ export class ClubService {
     return data;
   }
 
-  async getClubById(id: number) {
-    const data = await this.clubRepository.getClubById(id);
+  async getClubById(clubId: number) {
+    const data = await this.clubRepository.getClubById(clubId);
     console.log(data, '@@@@서비스')
 
-    const comments = await this.clubCommentService.showAllComment(id);
-    return { data, comments };
+    const comments = await this.clubCommentService.showAllComment(clubId);
+    return {data, comments};
   }
 
   async deleteClub(userId: number, id: number) {
