@@ -1,4 +1,93 @@
-<div class="event_table_container">
+<section id="page">
+    <header>페이지 레이아웃 위치 테스트</header>
+    <sidebar>사이드 바</sidebar>
+    <main><div class="container popular_container">
+        <table class="table table-hover event_table">
+            <thead id="event_thead">
+                <tr>
+                    <th></th>
+                    <th>🔥인기글🔥</th>
+                    <th></th>
+                    <th>😘작성자</th>
+                    <th>📆작성일</th>
+                    <th>👀</th>
+                    <!-- <th>Likes</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% if (sortPosts.length) { %>
+                    <% const maxViewCount=Math.max(...sortPosts.map(data=> data.viewCount)) %>
+                        <% sortPosts.forEach(data=> { %>
+                            <tr id="club_tr">
+                                <td>
+                                    <% if (data.viewCount===maxViewCount) { %>
+                                        🏅
+                                        <% }%>
+                                </td>
+                                <% if (data.maxMembers) { %>
+                                    <td id="club_Id">클럽</td>
+                                    <td id="club_Title"><a class="postLink" href='/club/list/<%= data.id%>'>
+                                            <%= data.title %>
+                                        </a></td>
+                                    <% } else { %>
+                                        <td id="club_Id">이벤트</td>
+                                        <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
+                                                <%= data.title %>
+                                            </a></td>
+                                        <% } %>
+                                            <td id="club_Writer"><a class="postLink"
+                                                    href="/userpage/<%= data.userId %>">
+                                                    <%= data.user.nickName%>
+                                            </td>
+                                            <td id="club_Date">
+                                                <%= reformPostDate(data.createdAt) %>
+                                            </td>
+                                            <td id="club_View">
+                                                <%= data.viewCount %>
+                                                <% if (data.viewCount===maxViewCount) { %>
+                                                    🔝
+                                                    <% } else {%>
+                                                        <% } %>
+                                            </td>
+                                            <!-- <td id="clubz_Likes"></td> -->
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <td id="club_Likes">인기글이 없습니다.</td>
+                                                    <% } %>
+                            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</main>
+    <footer>Footer</footer>
+  </section>
+
+<div class="main_body_container">
+    <div class="main_left">
+        <div class="main_title">
+            We <br>grow as <br><span style="color: #ff2727">Developers</span>
+        </div>
+        <div class="main_text">
+            우리들의 코딩모험은 부트캠프 수료 후 시작됩니다.<br>
+            개발자로서 함께 끊임없는 성장의 경험을
+            쌓아나가고 싶은 분들에게 - <br>스파르타 커뮤클럽이 계속되는
+            꿈의 발걸음을 응원합니다. <br><br><br>회원으로 가입하시면 더욱 다양한 이용이 가능합니다.
+        </div>
+        <div class="main_button">
+            <button class="sign_button" onclick="location='/sign'">지금 시작하기</button>
+        </div>
+    </div>
+    <div class="main_image">
+        <!-- <img src="https://spartacodingclub.kr/css/images/scc-og.jpg"> -->
+        <img src="https://wimg.mk.co.kr/meet/neds/2020/09/image_readtop_2020_997737_16012938134372637.jpg">
+    </div>
+</div>
+
+
+
+
+<div class="container popular_container">
     <table class="table table-hover event_table">
         <thead id="event_thead">
             <tr>
@@ -6,8 +95,8 @@
                 <th>🔥인기글🔥</th>
                 <th></th>
                 <th>😘작성자</th>
-                <th>⏰작성일</th>
-                <th>조회</th>
+                <th>📆작성일</th>
+                <th>👀</th>
                 <!-- <th>Likes</th> -->
             </tr>
         </thead>
@@ -55,28 +144,6 @@
         </tbody>
     </table>
 </div>
-
-<div class="main_body_container">
-    <div class="main_left">
-        <div class="main_title">
-            We <br>grow as <br><span style="color: #ff2727">Developers</span>
-        </div>
-        <div class="main_text">
-            우리들의 코딩모험은 부트캠프 수료 후 시작됩니다.<br>
-            개발자로서 함께 끊임없는 성장의 경험을
-            쌓아나가고 싶은 분들에게 - <br>스파르타 커뮤클럽이 계속되는
-            꿈의 발걸음을 응원합니다. <br><br><br>회원으로 가입하시면 더욱 다양한 이용이 가능합니다.
-        </div>
-        <div class="main_button">
-            <button class="sign_button" onclick="location='/sign'">지금 시작하기</button>
-        </div>
-    </div>
-    <div class="main_image">
-        <!-- <img src="https://spartacodingclub.kr/css/images/scc-og.jpg"> -->
-        <img src="https://wimg.mk.co.kr/meet/neds/2020/09/image_readtop_2020_997737_16012938134372637.jpg">
-    </div>
-</div>
-
 
 
 
