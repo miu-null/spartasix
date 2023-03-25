@@ -1,6 +1,6 @@
 function modal_open1(userId) {
   $(`#Appmodal`).fadeIn();
-  selectApp(userId);
+  // selectApp(userId);
   $(document).mouseup(function (e) {
     if ($(`#Appmodal`).has(e.target).length === 0) {
       $(`#Appmodal`).hide();
@@ -22,15 +22,16 @@ function modal_open2() {
 
 //ajax selectApp
 function selectApp(userId) {
+  console.log(userId);
   $.ajax({
     type: "GET",
-    url: `/userpage/${userId}/clubs/app`,
+    url: `/userpage/${Number(userId)}/clubs/app`,
     async: false,
     success: function (res) {
       let rows = res["myApps"];
 
       console.log(rows);
-
+      console.log(userId);
       let full_html = "";
 
       for (let i = 0; i < rows.length; i++) {

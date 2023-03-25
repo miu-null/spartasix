@@ -25,11 +25,23 @@ import { ClubCommentLikes } from "src/entities/clubcommentlikes.entity";
       EventPosts,
       AbusingClubCounts,
       ClubComments,
-      ClubCommentLikes
+      ClubCommentLikes,
     ]),
   ],
   controllers: [ClubController],
-  providers: [ClubService, ClubRepository, SearcherService, SearcherRepository, ClubCommentService, ClubCommentRepository],
-  exports: [ClubService, ClubRepository, ClubCommentService, ClubCommentRepository],
+  providers: [
+    ClubService,
+    ClubRepository,
+    SearcherService,
+    SearcherRepository,
+    ClubCommentService,
+    ClubCommentRepository,
+  ],
+  exports: [
+    ClubService,
+    ClubRepository,
+    ClubCommentService,
+    ClubCommentRepository,
+  ],
 })
-export class ClubModule { }
+export class ClubModule {}

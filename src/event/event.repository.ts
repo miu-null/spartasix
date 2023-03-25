@@ -38,11 +38,11 @@ export class EventRepository {
     await this.eventRepository
       .createQueryBuilder()
       .update(EventPosts)
-      .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
-      .where('id = :id', { id: eventPostId })
+      .set({ viewCount: () => "viewCount + 1" }) // 조회수를 1 증가
+      .where("id = :id", { id: eventPostId })
       .execute(); // 쿼리 실행
 
-    return { prevPost, nowPost, nextPost }
+    return { prevPost, nowPost, nextPost };
   }
 
   async createEvent(
