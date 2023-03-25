@@ -102,11 +102,10 @@ export class AppModule implements NestModule {
           path: "/club/clubspost",
           method: RequestMethod.POST,
         },
-        { path: "/list/:clubId", method: RequestMethod.DELETE },
-        { path: "/club/:clubId", method: RequestMethod.POST },
-        { path: "/club/:clubspost", method: RequestMethod.POST },
-        { path: "/club/clubs/:clubId", method: RequestMethod.PUT },
-        { path: "/list/:clubid", method: RequestMethod.DELETE },
+        { path: "/club/:id", method: RequestMethod.POST },
+        { path: "/club/clubspost", method: RequestMethod.POST },
+        { path: "/club/clubs/:id", method: RequestMethod.PUT },
+        { path: "/club/list/:id", method: RequestMethod.DELETE },
         { path: "/events/newevent", method: RequestMethod.POST },
         { path: "/events/list/:eventPostId", method: RequestMethod.DELETE },
         {
@@ -126,5 +125,5 @@ export class AppModule implements NestModule {
           method: RequestMethod.GET,
         },
       );
-   }
+  }
 }
