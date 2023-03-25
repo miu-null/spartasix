@@ -7,7 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "../entities/clubmembers.entity";
 import { Clubs } from "../entities/clubs.entity";
-import { EventPosts } from "../entities/eventposts.entity";
+import { EventPosts } from "../entities/events.entity";
 import { Users } from "../entities/users.entity";
 import { In, Raw, Repository } from "typeorm";
 
@@ -33,13 +33,13 @@ export class UserPageRepository {
       // relations: { user: true },
       where: { userId },
       select: ["title", "content"],
-      // order: { id: "DESC" },
+      order: { id: "DESC" },
     });
     const eventPosts = await this.eventpostRepository.find({
       // relations: { user: true },
       where: { userId },
       select: ["title", "content"],
-      // order: { id: "DESC" },
+      order: { id: "DESC" },
     });
 
     return { clubPosts, eventPosts };
@@ -70,34 +70,40 @@ export class UserPageRepository {
 
   // *클럽 신청서 전체보기
   async getClubApps(userId: number) {
-    const myClubs = await this.clubRepository.find({
-      where: {
-        userId,
-      },
+    const myOwnClubs = await this.clubMembersRepository.find({
+      where: { userId },
+      relations: { user: true },
+      select: { user: { nickName: true } },
     });
+    //   const myClubs = await this.clubRepository.find({
+    //     where: {
+    //       userId,
+    //     },
+    //   });
 
-    const clubApps = await this.clubMembersRepository.find({
-      where: {
-        clubId: In(myClubs.map((club) => club.id)),
-        isAccepted: false,
-      },
-    });
+    //   const clubApps = await this.clubMembersRepository.find({
+    //     where: {
+    //       clubId: In(myClubs.map((club) => club.id)),
+    //       isAccepted: false,
+    //     },
+    //   });
 
-    const users = await this.userRepository.find({
-      where: {
-        id: In(clubApps.map((clubMember) => clubMember.userId)),
-      },
-    });
+    //   const users = await this.userRepository.find({
+    //     where: {
+    //       id: In(clubApps.map((clubMember) => clubMember.userId)),
+    //     },
+    //   });
 
-    const userMap = users.reduce((acc, user) => {
-      acc[user.id] = user;
-      return acc;
-    }, {});
+    //   const userMap = users.reduce((acc, user) => {
+    //     acc[user.id] = user;
+    //     return acc;
+    //   }, {});
 
-    const myOwnClubs = clubApps.map((clubApp) => ({
-      ...clubApp,
-      user: userMap[clubApp.userId],
-    }));
+    //   const myOwnClubs = clubApps.map((clubApp) => ({
+    //     ...clubApp,
+    //     user: userMap[clubApp.userId],
+    //   }));
+    console.log(myOwnClubs);
     return { myOwnClubs };
   }
 
@@ -134,13 +140,13 @@ export class UserPageRepository {
 
   // 특정 클럽정보 조회 (운영자, 참여인원 보여주기)
   async getThisClub(userId: number, clubId: number) {
+    // 여기서 운영자, 클럽명(게시물 이름), 최대인원 등 확인
     const currentClub = await this.clubRepository.findOne({
       where: {
         id: clubId,
         userId,
       },
     });
-    // 여기서 운영자, 클럽명(게시물 이름), 최대인원 등 확인
 
     // 여기서 확정된 참여인원 확인 - 클럽 멤버들 확인
     const currentClubMember = await this.clubMembersRepository.find({

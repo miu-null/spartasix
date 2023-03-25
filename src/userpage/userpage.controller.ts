@@ -40,6 +40,7 @@ export class UserpageController {
   // @UseGuards(AuthGuard())
   async getUserPost(
     @Param("userId") userId: number,
+    // @Body() data:
     // , @Res() res: Response
   ) {
     const myPosts = await this.userPageService.getMyPosts(userId);
@@ -52,6 +53,7 @@ export class UserpageController {
     @Param("userId") userId: number,
     // , @Res() res: Response
   ) {
+    console.log(userId);
     const myClubs = await this.userPageService.getMyClubs(userId);
     return myClubs;
   }
@@ -65,8 +67,15 @@ export class UserpageController {
     return res.render("userInfoEdit", context);
   }
 
+  // 유저 신청서 조회
+  @Get("/clubs/:userId/app")
+  // @UseGuards(AuthGuard())
+  async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
+    const myApps = await this.userPageService.getClubApps(userId);
+    return res.json(myApps);
+  }
   // multipart/form-data 로 submit할때는 method를 patch로 변경시, multer middleware를 수정해야 하는 문제가 있음
-  @Post("/:userId/edit") // TODO 내 정보 수정하기, 본인검증로직 추가할 것
+  @Post("/:userId/edit") // 내 정보 수정하기, 본인검증로직 추가할 것
   @UseInterceptors(FileInterceptor("userIMG"))
   @Redirect("", 302)
   async updateUser(
@@ -125,14 +134,6 @@ export class UserpageController {
   ) {
     const thisClub = await this.userPageService.getThisClub(userId, clubId);
     return thisClub;
-  }
-
-  // 유저 신청서 조회
-  @Get("/:userId/clubs/app")
-  // @UseGuards(AuthGuard())
-  async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
-    const myApps = await this.userPageService.getClubApps(userId);
-    return myApps;
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)

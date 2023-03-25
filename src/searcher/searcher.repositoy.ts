@@ -3,9 +3,8 @@ import { getRepositoryToken, InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Users } from "../entities/users.entity";
 import { Clubs } from "../entities/clubs.entity";
-import { EventPosts } from "../entities/eventposts.entity";
+import { EventPosts } from "../entities/events.entity";
 // import { JwtService } from "@nestjs/jwt";
-
 
 @Injectable()
 export class SearcherRepository {
@@ -17,52 +16,59 @@ export class SearcherRepository {
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
   ) {}
-    //통합검색
-  async findAllPosts(data: any): Promise<any> {  
+  //통합검색
+  async findAllPosts(data: any): Promise<any> {
     {
-      const clubs = await this.findClubPosts(data)
-      const events = await this.findEventPosts(data)
-      const users = await this.findUsers(data)
-      const results = {events, clubs, users}
+      const clubs = await this.findClubPosts(data);
+      const events = await this.findEventPosts(data);
+      const users = await this.findUsers(data);
+      const results = { events, clubs, users };
       console.log(results);
-      return results
+      return results;
     }
   }
 
   //event 게시글 검색 검색
-  async findEventPosts(data?: any): Promise<EventPosts[]>  { 
+  async findEventPosts(data?: any): Promise<EventPosts[]> {
     {
-      const events= await this.eventRepository
-      .createQueryBuilder('search')
-      .leftJoinAndSelect('search.user', 'user')
-      .where('search.title LIKE :s OR search.content LIKE :s', { s: `%${data.term}%` })
-      .orderBy("search.id", "DESC")  //최신순(내림차순)
-      .getMany()
-      return events
+      const events = await this.eventRepository
+        .createQueryBuilder("search")
+        .leftJoinAndSelect("search.user", "user")
+        .where("search.title LIKE :s OR search.content LIKE :s", {
+          s: `%${data.term}%`,
+        })
+        .orderBy("search.id", "DESC") //최신순(내림차순)
+        .getMany();
+      return events;
     }
   }
 
   //clubs 게시글 검색: 제목, 내용, 모집인원
-  async findClubPosts(data?: any) : Promise<Clubs[]> { 
+  async findClubPosts(data?: any): Promise<Clubs[]> {
     {
       const clubs = await this.clubRepository
-        .createQueryBuilder('search')
-        .leftJoinAndSelect('search.user', 'user')
-        .where('search.title LIKE :s OR search.content LIKE :s OR search.maxMembers LIKE :s', { s: `%${data.term}%` })
-        .orderBy("search.id", "DESC")  //최신순(내림차순)
-        .getMany()
-      return clubs
+        .createQueryBuilder("search")
+        .leftJoinAndSelect("search.user", "user")
+        .where(
+          "search.title LIKE :s OR search.content LIKE :s OR search.maxMembers LIKE :s",
+          { s: `%${data.term}%` },
+        )
+        .orderBy("search.id", "DESC") //최신순(내림차순)
+        .getMany();
+      return clubs;
     }
   }
 
   // 유저 검색, 이메일, 닉네임
-  async findUsers(data?: any) : Promise<Users[]>{ 
+  async findUsers(data?: any): Promise<Users[]> {
     {
       const users = await this.userSearchRepository
-        .createQueryBuilder('search')
-        .where('search.email LIKE :s OR search.nickName LIKE :s', { s: `%${data.term}%` })
-        .getMany()
-      return users
+        .createQueryBuilder("search")
+        .where("search.email LIKE :s OR search.nickName LIKE :s", {
+          s: `%${data.term}%`,
+        })
+        .getMany();
+      return users;
     }
   }
 
@@ -70,40 +76,37 @@ export class SearcherRepository {
   async getAllPosts(): Promise<(Clubs | EventPosts)[]> {
     const clubPosts = await this.clubRepository.find();
     const eventPosts = await this.eventRepository.find();
-    const allPosts = [...clubPosts, ...eventPosts];   // 두 배열을 하나로 합치기
+    const allPosts = [...clubPosts, ...eventPosts]; // 두 배열을 하나로 합치기
     return allPosts;
   }
 
   //통합 인기글 조회: 조회순 정렬 최상위 4개만
   async getPopularPosts(): Promise<(Clubs | EventPosts)[]> {
-    const allPosts = await this.getAllPosts()
+    const allPosts = await this.getAllPosts();
     const popularPosts = allPosts
-    .sort((postA, postB) => postB.viewCount - postA.viewCount)
-    .slice(0, 4); //최상위 4개만 가져옴
-    return popularPosts;  
+      .sort((postA, postB) => postB.viewCount - postA.viewCount)
+      .slice(0, 4); //최상위 4개만 가져옴
+    return popularPosts;
   }
 
   //클럽 인기글 조회: 조회순 정렬 최상위 2개만
   async getPopularClubs(): Promise<Clubs[]> {
-    const clubPosts = await (await this.clubRepository
-      .find())
+    const clubPosts = await (await this.clubRepository.find())
       .sort((postA, postB) => postB.viewCount - postA.viewCount)
-      .slice(0,2)
-    const sortPosts = [...clubPosts]; 
+      .slice(0, 2);
+    const sortPosts = [...clubPosts];
     return sortPosts;
   }
 
   //이벤트 인기글 조회: 조회순 정렬 최상위 2개만
   async getPopularEvents(): Promise<EventPosts[]> {
     const sortPosts = await this.eventRepository
-      .createQueryBuilder('sort')
-      .leftJoinAndSelect('sort.user', 'user')
-      .orderBy('sort.viewCount', 'DESC')
+      .createQueryBuilder("sort")
+      .leftJoinAndSelect("sort.user", "user")
+      .orderBy("sort.viewCount", "DESC")
       .limit(2)
       .getMany();
-      console.log(sortPosts,'리포지토리')
+    console.log(sortPosts, "리포지토리");
     return sortPosts;
   }
-  
-  
 }
