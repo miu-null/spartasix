@@ -9,7 +9,7 @@ import { Clubs } from "src/entities/clubs.entity";
 import { Users } from "src/entities/users.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { SearcherRepository } from "src/searcher/searcher.repositoy";
-import { ClubRepository} from "src/club/club.repository";
+import { ClubRepository } from "src/club/club.repository";
 import { MailService } from "src/mail/mail.service";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 import { EventComments } from "src/entities/eventcomments.entity";
@@ -41,4 +41,4 @@ import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.r
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })
-export class EventModule {}
+export class EventModule { }

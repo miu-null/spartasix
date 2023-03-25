@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
@@ -68,6 +72,14 @@ export class ClubRepository {
     maxMembers: number,
     category: string,
   ) {
+    const article = await this.getClubById(clubId);
+    if (!article) {
+      throw new BadRequestException("게시글이 존재하지 않습니다.");
+    }
+
+    if (userId !== article.nowPost.userId) {
+      throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
+    }
     const data = await this.clubRepository.update(clubId, {
       userId,
       title,
@@ -76,45 +88,45 @@ export class ClubRepository {
       category,
     });
 
-    return true;
+    return data;
   }
 
   async getClubById(clubId: number) {
     const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
-      select: [
-        "title",
-        "content",
-        "maxMembers",
-        "createdAt",
-        "updatedAt",
-        "id",
-        "category",
-      ],
+      relations : {user : true}
     });
-    // const prevPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id < :id', {id:clubId})
-    // .orderBy('Clubs.id','DESC')
-    // .getOne();
-    // const nextPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id > :id', {id:clubId})
-    // .orderBy('Clubs.id','ASC')
-    // .getOne()
  
     const prevPost = await this.clubRepository.findOne({
       where: {id: LessThan(clubId)},
+      relations : {user : true},
       order: {id: 'DESC'}
     })
     const nextPost = await this.clubRepository.findOne({
       where: {id: MoreThan(clubId)},
+      relations : {user : true},
       order: {id: 'ASC'}
     });
+        await this.clubRepository
+    .createQueryBuilder()
+    .update(Clubs)
+    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
+    .where('id = :id', { id: clubId })
+    .execute(); // 쿼리 실행
     return { prevPost, nowPost, nextPost};
   }
 
-  async deleteClubDto(clubId: number) {
+  async deleteClubDto(userId: number, clubId: number) {
+    const article = await this.getClubById(clubId);
+
+    if (!article) {
+      throw new BadRequestException("게시글이 존재하지 않습니다.");
+    }
+    console.log("userId:", userId);
+    if (userId !== article.nowPost.userId) {
+      throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
+    }
+
     await this.clubRepository.softDelete(clubId);
   }
 
@@ -122,7 +134,6 @@ export class ClubRepository {
   async paginatedResults(page, term?: string) {
     const take = 5;
     const selectedData = await this.clubRepository
-      // .find({});
       .createQueryBuilder("Clubs")
       .leftJoinAndSelect("Clubs.user", "user")
       .orderBy("Clubs.id", "DESC") //최신순(내림차순)
