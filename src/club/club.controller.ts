@@ -20,7 +20,7 @@ import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate, paginatedResultss } from "../../views/static/js/filter";
+import { reformPostDate } from "../../views/static/js/filter";
 
 @Controller("club")
 export class ClubController {
@@ -34,12 +34,11 @@ export class ClubController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response) {
 
-    const clubposts = await this.clubService.getClubs();
-    const pagingposts = await paginatedResultss(page, clubposts)
+    const terms = await this.clubService.paginatedResults(page);
     const sortPosts = await this.searchService.getPopularClubs();
     
     return res.render("club.ejs", {
-      ...pagingposts,
+      ...terms,
       sortPosts,
       reformPostDate,
     });

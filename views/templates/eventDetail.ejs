@@ -29,7 +29,7 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= nowPost.id %>/updatepage'"
+      <a onclick="location.href='<%= events.id %>/updatepage'"
         class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
@@ -38,14 +38,14 @@
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
-      <div class="eventdetail_first_id" id="event_id"><%= nowPost.id %></div>
+      <div class="eventdetail_first_id" id="event_id"><%= events.id %></div>
       <div class="eventdetail_first_title">
         <div class="first_title" >Title</div>
-        <div class="title_text"id="event_title"><%= nowPost.title%></div>
+        <div class="title_text"id="event_title"><%= events.title%></div>
       </div>
       <div class="eventdetail_first_nickname">
         <div class="first_nickname">Writer</div>
-        <div class="nickname_text"><%= nowPost.user.nickName %></div>
+        <div class="nickname_text"><%= events.user.nickName %></div>
       </div>
       <div class="eventdetail_first_likes">
         <div class="first_likes">Likes</div>
@@ -55,15 +55,15 @@
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
         <div class="start_date">Event started at :</div>
-        <div class="date_text" id="event_startDate"><%= nowPost.startDate%></div>
+        <div class="date_text" id="event_startDate"><%= events.startDate%></div>
       </div>
       <div class="eventdetail_second_end">
         <div class="end_date">Event ended at :</div>
-        <div class="date_text" id="event_endDate"><%= nowPost.endDate%></div>
+        <div class="date_text" id="event_endDate"><%= events.endDate%></div>
       </div>
       <div class="eventdetail_second_view">
         <div class="view_title">View</div>
-        <div class="view_text"><%= nowPost.viewCount%></div>
+        <div class="view_text"><%= events.viewCount%></div>
       </div>
     </div>
   </div>
@@ -78,11 +78,11 @@
     </div>
     <div class="eventdetail_third">
       <div class="col-8">
-        <img class="eventImg" src="<%= nowPost.postIMG %>" name="eventPostImg" id="eventPostImg" alt="eventPostImg" />
+        <img class="eventImg" src="<%= events.postIMG %>" name="eventPostImg" id="eventPostImg" alt="eventPostImg" />
       </div>
     </div>
     <div class="eventdetail_body_text">
-      <%= nowPost.content %>
+      <%= events.content %>
     </div>
     <div class="eventdetail_like_container">
       <img class="eventdetail_like_img" src="/img/likes.png" />
@@ -185,7 +185,7 @@
     <div class="comment_input_box">
       <textarea id="comment_textarea" class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
     </div>
-    <div data-text="<%= nowPost.id %>" id="comment_show_text" class="comment_show_text"></div>
+    <div data-text="<%= events.id %>" id="comment_show_text" class="comment_show_text"></div>
   </div>
   <div class="comment_input_button_box">
     <button class="comment_input_button" onclick="createEventComment('<%= nowPost.id %>')">
