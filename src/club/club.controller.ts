@@ -20,7 +20,7 @@ import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate } from "../../views/static/js/filter";
+import { reformPostDate, paginatedResults } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 
 @Controller("club")
 export class ClubController {
@@ -29,16 +29,18 @@ export class ClubController {
     private readonly searchService: SearcherService,
   ) { }
 
+  //게시판 게시글 목록 조회
   @Get("/list")
   async getClubs(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response) {
 
-    const terms = await this.clubService.paginatedResults(page);
-    const sortPosts = await this.searchService.getPopularClubs();
+    const clubs = await this.clubService.getClubs();     /// 게시글 목록 데이터
+    const pagingposts = await paginatedResults(page, clubs)  // 페이지네이션 처리
+    const sortPosts = await this.searchService.getPopularClubs(); ///인기글 조회
     
     return res.render("club.ejs", {
-      ...terms,
+      ...pagingposts,
       sortPosts,
       reformPostDate,
     });
@@ -141,10 +143,10 @@ export class ClubController {
       page,
       term,
     );
-    console.log("검색", searchData, term);
     return res.render("clubsearch.ejs", {
       term,
       ...searchData,
+      reformPostDate
     });
   }
   // @Post("/list/report/:id")

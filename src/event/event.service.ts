@@ -13,8 +13,8 @@ export class EventService {
     private readonly eventCommentService: EventCommentService,
     ) {}
 
-  async getEvents(page) {
-    const events = await this.EventRepository.paginatedResults(page);
+  async getEvents() {
+    const events = await this.EventRepository.getEvents()
     return events;
   }
 
