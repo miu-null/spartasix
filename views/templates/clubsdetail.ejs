@@ -68,6 +68,14 @@
           <%= reformPostDate(nowPost.createdAt) %>
         </div>
       </div>
+      <div class="clubdetail_second_date">
+        <div class="second_date">
+          Category
+        </div>
+        <div class="second_date_text">
+          <%= nowPost.category %>
+        </div>
+      </div>
       <div class="clubdetail_second_view">
         <div class="view_title">
           View
@@ -217,8 +225,7 @@
             <%= data.clubCommentLikes.length %>
           </div>
         </div>
-      </div>
-      <div id="club_comment_button<%= data.id %>" class="event_comment_button">
+        <div id="club_comment_button<%= data.id %>" class="event_comment_button">
         <button id="club_del_button<%= data.id %>" class="comment_button"
           onclick="updateClubComment('<%= data.id %>',' <%= data.content %>')">edit</button>
         <button id="club_del_button1<%= data.id %>" class="comment_button"
@@ -236,13 +243,13 @@
     <div id="report_body">
       <dl>
         <dt>제목</dt>
-        <dt style="color:gray;">
+        <dt style="color:rgb(45, 40, 40);">
           <%= nowPost.title %>
         </dt>
       </dl>
       <dl>
         <dt>작성자 닉네임</dt>
-        <dt style="color:gray;">
+        <dt style="color:rgb(45, 40, 40);">
           <%= nowPost.nickName %>
         </dt>
       </dl>

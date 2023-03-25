@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
@@ -68,6 +72,14 @@ export class ClubRepository {
     maxMembers: number,
     category: string,
   ) {
+    const article = await this.getClubById(clubId);
+    if (!article) {
+      throw new BadRequestException("게시글이 존재하지 않습니다.");
+    }
+
+    if (userId !== article.nowPost.userId) {
+      throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
+    }
     const data = await this.clubRepository.update(clubId, {
       userId,
       title,
@@ -76,23 +88,13 @@ export class ClubRepository {
       category,
     });
 
-    return true;
+    return data;
   }
 
   async getClubById(clubId: number) {
     const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
       relations : {user : true}
-      // select: [
-      //   "title",
-      //   "content",
-      //   "maxMembers",
-      //   "createdAt",
-      //   "updatedAt",
-      //   "id",
-      //   "category",
-      //   "viewCount",
-      // ],
     });
  
     const prevPost = await this.clubRepository.findOne({
@@ -112,11 +114,19 @@ export class ClubRepository {
     .where('id = :id', { id: clubId })
     .execute(); // 쿼리 실행
     return { prevPost, nowPost, nextPost};
-
-
   }
 
-  async deleteClubDto(clubId: number) {
+  async deleteClubDto(userId: number, clubId: number) {
+    const article = await this.getClubById(clubId);
+
+    if (!article) {
+      throw new BadRequestException("게시글이 존재하지 않습니다.");
+    }
+    console.log("userId:", userId);
+    if (userId !== article.nowPost.userId) {
+      throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
+    }
+
     await this.clubRepository.softDelete(clubId);
   }
 

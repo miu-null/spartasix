@@ -119,11 +119,11 @@ export class ClubController {
       }
     };
 
-
   @Delete("/list/:id")
-  async delete(@Param("id") id: number, @Res() res) {
-    const club = await this.clubService.deleteClub(id);
-    return res.json(true);
+  async delete(@Param("id") id: number, @Req() req) {
+    const userId = req.user;
+    await this.clubService.deleteClub(userId, id);
+    return true;
   }
 
   ///모임게시판 검색기능
