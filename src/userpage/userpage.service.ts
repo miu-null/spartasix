@@ -77,7 +77,7 @@ export class UserpageService {
   // 클럽 신청서 조회 // 특정 유저만
   async getClubApps(userId: number) {
     const { myOwnClubs } = await this.userPageRepository.getClubApps(userId);
-    const myApps = myOwnClubs.map(
+    const myOwnApps = myOwnClubs.map(
       ({ id, user, userId, application, isAccepted, createdAt }) => {
         return {
           id,
@@ -89,7 +89,7 @@ export class UserpageService {
         };
       },
     );
-    return { myApps };
+    return { myOwnApps };
   }
 
   // 특정 신청서 조회 // 특정 유저만

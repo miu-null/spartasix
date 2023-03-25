@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { EventCommentLikes } from "./eventcommentlikes.entity";
-import { EventPosts } from "./eventposts.entity";
+import { EventPosts } from "./events.entity";
 import { Users } from "./users.entity";
 
 @Entity({ schema: "EventComments", name: "EventComments" })

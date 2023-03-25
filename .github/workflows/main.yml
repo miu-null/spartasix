@@ -78,6 +78,4 @@ jobs:
             -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
             -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
             -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
-            -v /etc/letsencrypt/live/jyh7b.shop/privkey.pem:/app/certs/private.key \
-            -v /etc/letsencrypt/live/jyh7b.shop/fullchain.pem:/app/certs/certificate.pem \
             ${{ env.DOCKER_IMAGE }}:latest

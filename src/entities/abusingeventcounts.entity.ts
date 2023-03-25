@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { EventPosts } from "./eventposts.entity";
+import { EventPosts } from "./events.entity";
 import { Users } from "./users.entity";
 
 @Entity({ schema: "AbusingEventCounts", name: "AbusingEventCounts" })

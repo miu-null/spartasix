@@ -12,7 +12,7 @@ import { EventComments } from "src/entities/eventcomments.entity";
 import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventLikes } from "src/entities/eventlikes.entity";
 import { EventMembers } from "src/entities/eventmembers.entity";
-import { EventPosts } from "src/entities/eventposts.entity";
+import { EventPosts } from "src/entities/events.entity";
 import { Users } from "src/entities/users.entity";
 
 @Injectable()
@@ -22,7 +22,7 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
     return {
       type: "mysql",
       host: this.configService.get<string>("DATABASE_HOST"),
-      port: this.configService.get<number>("DATABASE_PORT"),
+      port: parseInt(this.configService.get("DATABASE_PORT"), 10),
       username: this.configService.get<string>("DATABASE_USERNAME"),
       password: this.configService.get<string>("DATABASE_PASSWORD"),
       database: this.configService.get<string>("DATABASE_NAME"),
@@ -42,11 +42,12 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
         AbusingEventCounts,
       ],
       // entities: [join(__dirname, "/../entities/*.entity{.ts,.js}")], // 최종적으로 모든 entity 파일이 전부 import 되었을 때 사용 가능.
-      synchronize: this.configService.get<boolean>("DATABASE_SYNCHRONIZE"),
+      synchronize: this.configService.get("DATABASE_SYNCHRONIZE") === "true",
       autoLoadEntities: true,
       logging: "all",
+      // logging: this.configService.get("DATABASE_LOG") === "true",
       timezone: "Asia/Seoul",
-      charset: "utf8mb4"
+      charset: "utf8mb4",
     };
   }
 }
