@@ -13,7 +13,6 @@ import { AbusingEventCounts } from "./abusingeventcounts.entity";
 import { ClubCommentLikes } from "./clubcommentlikes.entity";
 import { ClubComments } from "./clubcomments.entity";
 import { ClubLikes } from "./clublikes.entity";
-import { ClubMembers } from "./clubmembers.entity";
 import { Clubs } from "./clubs.entity";
 import { EventComments } from "./eventcomments.entity";
 import { EventCommentLikes } from "./eventcommentlikes.entity";
@@ -56,28 +55,18 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @ManyToMany(() => Clubs, (clubs) => clubs.user, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
-  clubs: Clubs[];
-
-  @OneToMany(
-    () => ClubMembers,
-    (clubMembers: ClubMembers) => clubMembers.user,
-    {
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    },
-  )
-  clubMembers: ClubMembers[];
-
-  // @OneToMany(() => Clubs, (clubs) => clubs.user, {
+  // @ManyToMany(() => Clubs, (clubs) => clubs.user, {
   //   onUpdate: "CASCADE",
   //   onDelete: "CASCADE",
-  //   eager: true,
   // })
   // clubs: Clubs[];
+
+  @OneToMany(() => Clubs, (clubs) => clubs.user, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    eager: false,
+  })
+  clubs: Clubs[];
 
   @OneToMany(
     () => AbusingClubCounts,
