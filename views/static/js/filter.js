@@ -6,7 +6,6 @@ function reformPostDate(postObjDate) {
   const currentDate = new Date();
   const offset = currentDate.getTimezoneOffset()* 60000;
   const postDate = new Date(postObjDate - offset);
-
   // const postDate = new Date(postObjDate.setHours(postObjDate.getHours() +9));
   if (isSameDay(postDate, currentDate)) {
     return format(postDate, "kk:mm");
