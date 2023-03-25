@@ -138,7 +138,7 @@
                         <td id="club_Id">이벤트</td>
                         <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'><%= data.title %></a></td>
                         <% } %>
-                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName%>
+                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName%>
                     </td>
                     <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
                     <td id="club_View">
