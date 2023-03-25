@@ -5,8 +5,8 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { SearcherController } from './searcher.controller';
-import { SearcherService} from './searcher.service';
-import { SearcherRepository} from './searcher.repositoy';
+import { SearcherService } from './searcher.service';
+import { SearcherRepository } from './searcher.repositoy';
 import { Clubs } from "src/entities/clubs.entity";
 import { ClubMembers } from 'src/entities/clubmembers.entity';
 import { ClubRepository } from 'src/club/club.repository';
@@ -22,9 +22,9 @@ import { AbusingEventCounts } from 'src/entities/abusingeventcounts.entity';
     useClass: JwtConfigService,
     inject: [ConfigService],
   }),
-],
-  exports : [TypeOrmModule, SearcherService, SearcherRepository],
+  ],
+  exports: [TypeOrmModule, SearcherService, SearcherRepository],
   controllers: [SearcherController],
   providers: [SearcherService, SearcherRepository, ClubRepository, EventRepository]
 })
-export class SearcherModule {} 
+export class SearcherModule { } 

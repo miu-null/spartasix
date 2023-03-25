@@ -25,7 +25,7 @@ export class UserPageRepository {
     @InjectRepository(EventPosts)
     private readonly eventpostRepository: Repository<EventPosts>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   // 작성한 글 조회
   async getMyPosts(userId: number) {

@@ -24,6 +24,8 @@ import { remindEmailDto } from "./dto/remindevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { reformPostDate, reformAllPostsDate } from "../../views/static/js/filter";
+
 
 @Controller("events")
 export class EventController {
@@ -115,16 +117,12 @@ export class EventController {
   ) {
     const events = await this.eventService.getEvents(page);
     const sortPosts = await this.searchService.getPopularEvents()
-    const dateSet = await this.searchService.getTimeFormat() //날짜 조정
     return res.render("eventMain.ejs", {
        ...events,
-       ...dateSet,
-       sortPosts
+       sortPosts,
+       reformPostDate
       });
   }
-
-
-
 
   //게시글 상세 조회
   @Get("/list/:id")
@@ -137,12 +135,13 @@ export class EventController {
     const events = postDetail.data.nowPost
     let imgUrl = events.postIMG;
     events.createdAt = new Date(events.createdAt);
-
     const prevPost = postDetail.data.prevPost
     const nowPost = postDetail.data.nowPost
     const nextPost = postDetail.data.nextPost
     const comments = postDetail.comments
+    const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
     console.log("comments : ", comments)
+    
     return {events, imgUrl, nextPost, nowPost, prevPost, comments };
   }
 

@@ -37,14 +37,7 @@
                   <td id="Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></a></td>
                   <td id="View"><%= data.viewCount %></td>
                   <td id="Likes"><%= data.Likes %></td>
-                  <td id="Date">
-                    <% const postDate=new Date(data.createdAt); %>
-                    <% if (isSameDay(postDate, currentDate)) { %>
-                        <%= format(postDate, 'KK:mm', { locale: ko } ) %>
-                            <% } else { %>
-                                <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
-                                    <% } %>
-                  </td>
+                  <td id="Date"><%= reformPostDate(data.createdAt) %></td>
                   <% }) %>
                   <% } else { %>
                     <td id="club_Likes"> 인기글이 없습니다.</td>

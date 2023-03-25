@@ -13,7 +13,7 @@ export class EventRepository {
     private readonly userRepository: Repository<Users>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-  ) {}
+  ) { }
 
   async getEventById(eventPostId: number) {
     const nowPost = await this.eventRepository
@@ -21,26 +21,26 @@ export class EventRepository {
       .leftJoinAndSelect("eventPost.user", "nickName")
       .where("eventPost.id = :eventPostId", { eventPostId })
       .getOne();
-  
+
     const prevPost = await this.eventRepository
-    .createQueryBuilder("eventPost")
-    .leftJoinAndSelect("eventPost.user", "nickName")
-    .where("eventPost.id < :eventPostId", { eventPostId })
-    .orderBy('eventPost.id','DESC')
-    .getOne();
+      .createQueryBuilder("eventPost")
+      .leftJoinAndSelect("eventPost.user", "nickName")
+      .where("eventPost.id < :eventPostId", { eventPostId })
+      .orderBy('eventPost.id', 'DESC')
+      .getOne();
     const nextPost = await this.eventRepository
-    .createQueryBuilder("eventPost")
-    .leftJoinAndSelect("eventPost.user", "nickName")
-    .where("eventPost.id > :eventPostId", { eventPostId })
-    .orderBy('eventPost.id','ASC')
-    .getOne()
+      .createQueryBuilder("eventPost")
+      .leftJoinAndSelect("eventPost.user", "nickName")
+      .where("eventPost.id > :eventPostId", { eventPostId })
+      .orderBy('eventPost.id', 'ASC')
+      .getOne()
 
     await this.eventRepository
-    .createQueryBuilder()
-    .update(EventPosts)
-    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
-    .where('id = :id', { id: eventPostId })
-    .execute(); // 쿼리 실행
+      .createQueryBuilder()
+      .update(EventPosts)
+      .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
+      .where('id = :id', { id: eventPostId })
+      .execute(); // 쿼리 실행
 
     const event = await this.eventRepository
     .createQueryBuilder("eventPost")
