@@ -9,17 +9,10 @@
   </script> -->
   <script>
     $(document).ready(function(){
-      show_userPosts('<%= myInfo.userId %>', null, null);
-
-
+      show_userPosts(<%= myInfo.userId %>, null, null);
     });
-
-
-
-
     </script>
 
-    
 <!-- modal1 -->
 <div id="Appmodal" class="Appmodal">
   <div class="app_modal">
@@ -150,14 +143,12 @@
       <div class="box huge-clubs">
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
           Belong to this clubs...
-         <%= myInfo.userId %>
         </p>
 
         <br />
         <div class="box myclubs">
           <div class="box message">
-            <img src= "/img/message.png" onclick="modal_open1('<%= myInfo.userId %>'); selectApp('<%= myInfo.userId %>');">
-        
+            <img src= "/img/message.png" onclick="modal_open1(<%#= myInfo.userId %>)">
           </div>
           <br />
           <br />
