@@ -1,3 +1,12 @@
+$(document).ready(function () {
+  const id = $("#comment_show_text").data("text")
+  showComment(id);
+  showlike()
+
+  console.log(":::::::textarea:::::::", eventUpdateContent)
+})
+
+
 function event_open() {
   $(`#event_modal1`).fadeIn();
 
@@ -8,8 +17,39 @@ function event_open() {
   });
 }
 
+
+function dateValidate() {
+  let startDate = new Date($("#eventUpdateStartDate").val());
+  let endDate = new Date($("#eventUpdateEndDate").val());
+  console.log("startDate:", startDate, "endDate:", endDate)
+
+  if (startDate > endDate) {
+    alert("종료 날짜는 시작 날짜보다 커야 합니다.");
+  }
+}
+
+function updateDateValidate() {
+  let startDate = new Date($("#eventStartDate").val());
+  let endDate = new Date($("#eventEndDate").val());
+  console.log("startDate:", startDate, "endDate:", endDate)
+
+  if (startDate > endDate) {
+    alert("종료 날짜는 시작 날짜보다 커야 합니다.");
+  }
+}
+
+
+
+// 메일 알림
 function remindEvent() {
-  const email = $("#event_modal_email").val();
+  const id = document.getElementById("event_id").innerText;
+  const title = document.getElementById("event_title").innerText;
+  const email = document.getElementById("event_modal_email").value;
+  const startDate = document.getElementById("event_startDate").innerText;
+  const endDate = document.getElementById("event_endDate").innerText;
+  // const postImg = document.getElementById("event_postIMG").val; 파일정보 빼오는법 찾아야함.
+
+  console.log('info:', id, title, email, startDate, endDate)
 
   $.ajax({
     type: "POST",
@@ -18,62 +58,39 @@ function remindEvent() {
     contentType: "application/json; charset=utf-8",
     async: false,
     data: JSON.stringify({
+      id: id,
+      title: title,
       email: email,
+      startDate: startDate,
+      endDate: endDate,
     }),
     success: function (response) {
       alert("이벤트 알림 메일을 전송했습니다.");
+      window.location.replace("/events/list");
     },
-    error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
-      }
-
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
-        $.ajax({
-          type: "POST",
-          url: "/auth/new-accessToken",
-          success: function (response) {
-            $.ajax({
-              type: "POST",
-              url: `/events/remindEvent`,
-              dataType: "json",
-              contentType: "application/json; charset=utf-8",
-              async: false,
-              data: JSON.stringify({
-                email: email,
-              }),
-              success: function (response) {
-                alert("이벤트 알림 메일을 전송했습니다.");
-              },
-            });
-          },
-        });
-      }
-    },
+    errorfunction(request, status, error) {
+      alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    }
   });
+
 }
 
 function eventNew() {
-  const title = $("#eventTitle").val();
-  const startDate = $("#eventStartDate").val();
-  const endDate = $("#eventEndDate").val();
-  const content = $("#eventContent").val();
-  const postIMG = $("#eventPostImg").val();
 
+  const formData = new FormData();
+  formData.append("title", $("#eventTitle").val());
+  formData.append("startDate", $("#eventStartDate").val());
+  formData.append("endDate", $("#eventEndDate").val());
+  formData.append("content", $("#eventContent").val());
+  formData.append("file", $("#eventPostImg")[0].files[0]);
+  console.log(formData)
   $.ajax({
     type: "POST",
     url: "/events/newevent",
-    dataType: "json",
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify({
-      title: title,
-      startDate: startDate,
-      endDate: endDate,
-      content: content,
-      postIMG: postIMG,
-    }),
+    data: formData,
+    enctype: "multipart/form-data",
+    processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
+    contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
     success: function (response) {
       alert("작성 완료");
       window.location.replace("/events/list");
@@ -93,15 +110,10 @@ function eventNew() {
             $.ajax({
               type: "POST",
               url: "/events/newevent",
-              dataType: "json",
-              contentType: "application/json; charset=utf-8",
-              data: JSON.stringify({
-                title: title,
-                startDate: startDate,
-                endDate: endDate,
-                content: content,
-                postIMG: postIMG,
-              }),
+              data: formData,
+              enctype: "multipart/form-data",
+              processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
+              contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
               success: function (response) {
                 alert("작성 완료");
                 window.location.replace("/events/list");
@@ -115,24 +127,21 @@ function eventNew() {
 }
 
 function updateEvent(eventPostId) {
-  const title = $("#title2").val();
-  const date = $("#date2").val();
-  const content = $("#content2").val();
+  const formData = new FormData();
+  formData.append("title", $("#event_title").val());
+  formData.append("startDate", $("#startDate").val());
+  formData.append("endDate", $("#endDate").val());
+  formData.append("content", $("#event_content").val());
+  formData.append("file", $("#eventPostImg")[0].files[0]);
+  console.log(FormData)
 
-  console.log("제목 : " + title);
-  console.log("내용 : " + content);
-  console.log(date);
-  console.log(eventPostId);
   $.ajax({
     type: "PATCH",
     url: `/events/list/${eventPostId}/update`,
-    dataType: "json",
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify({
-      title: title,
-      content: content,
-      date: date,
-    }),
+    data: formData,
+    enctype: "multipart/form-data",
+    processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
+    contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
     success: function (response) {
       alert("수정 완료");
       window.location.replace(`/events/list/${eventPostId}`);
@@ -152,13 +161,10 @@ function updateEvent(eventPostId) {
             $.ajax({
               type: "PATCH",
               url: `/events/list/${eventPostId}/update`,
-              dataType: "json",
-              contentType: "application/json; charset=utf-8",
-              data: JSON.stringify({
-                title: title,
-                content: content,
-                date: date,
-              }),
+              data: formData,
+              enctype: "multipart/form-data",
+              processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
+              contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
               success: function (response) {
                 alert("수정 완료");
                 window.location.replace(`/events/list/${eventPostId}`);

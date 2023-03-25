@@ -107,9 +107,9 @@ export class AppModule implements NestModule {
         { path: "/club/clubs/:id", method: RequestMethod.PUT },
         { path: "/club/list/:id", method: RequestMethod.DELETE },
         { path: "/events/newevent", method: RequestMethod.POST },
-        { path: "/events/list/:eventPostId", method: RequestMethod.DELETE },
+        { path: "/events/list/:id", method: RequestMethod.DELETE },
         {
-          path: "/events/list/:eventPostId/update",
+          path: "/events/list/:id/update",
           method: RequestMethod.PATCH,
         },
         {
