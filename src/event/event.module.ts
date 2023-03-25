@@ -23,8 +23,7 @@ import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.r
       Clubs,
       Users,
       ClubMembers,
-      EventPosts,
-      AbusingClubCounts,
+      EventPosts, AbusingClubCounts,
       EventComments,
       EventCommentLikes,
     ]),
@@ -38,7 +37,7 @@ import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.r
     SearcherRepository,
     ClubRepository,
     EventCommentService,
-    EventCommentRepository,
+    EventCommentRepository
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })
