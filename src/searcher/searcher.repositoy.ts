@@ -4,7 +4,6 @@ import { Repository } from "typeorm";
 import { Users } from "../entities/users.entity";
 import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/events.entity";
-// import { JwtService } from "@nestjs/jwt";
 
 
 @Injectable()
@@ -20,11 +19,10 @@ export class SearcherRepository {
     //통합검색
   async findAllPosts(data: any): Promise<any> {  
     {
-      const clubs = await this.findClubPosts(data)
-      const events = await this.findEventPosts(data)
-      const users = await this.findUsers(data)
-      const results = {events, clubs, users}
-      console.log(results);
+      const clubs = await (await this.findClubPosts(data)).slice(0, 4)
+      const events = await (await this.findEventPosts(data)).slice(0,4)
+      const users = await (await this.findUsers(data)).slice(0,4)
+      const results = {clubs, events, users}
       return results
     }
   }
