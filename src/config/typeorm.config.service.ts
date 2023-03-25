@@ -22,7 +22,7 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
     return {
       type: "mysql",
       host: this.configService.get<string>("DATABASE_HOST"),
-      port: parseInt(this.configService.get("DATABASE_PORT"), 10),
+      port: this.configService.get<number>("DATABASE_PORT"),
       username: this.configService.get<string>("DATABASE_USERNAME"),
       password: this.configService.get<string>("DATABASE_PASSWORD"),
       database: this.configService.get<string>("DATABASE_NAME"),
@@ -42,12 +42,11 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
         AbusingEventCounts,
       ],
       // entities: [join(__dirname, "/../entities/*.entity{.ts,.js}")], // 최종적으로 모든 entity 파일이 전부 import 되었을 때 사용 가능.
-      synchronize: this.configService.get("DATABASE_SYNCHRONIZE") === "true",
+      synchronize: this.configService.get<boolean>("DATABASE_SYNCHRONIZE"),
       autoLoadEntities: true,
       logging: "all",
-      // logging: this.configService.get("DATABASE_LOG") === "true",
       timezone: "Asia/Seoul",
-      charset: "utf8mb4",
+      charset: "utf8mb4"
     };
   }
 }

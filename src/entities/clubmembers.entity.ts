@@ -8,8 +8,6 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { Clubs } from "./clubs.entity";
-import { Users } from "./users.entity";
 
 @Entity({ schema: "ClubMembers", name: "ClubMembers" })
 export class ClubMembers {
@@ -36,12 +34,4 @@ export class ClubMembers {
 
   @DeleteDateColumn()
   deletedAt: Date | null;
-
-  @ManyToOne(() => Users, (user: Users) => user.clubMembers)
-  @JoinColumn({ name: "userId" })
-  user: Users;
-
-  @ManyToOne(() => Clubs, (club: Clubs) => club.clubMembers)
-  @JoinColumn({ name: "clubId" })
-  club: Clubs;
 }
