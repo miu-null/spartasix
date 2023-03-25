@@ -24,7 +24,7 @@ import { remindEmailDto } from "./dto/remindevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { reformPostDate, } from "../../views/static/js/filter";
+import { reformPostDate, reformAllPostsDate } from "../../views/static/js/filter";
 
 
 @Controller("events")
@@ -132,16 +132,17 @@ export class EventController {
     @Param("id") id: number,
   ) {
     let postDetail = await this.eventService.getEventById(id);
-    const nowPost = postDetail.data.nowPost
+    const events = postDetail.data.nowPost
+    let imgUrl = events.postIMG;
+    events.createdAt = new Date(events.createdAt);
     const prevPost = postDetail.data.prevPost
+    const nowPost = postDetail.data.nowPost
     const nextPost = postDetail.data.nextPost
     const comments = postDetail.comments
-    let imgUrl = nowPost.postIMG;
-    // nowPost.createdAt = new Date(nowPost.createdAt);
-    const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate, imgUrl}
+    const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
     console.log("comments : ", comments)
     
-    return {...postSet};
+    return {events, imgUrl, nextPost, nowPost, prevPost, comments };
   }
 
   // 수정 페이지 렌더링

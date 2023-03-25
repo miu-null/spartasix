@@ -10,11 +10,6 @@ export class ClubService {
     private readonly clubCommentService: ClubCommentService
   ) { }
 
-  async getClubs() {
-    const data = await this.clubRepository.getClubs()
-    return data
-  }
-
   // users  import 필요? (작성,수정,삭제)
   async createClub(
     userId: number,
@@ -83,6 +78,10 @@ export class ClubService {
     return true;
   }
 
+  async paginatedResults(page) {
+    const data = await this.clubRepository.paginatedResults(page);
+    return data;
+  }
   // async reportClub(
   //   id: number,
   //   userId: number,

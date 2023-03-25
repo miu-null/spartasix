@@ -66,8 +66,8 @@ export class SearcherRepository {
 
   //게시글 통합 조회: 모든 게시글 통합 조회
   async getAllPosts(): Promise<(Clubs | EventPosts)[]> {
-    const clubPosts = await this.clubRepository.find({relations : {user : true}})
-    const eventPosts = await this.eventRepository.find({relations : {user : true}});
+    const clubPosts = await this.clubRepository.find({relations : {user : true},})
+    const eventPosts = await this.eventRepository.find({relations : {user : true},});
     const allPosts = [...clubPosts, ...eventPosts];   // 두 배열을 하나로 합치기
     return allPosts;
   }
@@ -103,14 +103,5 @@ export class SearcherRepository {
     return sortPosts;
   }
 
-  async getThisClub(userId: number, clubId: number) {
-    const currentClub = await this.clubRepository.findOne({
-      where: {
-        id: clubId,
-        userId,
-      },
-    });
-    // 여기서 운영자, 클럽명(게시물 이름), 최대인원 등 확인
-  
-}
+
 }
