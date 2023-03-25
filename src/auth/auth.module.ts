@@ -2,6 +2,7 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { CacheModule, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
+import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtConfigService } from "src/config/jwt.config.service";
 import { MailerConfigService } from "src/config/mailer.config.service";
@@ -12,10 +13,14 @@ import { RedisService } from "src/redis/redis.service";
 import { AuthController } from "./auth.controller";
 import { AuthRepository } from "./auth.repository";
 import { AuthService } from "./auth.service";
+import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Users]),
+    PassportModule.register({
+      defaultStrategy: "jwt",
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useClass: JwtConfigService,
@@ -33,7 +38,7 @@ import { AuthService } from "./auth.service";
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, RedisService, MailService],
+  providers: [AuthService, AuthRepository, RedisService, MailService, JwtStrategy],
   exports: [AuthService, RedisService, MailService],
 })
 export class AuthModule {}
