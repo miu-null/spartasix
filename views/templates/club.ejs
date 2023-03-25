@@ -24,14 +24,7 @@
           <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName %></a></td>
           <td id="club_View"><%= data.viewCount %></td>
           <td id="club_Likes"><%= data.Likes %></td>
-          <td id="club_Likes">
-            <% const postDate=new Date(data.createdAt); %>
-            <% if (isSameDay(postDate, currentDate)) { %>
-                <%= format(postDate, 'KK:mm', { locale: ko } ) %>
-                    <% } else { %>
-                        <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
-                            <% } %>
-          </td>
+          <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
           <% }) %>
           <% } else { %>
             <td id="club_Likes"> 인기글이 없습니다.</td>
@@ -56,12 +49,12 @@
       <thead id="club_thead">
         <tr>
           <th>Club</th>
-          <th>Title</th>
-          <th>Writer</th>
-          <th>maxMembers</th>
-          <th>Date</th>
-          <th>View</th>
-          <th>Likes</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>팀원구성</th>
+          <th>작성일</th>
+          <th>조회수</th>
+          <th>좋아요</th>
         </tr>
       </thead>
       <tbody>
@@ -69,16 +62,9 @@
           <tr id="club_tr">
             <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
             <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.user.nickName %></td>
+            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></td>
             <td id="club_maxMember"><%= data.maxMembers %></td>
-            <td id="club_Date">
-              <% const postDate=new Date(data.createdAt); %>
-              <% if (isSameDay(postDate, currentDate)) { %>
-                  <%= format(postDate, 'KK:mm', { locale: ko } ) %>
-                      <% } else { %>
-                          <%= format(postDate, 'yyyy-MM-dd', { locale: ko } ) %>
-                              <% } %>
-                            </td>
+            <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
             <td id="club_View"><%= data.viewCount %></td>
             <td id="club_Likes"><%= data.Likes %></td>
           </tr>
@@ -126,7 +112,7 @@
 <section id="search" class="search-wrap">
   <form action="/club/search" class="search-form">
     <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시판 검색 : 제목, 내용"
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용"
         aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
   </form>
 </section>
