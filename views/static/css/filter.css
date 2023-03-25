@@ -1,3 +1,9 @@
+.popular_main_container {
+  width: 130%;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
 .popular_container{
   margin-top: 10px;
   margin-bottom: 10px;
@@ -8,6 +14,8 @@
   font-size: small;
   letter-spacing: 0.3px;
 }
+
+
 
 /* 검색창 */
 .search-wrap {
@@ -38,35 +46,4 @@ input {
   position: relative;
   width: 730px;
   margin: auto;
-}
-
-#page {
-  display: grid;
-  width: 100%;
-  height: 250px;
-  grid-template-areas: "head head"
-                       "side  main"
-                       "foot  foot";
-  grid-template-rows: 50px 1fr 30px;
-  grid-template-columns: 150px 1fr;
-}
-
-#page > header {
-  grid-area: head;
-  background-color: #ec4330;
-}
-
-#page > side {
-  grid-area: side;
-  background-color: #ffa08c;
-}
-
-#page > main {
-  grid-area: main;
-  background-color: #ffffff;
-}
-
-#page > footer {
-  grid-area: foot;
-  background-color: #8cffa0;
 }
