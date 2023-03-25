@@ -8,7 +8,7 @@ export class ClubService {
   constructor(
     private readonly clubRepository: ClubRepository,
     private readonly clubCommentService: ClubCommentService
-    ) { }
+  ) { }
 
   // users  import 필요? (작성,수정,삭제)
   async createClub(
@@ -64,16 +64,18 @@ export class ClubService {
     return data;
   }
 
-  async getClubById(id: number) {
-    const data = await this.clubRepository.getClubById(id);
+  async getClubById(clubId: number) {
+    const data = await this.clubRepository.getClubById(clubId);
     console.log(data, '@@@@서비스')
 
-    const comments = await this.clubCommentService.showAllComment(id);
+    const comments = await this.clubCommentService.showAllComment(clubId);
     return {data, comments};
   }
 
-  async deleteClub(id: number) {
-    await this.clubRepository.deleteClubDto(id);
+  async deleteClub(userId: number, id: number) {
+    await this.clubRepository.deleteClubDto(userId, id);
+
+    return true;
   }
 
   async paginatedResults(page) {

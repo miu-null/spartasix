@@ -13,7 +13,7 @@ export class EventRepository {
     private readonly userRepository: Repository<Users>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-  ) {}
+  ) { }
 
   async getEventById(eventPostId: number) {
     const nowPost = await this.eventRepository
@@ -26,14 +26,14 @@ export class EventRepository {
       .createQueryBuilder("eventPost")
       .leftJoinAndSelect("eventPost.user", "nickName")
       .where("eventPost.id < :eventPostId", { eventPostId })
-      .orderBy("eventPost.id", "DESC")
+      .orderBy('eventPost.id', 'DESC')
       .getOne();
     const nextPost = await this.eventRepository
       .createQueryBuilder("eventPost")
       .leftJoinAndSelect("eventPost.user", "nickName")
       .where("eventPost.id > :eventPostId", { eventPostId })
-      .orderBy("eventPost.id", "ASC")
-      .getOne();
+      .orderBy('eventPost.id', 'ASC')
+      .getOne()
 
     await this.eventRepository
       .createQueryBuilder()

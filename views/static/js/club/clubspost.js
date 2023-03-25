@@ -30,12 +30,19 @@ function clubpost() {
   // maxMembers = Number(maxMembers);
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
+    return false;
   }
-  if (maxMembers == !Number) {
+  if (maxMembers == String) {
     alert("최대인원수는 숫자로 입력해주세요");
+    return false;
   }
   if (maxMembers < 2) {
     alert("최소 2명이상의 인원이 필요합니다");
+    return false;
+  }
+  if (category == "카테고리") {
+    alert("카테고리를 선택해주세요");
+    return false;
   }
   $.ajax({
     type: "POST",
@@ -51,7 +58,7 @@ function clubpost() {
     }),
     success: function (response) {
       alert("작성 완료");
-      window.location.replace("http://localhost:3000/club/list");
+      window.location.replace("/club/list");
     },
     error: function (request) {
       if (
@@ -78,7 +85,7 @@ function clubpost() {
               }),
               success: function (response) {
                 alert("작성 완료");
-                window.location.replace("http://localhost:3000/club/list");
+                window.location.replace("/club/list");
               },
             });
           },
@@ -94,15 +101,24 @@ function clubupdate() {
   const content = $("#club_content").val();
   const clubId = location.pathname.split("clubs/")[1];
   const category = $("#club_category").val();
+
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
+    return false;
   }
-  if (maxMembers != Number) {
+  if (maxMembers == String) {
     alert("최대인원수는 숫자로 입력해주세요");
+    return false;
   }
   if (maxMembers < 2) {
     alert("최소 2명이상의 인원이 필요합니다");
+    return false;
   }
+  if (category == "카테고리") {
+    alert("카테고리를 선택해주세요");
+    return false;
+  }
+
   console.log(clubId);
   $.ajax({
     type: "PUT",
@@ -118,9 +134,20 @@ function clubupdate() {
     }),
     success: function (response) {
       alert("수정 완료");
-      window.location.replace("http://localhost:3000/club/list");
+      window.location.replace(`/club/list/${clubId}`);
     },
     error: function (request) {
+      if (request.responseJSON["message"] === "게시글이 존재하지 않습니다.") {
+        alert("게시글이 존재하지 않습니다.");
+        window.location.reload();
+      }
+      if (
+        request.responseJSON["message"] ===
+        "작성자만 사용할 수 있는 기능입니다."
+      ) {
+        alert("작성자만 사용할 수 있는 기능입니다.");
+        window.location.reload();
+      }
       if (
         request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
       ) {
@@ -146,7 +173,7 @@ function clubupdate() {
               }),
               success: function (response) {
                 alert("수정 완료");
-                window.location.replace("http://localhost:3000/club/list");
+                window.location.replace(`/club/list/${clubId}`);
               },
             });
           },
@@ -164,9 +191,20 @@ function clubdelete() {
     url: `/club/list/${clubId}`,
     success: function (response) {
       alert("삭제 완료");
-      window.location.replace("http://localhost:3000/club/list");
+      window.location.replace("/club/list");
     },
     error: function (request) {
+      if (request.responseJSON["message"] === "게시글이 존재하지 않습니다.") {
+        alert("게시글이 존재하지 않습니다.");
+        window.location.reload();
+      }
+      if (
+        request.responseJSON["message"] ===
+        "작성자만 사용할 수 있는 기능입니다."
+      ) {
+        alert("작성자만 사용할 수 있는 기능입니다.");
+        window.location.reload();
+      }
       if (
         request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
       ) {
@@ -198,6 +236,7 @@ function clubApp() {
   const application = $("#club_modal_textarea").val();
   if (!application) {
     alert("모든 항목을 작성해 주세요.");
+    return false;
   }
   $.ajax({
     type: "POST",
@@ -516,6 +555,10 @@ function report_submit() {
   const id = location.pathname.split("list/")[1];
   const clubId = location.pathname.split("list/")[1];
   console.log(reportContent, reprotReason);
+  if (!reportReason || !reportContent) {
+    alert("모든 항목을 작성해 주세요.");
+    return false;
+  }
   $.ajax({
     type: "POST",
     url: `/list/report/${id}`,
@@ -528,7 +571,7 @@ function report_submit() {
     }),
     success: function (response) {
       alert("신고 완료");
-      window.location.replace(`http://localhost:3000/club/list/${id}`);
+      window.location.replace(`/club/list/${id}`);
     },
     error: function (request) {
       if (
@@ -554,7 +597,7 @@ function report_submit() {
               }),
               success: function (response) {
                 alert("신고 완료");
-                window.location.replace(`http://localhost:3000/club/list/${id}`);
+                window.location.replace(`/club/list/${id}`);
               },
             });
           },

@@ -120,7 +120,7 @@
 
 .clubdetail_second_date {
   display: flex;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   font-weight: bold;
 }
 
@@ -130,7 +130,7 @@
 
 .clubdetail_second_view {
   display: flex;
-  margin-left: 130px;
+  /* margin-left: 35px; */
   font-weight: bold;
 }
 
@@ -237,13 +237,13 @@
 }
 
 /* The Modal (background) */
-.club_modal { 
-  position:absolute; 
-  width:100%; 
-  height:100%; 
-  top:0; 
-  left:0; 
-  display:none;
+.club_modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
   z-index: 50;
 }
 
@@ -253,22 +253,28 @@
   background-position: center;
   background-size: cover;
   position: absolute;
-  width:530px; height:700px;
-  background: rgba(255, 246, 244, 0.95); 
-  position:absolute; top:15%; left:30%;
-  margin-top:-5%; margin-right: 3%;
-  text-align:center;
-  box-sizing:border-box; padding:74px 0;
-  line-height:23px; cursor:pointer;
-  display:flex;
+  width: 530px;
+  height: 700px;
+  background: rgba(255, 246, 244, 0.95);
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  margin-top: -5%;
+  margin-right: 3%;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 74px 0;
+  line-height: 23px;
+  cursor: pointer;
+  display: flex;
   flex-direction: column;
   cursor: default;
-  transform: translate(10%,2%);
+  transform: translate(10%, 2%);
 }
 
 .club_modal_body {
   font-weight: bold;
-  color: #EA4E4E;
+  color: #ea4e4e;
 }
 
 .club_modal_text {
@@ -299,12 +305,12 @@
 }
 
 .club_modal_button {
-  border: 1px #EA4E4E solid;
-  background-color: #EA4E4E;
+  border: 1px #ea4e4e solid;
+  background-color: #ea4e4e;
   width: 140px;
   height: 48px;
   border-radius: 30px;
-  color: #FFFF;
+  color: #ffff;
   font-weight: bold;
 }
 
@@ -339,13 +345,12 @@
 .comment_input_button_box {
   margin-left: auto;
   margin-top: 10px;
-
 }
 
 .comment_input_button {
-  border: 1px solid #EA4E4E;
+  border: 1px solid #ea4e4e;
   border-radius: 30px;
-  background-color: #EA4E4E;
+  background-color: #ea4e4e;
   font-weight: bold;
   color: #ffff;
 }
@@ -403,7 +408,7 @@
 .comment_button {
   border: none;
   background-color: #ffff;
-  color: #EA4E4E;
+  color: #ea4e4e;
   font-weight: bold;
   margin-right: 5px;
 }
@@ -422,7 +427,7 @@
   margin-top: -5px;
   border: none;
   background-color: #ffff;
-  color: #EA4E4E;
+  color: #ea4e4e;
   font-weight: bold;
   font-size: 1rem;
 }

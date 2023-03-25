@@ -39,4 +39,5 @@ import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
     EventRepository,
   ],
 })
+
 export class SearcherModule {}

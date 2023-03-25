@@ -42,4 +42,4 @@ import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.r
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })
-export class EventModule {}
+export class EventModule { }
