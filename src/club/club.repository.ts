@@ -82,36 +82,38 @@ export class ClubRepository {
   async getClubById(clubId: number) {
     const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
-      select: [
-        "title",
-        "content",
-        "maxMembers",
-        "createdAt",
-        "updatedAt",
-        "id",
-        "category",
-      ],
+      relations : {user : true}
+      // select: [
+      //   "title",
+      //   "content",
+      //   "maxMembers",
+      //   "createdAt",
+      //   "updatedAt",
+      //   "id",
+      //   "category",
+      //   "viewCount",
+      // ],
     });
-    // const prevPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id < :id', {id:clubId})
-    // .orderBy('Clubs.id','DESC')
-    // .getOne();
-    // const nextPost = await this.clubRepository
-    // .createQueryBuilder("Clubs")
-    // .where('Clubs.id > :id', {id:clubId})
-    // .orderBy('Clubs.id','ASC')
-    // .getOne()
  
     const prevPost = await this.clubRepository.findOne({
       where: {id: LessThan(clubId)},
+      relations : {user : true},
       order: {id: 'DESC'}
     })
     const nextPost = await this.clubRepository.findOne({
       where: {id: MoreThan(clubId)},
+      relations : {user : true},
       order: {id: 'ASC'}
     });
+        await this.clubRepository
+    .createQueryBuilder()
+    .update(Clubs)
+    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
+    .where('id = :id', { id: clubId })
+    .execute(); // 쿼리 실행
     return { prevPost, nowPost, nextPost};
+
+
   }
 
   async deleteClubDto(clubId: number) {
@@ -122,7 +124,6 @@ export class ClubRepository {
   async paginatedResults(page, term?: string) {
     const take = 5;
     const selectedData = await this.clubRepository
-      // .find({});
       .createQueryBuilder("Clubs")
       .leftJoinAndSelect("Clubs.user", "user")
       .orderBy("Clubs.id", "DESC") //최신순(내림차순)

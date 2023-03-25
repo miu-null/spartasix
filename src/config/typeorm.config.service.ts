@@ -12,7 +12,7 @@ import { EventComments } from "src/entities/eventcomments.entity";
 import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventLikes } from "src/entities/eventlikes.entity";
 import { EventMembers } from "src/entities/eventmembers.entity";
-import { EventPosts } from "src/entities/eventposts.entity";
+import { EventPosts } from "src/entities/events.entity";
 import { Users } from "src/entities/users.entity";
 
 @Injectable()

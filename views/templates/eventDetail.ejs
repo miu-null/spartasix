@@ -29,28 +29,28 @@
 <div class="eventdetail_container">
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= events.id %>/update'"
+      <a onclick="location.href='<%= nowPost.id %>/update'"
         class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
-      <a onclick="deleteEvent('<%= events.id %>')" class="new_event">delete</a>
+      <a onclick="deleteEvent('<%= nowPost.id %>')" class="new_event">delete</a>
     </div>
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
       <div class="eventdetail_first_id">
-        <%= events.id %>
+        <%= nowPost.id %>
       </div>
       <div class="eventdetail_first_title">
         <div class="first_title">Title</div>
         <div class="title_text">
-          <%= events.title%>
+          <%= nowPost.title%>
         </div>
       </div>
       <div class="eventdetail_first_nickname">
         <div class="first_nickname">Writer</div>
         <div class="nickname_text">
-          <%= events.user.nickName %>
+          <%= nowPost.user.nickName %>
         </div>
       </div>
       <div class="eventdetail_first_likes">
@@ -60,18 +60,18 @@
     </div>
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
-        <div class="start_date">Event started at :</div>
+        <div class="start_date">시작일</div>
         <div class="date_text">
-          <%= events.createdateAt%>
+          2023-03-20
         </div>
       </div>
       <div class="eventdetail_second_end">
-        <div class="end_date">Event ended at :</div>
-        <div class="date_text">2023.04.23</div>
+        <div class="end_date">종료일</div>
+        <div class="date_text">2023-03-20</div>
       </div>
       <div class="eventdetail_second_date">
-        <div class="second_date">Date</div>
-        <div class="second_date_text">2023.04.03</div>
+        <div class="second_date">작성일</div>
+        <div class="second_date_text"><%= reformPostDate(nowPost.createdAt) %></div>
       </div>
       <div class="eventdetail_second_view">
         <div class="view_title">View</div>
@@ -124,7 +124,7 @@
         </div>
         <div class="eventdetail_bottom_div_date">
           <% if (nextPost) { %>
-            <%= nextPost.createdAt %>
+            <%= reformPostDate(nextPost.createdAt) %>
               <% } else {%>
                 <% }%>
         </div>
@@ -148,7 +148,7 @@
         </div>
         <div class="eventdetail_bottom_div_date">
           <% if (nowPost) { %>
-            <%= nowPost.createdAt %>
+            <%= reformPostDate(nowPost.createdAt) %>
               <% } %>
         </div>
       </div>
@@ -178,7 +178,7 @@
         </div>
         <div class="eventdetail_bottom_div_date">
           <% if (prevPost) { %>
-            <%= prevPost.createdAt %>
+            <%= reformPostDate(prevPost.createdAt) %>
               <% } %>
         </div>
       </div>
@@ -195,42 +195,42 @@
     <div data-text="<%= events.id %>" id="comment_show_text" class="comment_show_text"></div>
   </div>
   <div class="comment_input_button_box">
-    <button class="comment_input_button" onclick="createEventComment('<%= events.id %>')">
+    <button class="comment_input_button" onclick="createEventComment('<%= nowPost.id %>')">
       작성
     </button>
   </div>
   <div id="comment_show_text" class="comment_show_text">
-    <% for (let i = 0; i < comments.length; i++ ) { %>
+    <% comments.forEach(data => { %>
     <div class="comment_text_box">
-      <div id="comment_text_container<%= comments[i].id %>" class="comment_text_container">
+      <div id="comment_text_container<%= data.id %>" class="comment_text_container">
         <div class="comment_nickname">
-          <%= comments[i].user.nickName %>
+          <%= data.user.nickName %>
         
         </div>
-        <div id="content_<%= comments[i].id %>" class="comment_content">
-          <div id="content_box_<%= comments[i].id %>" class="comment_content_box">
-            <%= comments[i].content %>
+        <div id="content_<%= data.id %>" class="comment_content">
+          <div id="content_box_<%= data.id %>" class="comment_content_box">
+            <%= data.content %>
           </div>
         </div>
         <div class="comment_date">
-          <%= comments[i].createdAt %>
+          <%= reformPostDate(data.createdAt) %>
         </div>
-        <div id="comment_like<%= comments[i].id %>" class="comment_like">
+        <div id="comment_like<%= data.id %>" class="comment_like">
           <div>
-            <image onclick="updateLike('<%= comments[i].id %>')" class="comment_like_img" src="/img/likes.png">
+            <image onclick="updateLike('<%= data.id %>')" class="comment_like_img" src="/img/likes.png">
           </div>
           <div id="event_commentId" class="like_total">
-            <%= comments[i].eventCommentLikes.length %>
+            <%= data.eventCommentLikes.length %>
           </div>
         </div>
       </div>
-      <div id="event_comment_button<%= comments[i].id %>" class="event_comment_button">
-        <button id="comment_del_button<%= comments[i].id %>" class="comment_button"
-          onclick="updateEventComment('<%= comments[i].id %>',' <%= comments[i].content %>')">edit</button>
-        <button id="comment_del_button1<%= comments[i].id %>" class="comment_button"
-          onclick="deleteEventComment('<%= comments[i].id %>')">delete</button>
+      <div id="event_comment_button<%= data.id %>" class="event_comment_button">
+        <button id="comment_del_button<%= data.id %>" class="comment_button"
+          onclick="updateEventComment('<%= data.id %>',' <%= data.content %>')">edit</button>
+        <button id="comment_del_button1<%= data.id %>" class="comment_button"
+          onclick="deleteEventComment('<%= data.id %>')">delete</button>
       </div>
     </div>
-    <% } %>
+    <% }) %>
   </div>
 </div>
