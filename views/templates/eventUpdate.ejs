@@ -51,12 +51,15 @@
       <div class="col-8">
         <input type="file" name="eventPostImg" id="eventUpdateImg" accept="image/*" onchange="onUpload(this)">
       </div>
+      <i class="fa-sharp fa-solid fa-xmark"></i>
     </div>
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
-      <img class="eventImg" id="nowimage" src="<%= events.postIMG %>" >
-      <p><textarea id="eventUpdateContent" class="textarea" value="<%= events.content %>"></textarea></p>
+      <img class="eventImg" id="nowimage" src="<%= events.postIMG %>">
+      <textarea id="eventUpdateContent" class="textarea" value="<%= events.content %>"> 
+       <%= events.content %>
+      </textarea>
     </div>
   </div>
 </div>
