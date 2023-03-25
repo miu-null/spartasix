@@ -7,7 +7,7 @@ import {
   Post,
   Delete,
   Res,
-  Request,
+  Req,
   UploadedFile,
   UseInterceptors,
   Redirect,
@@ -27,7 +27,12 @@ export class UserpageController {
 
   @Get("/:userId")
   // @UseGuards(AuthGuard())
-  async getUserInfo(@Param("userId") userId: number, @Res() res: Response) {
+  async getUserInfo(
+    @Param("userId") userId: number,
+    @Res() res: Response,
+    @Req() req: Request,
+  ) {
+    const currentUser = req.user;
     const myInfo = await this.userPageService.getUserInfo(userId);
     return res.render("userInfo", { myInfo });
   }
