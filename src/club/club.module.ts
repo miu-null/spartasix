@@ -15,6 +15,7 @@ import { ClubCommentService } from "src/comments/clubcomment/clubcomment.service
 import { ClubCommentRepository } from "src/comments/clubcomment/clubcomment.repository";
 import { ClubComments } from "src/entities/clubcomments.entity";
 import { ClubCommentLikes } from "src/entities/clubcommentlikes.entity";
+import { PassportModule } from "@nestjs/passport";
 
 @Module({
   imports: [
@@ -25,11 +26,26 @@ import { ClubCommentLikes } from "src/entities/clubcommentlikes.entity";
       EventPosts,
       AbusingClubCounts,
       ClubComments,
-      ClubCommentLikes
+      ClubCommentLikes,
     ]),
+    PassportModule.register({
+      defaultStrategy: "jwt",
+    }),
   ],
   controllers: [ClubController],
-  providers: [ClubService, ClubRepository, SearcherService, SearcherRepository, ClubCommentService, ClubCommentRepository],
-  exports: [ClubService, ClubRepository, ClubCommentService, ClubCommentRepository],
+  providers: [
+    ClubService,
+    ClubRepository,
+    SearcherService,
+    SearcherRepository,
+    ClubCommentService,
+    ClubCommentRepository,
+  ],
+  exports: [
+    ClubService,
+    ClubRepository,
+    ClubCommentService,
+    ClubCommentRepository,
+  ],
 })
-export class ClubModule { }
+export class ClubModule {}

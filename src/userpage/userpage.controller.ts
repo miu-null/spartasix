@@ -20,7 +20,6 @@ import { AuthGuard } from "@nestjs/passport";
 import { Express } from "express";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { AuthMiddleware } from "src/auth/auth.middleware";
 
 @Controller("userpage")
 export class UserpageController {
@@ -128,11 +127,11 @@ export class UserpageController {
   }
 
   // 유저 신청서 조회
-  @Get("/:userId/clubs/app")
+  @Get("/clubs/:userId/app")
   // @UseGuards(AuthGuard())
   async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
     const myApps = await this.userPageService.getClubApps(userId);
-    return myApps;
+    return res.json(myApps);
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
@@ -145,6 +144,7 @@ export class UserpageController {
   }
 
   @Patch("/:userId/clubs/app/:clubMemberId") // 모임신청 수락 - 모임신청 테이블의 isAccepted true (완료)
+  @UseGuards(AuthGuard())
   async getThisMember(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
@@ -157,6 +157,7 @@ export class UserpageController {
   }
 
   @Delete("/:userId/clubs/app/:clubMemberId") // 모임신청 삭제 - 모임신청 테이블에서 삭제하기 (완료)
+  @UseGuards(AuthGuard())
   async rejectApps(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
