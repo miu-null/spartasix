@@ -1,3 +1,9 @@
+<script>
+  function onUpload(e) {
+    var imageUrl = URL.createObjectURL(e.files[0])
+    document.getElementById('nowimage').src = imageUrl;
+  }
+  </script>
 <div class="eventdetail_container">
     <div class="eventdetail_button">
       <div class="eventdetail_edit">
@@ -40,13 +46,14 @@
         <div class="first_file">
           image
         </div>
-          <div class="col-8">
-            <input type="file" id="eventPostImg" accept="image/*" placeholder="img" >
-          </div>
+        <div class="col-8">
+          <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" placeholder="img">
+        </div>
       </div>
     </div>
     <div class="eventdetail_body">
       <div class="eventdetail_body_text">
+        <img class="eventImg" id="nowimage">
         <textarea id="eventContent"  class="textarea" placeholder="content"></textarea>
       </div>
     </div>

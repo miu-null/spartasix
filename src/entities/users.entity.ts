@@ -18,7 +18,7 @@ import { EventComments } from "./eventcomments.entity";
 import { EventCommentLikes } from "./eventcommentlikes.entity";
 import { EventLikes } from "./eventlikes.entity";
 import { EventMembers } from "./eventmembers.entity";
-import { EventPosts } from "./eventposts.entity";
+import { EventPosts } from "./events.entity";
 
 @Entity({ schema: "Users", name: "Users" })
 export class Users {

@@ -81,6 +81,18 @@
                       <td id="Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
                       <td id="Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
                       <td id="Writer"><a class="postLink" href="/userpage/<%= data.user.id %>"><%= data.user.nickName %></a></td>
+                      <td id="Date"><%= data.startDate %> ~ <%= data.endDate %></td>
+                      <td id="View"><%= data.viewCount %></td>
+                      <td id="Likes"><%= data.Likes %></td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                <!-- <tbody>
+                    <% slicedData.forEach(data => { %>
+                    <tr id="event_tr">
+                      <td id="Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
+                      <td id="Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
+                      <td id="Writer"><a class="postLink" href="/userpage/<%= data.user.id %>"><%= data.user.nickName %></a></td>
                       <td id="Date">
                         <% const postDate=new Date(data.createdAt); %>
                         <% if (isSameDay(postDate, currentDate)) { %>
@@ -93,7 +105,7 @@
                       <td id="Likes"><%= data.Likes %></td>
                     </tr>
                     <% }) %>
-                  </tbody>
+                  </tbody> -->
             </table>
         </div>
     </div>
