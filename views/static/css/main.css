@@ -54,25 +54,3 @@
 .main_image {
   width: 30%;
 }
-
-/* 레이아웃 테스트 */
-#my-grid {
-  display: grid;
-  grid-template-columns: auto 850px auto;
-  grid-template-rows: 1fr;
-  grid-template-areas: 
-    "box1 box2 box3";
-}
-
-.box1 {
-  grid-area: box1;
-}
-
-.box2 {
-  grid-area: box2;
-  background-color: #ffffff;
-}
-
-.box3 {
-  grid-area: box3;
-}

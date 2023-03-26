@@ -1,5 +1,5 @@
 .popular_main_container {
-  width: 130%;
+  width: 100%;
   margin-left: 0%;
   margin-right: 0%;
 }
@@ -14,7 +14,6 @@
   font-size: small;
   letter-spacing: 0.3px;
 }
-
 
 
 /* 게시글 검색창 하단 */
@@ -60,4 +59,26 @@ input {
   color: white; /* 활성화된 버튼의 텍스트 색상 */
   background-color: darkred; /* 활성화된 버튼의 배경색 */
   border-color: darkred; /* 활성화된 버튼의 테두리 색상 */
+}
+
+/* 인기글 레이아웃 위치*/
+#my-grid {
+  display: grid;
+  grid-template-columns: auto 850px auto;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+    "box1 box2 box3";
+}
+
+.box1 {
+  grid-area: box1;
+}
+
+.box2 {
+  grid-area: box2;
+  background-color: #ffffff;
+}
+
+.box3 {
+  grid-area: box3;
 }
