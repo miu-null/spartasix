@@ -8,11 +8,9 @@ function event_open() {
   });
 }
 
-
 function dateValidate() {
   let startDate = new Date($("#eventUpdateStartDate").val());
   let endDate = new Date($("#eventUpdateEndDate").val());
-  console.log("startDate:", startDate, "endDate:", endDate)
 
   if (startDate > endDate) {
     alert("종료 날짜는 시작 날짜보다 커야 합니다.");
@@ -22,25 +20,18 @@ function dateValidate() {
 function updateDateValidate() {
   let startDate = new Date($("#eventStartDate").val());
   let endDate = new Date($("#eventEndDate").val());
-  console.log("startDate:", startDate, "endDate:", endDate)
 
   if (startDate > endDate) {
     alert("종료 날짜는 시작 날짜보다 커야 합니다.");
   }
 }
 
-
-
-// 메일 알림
 function remindEvent() {
   const id = document.getElementById("event_id").innerText;
   const title = document.getElementById("event_title").innerText;
   const email = document.getElementById("event_modal_email").value;
   const startDate = document.getElementById("event_startDate").innerText;
   const endDate = document.getElementById("event_endDate").innerText;
-  // const postImg = document.getElementById("event_postIMG").val; 파일정보 빼오는법 찾아야함.
-
-  console.log('info:', id, title, email, startDate, endDate)
 
   $.ajax({
     type: "POST",
@@ -60,28 +51,35 @@ function remindEvent() {
       window.location.replace("/events/list");
     },
     errorfunction(request, status, error) {
-      alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-    }
+      alert(
+        "code:" +
+          request.status +
+          "\n" +
+          "message:" +
+          request.responseText +
+          "\n" +
+          "error:" +
+          error,
+      );
+    },
   });
-
 }
 
 function eventNew() {
-
   const formData = new FormData();
   formData.append("title", $("#eventTitle").val());
   formData.append("startDate", $("#eventStartDate").val());
   formData.append("endDate", $("#eventEndDate").val());
   formData.append("content", $("#eventContent").val());
   formData.append("file", $("#eventPostImg")[0].files[0]);
-  console.log(formData)
+
   $.ajax({
     type: "POST",
     url: "/events/newevent",
     data: formData,
     enctype: "multipart/form-data",
-    processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
-    contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
+    processData: false,
+    contentType: false,
     success: function (response) {
       alert("작성 완료");
       window.location.replace("/events/list");
@@ -101,8 +99,8 @@ function eventNew() {
               url: "/events/newevent",
               data: formData,
               enctype: "multipart/form-data",
-              processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
-              contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
+              processData: false,
+              contentType: false,
               success: function (response) {
                 alert("작성 완료");
                 window.location.replace("/events/list");
@@ -122,21 +120,20 @@ function updateEvent(eventPostId) {
   formData.append("endDate", $("#endDate").val());
   formData.append("content", $("#event_content").val());
   formData.append("file", $("#eventPostImg")[0].files[0]);
-  console.log(FormData)
 
   $.ajax({
     type: "PATCH",
     url: `/events/list/${eventPostId}/update`,
     data: formData,
     enctype: "multipart/form-data",
-    processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
-    contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
+    processData: false,
+    contentType: false,
     success: function (response) {
       alert("수정 완료");
       window.location.replace(`/events/list/${eventPostId}`);
     },
     error: function (request) {
-     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용가능한 기능입니다.");
       }
 
@@ -150,8 +147,8 @@ function updateEvent(eventPostId) {
               url: `/events/list/${eventPostId}/update`,
               data: formData,
               enctype: "multipart/form-data",
-              processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
-              contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
+              processData: false,
+              contentType: false,
               success: function (response) {
                 alert("수정 완료");
                 window.location.replace(`/events/list/${eventPostId}`);
@@ -176,7 +173,7 @@ function deleteEvent(eventPostId) {
       window.location.replace("/events/list");
     },
     error: function (request) {
-     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용가능한 기능입니다.");
       }
 
@@ -220,7 +217,7 @@ function createEventComment(postId) {
       window.location.reload();
     },
     error: function (request) {
-     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용가능한 기능입니다.");
       }
 
@@ -311,11 +308,11 @@ function updateEventComment(commentId, content) {
           window.location.reload();
         }
 
-     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
-      }
+        if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+          alert("로그인 후 이용가능한 기능입니다.");
+        }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+        if (request.responseJSON["message"] === "Unauthorized") {
           $.ajax({
             type: "POST",
             url: "/auth/new-accessToken",
@@ -379,7 +376,7 @@ function deleteEventComment(eventcommentId) {
         window.location.reload();
       }
 
-     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용가능한 기능입니다.");
       }
 
@@ -435,7 +432,7 @@ function updateLike(commentId) {
         window.location.reload();
       }
 
-     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용가능한 기능입니다.");
       }
 

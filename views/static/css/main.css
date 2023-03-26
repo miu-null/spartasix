@@ -1,7 +1,3 @@
-/* :root {
-  --bs-font-sans-serif: "Rubik", sans-serif;
-} */
-
 :root {
   font-family: "Amiko", sans-serif;
 }
@@ -54,14 +50,14 @@
   width: 30%;
 }
 
-/* 레이아웃 테스트 */
 #page {
   display: grid;
   width: 100%;
   height: 250px;
-  grid-template-areas: "head head"
-                       "side  main"
-                       "foot  foot";
+  grid-template-areas:
+    "head head"
+    "side  main"
+    "foot  foot";
   grid-template-rows: 50px 1fr 30px;
   grid-template-columns: 350px 1fr;
 }

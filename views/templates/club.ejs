@@ -1,39 +1,49 @@
 <div class="container popular_container">
   <div class="club_table_container">
-  <table class="table table-hover club_table">
-    <thead id="club_thead">
-      <tr>
-        <th>모임 인기글</th>
-        <th></th>
-        <th></th>
-        <th>👀</th>
-        <th></th>
-        <th>📆</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (sortPosts.length) { %>
-        <% const maxViewCount = Math.max(...sortPosts.map(data => data.viewCount)) %>
-        <% sortPosts.forEach(data => { %>
-          <tr id="club_tr">
-            <% if (data.viewCount === maxViewCount) { %>
-              <td>🥇</td>
-            <% } else { %>
-              <td>🥈</td>
-            <% } %>
-          <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
-          <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.nickName %></a></td>
-          <td id="club_View"><%= data.viewCount %></td>
-          <td id="club_Likes"><%= data.Likes %></td>
-          <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
-          <% }) %>
-          <% } else { %>
-            <td id="club_Likes"> 인기글이 없습니다.</td>
-            <% } %>
-          </tr>  
-    </tbody>
-  </table>
-</div>
+    <table class="table table-hover club_table">
+      <thead id="club_thead">
+        <tr>
+          <th>모임 인기글</th>
+          <th></th>
+          <th></th>
+          <th>👀</th>
+          <th></th>
+          <th>📆</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (sortPosts.length) { %>
+          <% const maxViewCount=Math.max(...sortPosts.map(data=> data.viewCount)) %>
+            <% sortPosts.forEach(data=> { %>
+              <tr id="club_tr">
+                <% if (data.viewCount===maxViewCount) { %>
+                  <td>🥇</td>
+                  <% } else { %>
+                    <td>🥈</td>
+                    <% } %>
+                      <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
+                          <%= data.title %>
+                        </a></td>
+                      <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
+                          <%= data.nickName %>
+                        </a></td>
+                      <td id="club_View">
+                        <%= data.viewCount %>
+                      </td>
+                      <td id="club_Likes">
+                        <%= data.Likes %>
+                      </td>
+                      <td id="club_Date">
+                        <%= reformPostDate(data.createdAt) %>
+                      </td>
+                      <% }) %>
+                        <% } else { %>
+                          <td id="club_Likes"> 인기글이 없습니다.</td>
+                          <% } %>
+              </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 
@@ -57,13 +67,27 @@
       <tbody>
         <% slicedData.forEach(data=> { %>
           <tr id="club_tr">
-            <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
-            <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></td>
-            <td id="club_maxMember"><%= data.maxMembers %></td>
-            <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
-            <td id="club_View"><%= data.viewCount %></td>
-            <td id="club_Likes"><%= data.Likes %></td>
+            <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'>
+                <%= data.id %>
+              </a></td>
+            <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
+                <%= data.title %>
+              </a></td>
+            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
+                <%= data.user.nickName %>
+            </td>
+            <td id="club_maxMember">
+              <%= data.maxMembers %>
+            </td>
+            <td id="club_Date">
+              <%= reformPostDate(data.createdAt) %>
+            </td>
+            <td id="club_View">
+              <%= data.viewCount %>
+            </td>
+            <td id="club_Likes">
+              <%= data.Likes %>
+            </td>
           </tr>
           <% }) %>
       </tbody>
@@ -71,7 +95,6 @@
   </div>
 </div>
 
-<!-- 페이지네이션 버튼 -->
 <div id="pagination">
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
@@ -109,7 +132,7 @@
 <section id="search" class="search-wrap">
   <form action="/club/search" class="search-form">
     <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-      <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용"
-        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용" aria-label="Search"
+        pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
   </form>
 </section>

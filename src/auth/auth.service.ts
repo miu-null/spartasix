@@ -28,7 +28,7 @@ export class AuthService {
     if (!email || !password || !nickName || !phone) {
       throw new BadRequestException("모든 항목을 작성해 주세요.");
     }
-    // 뭔가 생성될 때는 객체/ Id를 리턴해주는 것이 권장됩니다.
+
     if (password !== confirmpassword) {
       throw new BadRequestException(
         "비밀번호와 비밀번호 확인란이 일치하지 않습니다.",
@@ -48,8 +48,6 @@ export class AuthService {
 
     const accessToken = await this.AccessToken(user.id);
     const refreshToken = await this.RefreshToken(user.email);
-    console.log("acc   " + accessToken);
-    console.log("ref   " + refreshToken);
 
     await this.redisService.setRefreshToken(
       {
@@ -119,11 +117,9 @@ export class AuthService {
     if (!user) {
       throw new BadRequestException("로그인 후 이용 가능한 기능입니다.");
     }
-    console.log("user : ", user["userId"])
     const newAccessToken = await this.AccessToken(Number(user["userId"]));
 
-
-    const Header = {newAccessToken, refreshtoken, accessToken}
+    const Header = { newAccessToken, refreshtoken, accessToken };
 
     return Header;
   }

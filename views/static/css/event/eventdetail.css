@@ -239,7 +239,6 @@
   margin-left: 60px;
 }
 
-/* The Modal (background) */
 .event_modal {
   position: absolute;
   width: 100%;
@@ -353,7 +352,7 @@
 .comment_input_button {
   border: 1px solid #ea4e4e;
   border-radius: 30px;
-  background-color: #EA4E4E;
+  background-color: #ea4e4e;
   font-weight: bold;
   width: 60px;
   height: 30px;
@@ -413,7 +412,7 @@
 .comment_button {
   border: none;
   background-color: #ffff;
-  color: #EA4E4E;
+  color: #ea4e4e;
   font-weight: bold;
   margin-right: 5px;
 }
@@ -432,7 +431,7 @@
   margin-top: -5px;
   border: none;
   background-color: #ffff;
-  color: #EA4E4E;
+  color: #ea4e4e;
   font-weight: bold;
   font-size: 1rem;
 }

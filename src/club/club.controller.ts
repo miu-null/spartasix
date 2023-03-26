@@ -12,7 +12,7 @@ import {
   ParseIntPipe,
   DefaultValuePipe,
   Render,
-  UseGuards
+  UseGuards,
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -20,8 +20,7 @@ import { UpdateClubDto } from "./dto/updateclub.dto";
 import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
-import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate, paginatedResults } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
+import { reformPostDate, paginatedResults } from "../../views/static/js/filter";
 import { AuthGuard } from "@nestjs/passport";
 
 @Controller("club")
@@ -29,18 +28,17 @@ export class ClubController {
   constructor(
     private readonly clubService: ClubService,
     private readonly searchService: SearcherService,
-  ) { }
+  ) {}
 
-  //게시판 게시글 목록 조회
   @Get("/list")
   async getClubs(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Res() res: Response) {
+    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response,
+  ) {
+    const clubs = await this.clubService.getClubs();
+    const pagingposts = await paginatedResults(page, clubs);
+    const sortPosts = await this.searchService.getPopularClubs();
 
-    const clubs = await this.clubService.getClubs();     /// 게시글 목록 데이터
-    const pagingposts = await paginatedResults(page, clubs)  // 페이지네이션 처리
-    const sortPosts = await this.searchService.getPopularClubs(); ///인기글 조회
-    
     return res.render("club.ejs", {
       ...pagingposts,
       sortPosts,
@@ -67,7 +65,6 @@ export class ClubController {
     return post;
   }
 
-  // 신청서 작성
   @Post("/:id")
   @UseGuards(AuthGuard())
   async createApp(
@@ -110,21 +107,19 @@ export class ClubController {
   }
 
   @Get("/list/:id")
-  @Render('clubsdetail.ejs')
-  async getClubsById(
-    @Param("id") id: number,
-    ) {
+  @Render("clubsdetail.ejs")
+  async getClubsById(@Param("id") id: number) {
     const detail = await this.clubService.getClubById(id);
-    const prevPost = detail.data.prevPost
-    const nowPost = detail.data.nowPost
-    const nextPost = detail.data.nextPost
-    const comments = detail.comments
-    const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
-    console.log("detail : ", comments)
+    const prevPost = detail.data.prevPost;
+    const nowPost = detail.data.nowPost;
+    const nextPost = detail.data.nextPost;
+    const comments = detail.comments;
+    const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate };
+
     return {
       ...postSet,
-      }
     };
+  }
 
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
@@ -134,7 +129,6 @@ export class ClubController {
     return true;
   }
 
-  ///모임게시판 검색기능
   @Get("/search")
   async searchClubs(
     @Query("page") page: number,
@@ -152,23 +146,7 @@ export class ClubController {
     return res.render("clubsearch.ejs", {
       term,
       ...searchData,
-      reformPostDate
+      reformPostDate,
     });
   }
-  // @Post("/list/report/:id")
-  // async reportClub(
-  //   @Param("id") id: number,
-  //   @Body data: ReportClubDto,
-  //   @Req() req,
-  // ) {
-  //   const userId = req.user;
-  //   const reportPost = await this.clubService.reportClub(
-  //     id,
-  //     userId,
-  //     clubId,
-  //     reportReason,
-  //     reportContent,
-  //   );
-  //   return reportPost;
-  // }
 }

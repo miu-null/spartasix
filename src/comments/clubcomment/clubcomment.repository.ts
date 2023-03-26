@@ -43,7 +43,6 @@ export class ClubCommentRepository {
   }
 
   async createComment(userId: number, clubId: number, content: string) {
-    console.log("userId : " + userId);
     this.clubRepository.insert({
       userId,
       clubId,
@@ -54,8 +53,6 @@ export class ClubCommentRepository {
 
   async updateComment(userId: number, clubCommentId: number, content: string) {
     const comment = await this.findCommentUserId(clubCommentId);
-    console.log("userId", userId)
-    console.log(comment.userId)
     if (!comment) {
       throw new BadRequestException("댓글이 존재하지 않습니다.");
     }

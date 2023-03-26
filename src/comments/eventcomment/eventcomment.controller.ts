@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { CreateCommentDto } from "../dto/createcomment.dto";
 import { EventCommentService } from "./eventcomment.service";
@@ -28,17 +37,18 @@ export class EventCommentController {
     @Req() req,
   ) {
     const userId = req.user;
-    await this.eventCommentService.updateComment(userId, eventCommentId, data.content);
+    await this.eventCommentService.updateComment(
+      userId,
+      eventCommentId,
+      data.content,
+    );
 
     return true;
   }
 
   @Delete("/delete-comment/:id")
   @UseGuards(AuthGuard())
-  async deleteComment(
-    @Param("id") eventCommentId: number,
-    @Req() req,
-  ) {
+  async deleteComment(@Param("id") eventCommentId: number, @Req() req) {
     const userId = req.user;
     await this.eventCommentService.deleteComment(userId, eventCommentId);
 
@@ -47,13 +57,10 @@ export class EventCommentController {
 
   @Post("/update_event_like/:commentId")
   @UseGuards(AuthGuard())
-  async updateLike(
-    @Req() req, 
-    @Param("commentId") commentId: number,
-    ) {
+  async updateLike(@Req() req, @Param("commentId") commentId: number) {
     const userId = req.user;
 
-    await this.eventCommentService.updateLike(userId, commentId)
+    await this.eventCommentService.updateLike(userId, commentId);
 
     return true;
   }

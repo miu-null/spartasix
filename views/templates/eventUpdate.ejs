@@ -3,7 +3,7 @@
     var imageUrl = URL.createObjectURL(e.files[0])
     document.getElementById('nowimage').src = imageUrl;
   }
-  </script>
+</script>
 
 <div class="eventdetail_container">
   <div class="eventdetail_button">
@@ -32,7 +32,8 @@
           Event started at :
         </div>
         <div class="col-3">
-          <input type="date" id="startDate" class="form-control" value="<%= event.startDate %>"onchange="dateValidate()">
+          <input type="date" id="startDate" class="form-control" value="<%= event.startDate %>"
+            onchange="dateValidate()">
         </div>
       </div>
       <div class="eventdetail_second_end">
@@ -40,7 +41,7 @@
           Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="endDate" class="form-control" value="<%= event.endDate %>"onchange="dateValidate()">
+          <input type="date" id="endDate" class="form-control" value="<%= event.endDate %>" onchange="dateValidate()">
         </div>
       </div>
     </div>
@@ -49,7 +50,8 @@
         image
       </div>
       <div class="col-8">
-        <input type="file" onchange="onUpload(this)" name="eventPostImg" id="eventPostImg" accept="image/*" value="<%= event.postIMG %>">
+        <input type="file" onchange="onUpload(this)" name="eventPostImg" id="eventPostImg" accept="image/*"
+          value="<%= event.postIMG %>">
       </div>
     </div>
   </div>

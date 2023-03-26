@@ -2,80 +2,85 @@
   <div class="searchCount" id="searchCount">검색결과 : 총<%= searchCount %>건</div>
   <div class="event_table_container">
     <table class="table table-hover event_table">
-        <thead id="event_thead">
-            <tr>
-                <th>유저검색</th>
-                <th>닉네임</th>
-                <th>GITHUB</th>
-                <th>좋아요</th>
-                <th>가입일</th>
-            </tr>
-        </thead>
-        <tbody>
-          <% if (slicedData.length) { %>
-            <% slicedData.forEach(data=> { %>
-                <tr id="club_tr">
-                    <td id="club_Id"> 유저 </td>
-                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.nickName%><img src="<%= data.userIMG %>"width="40"></a></td>
-                    <td id="club_Likes"><%= data.snsURL %>
-                    <td id="club_Likes"><%= data.Likes %></td>
-                    <td id="club_Date"><%= data.createdAt %></td>
+      <thead id="event_thead">
+        <tr>
+          <th>유저검색</th>
+          <th>닉네임</th>
+          <th>GITHUB</th>
+          <th>좋아요</th>
+          <th>가입일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (slicedData.length) { %>
+          <% slicedData.forEach(data=> { %>
+            <tr id="club_tr">
+              <td id="club_Id"> 유저 </td>
+              <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>">
+                  <%= data.nickName%><img src="<%= data.userIMG %>" width="40">
+                </a></td>
+              <td id="club_Likes">
+                <%= data.snsURL %>
+              <td id="club_Likes">
+                <%= data.Likes %>
+              </td>
+              <td id="club_Date">
+                <%= data.createdAt %>
+              </td>
 
-                  </td>
-                <% }) %>
+              </td>
+              <% }) %>
                 <% } else { %>
                   <td id="club_Likes">검색 결과가 없습니다.</td>
                   <% } %>
-                </tr>  
-        </tbody>
+            </tr>
+      </tbody>
     </table>
-</div>
+  </div>
 
-    <!-- 페이지네이션 버튼 -->
-    <div id="pagination">
-      <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-          <% if (unitStart - 1> 0 ) { %>
-            <li class="page-item">
-              <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitStart -1 %>" tabindex="-1"
-                aria-disabled="true">이전</span>
-              </a>
-            </li>
-            <% } %>
-              <% for (let i=unitStart; i <=unitEnd; i++) { %>
-                <% if (i <=lastPage) { %>
-                  <% if ( i===page) { %>
-                    <li class="page-item active" aria-current="page">
-                      <span class="page-link">
+  <div id="pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <% if (unitStart - 1> 0 ) { %>
+          <li class="page-item">
+            <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitStart -1 %>" tabindex="-1"
+              aria-disabled="true">이전</span>
+            </a>
+          </li>
+          <% } %>
+            <% for (let i=unitStart; i <=unitEnd; i++) { %>
+              <% if (i <=lastPage) { %>
+                <% if ( i===page) { %>
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                      <%= i %>
+                    </span>
+                  </li>
+                  <% } else { %>
+                    <li class="page-item"><a class="page-link" href="users?term=<%=term.term %>&page=<%= i %>">
                         <%= i %>
-                      </span>
-                    </li>
-                    <% } else { %>
-                      <li class="page-item"><a class="page-link" href="users?term=<%=term.term %>&page=<%= i %>">
-                          <%= i %>
-                        </a></li>
+                      </a></li>
+                    <% } %>
                       <% } %>
                         <% } %>
-                          <% } %>
-                            <% if (unitEnd <=lastPage) { %>
-                              <li class="page-item">
-                                <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
-                                </a>
-                              </li>
-                              <% } %>
-        </ul>
-      </nav>
-    </div>
-
-
-
-    <section id="search" class="search-wrap">
-      <form action="/search/users" class="search-form">
-        <!-- <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3"> -->
-        <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
-          aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
-      </form>
-    </section>
-
+                          <% if (unitEnd <=lastPage) { %>
+                            <li class="page-item">
+                              <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
+                              </a>
+                            </li>
+                            <% } %>
+      </ul>
+    </nav>
   </div>
+
+
+
+  <section id="search" class="search-wrap">
+    <form action="/search/users" class="search-form">
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
+        aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+    </form>
+  </section>
+
+</div>
 </div>

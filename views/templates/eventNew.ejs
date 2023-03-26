@@ -3,58 +3,57 @@
     var imageUrl = URL.createObjectURL(e.files[0])
     document.getElementById('nowimage').src = imageUrl;
   }
-  </script>
+</script>
 <div class="eventdetail_container">
-    <div class="eventdetail_button">
-      <div class="eventdetail_edit">
-        <a onclick="eventNew()" class="new_event">작성&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
-      </div>
-      <div class="eventdetail_delete">
-        <a href="/events/list" class="new_event">취소</a>
-      </div>
+  <div class="eventdetail_button">
+    <div class="eventdetail_edit">
+      <a onclick="eventNew()" class="new_event">작성&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
-    <div class="eventdetail_title">
-      <div class="eventdetail_first">
-        <div class="eventdetail_first_title">
-          <div class="first_title">
-            Title
-          </div>
-          <div class="title_text">
-            <input id="eventTitle" class="event_title" placeholder="title">
-          </div>
+    <div class="eventdetail_delete">
+      <a href="/events/list" class="new_event">취소</a>
+    </div>
+  </div>
+  <div class="eventdetail_title">
+    <div class="eventdetail_first">
+      <div class="eventdetail_first_title">
+        <div class="first_title">
+          Title
         </div>
-      </div>
-      <div class="eventdetail_second">
-        <div class="eventdetail_second_start">
-          <div class="event_start_date">
-            Event started at : 
-          </div>
-          <div class="col-3">
-            <input type="date" id="eventStartDate" class="form-control" placeholder="이벤트 시작 기간">
-        </div>
-        </div>
-        <div class="eventdetail_second_end">
-          <div class="event_end_date">
-            Event ended at : 
-          </div>
-          <div class="col-3">
-            <input type="date" id="eventEndDate" class="form-control" placeholder="이벤트 시작 기간">
-        </div>
-        </div>
-      </div>
-      <div class="eventdetail_third">
-        <div class="first_file">
-          image
-        </div>
-        <div class="col-8">
-          <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" placeholder="img">
+        <div class="title_text">
+          <input id="eventTitle" class="event_title" placeholder="title">
         </div>
       </div>
     </div>
-    <div class="eventdetail_body">
-      <div class="eventdetail_body_text">
-        <img class="eventImg" id="nowimage">
-        <textarea id="eventContent"  class="textarea" placeholder="content"></textarea>
+    <div class="eventdetail_second">
+      <div class="eventdetail_second_start">
+        <div class="event_start_date">
+          Event started at :
+        </div>
+        <div class="col-3">
+          <input type="date" id="eventStartDate" class="form-control" placeholder="이벤트 시작 기간">
+        </div>
+      </div>
+      <div class="eventdetail_second_end">
+        <div class="event_end_date">
+          Event ended at :
+        </div>
+        <div class="col-3">
+          <input type="date" id="eventEndDate" class="form-control" placeholder="이벤트 시작 기간">
+        </div>
       </div>
     </div>
- 
+    <div class="eventdetail_third">
+      <div class="first_file">
+        image
+      </div>
+      <div class="col-8">
+        <input type="file" name="eventPostImg" id="eventPostImg" accept="image/*" placeholder="img">
+      </div>
+    </div>
+  </div>
+  <div class="eventdetail_body">
+    <div class="eventdetail_body_text">
+      <img class="eventImg" id="nowimage">
+      <textarea id="eventContent" class="textarea" placeholder="content"></textarea>
+    </div>
+  </div>

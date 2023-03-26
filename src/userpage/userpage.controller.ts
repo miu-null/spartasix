@@ -25,8 +25,6 @@ import { FileInterceptor } from "@nestjs/platform-express";
 export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
 
-  // 유저정보, 회원 게시글, 운영 클럽 + 가입한 클럽 조회기능
-  // TODO 유저정보 조회 - 민감정보 열람권한은 본인만 가능하게 (프론트에서)
   @Get("/:userId")
   // @UseGuards(AuthGuard())
   async getUserInfo(@Param("userId") userId: number, @Res() res: Response) {
@@ -34,28 +32,19 @@ export class UserpageController {
     return res.render("userInfo", { myInfo });
   }
 
-  // 유저 게시물 조회
   @Get("/:userId/post")
   // @UseGuards(AuthGuard())
-  async getUserPost(
-    @Param("userId") userId: number,
-    // , @Res() res: Response
-  ) {
+  async getUserPost(@Param("userId") userId: number) {
     const myPosts = await this.userPageService.getMyPosts(userId);
     return myPosts;
   }
 
-  // 유저 클럽정보 조회
   @Get("/:userId/clubs")
-  async getUserClubs(
-    @Param("userId") userId: number,
-    // , @Res() res: Response
-  ) {
+  async getUserClubs(@Param("userId") userId: number) {
     const myClubs = await this.userPageService.getMyClubs(userId);
     return myClubs;
   }
 
-  // 유저정보 수정
   @Get("/:userId/edit")
   // @UseGuards(AuthGuard())
   async editUserInfo(@Param("userId") userId: number, @Res() res: Response) {
@@ -64,20 +53,18 @@ export class UserpageController {
     return res.render("userInfoEdit", context);
   }
 
-  // multipart/form-data 로 submit할때는 method를 patch로 변경시, multer middleware를 수정해야 하는 문제가 있음
-  @Post("/:userId/edit") // TODO 내 정보 수정하기, 본인검증로직 추가할 것
+  @Post("/:userId/edit")
   @UseInterceptors(FileInterceptor("userIMG"))
   @Redirect("", 302)
   async updateUser(
     @Param("userId") userId: number,
-    @Request() req: Request, // @Body() data: UserUpdateDto,
+    @Request() req: Request,
     @Body() data: UserUpdateDto,
     @UploadedFile() uploadedFile: Express.Multer.File,
   ) {
     const userInfo = await this.userPageService.getUserInfo(userId);
     let imgUrl = userInfo.userIMG;
-    console.log("hello world");
-    console.log(uploadedFile);
+
     if (!!uploadedFile) {
       AWS.config.update({
         credentials: {
@@ -86,7 +73,6 @@ export class UserpageController {
         },
       });
       const key = `${Date.now() + uploadedFile.originalname}`;
-      // AWS 객체 생성
       const upload = await new AWS.S3()
         .putObject({
           Key: key,
@@ -117,7 +103,7 @@ export class UserpageController {
     };
   }
 
-  @Get("/:userId/clubs/:clubId") // TODO 특정 클럽정보 조회
+  @Get("/:userId/clubs/:clubId")
   async getThisClub(
     @Param("userId") userId: number,
     @Param("clubId") clubId: number,
@@ -126,7 +112,6 @@ export class UserpageController {
     return thisClub;
   }
 
-  // 유저 신청서 조회
   @Get("/clubs/:userId/app")
   // @UseGuards(AuthGuard())
   async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
@@ -134,7 +119,7 @@ export class UserpageController {
     return res.json(myApps);
   }
 
-  @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
+  @Get("/:userId/clubs/app/:clubMemberId")
   async getThisApp(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
@@ -143,7 +128,7 @@ export class UserpageController {
     return thisApp;
   }
 
-  @Patch("/:userId/clubs/app/:clubMemberId") // 모임신청 수락 - 모임신청 테이블의 isAccepted true (완료)
+  @Patch("/:userId/clubs/app/:clubMemberId")
   @UseGuards(AuthGuard())
   async getThisMember(
     @Param("userId") userId: number,
@@ -156,7 +141,7 @@ export class UserpageController {
     return thisMember;
   }
 
-  @Delete("/:userId/clubs/app/:clubMemberId") // 모임신청 삭제 - 모임신청 테이블에서 삭제하기 (완료)
+  @Delete("/:userId/clubs/app/:clubMemberId")
   @UseGuards(AuthGuard())
   async rejectApps(
     @Param("userId") userId: number,

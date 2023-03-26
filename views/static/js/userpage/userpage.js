@@ -20,16 +20,12 @@ function modal_open2() {
   });
 }
 
-//ajax selectApp
 function selectApp(userId) {
   $.ajax({
     type: "GET",
     url: `/userpage/clubs/${userId}/app`,
     success: function (res) {
       let rows = res["myApps"];
-
-      console.log(rows);
-
       let full_html = "";
 
       for (let i = 0; i < rows.length; i++) {
@@ -171,7 +167,6 @@ function show_userPosts(userId, prev, next) {
       let clubPosts = res.clubPosts;
       let eventPosts = res.eventPosts;
       let rows = [];
-      console.log(res);
 
       let full_html = "";
       rows = clubPosts;
@@ -219,12 +214,3 @@ function show_userPosts(userId, prev, next) {
     },
   });
 }
-
-// function editInfo(userId) {
-//   $.ajax({
-//     type: "PATCH",
-
-//     async: true,
-//     success: function (res) {},
-//   });
-// }

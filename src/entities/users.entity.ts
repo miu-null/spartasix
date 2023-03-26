@@ -55,12 +55,6 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  // @ManyToMany(() => Clubs, (clubs) => clubs.user, {
-  //   onUpdate: "CASCADE",
-  //   onDelete: "CASCADE",
-  // })
-  // clubs: Clubs[];
-
   @OneToMany(() => Clubs, (clubs) => clubs.user, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",

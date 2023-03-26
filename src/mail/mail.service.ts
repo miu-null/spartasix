@@ -1,5 +1,5 @@
-import { MailerService } from "@nestjs-modules/mailer"
-import { Injectable } from "@nestjs/common"
+import { MailerService } from "@nestjs-modules/mailer";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class MailService {
@@ -12,14 +12,13 @@ export class MailService {
       from: "cvy5333@gmail.com",
       subject: "[스파르타 커뮤클럽] 비밀번호 인증",
       text: `인증 번호는 [ ${randomPassword} ] 입니다.`,
-    })
-    return randomPassword
+    });
+    return randomPassword;
   }
 
-
   async randomString() {
-    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    let result = '';
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let result = "";
     const charactersLength = characters.length;
     for (let i = 0; i < 7; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -28,7 +27,12 @@ export class MailService {
     return result;
   }
 
-  async remindEmail(email:string,startDate:Date,endDate:Date,title:string) {
+  async remindEmail(
+    email: string,
+    startDate: Date,
+    endDate: Date,
+    title: string,
+  ) {
     await this.mailerService.sendMail({
       to: `${email}`,
       from: "harucometrue7@gmail.com",
@@ -40,6 +44,6 @@ export class MailService {
               <p>이벤트 기간은 ${startDate}일부터 ${endDate}일까지 입니다. </p>
             </div>
           `,
-    })
+    });
   }
 }
