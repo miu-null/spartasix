@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
@@ -18,15 +14,22 @@ export class ClubRepository {
     private clubmemberRepository: Repository<ClubMembers>,
     @InjectRepository(AbusingClubCounts)
     private abusingClubRepository: Repository<AbusingClubCounts>,
-  ) { }
+  ) {}
 
-  // 게시판 게시글 목록 조회
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
-      relations : {user : true},
-      select: ["id", "title", "maxMembers", "createdAt", "userId", "category", "viewCount"],
-      order: {id: 'DESC'}  //최신순(내림차순)
+      relations: { user: true },
+      select: [
+        "id",
+        "title",
+        "maxMembers",
+        "createdAt",
+        "userId",
+        "category",
+        "viewCount",
+      ],
+      order: { id: "DESC" },
     });
     return data;
   }
@@ -93,28 +96,28 @@ export class ClubRepository {
   }
 
   async getClubById(clubId: number) {
-    const nowPost = await this.clubRepository.findOne({  //현재글 세부 정보 표기
+    const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
-      relations : {user : true}
+      relations: { user: true },
     });
- 
-    const prevPost = await this.clubRepository.findOne({  //이전글 표기
-      where: {id: LessThan(clubId)},
-      relations : {user : true},
-      order: {id: 'DESC'}  
-    })
-    const nextPost = await this.clubRepository.findOne({  //다음글 표기
-      where: {id: MoreThan(clubId)},
-      relations : {user : true},
-      order: {id: 'ASC'}
+
+    const prevPost = await this.clubRepository.findOne({
+      where: { id: LessThan(clubId) },
+      relations: { user: true },
+      order: { id: "DESC" },
     });
-        await this.clubRepository
-    .createQueryBuilder()
-    .update(Clubs)
-    .set({ viewCount: () => 'viewCount + 1' }) // 조회수를 1 증가
-    .where('id = :id', { id: clubId })
-    .execute(); // 쿼리 실행
-    return { prevPost, nowPost, nextPost};
+    const nextPost = await this.clubRepository.findOne({
+      where: { id: MoreThan(clubId) },
+      relations: { user: true },
+      order: { id: "ASC" },
+    });
+    await this.clubRepository
+      .createQueryBuilder()
+      .update(Clubs)
+      .set({ viewCount: () => "viewCount + 1" })
+      .where("id = :id", { id: clubId })
+      .execute();
+    return { prevPost, nowPost, nextPost };
   }
 
   async deleteClubDto(userId: number, clubId: number) {
@@ -123,7 +126,7 @@ export class ClubRepository {
     if (!article) {
       throw new BadRequestException("게시글이 존재하지 않습니다.");
     }
-    console.log("userId:", userId);
+
     if (userId !== article.nowPost.userId) {
       throw new BadRequestException("작성자만 사용할 수 있는 기능입니다.");
     }

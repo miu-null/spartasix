@@ -84,7 +84,6 @@
   top: 1px;
 }
 
-/* 검색창 */
 .search {
   width: 300px;
   margin-right: 10px;
@@ -110,12 +109,3 @@
 input::-webkit-search-cancel-button {
   display: none;
 }
-
-/* 검색창 돋보기 */
-/* .search img {
-  position: absolute;
-  width: 17px;
-  top: 10px;
-  right: 12px;
-  margin: 0;
-} */

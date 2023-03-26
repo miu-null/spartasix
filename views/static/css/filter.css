@@ -4,7 +4,7 @@
   margin-right: 0%;
 }
 
-.popular_container{
+.popular_container {
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
@@ -15,8 +15,6 @@
   letter-spacing: 0.3px;
 }
 
-
-/* 게시글 검색창 하단 */
 .search-wrap {
   position: relative;
   width: 250px;

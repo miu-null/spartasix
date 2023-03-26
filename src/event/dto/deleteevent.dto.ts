@@ -1,7 +1,6 @@
-import { IsNumber } from 'class-validator';
+import { IsNumber } from "class-validator";
 
 export class DeleteEventDto {
-    @IsNumber()
-    readonly id: Number;
-  
+  @IsNumber()
+  readonly id: Number;
 }

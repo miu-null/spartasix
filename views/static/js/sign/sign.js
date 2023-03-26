@@ -144,11 +144,10 @@ function find_password() {
   });
 }
 
-// 미완성
 function checkpass(randompassword) {
-  const button = document.querySelector("#div-check"); // 인증 번호 넣을 div
-  const subbutton = document.querySelector("#onsubmit"); // 지울 버튼
-  const form = document.querySelector("#login1"); // 최상위 form
+  const button = document.querySelector("#div-check");
+  const subbutton = document.querySelector("#onsubmit");
+  const form = document.querySelector("#sign_login1");
   const textinput = document.createElement("input");
   const textbutton = document.createElement("input");
 
@@ -157,11 +156,11 @@ function checkpass(randompassword) {
   button.appendChild(textinput);
   button.appendChild(textbutton);
 
-  textinput.setAttribute("class", "input-field1");
+  textinput.setAttribute("class", "sign_input-field1");
   textinput.setAttribute("id", "rename_pass");
   textinput.setAttribute("placeholder", "authentication password");
 
-  textbutton.setAttribute("class", "submit12");
+  textbutton.setAttribute("class", "sign_submit12");
   textbutton.setAttribute("id", "checkpass");
   textbutton.setAttribute("type", "button");
   textbutton.setAttribute("value", "인증 하기");
@@ -177,10 +176,10 @@ function checkpass(randompassword) {
 
     if (rename_pass === randompassword.randomPassword) {
       alert("인증 완료. 새로운 비밀번호를 입력해주세요.");
-      const input1 = document.querySelector("#email1"); // 지울 input
-      const input2 = document.querySelector("#phone1"); // 지울 input
-      const input3 = document.querySelector("#rename_pass"); // 지울 input
-      const button1 = document.querySelector("#checkpass"); // 지울 input
+      const input1 = document.querySelector("#email1");
+      const input2 = document.querySelector("#phone1");
+      const input3 = document.querySelector("#rename_pass");
+      const button1 = document.querySelector("#checkpass");
       const newpassinput = document.createElement("input");
       const newpassbutton = document.createElement("input");
 
@@ -192,11 +191,11 @@ function checkpass(randompassword) {
       button.removeChild(input3);
       button.removeChild(button1);
 
-      newpassinput.setAttribute("class", "input-field1");
+      newpassinput.setAttribute("class", "sign_input-field1");
       newpassinput.setAttribute("id", "new_input");
       newpassinput.setAttribute("placeholder", "new password");
 
-      newpassbutton.setAttribute("class", "submit12");
+      newpassbutton.setAttribute("class", "sign_submit12");
       newpassbutton.setAttribute("id", "new_passbtn");
       newpassbutton.setAttribute("type", "button");
       newpassbutton.setAttribute("value", "비밀번호 변경하기");
@@ -223,31 +222,5 @@ function checkpass(randompassword) {
         });
       });
     }
-  });
-}
-
-function test() {
-  $.ajax({
-    type: "POST",
-    url: "/auth/test",
-    success: function (response) {
-      console.log(response);
-    },
-    error: function (request) {
-      console.log(request);
-      if (request.responseJSON["message"] === "Unauthorized") {
-        $.ajax({
-          type: "POST",
-          url: "/auth/new-accessToken",
-          async: false,
-          success: function (response) {
-            console.log("test 재발급 성공");
-          },
-          error: function (request) {
-            console.log(request);
-          },
-        });
-      }
-    },
   });
 }

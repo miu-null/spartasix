@@ -1,87 +1,81 @@
 <script>
-    function onUpload(e) {
-      var imageUrl = URL.createObjectURL(e.files[0])
-      document.getElementById('memberImage').src = imageUrl;
-    }
-    </script>
-    
-    <div class="huge-container">
-      <form action="/userpage/info/<%= myInfo.userId %>" method="POST" enctype="multipart/form-data">
-        <div class="box member-image-box">
-          <label for="userIMG" style="cursor: pointer;">
-            <div class="member-image">
-              <img id="memberImage" src="<%= myInfo.userIMG %>" alt="memberimage" />
-            </div>
-          </label>
-          <input id="userIMG" style="display: none;"  type="file" name="userIMG" onchange="onUpload(this)" />
+  function onUpload(e) {
+    var imageUrl = URL.createObjectURL(e.files[0])
+    document.getElementById('memberImage').src = imageUrl;
+  }
+</script>
+
+<div class="huge-container">
+  <form action="/userpage/info/<%= myInfo.userId %>" method="POST" enctype="multipart/form-data">
+    <div class="box member-image-box">
+      <label for="userIMG" style="cursor: pointer;">
+        <div class="member-image">
+          <img id="memberImage" src="<%= myInfo.userIMG %>" alt="memberimage" />
         </div>
+      </label>
+      <input id="userIMG" style="display: none;" type="file" name="userIMG" onchange="onUpload(this)" />
+    </div>
+    <br />
+    <div class="box huge-userbox">
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+        User Info
+      </p>
+      <br />
+      <div class="box userinfo-box">
         <br />
-        <div class="box huge-userbox">
-          <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-            User Info
-          </p>
-          <br/>
-          <div class="box userinfo-box">
-            <br />
-            <br />
-            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-              You can call me...
-            </p>
-            <p
-              style="
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          You can call me...
+        </p>
+        <p style="
                 font-family: Amiko, sans-serif;
                 font-size: 20px;
                 font-weight: bold;
-              "
-            >
-              <input name="nickName" placeholder="닉네임 입력" value="<%= myInfo.nickName %>" />
-            </p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-              Contact
-            </p>
-            <p
-              style="
+              ">
+          <input name="nickName" placeholder="닉네임 입력" value="<%= myInfo.nickName %>" />
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Contact
+        </p>
+        <p style="
                 font-family: Amiko, sans-serif;
                 font-size: 20px;
                 font-weight: bold;
-              "
-            >
-              <input name="email" placeholder="이메일 입력" value="<%= myInfo.email %>" />
-            </p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-              Check my GitHub !
-            </p>
-            <p
-              style="
+              ">
+          <input name="email" placeholder="이메일 입력" value="<%= myInfo.email %>" />
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Check my GitHub !
+        </p>
+        <p style="
                 font-family: Amiko, sans-serif;
                 font-size: 20px;
                 font-weight: bold;
-              "
-            >
-              <input name="snsUrl" placeholder="깃헙 URL 입력" value="<%= myInfo.snsURL %>" />
-            </p>
-    
-            <button type="submit" style="
+              ">
+          <input name="snsUrl" placeholder="깃헙 URL 입력" value="<%= myInfo.snsURL %>" />
+        </p>
+
+        <button type="submit" style="
               border: 0;
               padding: 0.5rem 1rem;
               background-color: #ea4e4e;
               color: white;
               ">
-              수정
-            </button>
-            <br />
-          </div>
-        </div>
-    
-      </form>
+          수정
+        </button>
+        <br />
+      </div>
     </div>
-    
-    </div>
+
+  </form>
+</div>
+
+</div>

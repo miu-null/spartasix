@@ -13,7 +13,6 @@
   float: right;
   text-decoration: none;
   color: #ea4e4e;
-  /* font-weight: bold; */
 }
 
 .event_table_container {
@@ -80,6 +79,6 @@
   color: black;
 }
 
-.eventImg{
+.eventImg {
   width: 600px;
 }

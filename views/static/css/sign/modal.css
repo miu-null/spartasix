@@ -1,12 +1,11 @@
-/* The Modal (background) */
-.sign_modal { 
-  position:absolute; 
-  width:100%; 
-  height:100%; 
-  background: rgba(0,0,0,0.8); 
-  top:0; 
-  left:0; 
-  display:none;
+.sign_modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  display: none;
   z-index: 50;
 }
 
@@ -16,17 +15,24 @@
   background-position: center;
   background-size: cover;
   position: absolute;
-  width:500px; height:700px;
-  background:#f8f5f2; border-radius:10px;
-  position:absolute; top:15%; left:30%;
-  margin-top:-5%; margin-right: 3%;
-  text-align:center;
-  box-sizing:border-box; padding:74px 0;
-  line-height:23px; cursor:pointer;
-  display:flex;
+  width: 500px;
+  height: 700px;
+  background: #f8f5f2;
+  border-radius: 10px;
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  margin-top: -5%;
+  margin-right: 3%;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 74px 0;
+  line-height: 23px;
+  cursor: pointer;
+  display: flex;
   flex-direction: column;
   cursor: default;
-  transform: translate(10%,2%);
+  transform: translate(10%, 2%);
 }
 
 .sign_form-wrap1 {
@@ -80,10 +86,11 @@
   display: block;
   margin: auto;
   margin-top: 40px;
-  background: linear-gradient(to right, #f9528a, #ff105f);
+  background-color: #ea4e4e;
   border: 0;
   outline: none;
   border-radius: 30px;
+  color: white;
 }
 
 #sign_login1 {

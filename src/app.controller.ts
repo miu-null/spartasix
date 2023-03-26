@@ -1,24 +1,23 @@
-import { Controller, Get, Inject, Res, Render} from "@nestjs/common";
+import { Controller, Get, Inject, Res, Render } from "@nestjs/common";
 import { Response } from "express";
 import { SearcherService } from "./searcher/searcher.service";
 import { reformPostDate } from "../views/static/js/filter";
 
-
 @Controller()
 export class AppController {
-  constructor(@Inject(SearcherService)
-    private readonly searchService: SearcherService
-
+  constructor(
+    @Inject(SearcherService)
+    private readonly searchService: SearcherService,
   ) {}
 
-  @Get("/") // 메인페이지 바디
+  @Get("/")
   @Render("mainbody")
   async mainpage(@Res() res: Response) {
-    const sortPosts = await this.searchService.getPopularPosts()
+    const sortPosts = await this.searchService.getPopularPosts();
     return {
       sortPosts,
-      reformPostDate
-    }
+      reformPostDate,
+    };
   }
 
   @Get("sign")
@@ -38,6 +37,6 @@ export class AppController {
 
   @Get("mypage")
   mypage(@Res() res: Response) {
-    return res.render("userinfo")
+    return res.render("userinfo");
   }
 }

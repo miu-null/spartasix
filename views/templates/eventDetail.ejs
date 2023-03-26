@@ -38,14 +38,20 @@
   </div>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
-      <div class="eventdetail_first_id" id="event_id"><%= events.id %></div>
+      <div class="eventdetail_first_id" id="event_id">
+        <%= events.id %>
+      </div>
       <div class="eventdetail_first_title">
-        <div class="first_title" >Title</div>
-        <div class="title_text"id="event_title"><%= events.title%></div>
+        <div class="first_title">Title</div>
+        <div class="title_text" id="event_title">
+          <%= events.title%>
+        </div>
       </div>
       <div class="eventdetail_first_nickname">
         <div class="first_nickname">Writer</div>
-        <div class="nickname_text"><%= events.user.nickName %></div>
+        <div class="nickname_text">
+          <%= events.user.nickName %>
+        </div>
       </div>
       <div class="eventdetail_first_likes">
         <div class="first_likes">Likes</div>
@@ -55,15 +61,21 @@
     <div class="eventdetail_second">
       <div class="eventdetail_second_start">
         <div class="start_date">Event started at :</div>
-        <div class="date_text" id="event_startDate"><%= events.startDate%></div>
+        <div class="date_text" id="event_startDate">
+          <%= events.startDate%>
+        </div>
       </div>
       <div class="eventdetail_second_end">
         <div class="end_date">Event ended at :</div>
-        <div class="date_text" id="event_endDate"><%= events.endDate%></div>
+        <div class="date_text" id="event_endDate">
+          <%= events.endDate%>
+        </div>
       </div>
       <div class="eventdetail_second_view">
         <div class="view_title">View</div>
-        <div class="view_text"><%= events.viewCount%></div>
+        <div class="view_text">
+          <%= events.viewCount%>
+        </div>
       </div>
     </div>
   </div>
@@ -88,10 +100,7 @@
       <img class="eventdetail_like_img" src="/img/likes.png" />
     </div>
 
-
-    <!-- 하단 이전, 현재, 다음 게시물 표기 -->
     <div class="eventdetail_bottom">
-      <!-- 다음 게시글 링크 -->
       <div class="eventdetail_bottom_div">
         <div class="eventdetail_bottom_div_title">
           <% if (nextPost) { %>
@@ -123,7 +132,6 @@
         </div>
       </div>
 
-      <!-- 현재 글 표기 굵은 글씨 처리 필요 -->
       <div class="eventdetail_bottom_div">
         <div class="eventdetail_bottom_div_title">
           현재글
@@ -145,7 +153,6 @@
               <% } %>
         </div>
       </div>
-      <!-- 이전 게시글 링크 -->
       <div class="eventdetail_bottom_div1">
         <div class="eventdetail_bottom_div_title">
           <% if (prevPost) { %>
@@ -179,7 +186,6 @@
   </div>
 </div>
 
-<!-- 댓글란 -->
 <div class="eventdetail_comment_container">
   <div class="comment_body">
     <div class="comment_input_box">
@@ -193,37 +199,37 @@
     </button>
   </div>
   <div id="comment_show_text" class="comment_show_text">
-    <% comments.forEach(data => { %>
-    <div class="comment_text_box">
-      <div id="comment_text_container<%= data.id %>" class="comment_text_container">
-        <div class="comment_nickname">
-          <%= data.user.nickName %>
-        
-        </div>
-        <div id="content_<%= data.id %>" class="comment_content">
-          <div id="content_box_<%= data.id %>" class="comment_content_box">
-            <%= data.content %>
+    <% comments.forEach(data=> { %>
+      <div class="comment_text_box">
+        <div id="comment_text_container<%= data.id %>" class="comment_text_container">
+          <div class="comment_nickname">
+            <%= data.user.nickName %>
+
+          </div>
+          <div id="content_<%= data.id %>" class="comment_content">
+            <div id="content_box_<%= data.id %>" class="comment_content_box">
+              <%= data.content %>
+            </div>
+          </div>
+          <div class="comment_date">
+            <%= reformPostDate(data.createdAt) %>
+          </div>
+          <div id="comment_like<%= data.id %>" class="comment_like">
+            <div>
+              <image onclick="updateLike('<%= data.id %>')" class="comment_like_img" src="/img/likes.png">
+            </div>
+            <div id="event_commentId" class="like_total">
+              <%= data.eventCommentLikes.length %>
+            </div>
           </div>
         </div>
-        <div class="comment_date">
-          <%= reformPostDate(data.createdAt) %>
-        </div>
-        <div id="comment_like<%= data.id %>" class="comment_like">
-          <div>
-            <image onclick="updateLike('<%= data.id %>')" class="comment_like_img" src="/img/likes.png">
-          </div>
-          <div id="event_commentId" class="like_total">
-            <%= data.eventCommentLikes.length %>
-          </div>
+        <div id="event_comment_button<%= data.id %>" class="event_comment_button">
+          <button id="comment_del_button<%= data.id %>" class="comment_button"
+            onclick="updateEventComment('<%= data.id %>',' <%= data.content %>')">edit</button>
+          <button id="comment_del_button1<%= data.id %>" class="comment_button"
+            onclick="deleteEventComment('<%= data.id %>')">delete</button>
         </div>
       </div>
-      <div id="event_comment_button<%= data.id %>" class="event_comment_button">
-        <button id="comment_del_button<%= data.id %>" class="comment_button"
-          onclick="updateEventComment('<%= data.id %>',' <%= data.content %>')">edit</button>
-        <button id="comment_del_button1<%= data.id %>" class="comment_button"
-          onclick="deleteEventComment('<%= data.id %>')">delete</button>
-      </div>
-    </div>
-    <% }) %>
+      <% }) %>
   </div>
 </div>

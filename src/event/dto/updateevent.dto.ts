@@ -1,21 +1,20 @@
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional } from "class-validator";
 
 export class UpdateEventDto {
-    @IsString()
-    readonly title: string;
-  
-    @IsOptional()
-    @IsString()
-    readonly content: string;
+  @IsString()
+  readonly title: string;
 
-    @IsString()
-    readonly startDate: Date;
+  @IsOptional()
+  @IsString()
+  readonly content: string;
 
-    
-    @IsString()
-    readonly endDate: Date;
+  @IsString()
+  readonly startDate: Date;
 
-    @IsOptional()
-    @IsString()
-    readonly postIMG?: string;
+  @IsString()
+  readonly endDate: Date;
+
+  @IsOptional()
+  @IsString()
+  readonly postIMG?: string;
 }

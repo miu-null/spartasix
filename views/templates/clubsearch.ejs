@@ -16,29 +16,41 @@
             <th>좋아요</th>
         </tr>
       </thead>
-      
+
       <tbody>
         <% if (slicedData.length) { %>
-        <% slicedData.forEach(data => { %>
-          <tr id="club_tr">
-            <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'><%= data.id %></a></td>
-            <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
-            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></td>
-            <td id="club_maxMember"><%= data.maxMembers %></td>
-            <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
-            <td id="club_View"><%= data.viewCount %></td>
-            <td id="club_Likes"><%= data.Likes %></td>
-          <% }) %>
-          <% } else { %>
-            <td id="club_Likes">검색 결과가 없습니다.</td>
-            <% } %>
-          </tr>            
+          <% slicedData.forEach(data=> { %>
+            <tr id="club_tr">
+              <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'>
+                  <%= data.id %>
+                </a></td>
+              <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
+                  <%= data.title %>
+                </a></td>
+              <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
+                  <%= data.user.nickName %>
+              </td>
+              <td id="club_maxMember">
+                <%= data.maxMembers %>
+              </td>
+              <td id="club_Date">
+                <%= reformPostDate(data.createdAt) %>
+              </td>
+              <td id="club_View">
+                <%= data.viewCount %>
+              </td>
+              <td id="club_Likes">
+                <%= data.Likes %>
+              </td>
+              <% }) %>
+                <% } else { %>
+                  <td id="club_Likes">검색 결과가 없습니다.</td>
+                  <% } %>
+            </tr>
       </tbody>
     </table>
   </div>
 </div>
-  
-<!-- 페이지네이션 버튼 -->
 <div id="pagination">
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
@@ -49,8 +61,8 @@
           </a>
         </li>
         <% } %>
-          <% for (let i=unitStart; i <= unitEnd; i++) { %>
-            <% if (i <= lastPage) { %>
+          <% for (let i=unitStart; i <=unitEnd; i++) { %>
+            <% if (i <=lastPage) { %>
               <% if ( i===page) { %>
                 <li class="page-item active" aria-current="page">
                   <span class="page-link">
@@ -69,7 +81,7 @@
                             <a class="page-link" href="search?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
                             </a>
                           </li>
-                          <% } %> 
+                          <% } %>
     </ul>
   </nav>
 </div>
@@ -81,4 +93,3 @@
       aria-label="Search">
   </form>
 </section>
-  

@@ -34,19 +34,29 @@
                                         <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
                                                 <%= data.title %>
                                             </a></td>
-                                        <% } %>
-                                            <td id="club_Writer"><a class="postLink"
-                                                    href="/userpage/<%= data.userId %>">
-                                                    <%= data.user.nickName%>
-                                            </td>
-                                            <td id="club_Date">
-                                                <%= reformPostDate(data.createdAt) %>
-                                            </td>
-                                            <td id="club_View">
-                                                <%= data.viewCount %>
-                                                <% if (data.viewCount===maxViewCount) { %>
-                                                    🔝
-                                                    <% } else {%>
+                                        <% } else { %>
+                                            <td id="club_Id">이벤트</td>
+                                            <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
+                                                    <%= data.title %>
+                                                </a></td>
+                                            <% } %>
+                                                <td id="club_Writer"><a class="postLink"
+                                                        href="/userpage/<%= data.userId %>">
+                                                        <%= data.user.nickName%>
+                                                </td>
+                                                <td id="club_Date">
+                                                    <%= reformPostDate(data.createdAt) %>
+                                                </td>
+                                                <td id="club_View">
+                                                    <%= data.viewCount %>
+                                                        <% if (data.viewCount===maxViewCount) { %>
+                                                            🔝
+                                                            <% } else {%>
+                                                                <% } %>
+                                                </td>
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <td id="club_Likes">인기글이 없습니다.</td>
                                                         <% } %>
                                             </td>
                                             <!-- <td id="clubz_Likes"></td> -->
@@ -77,7 +87,6 @@
         </div>
     </div>
     <div class="main_image">
-        <!-- <img src="https://spartacodingclub.kr/css/images/scc-og.jpg"> -->
-        <img src="https://wimg.mk.co.kr/meet/neds/2020/09/image_readtop_2020_997737_16012938134372637.jpg">
+        <img src="https://spartacodingclub.kr/css/images/scc-og.jpg">
     </div>
 </div>

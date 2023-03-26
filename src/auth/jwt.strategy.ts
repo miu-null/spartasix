@@ -36,10 +36,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
 
     if (!user) {
-      throw new UnauthorizedException('회원이 존재하지 않습니다.');
+      throw new UnauthorizedException("회원이 존재하지 않습니다.");
     }
 
     req.user = user.id;
-    return user.id
+    return user.id;
   }
 }
