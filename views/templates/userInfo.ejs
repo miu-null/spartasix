@@ -1,19 +1,10 @@
-<!-- 
+<script>
+  $(document).ready(function () {
+    show_userPosts('<%= myInfo.userId %>', null, null);
+  });
+</script>
 
-  <script>
-    function setIsEditing(isEditing) {
-      console.log(isEditing)
-      isEditing = !isEditing;
-      console.log(isEditing)
-    }
-  </script> -->
-  <script>
-    $(document).ready(function(){
-      show_userPosts('<%= myInfo.userId %>', null, null);
-    });
-    </script>
 
-<!-- modal1 -->
 <div id="Appmodal" class="Appmodal">
   <div class="app_modal">
     <div class="application">
@@ -27,16 +18,6 @@
     </div>
   </div>
 </div>
-
-<!-- modal2 -->
-<!-- <div id="Appmodal2" class="Appmodal2">
-  <div class="app_modal2">
-    <div class="application2">
-
-    </div>
-  </div>
-</div> -->
-<!--body-->
 
 <div class="huge-container">
   <div class="box member-image-box">
@@ -138,7 +119,7 @@
       </p>
 
       <div class="box activities-box">
-<div id = "clubPosts"> </div>
+        <div id="clubPosts"> </div>
       </div>
       <div class="box huge-clubs">
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
@@ -148,7 +129,7 @@
         <br />
         <div class="box myclubs">
           <div class="box message">
-            <img src= "/img/message.png" onclick="modal_open1('<%= myInfo.userId %>')">
+            <img src="/img/message.png" onclick="modal_open1('<%= myInfo.userId %>')">
           </div>
           <br />
           <br />
@@ -158,16 +139,13 @@
           <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
             My Clubs
           </p>
-          <%# for(let i = 0; i < myPosts.clubPosts.length; i++) {%>
           <p style="
                 font-family: Amiko, sans-serif;
                 font-size: 20px;
                 font-weight: normal;
                 color: #ea4e4e;
               ">
-            <%#=myPosts.clubPosts[i].title%>
             <br />
-            <%# } %>
           </p>
           <br />
           <br />
@@ -177,23 +155,16 @@
           <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
             I'm in
           </p>
-          <%# for(let i = 0; i < myClubs.MyClub.length; i++) {%>
-            <p style="
+          <p style="
               font-family: Amiko, sans-serif;
               font-size: 20px;
               font-weight: normal;
               color: #ea4e4e;
               ">
-              <%#= myClubs.MyClub[i].title %>
-            </p>
-            </p>
-            <%# } %>
-
-
-
+          </p>
+          </p>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>

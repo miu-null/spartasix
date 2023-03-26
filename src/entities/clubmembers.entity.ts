@@ -5,8 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from "typeorm";
 
 @Entity({ schema: "ClubMembers", name: "ClubMembers" })

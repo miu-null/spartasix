@@ -2,7 +2,6 @@
   display: flex;
   margin: 4px;
   height: 340vh;
-  /* gap: 50px; */
   align-items: center;
   justify-content: center;
   background-color: white;
@@ -23,7 +22,6 @@
 .member-image-box {
   width: 400px;
   height: 400px;
-  /* border: 2px solid greenyellow; */
   display: flex;
   position: absolute;
   margin-top: -100px;
@@ -35,7 +33,7 @@
   height: 400px;
   border-radius: 50%;
   overflow: hidden;
-} /* 이미지 틀 */
+}
 
 .member-image img {
   width: 100%;
@@ -44,12 +42,9 @@
 }
 
 .huge-userbox {
-  /* font-family: "Alfa Slab One", "Amiko", sans-serif;
-  font-size: 30px; */
   width: 700px;
   height: 700px;
   margin-top: 560px;
-  /* border: 1px solid magenta; */
   align-items: center;
   text-align: center;
 }
@@ -61,10 +56,6 @@
   margin-top: 90px;
   padding: 30px;
   text-align: center;
-  /* display: grid; */
-  /* font-size: 28px;
-  font-style: bold;
-  font-family: "Amiko"; */
 }
 
 .additional-info {
@@ -80,7 +71,6 @@
   width: 700px;
   height: 600px;
   margin-top: 1210px;
-  /* border: 1px solid magenta; */
   text-align: center;
   align-items: center;
 }
@@ -97,16 +87,12 @@
   text-align: left;
   font-family: "Amiko";
 }
-/* belong to this clubs... */
 
 .huge-clubs {
-  /* border: 1px solid slateblue; */
   text-align: center;
   margin-top: 945px;
   width: 700px;
   height: 400px;
-
-  /* identical to box height */
 }
 
 .myclubs {
@@ -118,56 +104,15 @@
 
 .message img {
   width: 8%;
-  /* align-items: right; */
   position: absolute;
   left: 90%;
   top: -170px;
 }
 
-/* .box-container {
-  display: flex;
-  border: 2px solid red;
-  margin: 4px;
-  height: 100vh;
-  gap: 50px;
-  align-items: center;
-  justify-content: center;
-}
-
-.box {
-  width: 600px;
-  height: 800px;
-} */
-
-/* .image-info-box {
-  width: 360px;
-  border: 2px solid greenyellow;
-} */
-
-/* .image-info-box > * {
-  border: 10px solid rgb(234, 7, 200);
-} */
-
-/* .image-box {
-  display: flex;
-  justify-content: center;
-  height: 30%;
-  border: 1px solid rgb(234, 7, 200);
-} */
-
-/* .info-box {
-  color: #a58f8f;
-  padding: 37px;
-  background-color: #f4f3f0;
-  height: 70%;
-} */
-
 .userBio_container {
   font-family: "JejuGothic";
   font-style: normal;
-  /* font-weight: 400; */
   font-size: 15px;
-  /* line-height: 50px; */
   color: #625858;
   display: flex;
   width: 280px;
@@ -182,11 +127,6 @@
   flex-direction: column;
   gap: 12px;
 }
-/* 
-.message-box {
-  width: 70px;
-  align-self: end;
-} */
 
 .edit-box {
   width: 45px;
@@ -195,11 +135,9 @@
   left: 51%;
   background: #e79292;
   border-radius: 10px;
-  /* align-self: end; */
 }
 
 .post-box {
-  /* border: 2px solid orange; */
   background-color: #efe8df;
   border-radius: 5px;
   padding: 30px;

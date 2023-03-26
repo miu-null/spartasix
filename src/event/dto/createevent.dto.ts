@@ -1,7 +1,6 @@
 import { IsString, IsOptional, IsEmail } from "class-validator";
 
 export class CreateEventDto {
-  
   @IsString()
   readonly title: string;
 
@@ -14,11 +13,11 @@ export class CreateEventDto {
   @IsOptional()
   @IsString()
   readonly content: string;
-  
+
   @IsOptional()
   @IsEmail()
   readonly email: string;
-  
+
   @IsOptional()
   @IsString()
   readonly postIMG?: string;

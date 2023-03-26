@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { EventRepository } from "./event.repository";
-import { UpdateEventDto } from "src/event/dto/updateevent.dto";
-import { DeleteEventDto } from "./dto/deleteevent.dto";
 import { MailService } from "src/mail/mail.service";
 import { EventCommentService } from "src/comments/eventcomment/eventcomment.service";
 
@@ -11,10 +9,10 @@ export class EventService {
     private EventRepository: EventRepository,
     private readonly mailService: MailService,
     private readonly eventCommentService: EventCommentService,
-    ) {}
+  ) {}
 
   async getEvents() {
-    const events = await this.EventRepository.getEvents()
+    const events = await this.EventRepository.getEvents();
     return events;
   }
 
@@ -22,11 +20,16 @@ export class EventService {
     const data = await this.EventRepository.getEventById(id);
     const comments = await this.eventCommentService.showAllComment(id);
 
-    return {data, comments}
+    return { data, comments };
   }
-  
-  async remindEvent(email:string,startDate:Date,endDate:Date,title:string){
-    return await this.mailService.remindEmail(email,startDate,endDate,title)
+
+  async remindEvent(
+    email: string,
+    startDate: Date,
+    endDate: Date,
+    title: string,
+  ) {
+    return await this.mailService.remindEmail(email, startDate, endDate, title);
   }
 
   async createEvent(

@@ -5,11 +5,11 @@ export class remindEmailDto {
   readonly email: string;
 
   @IsString()
-  startDate:Date;
+  startDate: Date;
 
   @IsString()
-  endDate:Date;
+  endDate: Date;
 
   @IsString()
-  title:string;
+  title: string;
 }

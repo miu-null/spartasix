@@ -1,19 +1,12 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventComments } from "src/entities/eventcomments.entity";
-import { Users } from "src/entities/users.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
 export class EventCommentRepository {
   constructor(
-    @InjectRepository(Users)
-    private readonly userRepository: Repository<Users>,
     @InjectRepository(EventComments)
     private readonly eventRepository: Repository<EventComments>,
     @InjectRepository(EventCommentLikes)
@@ -96,7 +89,6 @@ export class EventCommentRepository {
   }
 
   async updateLike(userId: number, commentId: number) {
-    console.log(userId, commentId);
     const Like = await this.eventCommentLikeRepository.findOne({
       where: { userId, eventCommentId: commentId, deletedAt: null },
       select: ["id"],

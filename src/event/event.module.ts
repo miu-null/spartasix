@@ -46,4 +46,4 @@ import { PassportModule } from "@nestjs/passport";
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })
-export class EventModule { }
+export class EventModule {}
