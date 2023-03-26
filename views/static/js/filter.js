@@ -1,4 +1,4 @@
-const { isSameDay } = require("date-fns");
+const { isSameDay, parse, parseISO } = require("date-fns");
 const { format } = require("date-fns-tz");
 
 function reformPostDate(postObjDate) {
@@ -12,6 +12,24 @@ function reformPostDate(postObjDate) {
     return format(postDate, "yyyy-MM-dd");
   }
 }
+
+function reformPostDate2nd(postObjDate) {
+  const dateString = postObjDate;
+  const dateObj = new Date(dateString);
+  const currentDate = new Date();
+  const offset = currentDate.getTimezoneOffset()* 60000;
+  const postDate = new Date(dateObj - offset);
+  
+  if (isSameDay(postDate, currentDate)) {
+    return format(postDate, "kk:mm");
+  } else {
+    return format(postDate, "yyyy-MM-dd");
+  } 
+
+}
+
+
+
 
 async function paginatedResults(page, selectedData) {
   const take = 6;
@@ -36,4 +54,5 @@ async function paginatedResults(page, selectedData) {
 module.exports = {
   reformPostDate,
   paginatedResults,
+  reformPostDate2nd
 };
