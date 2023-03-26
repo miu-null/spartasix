@@ -124,8 +124,6 @@ export class ClubController {
       reformPostDate2nd
       }
     };
-  
-
 
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
