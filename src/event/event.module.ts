@@ -16,6 +16,7 @@ import { EventComments } from "src/entities/eventcomments.entity";
 import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventCommentService } from "src/comments/eventcomment/eventcomment.service";
 import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.repository";
+import { PassportModule } from "@nestjs/passport";
 
 @Module({
   imports: [
@@ -23,10 +24,14 @@ import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.r
       Clubs,
       Users,
       ClubMembers,
-      EventPosts, AbusingClubCounts,
+      EventPosts,
+      AbusingClubCounts,
       EventComments,
       EventCommentLikes,
     ]),
+    PassportModule.register({
+      defaultStrategy: "jwt",
+    }),
   ],
   controllers: [EventController],
   providers: [
@@ -37,7 +42,7 @@ import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.r
     SearcherRepository,
     ClubRepository,
     EventCommentService,
-    EventCommentRepository
+    EventCommentRepository,
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })

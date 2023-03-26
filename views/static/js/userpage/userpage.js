@@ -24,8 +24,7 @@ function modal_open2() {
 function selectApp(userId) {
   $.ajax({
     type: "GET",
-    url: `/userpage/${userId}/clubs/app`,
-    async: false,
+    url: `/userpage/clubs/${userId}/app`,
     success: function (res) {
       let rows = res["myApps"];
 
@@ -103,13 +102,11 @@ function update_accepted(userId, clubMemberId) {
       window.location.reload();
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -140,13 +137,11 @@ function delete_accepted(userId, clubMemberId) {
       window.location.reload();
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",

@@ -15,6 +15,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Render,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { EventService } from "./event.service";
@@ -25,6 +26,7 @@ import { SearcherService } from "src/searcher/searcher.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { reformPostDate, reformAllPostsDate } from "../../views/static/js/filter";
+import { AuthGuard } from "@nestjs/passport";
 
 
 @Controller("events")
@@ -49,6 +51,7 @@ export class EventController {
   //새글 쓰기
   @Post("/newevent")
   @UseInterceptors(FileInterceptor("file"))
+  @UseGuards(AuthGuard())
   async createUser(
     @Req() req,
     @Res() res: Response,
@@ -142,7 +145,7 @@ export class EventController {
     const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
     console.log("comments : ", comments)
     
-    return {events, imgUrl, nextPost, nowPost, prevPost, comments };
+    return {events, imgUrl, nextPost, nowPost, prevPost, comments, reformPostDate };
   }
 
   // 수정 페이지 렌더링
@@ -163,6 +166,7 @@ export class EventController {
   // 게시글 수정
   @Patch("/list/:id/update")
   @UseInterceptors(FileInterceptor("file"))
+  @UseGuards(AuthGuard())
   async updateEvent(
     @Param("id") id: number,
     @Req() req,
@@ -207,6 +211,7 @@ export class EventController {
   }
 
   @Delete("/list/:eventPostId")
+  @UseGuards(AuthGuard())
   async deleteArticle(@Param("eventPostId") eventPostId: number) {
     const deleteEvent = await this.eventService.deleteEvent(eventPostId);
     return true;

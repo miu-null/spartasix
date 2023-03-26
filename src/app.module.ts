@@ -17,7 +17,6 @@ import { EventModule } from "./event/event.module";
 import { UserpageModule } from "./userpage/userpage.module";
 import { AuthModule } from "./auth/auth.module";
 import { RedisModule } from "./redis/redis.module";
-import { AuthMiddleware } from "./auth/auth.middleware";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { MailerConfigService } from "./config/mailer.config.service";
 import { MailModule } from "./mail/mail.module";
@@ -25,12 +24,16 @@ import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
 import { CacheConfigService } from "./config/redis.config.service";
 import { SearcherService } from "./searcher/searcher.service";
+import { PassportModule } from "@nestjs/passport";
 
 const ejsMiddleware = require("express-ejs-layouts");
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    PassportModule.register({
+      defaultStrategy: "jwt",
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: typeOrmConfigService,
@@ -69,61 +72,5 @@ export class AppModule implements NestModule {
     consumer
       .apply(ejsMiddleware)
       .forRoutes("/");
-    consumer
-      .apply(AuthMiddleware)
-
-      .forRoutes(
-        {
-          path: "/eventcomment/create-comment/:id",
-          method: RequestMethod.POST,
-        },
-        {
-          path: "/eventcomment/update-comment/:id",
-          method: RequestMethod.PATCH,
-        },
-        {
-          path: "/eventcomment/delete-comment/:id",
-          method: RequestMethod.DELETE,
-        },
-
-        {
-          path: "/clubcomment/create-comment/:id",
-          method: RequestMethod.POST,
-        },
-        {
-          path: "/clubcomment/update-comment/:id",
-          method: RequestMethod.PATCH,
-        },
-        {
-          path: "/clubcomment/delete-comment/:id",
-          method: RequestMethod.DELETE,
-        },
-        {
-          path: "/club/clubspost",
-          method: RequestMethod.POST,
-        },
-        { path: "/club/:id", method: RequestMethod.POST },
-        { path: "/club/clubspost", method: RequestMethod.POST },
-        { path: "/club/clubs/:id", method: RequestMethod.PUT },
-        { path: "/club/list/:id", method: RequestMethod.DELETE },
-        { path: "/events/newevent", method: RequestMethod.POST },
-        { path: "/events/list/:id", method: RequestMethod.DELETE },
-        {
-          path: "/events/list/:id/update",
-          method: RequestMethod.PATCH,
-        },
-        {
-          path: "/eventcomment/update_event_like/:commentId",
-          method: RequestMethod.POST,
-        },
-        {
-          path: "/clubcomment/update_club_like/:commentId",
-          method: RequestMethod.POST,
-        },
-        {
-          path: "/auth/test",
-          method: RequestMethod.GET,
-        },
-      );
   }
 }

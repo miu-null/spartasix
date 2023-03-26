@@ -1,12 +1,3 @@
-$(document).ready(function () {
-  const id = $("#comment_show_text").data("text")
-  showComment(id);
-  showlike()
-
-  console.log(":::::::textarea:::::::", eventUpdateContent)
-})
-
-
 function event_open() {
   $(`#event_modal1`).fadeIn();
 
@@ -96,13 +87,11 @@ function eventNew() {
       window.location.replace("/events/list");
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -147,13 +136,11 @@ function updateEvent(eventPostId) {
       window.location.replace(`/events/list/${eventPostId}`);
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -189,13 +176,11 @@ function deleteEvent(eventPostId) {
       window.location.replace("/events/list");
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -235,13 +220,11 @@ function createEventComment(postId) {
       window.location.reload();
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -328,14 +311,11 @@ function updateEventComment(commentId, content) {
           window.location.reload();
         }
 
-        if (
-          request.responseJSON["message"] ===
-          "로그인 후 이용 가능한 기능입니다."
-        ) {
-          alert("로그인 후 이용 가능한 기능입니다.");
-        }
+     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
+      }
 
-        if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
           $.ajax({
             type: "POST",
             url: "/auth/new-accessToken",
@@ -399,13 +379,11 @@ function deleteEventComment(eventcommentId) {
         window.location.reload();
       }
 
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -457,13 +435,11 @@ function updateLike(commentId) {
         window.location.reload();
       }
 
-      if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
-      ) {
-        alert("로그인 후 이용 가능한 기능입니다.");
+     if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
