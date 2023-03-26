@@ -9,8 +9,8 @@
                         <th>유저</th>
                         <th>닉네임</th>
                         <th>GITHUB</th>
-                        <th>좋아요</th>
                         <th>가입일</th>
+                        <th>유저페이지</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,12 +20,13 @@
                             <td id="club_Id"> 유저 </td>
                             <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.nickName%><img src="<%= data.userIMG %>"width="40"></a></td>
                             <td id="club_Likes"><a class="postLink" href="http://<%= data.snsURL %>"><%= data.snsURL %>
-                            <td id="club_Likes"><%= data.Likes %></td>
                             <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
+                            <td id="club_Writer"><a class="btn btn-secondary btn-sm" href="/userpage/<%= data.id %>">방문</a></td>
                             <% }) %>
                             <% } else { %>
                               <td id="club_Likes">검색 결과가 없습니다.</td>
                               <% } %>
+                              
                             </tr>    
                 </tbody>
             </table>
