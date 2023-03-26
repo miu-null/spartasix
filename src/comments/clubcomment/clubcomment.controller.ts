@@ -7,7 +7,9 @@ import {
   Patch,
   Post,
   Req,
+  UseGuards,
 } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 import { CreateCommentDto } from "../dto/createcomment.dto";
 import { ClubCommentService } from "./clubcomment.service";
 
@@ -15,27 +17,22 @@ import { ClubCommentService } from "./clubcomment.service";
 export class ClubCommentController {
   constructor(private readonly clubCommentService: ClubCommentService) {}
 
-  @Get("/:id/comments")
-  async showAllComment(@Param("id") clubPostId: number) {
-    const comments = await this.clubCommentService.showAllComment(clubPostId);
-
-    return comments;
-  }
-
   @Post("/create-comment/:id")
+  @UseGuards(AuthGuard())
   async createComment(
     @Param("id") clubId: number,
     @Body() data: CreateCommentDto,
     @Req() req,
   ) {
     const userId = req.user;
-
+    console.log(userId)
     this.clubCommentService.createComment(userId, clubId, data.content);
 
     return true;
   }
 
   @Patch("/update-comment/:id")
+  @UseGuards(AuthGuard())
   async updateComment(
     @Param("id") clubCommentId: number,
     @Body() data: CreateCommentDto,
@@ -52,6 +49,7 @@ export class ClubCommentController {
   }
 
   @Delete("/delete-comment/:id")
+  @UseGuards(AuthGuard())
   async deleteComment(@Param("id") clubCommentId: number, @Req() req) {
     const userId = req.user;
     await this.clubCommentService.deleteComment(userId, clubCommentId);
@@ -60,6 +58,7 @@ export class ClubCommentController {
   }
 
   @Post("/update_club_like/:commentId")
+  @UseGuards(AuthGuard())
   async updateLike(
     @Req() req, 
     @Param("commentId") commentId: number,

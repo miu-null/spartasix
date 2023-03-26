@@ -8,6 +8,7 @@ import {
   Post,
   Req,
   Res,
+  UnauthorizedException,
   UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
@@ -16,6 +17,7 @@ import { loginDto } from "./dto/login.dto";
 import { Cache } from "cache-manager";
 import { findPasswordDto } from "./dto/findpassword.dto";
 import { MailService } from "src/mail/mail.service";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller("auth")
 export class AuthController {
@@ -89,6 +91,8 @@ export class AuthController {
       res.cookie("refreshToken", newpayload.refreshtoken);
 
       return res.json(newpayload)
+    } else {
+      throw new UnauthorizedException(`토큰 만료`)
     }
   }
 }

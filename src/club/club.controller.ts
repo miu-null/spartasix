@@ -11,7 +11,8 @@ import {
   Query,
   ParseIntPipe,
   DefaultValuePipe,
-  Render
+  Render,
+  UseGuards
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -21,6 +22,7 @@ import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
 import { reformPostDate } from "../../views/static/js/filter";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller("club")
 export class ClubController {
@@ -50,6 +52,7 @@ export class ClubController {
   }
 
   @Post("/clubspost")
+  @UseGuards(AuthGuard())
   async createClub(@Body() data: CreateClubDto, @Req() req) {
     const userId = req.user;
     const post = await this.clubService.createClub(
@@ -64,6 +67,7 @@ export class ClubController {
 
   // 신청서 작성
   @Post("/:id")
+  @UseGuards(AuthGuard())
   async createApp(
     @Param("id") id: number,
     @Body() data: CreateAppDto,
@@ -85,6 +89,7 @@ export class ClubController {
   }
 
   @Put("/clubs/:id")
+  @UseGuards(AuthGuard())
   async updateClub(
     @Param("id") id: number,
     @Body() data: UpdateClubDto,
@@ -120,6 +125,7 @@ export class ClubController {
     };
 
   @Delete("/list/:id")
+  @UseGuards(AuthGuard())
   async delete(@Param("id") id: number, @Req() req) {
     const userId = req.user;
     await this.clubService.deleteClub(userId, id);

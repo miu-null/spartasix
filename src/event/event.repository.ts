@@ -27,6 +27,7 @@ export class EventRepository {
       .leftJoinAndSelect("eventPost.user", "nickName")
       .where("eventPost.id < :eventPostId", { eventPostId })
       .orderBy('eventPost.id', 'DESC')
+
       .getOne();
     const nextPost = await this.eventRepository
       .createQueryBuilder("eventPost")
@@ -34,6 +35,7 @@ export class EventRepository {
       .where("eventPost.id > :eventPostId", { eventPostId })
       .orderBy('eventPost.id', 'ASC')
       .getOne()
+
 
     await this.eventRepository
       .createQueryBuilder()
