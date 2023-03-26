@@ -104,6 +104,7 @@ export class EventController {
     const events = await this.eventService.getEvents();
     const pagingposts = await paginatedResults(page, events);
     const sortPosts = await this.searchService.getPopularEvents();
+
     return res.render("eventMain.ejs", {
       ...pagingposts,
       sortPosts,

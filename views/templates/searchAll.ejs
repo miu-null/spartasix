@@ -1,94 +1,127 @@
-<section id="page">
-    <header>Header</header>
-    <side>유저 포스팅 순위</side>
-    <main>
-        <div class="container event_container">
-            <div>
-                <a href="users?term=<%=term.term %>" class="new_club">
-                    <%= users.length%>건 결과 모두보기>
-                </a>
-            </div>
-            <div class="event_table_container">
-                <table class="table table-hover event_table">
-                    <thead id="event_thead">
-                        <tr>
-                            <th>유저</th>
-                            <th>닉네임</th>
-                            <th>GITHUB</th>
-                            <th>좋아요</th>
-                            <th>가입일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if (users.length) { %>
-                            <% users.slice(0, 5).forEach(data=> { %>
-                                <tr id="club_tr">
-                                    <td id="club_Id"> 유저 </td>
-                                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>">
-                                            <%= data.nickName%><img src="<%= data.userIMG %>" width="40">
-                                        </a></td>
-                                    <td id="club_Likes"><a class="postLink" href="http://<%= data.snsURL %>">
-                                            <%= data.snsURL %>
-                                    <td id="club_Likes">
-                                        <%= data.Likes %>
-                                    </td>
-                                    <td id="club_Date">
-                                        <%= reformPostDate(data.createdAt) %>
-                                    </td>
-                                    <% }) %>
-                                        <% } else { %>
-                                            <td id="club_Likes">검색 결과가 없습니다.</td>
-                                            <% } %>
-                                </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <a href="/events/search?term=<%=term.term %>" class="new_club">
-                    <%= events.length %>건 결과 모두보기>
-                </a>
-            </div>
-            <div class="event_table_container">
-                <table class="table table-hover event_table">
-                    <thead id="event_thead">
-                        <tr>
-                            <th>행사</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>⏰Date</th>
-                            <th>View</th>
-                            <th>Likes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if (events.length) { %>
-                            <% events.slice(0, 5).forEach(data=> { %>
-                                <tr id="club_tr">
-                                    <td id="club_Id">이벤트</td>
-                                    <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
-                                            <%= data.title %>
-                                        </a></td>
-                                    <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
-                                            <%= data.user.nickName %>
-                                    </td>
-                                    <td id="club_Date">
-                                        <%= reformPostDate(data.createdAt) %>
-                                    </td>
-                                    <td id="club_View">
-                                        <%= data.viewCount %>
-                                    </td>
-                                    <td id="club_Likes">
-                                        <%= data.Likes %>
-                                    </td>
-                                    <% }) %>
-                                        <% } else { %>
-                                            <td id="club_Likes">검색 결과가 없습니다.</td>
-                                            <% } %>
-                                </tr>
-                    </tbody>
-                </table>
-            </div>
+<div class="container event_container">
+        <div>
+            <a href="users?term=<%=term.term %>" class="new_club"> <%= users.length%>건 결과 모두보기></a>
+        </div>
+        <div class="event_table_container">
+            <table class="table table-hover event_table">
+                <thead id="event_thead">
+                    <tr>
+                        <th>유저</th>
+                        <th>닉네임</th>
+                        <th>GITHUB</th>
+                        <th>가입일</th>
+                        <th>유저페이지</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (users.length) { %>
+                    <% users.slice(0, 5).forEach(data=> { %>
+                        <tr id="club_tr">
+                            <td id="club_Id"> 유저 </td>
+                            <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.nickName%><img src="<%= data.userIMG %>"width="40"></a></td>
+                            <td id="club_Likes"><a class="postLink" href="http://<%= data.snsURL %>"><%= data.snsURL %>
+                            <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
+                            <td id="club_Writer"><a class="btn btn-secondary btn-sm" href="/userpage/<%= data.id %>">방문</a></td>
+                            <% }) %>
+                            <% } else { %>
+                              <td id="club_Likes">검색 결과가 없습니다.</td>
+                              <% } %>
+                              
+                            </tr>    
+                </tbody>
+            </table>
+        </div>
+    
+        <div>
+            <a href="/events/search?term=<%=term.term %>" class="new_club"> <%= events.length %>건 결과 모두보기></a>
+          </div>
+      <div class="event_table_container">
+          <table class="table table-hover event_table">
+              <thead id="event_thead">
+                  <tr>
+                      <th>행사</th>
+                      <th>제목</th>
+                      <th>작성자</th>
+                      <th>⏰Date</th>
+                      <th>View</th>
+                      <th>Likes</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% if (events.length) { %>
+                  <% events.slice(0, 5).forEach(data=> { %>
+                      <tr id="club_tr">
+                          <td id="club_Id">이벤트</td>
+                          <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
+                                  <%= data.title %>
+                              </a></td>
+                          <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
+                                  <%= data.user.nickName %>
+                          </td>
+                          <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
+                          <td id="club_View">
+                              <%= data.viewCount %>
+                          </td>
+                          <td id="club_Likes">
+                              <%= data.Likes %>
+                          </td>
+                          <% }) %>
+                          <% } else { %>
+                            <td id="club_Likes">검색 결과가 없습니다.</td>
+                            <% } %>
+                          </tr>    
+              </tbody>
+          </table>
+      </div>
+    
+      <div>
+        <a href="/club/search?term=<%=term.term %>" class="new_club"> <%= clubs.length%>건 결과 모두보기></a>
+      </div>
+      <div class="event_table_container">
+          <table class="table table-hover event_table">
+              <thead id="event_thead">
+                  <tr>
+                      <th>모임</th>
+                      <th>제목</th>
+                      <th>작성자</th>
+                      <th>⏰Date</th>
+                      <th>View</th>
+                      <th>Likes</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% if (clubs.length) { %>
+                  <% clubs.slice(0, 5).forEach(data=> { %>
+                      <tr id="club_tr">
+                          <td id="club_Id">클럽</td>
+                          <td id="club_Title"><a class="postLink" href='/club/list/<%= data.id%>'>
+                                  <%= data.title %>
+                              </a></td>
+                          <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %>
+                          </td>
+                          <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
+                          <td id="club_View">
+                              <%= data.viewCount %>
+                          </td>
+                          <td id="club_Likes">
+                              <%= data.Likes %>
+                          </td>
+                          <% }) %>
+                          <% } else { %>
+                            <td id="club_Likes">검색 결과가 없습니다.</td>
+                            <% } %>
+                          </tr>   
+              </tbody>
+          </table>
+      </div>
+    
+    <section id="search" class="search-wrap">
+        <form action="/search/all" class="search-form">
+          <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용, 유저"
+          aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
+        </form>
+    </section>
+  </section>
 
             <div>
                 <a href="/club/search?term=<%=term.term %>" class="new_club">
