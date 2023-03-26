@@ -8,6 +8,7 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository, MoreThan, LessThan } from "typeorm";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
+import { concat } from "rxjs";
 
 @Injectable()
 export class ClubRepository {
@@ -103,6 +104,7 @@ export class ClubRepository {
       relations : {user : true},
       order: {id: 'DESC'}  
     })
+    
     const nextPost = await this.clubRepository.findOne({  //다음글 표기
       where: {id: MoreThan(clubId)},
       relations : {user : true},
@@ -116,6 +118,48 @@ export class ClubRepository {
     .execute(); // 쿼리 실행
     return { prevPost, nowPost, nextPost};
   }
+
+  // 클럽 멤버 정보 (운영자, 참여인원 보여주기)
+  async getClubMember(clubId: number) {
+    const clubmembers = await this.clubmemberRepository
+      .createQueryBuilder("members")
+      .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
+      .innerJoin("Users", "u", "u.id = members.userId")
+      .where("members.clubId = :clubId", { clubId })
+      .andWhere("members.isAccepted = true")
+      .getRawMany();
+    
+    const clubwaitList = await this.clubmemberRepository
+      .createQueryBuilder("members")
+      .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
+      .innerJoin("Users", "u", "u.id = members.userId")
+      .where("members.clubId = :clubId", { clubId })
+      .andWhere("members.isAccepted = false")
+      .getRawMany();  
+    
+    const clubMembers = [].concat(clubmembers)
+    const clubWaitList = [].concat(clubwaitList)
+
+  
+    console.log("리포지토멤버",  clubMembers, "리포지토리대기자",clubWaitList);
+    return {clubMembers, clubWaitList};
+
+      // .createQueryBuilder('members')
+      // .leftJoinAndSelect('members.nickName', 'nickName')
+      // .where('members.clubid = :clubId AND members.isAccepted = true', {clubId})
+      // .getMany()
+
+      // console.log('리포지토리커렌', '리포지토리멤버', ClubMembers)
+      return ClubMembers;
+  }
+
+      // const currentClubMember = await this.clubmemberRepository
+      // .find({ // 확정된 멤버들 확인
+      //     where: {
+      //       clubId,
+      //       isAccepted: true,
+      //     },
+      //   });
 
   async deleteClubDto(userId: number, clubId: number) {
     const article = await this.getClubById(clubId);

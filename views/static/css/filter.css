@@ -65,7 +65,7 @@ input {
 #my-grid {
   display: grid;
   grid-template-columns: auto 850px auto;
-  grid-template-rows: 1fr;
+  grid-template-rows: 2fr;
   grid-template-areas: 
     "box1 box2 box3";
 }

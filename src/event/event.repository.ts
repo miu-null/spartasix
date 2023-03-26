@@ -38,8 +38,8 @@ export class EventRepository {
       .leftJoinAndSelect("eventPost.user", "nickName")
       .where("eventPost.id < :eventPostId", { eventPostId })
       .orderBy('eventPost.id', 'DESC')
-
       .getOne();
+      
     const nextPost = await this.eventRepository  //다음글 표기 정보
       .createQueryBuilder("eventPost") 
       .leftJoinAndSelect("eventPost.user", "nickName")

@@ -1,4 +1,4 @@
-const { isSameDay } = require("date-fns");
+const { isSameDay, parse, parseISO } = require("date-fns");
 const { format } = require("date-fns-tz");
 
 // 게시글 정보 조회시 날짜 형식 변경(게시판, 게시글, 댓글, 이전다음 글 안내)
@@ -13,6 +13,24 @@ function reformPostDate(postObjDate) {
     return format(postDate, "yyyy-MM-dd");
   } 
 }
+
+function reformPostDate2nd(postObjDate) {
+  const dateString = postObjDate;
+  const dateObj = new Date(dateString);
+  const currentDate = new Date();
+  const offset = currentDate.getTimezoneOffset()* 60000;
+  const postDate = new Date(dateObj - offset);
+  
+  if (isSameDay(postDate, currentDate)) {
+    return format(postDate, "kk:mm");
+  } else {
+    return format(postDate, "yyyy-MM-dd");
+  } 
+
+}
+
+
+
 
 // 페이지네이션 처리 
 async function paginatedResults(page, selectedData) {
@@ -38,5 +56,6 @@ async function paginatedResults(page, selectedData) {
 
 module.exports = {
   reformPostDate,
-  paginatedResults
+  paginatedResults,
+  reformPostDate2nd
 };

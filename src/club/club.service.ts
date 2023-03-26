@@ -71,17 +71,20 @@ export class ClubService {
 
   async getClubById(id: number) {
     const data = await this.clubRepository.getClubById(id);
-    console.log(data, '@@@@서비스')
-
     const comments = await this.clubCommentService.showAllComment(id);
     return {data, comments};
   }
 
   async deleteClub(userId: number, id: number) {
     await this.clubRepository.deleteClubDto(userId, id);
-
     return true;
   }
+
+  async getClubMember(clubId: number) {
+    const nowClubMember = await this.clubRepository.getClubMember(clubId);
+    return nowClubMember
+  }
+
   // async reportClub(
   //   id: number,
   //   userId: number,

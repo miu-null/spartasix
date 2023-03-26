@@ -95,8 +95,54 @@
         <button onclick="report_modal_open()" class="report_button">report</button>
       </div>
     </div>
+
     <div class="clubdetail_body_text">
-      <%= nowPost.content %>
+      <h6><%= nowPost.content %></h6>
+      <!-- 참가자 이미지 띄우기 테스트 -->
+<div class="card-section">
+  <h3>👩‍💻참가자</h3>
+  <div class="row">
+    <% if (clubMembers.length) { %>
+    <% clubMembers.forEach(data=> { %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
+            <p class="card-text"><%= reformPostDate2nd(data.members_createdAt) %></p>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    <% } else { %>
+      <div>아직 참여자가 없습니다.</div>
+      <% } %>
+  </div>
+</div>
+
+<div class="card-section">
+  <h3>⌛대기자</h3>
+  <div class="row">
+    <% if (clubWaitList.length) { %>
+    <% clubWaitList.forEach(data=> { %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
+            <p class="card-text"><%= reformPostDate2nd(data.members_createdAt) %></p>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    <% } else { %>
+      <div>아직 대기자가 없습니다.</div>
+      <% } %>
+  </div>
+</div>
+    
+<!-- 테스트 구간 끝 -->
+    </div>
+
+    <div>
     </div>
     <div class="clubdetail_like_container">
       <img class="clubdetail_like_img" src="/img/likes.png">
@@ -108,14 +154,14 @@
       <div class="eventdetail_bottom_div">
         <div class="eventdetail_bottom_div_title">
           <% if (nextPost) { %>
-            <a href="<%= nextPost.id %>">다음글</a>
+            <a class="postLink" href="<%= nextPost.id %>">다음글</a>
             <% } else {%>
               다음글
               <% }%>
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (nextPost) { %>
-            <a href="<%= nextPost.id %>">
+            <a class="postLink" href="<%= nextPost.id %>">
               <%= nextPost.title %>
             </a>
             <% } else {%>
@@ -159,14 +205,14 @@
       <div class="eventdetail_bottom_div1">
         <div class="eventdetail_bottom_div_title">
           <% if (prevPost) { %>
-            <a href="<%= prevPost.id %>">이전글</a>
+            <a class="postLink" href="<%= prevPost.id %>">이전글</a>
             <% } else {%>
               이전글
               <% }%>
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (prevPost) { %>
-            <a href="<%= prevPost.id %>">
+            <a class="postLink" href="<%= prevPost.id %>">
               <%= prevPost.title %>
             </a>
             <% } else {%>
