@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <section id="search-wrap">
                   <div class="search">
                       <form action="/search/all" class="search-form">
-                          <input type="search" id="term" name="term" class="form-control1" placeholder="🔍검색어를 입력하세요"
+                          <input type="search" id="term" name="term" class="form-control1" placeholder="🔍제목, 내용, 닉네임"
                               aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
                       </form>
                   </div>
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <section id="search-wrap">
                   <div class="search">
                       <form action="/search/all" class="search-form">
-                          <input type="search" id="term" name="term" class="form-control1" placeholder="🔍검색어를 입력하세요"
+                          <input type="search" id="term" name="term" class="form-control1" placeholder="🔍제목, 내용, 닉네임"
                               aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
                       </form>
                   </div>

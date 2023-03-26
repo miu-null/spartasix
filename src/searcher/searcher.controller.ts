@@ -34,7 +34,6 @@ export class SearcherController {
     }
   }
 
-
   @Get("users")  // 유저 검색 기능, 페이지네이션 테스트
   @Render('userSearch.ejs')
   async searchUsers(
@@ -53,6 +52,4 @@ export class SearcherController {
       console.error(err.message);
     }
   }
-
-
 }

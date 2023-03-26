@@ -25,7 +25,7 @@ import { remindEmailDto } from "./dto/remindevent.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { reformPostDate, reformAllPostsDate } from "../../views/static/js/filter";
+import { reformPostDate, paginatedResults } from "../../views/static/js/filter"; //함수: 날짜처리, 페이지네이션 
 import { AuthGuard } from "@nestjs/passport";
 
 
@@ -112,16 +112,17 @@ export class EventController {
     return res.render("eventNew.ejs");
   }
 
-  // 전체 글 조회
+  // 게시판 전체 글 조회
   @Get("/list")
   async getEvent(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
   ) {
-    const events = await this.eventService.getEvents(page);
-    const sortPosts = await this.searchService.getPopularEvents()
+    const events = await this.eventService.getEvents();   // 게시글 목록 조회
+    const pagingposts = await paginatedResults(page, events)  ///페이지네이션 처리
+    const sortPosts = await this.searchService.getPopularEvents()  //인기글 조회
     return res.render("eventMain.ejs", {
-       ...events,
+       ...pagingposts,
        sortPosts,
        reformPostDate
       });
@@ -235,6 +236,7 @@ export class EventController {
     return res.render("eventsearch.ejs", {
       term,
       ...searchData,
+      reformPostDate
     });
   }
 }
