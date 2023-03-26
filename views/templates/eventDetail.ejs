@@ -104,14 +104,14 @@
       <div class="eventdetail_bottom_div">
         <div class="eventdetail_bottom_div_title">
           <% if (nextPost) { %>
-            <a href="<%= nextPost.id %>">다음글</a>
+            <a class="postLink" href="<%= nextPost.id %>">다음글</a>
             <% } else {%>
               다음글
               <% }%>
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (nextPost) { %>
-            <a href="<%= nextPost.id %>">
+            <a class="postLink" href="<%= nextPost.id %>">
               <%= nextPost.title %>
             </a>
             <% } else {%>
@@ -156,14 +156,14 @@
       <div class="eventdetail_bottom_div1">
         <div class="eventdetail_bottom_div_title">
           <% if (prevPost) { %>
-            <a href="<%= prevPost.id %>">이전글</a>
+            <a class="postLink" href="<%= prevPost.id %>">이전글</a>
             <% } else {%>
               이전글
               <% }%>
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (prevPost) { %>
-            <a href="<%= prevPost.id %>">
+            <a class="postLink" href="<%= prevPost.id %>">
               <%= prevPost.title %>
             </a>
             <% } else {%>
