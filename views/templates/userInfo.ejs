@@ -1,9 +1,35 @@
-<script>
-  $(document).ready(function () {
-    show_userPosts('<%= myInfo.userId %>', null, null);
-  });
-</script>
-
+  <script>
+        $(document).ready(function(){
+          checkClubs(`<%= myInfo.userId %>`)
+        });
+        
+        // Function to load the next page of posts
+        const loadNextPage = () => {
+          show_userPosts(`<%= myInfo.userId %>`, startCursor, endCursor, limit);
+          let startCursor = 0;
+          let endCursor = 0;
+          const limit = 3; // or whatever limit you want to use
+        };
+        
+    // Event listener for "next page" button
+    document.getElementById("nextClubBtn").addEventListener("click", () => {
+      startCursor = endCursor;
+      limit = 3;
+      loadNextPage();
+    });
+    console.log(startCursor)
+    console.log("sleepy")
+    // Event listener for "previous page" button
+    document.getElementById("prevClubBtn").addEventListener("click", () => {
+      endCursor = startCursor;
+      startCursor = null;
+      limit = 3;
+      loadNextPage();
+    });
+  
+    // Load the first page of posts
+    loadNextPage();
+    </script>
 
 <div id="Appmodal" class="Appmodal">
   <div class="app_modal">
@@ -31,15 +57,15 @@
       User Info
     </p>
     <br />
-    <a href="/userpage/<%= myInfo.userId %>/edit" style="
+    <p style="
         font-family: Amiko, sans-serif;
         font-size: 15px;
         font-weight: bold;
         color: #ea4e4e;
         float: right;
-      ">
+      ", onclick="editInfo('<%= myInfo.userId %>')"">
       + edit
-    </a>
+  </p>
     <div class="box userinfo-box">
       <br />
       <br />
@@ -84,34 +110,6 @@
 
       <br />
     </div>
-    <div class="box additional-info">
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        P*word <br />
-      </p>
-
-      <p style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        ">
-        <%= myInfo.password %>
-      </p>
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Cell-phone Number <br />
-      </p>
-
-      <p style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        ">
-        <%= myInfo.phone %>
-      </p>
-    </div>
 
     <div class="box huge-activities">
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
@@ -119,8 +117,16 @@
       </p>
 
       <div class="box activities-box">
-        <div id="clubPosts"> </div>
+        <div id="clubPosts">
+        <button id="nextClubBtn" onclick="show_userPosts('${userId}', '${startCursor}', '${endCursor}', '${limit}' )">next Club</button>
+        <button id="prevClubBtn" onclick="show_userPosts('${userId}', '${startCursor}', '${endCursor}', '${limit}' )">Previousss Club</button>
+        
       </div>
+      </div>
+      
+  
+ 
+      
       <div class="box huge-clubs">
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
           Belong to this clubs...
@@ -133,36 +139,14 @@
           </div>
           <br />
           <br />
-          <br />
-          <br />
+     
 
-          <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-            My Clubs
-          </p>
-          <p style="
-                font-family: Amiko, sans-serif;
-                font-size: 20px;
-                font-weight: normal;
-                color: #ea4e4e;
-              ">
-            <br />
-          </p>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-            I'm in
-          </p>
-          <p style="
-              font-family: Amiko, sans-serif;
-              font-size: 20px;
-              font-weight: normal;
-              color: #ea4e4e;
-              ">
-          </p>
-          </p>
+          <div id="myClubAct">
+            <div id="myOwnClub"> </div>
+              
+  
+                          </div>
+
         </div>
       </div>
     </div>

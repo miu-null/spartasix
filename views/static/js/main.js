@@ -19,21 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
               </div>
               <div class="header_list">
               <section id="search-wrap">
-<<<<<<< HEAD
                   <div class="search">
                       <form action="/search/all" class="search-form">
                           <input type="search" id="term" name="term" class="form-control1" placeholder="🔍제목, 내용, 닉네임"
                               aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
                       </form>
                   </div>
-=======
-              <div class="search">
-              <form action="/search/all" class="search-form">
-              <input type="search" id="term" name="term" class="form-control1" placeholder="🔍검색어를 입력하세요"
-              aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
-              </form>
-              </div>
->>>>>>> 1ba86ce ([수정] 마이페이지 리다이렉션)
               </section>  
               </div>
               <div class="header_button">
@@ -44,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $("#login_header").append(temp_html);
   }
-
   const userId = obj.value;
   if (obj !== null) {
     let temp_html = `
