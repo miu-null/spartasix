@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   Patch,
   Post,
@@ -25,7 +24,6 @@ export class ClubCommentController {
     @Req() req,
   ) {
     const userId = req.user;
-    console.log(userId)
     this.clubCommentService.createComment(userId, clubId, data.content);
 
     return true;
@@ -59,15 +57,10 @@ export class ClubCommentController {
 
   @Post("/update_club_like/:commentId")
   @UseGuards(AuthGuard())
-  async updateLike(
-    @Req() req, 
-    @Param("commentId") commentId: number,
-    ) {
-      console.log("hello")
-      console.log(commentId)
+  async updateLike(@Req() req, @Param("commentId") commentId: number) {
     const userId = req.user;
 
-    await this.clubCommentService.updateLike(userId, commentId)
+    await this.clubCommentService.updateLike(userId, commentId);
 
     return true;
   }

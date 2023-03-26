@@ -14,7 +14,7 @@ import { EventRepository } from "src/event/event.repository";
 import { Users } from "src/entities/users.entity";
 import { EventPosts } from "src/entities/events.entity";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
-import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -39,5 +39,4 @@ import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
     EventRepository,
   ],
 })
-
 export class SearcherModule {}

@@ -1,5 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from "class-validator";
-import { Type } from "class-transformer";
+import { IsString } from "class-validator";
 
 export class ReportClubDto {
   @IsString()

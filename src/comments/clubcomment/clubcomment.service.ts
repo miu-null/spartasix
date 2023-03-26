@@ -6,7 +6,9 @@ export class ClubCommentService {
   constructor(private readonly clubCommentRepository: ClubCommentRepository) {}
 
   async showAllComment(clubPostId: number) {
-    const comments = await this.clubCommentRepository.showAllComment(clubPostId);
+    const comments = await this.clubCommentRepository.showAllComment(
+      clubPostId,
+    );
 
     return comments;
   }

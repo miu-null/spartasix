@@ -8,7 +8,9 @@ export class EventCommentService {
   ) {}
 
   async showAllComment(eventPostId: number) {
-    const comments = await this.eventCommentRepository.showAllComment(eventPostId);
+    const comments = await this.eventCommentRepository.showAllComment(
+      eventPostId,
+    );
 
     return comments;
   }
@@ -18,7 +20,11 @@ export class EventCommentService {
   }
 
   async updateComment(userId: number, eventCommentId: number, content: string) {
-    await this.eventCommentRepository.updateComment(userId, eventCommentId, content);
+    await this.eventCommentRepository.updateComment(
+      userId,
+      eventCommentId,
+      content,
+    );
 
     return true;
   }
@@ -28,7 +34,7 @@ export class EventCommentService {
 
     return true;
   }
-  
+
   async updateLike(userId: number, commentId: number) {
     await this.eventCommentRepository.updateLike(userId, commentId);
 

@@ -27,7 +27,7 @@ function clubpost() {
   const maxMembers = $("#club_maxMembers").val();
   const content = $("#club_content").val();
   const category = $("#club_category").val();
-  // maxMembers = Number(maxMembers);
+
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
     return false;
@@ -51,7 +51,6 @@ function clubpost() {
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       title: title,
-      // maxMembers: Number(maxMembers),
       maxMembers: maxMembers,
       content: content,
       category: category,
@@ -86,10 +85,13 @@ function clubpost() {
                 window.location.replace("/club/list");
               },
               error: function (request) {
-                if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+                if (
+                  request.responseJSON["message"] ===
+                  "회원이 존재하지 않습니다."
+                ) {
                   alert("로그인 후 이용가능한 기능입니다.");
                 }
-              }
+              },
             });
           },
         });
@@ -122,7 +124,6 @@ function clubupdate() {
     return false;
   }
 
-  console.log(clubId);
   $.ajax({
     type: "PUT",
     url: `/club/clubs/${clubId}`,
@@ -177,10 +178,13 @@ function clubupdate() {
                 window.location.replace(`/club/list/${clubId}`);
               },
               error: function (request) {
-                if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+                if (
+                  request.responseJSON["message"] ===
+                  "회원이 존재하지 않습니다."
+                ) {
                   alert("로그인 후 이용가능한 기능입니다.");
                 }
-              }
+              },
             });
           },
         });
@@ -191,7 +195,7 @@ function clubupdate() {
 
 function clubdelete() {
   const clubId = location.pathname.split("list/")[1];
-  console.log(clubId);
+
   $.ajax({
     type: "DELETE",
     url: `/club/list/${clubId}`,
@@ -320,7 +324,10 @@ function createClubComment(postId) {
                 window.location.reload();
               },
               error: function (request) {
-                if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+                if (
+                  request.responseJSON["message"] ===
+                  "회원이 존재하지 않습니다."
+                ) {
                   alert("로그인 후 이용가능한 기능입니다.");
                 }
               },
@@ -538,7 +545,10 @@ function club_updateLike(commentId) {
                   alert("좋아요 취소 !");
                   window.location.reload();
                 }
-                if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+                if (
+                  request.responseJSON["message"] ===
+                  "회원이 존재하지 않습니다."
+                ) {
                   alert("로그인 후 이용가능한 기능입니다.");
                 }
               },
@@ -555,7 +565,7 @@ function report_submit() {
   const reportContent = $("#report_content").val();
   const id = location.pathname.split("list/")[1];
   const clubId = location.pathname.split("list/")[1];
-  console.log(reportContent, reprotReason);
+
   if (!reportReason || !reportContent) {
     alert("모든 항목을 작성해 주세요.");
     return false;
@@ -599,10 +609,13 @@ function report_submit() {
                 window.location.replace(`/club/list/${id}`);
               },
               error: function (request) {
-                if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+                if (
+                  request.responseJSON["message"] ===
+                  "회원이 존재하지 않습니다."
+                ) {
                   alert("로그인 후 이용가능한 기능입니다.");
                 }
-              }
+              },
             });
           },
         });

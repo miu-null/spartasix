@@ -2,14 +2,12 @@ import {
   Body,
   CACHE_MANAGER,
   Controller,
-  Get,
   Inject,
   Patch,
   Post,
   Req,
   Res,
   UnauthorizedException,
-  UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/createuser.dto";
@@ -17,7 +15,6 @@ import { loginDto } from "./dto/login.dto";
 import { Cache } from "cache-manager";
 import { findPasswordDto } from "./dto/findpassword.dto";
 import { MailService } from "src/mail/mail.service";
-import { AuthGuard } from "@nestjs/passport";
 
 @Controller("auth")
 export class AuthController {
@@ -25,7 +22,7 @@ export class AuthController {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private authService: AuthService,
     private mailService: MailService,
-  ) { }
+  ) {}
   @Post("/sign-up")
   async createUser(@Body() data: CreateUserDto, @Res() res) {
     await this.authService.createUser(
@@ -43,9 +40,9 @@ export class AuthController {
   async login(@Body() data: loginDto, @Res() res) {
     const user = await this.authService.login(data.email, data.password);
 
-    res.cookie("accessToken", user.accessToken, {httpOnly: true});
-    res.cookie("refreshToken", user.refreshToken, {httpOnly: true});
-    return res.json(user.user["id"])
+    res.cookie("accessToken", user.accessToken, { httpOnly: true });
+    res.cookie("refreshToken", user.refreshToken, { httpOnly: true });
+    return res.json(user.user["id"]);
   }
 
   @Post("/logout")
@@ -81,18 +78,17 @@ export class AuthController {
   async newAccessToken(@Req() req: any, @Res() res) {
     const header = req.headers.cookie;
     const newpayload = await this.authService.newAccessToken(header);
-    console.log(header)
 
     if (newpayload) {
       res.clearCookie("accessToken", newpayload.accessToken);
       res.clearCookie("refreshToken", newpayload.refreshtoken);
-  
+
       res.cookie("accessToken", newpayload.newAccessToken);
       res.cookie("refreshToken", newpayload.refreshtoken);
 
-      return res.json(newpayload)
+      return res.json(newpayload);
     } else {
-      throw new UnauthorizedException(`토큰 만료`)
+      throw new UnauthorizedException(`토큰 만료`);
     }
   }
 }

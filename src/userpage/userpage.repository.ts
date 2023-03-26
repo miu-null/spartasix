@@ -1,15 +1,11 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ClubMembers } from "../entities/clubmembers.entity";
 import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/events.entity";
 import { Users } from "../entities/users.entity";
-import { In, Raw, Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 
@@ -25,27 +21,21 @@ export class UserPageRepository {
     @InjectRepository(EventPosts)
     private readonly eventpostRepository: Repository<EventPosts>,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
-  // 작성한 글 조회
   async getMyPosts(userId: number) {
     const clubPosts = await this.clubRepository.find({
-      // relations: { user: true },
       where: { userId },
       select: ["title", "content"],
-      // order: { id: "DESC" },
     });
     const eventPosts = await this.eventpostRepository.find({
-      // relations: { user: true },
       where: { userId },
       select: ["title", "content"],
-      // order: { id: "DESC" },
     });
 
     return { clubPosts, eventPosts };
   }
 
-  // 　운영중, 참여중인 모임 전체 보기
   async getMyClubs(userId: number) {
     const myOwnClub = await this.clubRepository.find({ where: { userId } });
     const MyClubApp = await this.clubMembersRepository.find({
@@ -61,14 +51,13 @@ export class UserPageRepository {
         id: In(MyClubApp.map((clubApp) => clubApp.clubId)),
       },
     });
-    console.log(myOwnClub, MyClub);
+
     return {
       myOwnClub,
       MyClub,
     };
   }
 
-  // *클럽 신청서 전체보기
   async getClubApps(userId: number) {
     const myClubs = await this.clubRepository.find({
       where: {
@@ -101,7 +90,6 @@ export class UserPageRepository {
     return { myOwnClubs };
   }
 
-  // 회원정보 조회
   async getUserInfo(userId: number) {
     return await this.userRepository.findOne({
       where: { id: userId },
@@ -118,7 +106,6 @@ export class UserPageRepository {
     });
   }
 
-  // 회원정보 수정
   async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
     const changedInfo = await this.userRepository.update(userId, {
       email: updateUserInfo.email,
@@ -129,10 +116,8 @@ export class UserPageRepository {
       userIMG: updateUserInfo.userIMG,
     });
     return changedInfo;
-    //
   }
 
-  // 특정 클럽정보 조회 (운영자, 참여인원 보여주기)
   async getThisClub(userId: number, clubId: number) {
     const currentClub = await this.clubRepository.findOne({
       where: {
@@ -140,9 +125,6 @@ export class UserPageRepository {
         userId,
       },
     });
-    // 여기서 운영자, 클럽명(게시물 이름), 최대인원 등 확인
-
-    // 여기서 확정된 참여인원 확인 - 클럽 멤버들 확인
     const currentClubMember = await this.clubMembersRepository.find({
       where: {
         clubId,
@@ -152,7 +134,6 @@ export class UserPageRepository {
     return { currentClub, currentClubMember };
   }
 
-  // TODO 특정 신청서 조회
   async getThisApp(userId: number, clubMemberId: number) {
     const application = await this.clubMembersRepository.findOne({
       where: { id: clubMemberId },
@@ -160,7 +141,7 @@ export class UserPageRepository {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     return { application, user };
   }
-  // 신청서 수락
+
   async getThisMember(userId: number, clubMemberId: number) {
     const { application: thisApp } = await this.getThisApp(
       userId,
@@ -172,7 +153,6 @@ export class UserPageRepository {
     }
   }
 
-  // 신청서 거절
   async rejectApp(userId: number, clubMemberId: number) {
     await this.clubMembersRepository
       .createQueryBuilder("ClubMembers")

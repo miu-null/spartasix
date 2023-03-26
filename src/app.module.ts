@@ -2,7 +2,6 @@ import {
   Module,
   NestModule,
   MiddlewareConsumer,
-  RequestMethod,
   CacheModule,
 } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -69,8 +68,6 @@ const ejsMiddleware = require("express-ejs-layouts");
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ejsMiddleware)
-      .forRoutes("/");
+    consumer.apply(ejsMiddleware).forRoutes("/");
   }
 }

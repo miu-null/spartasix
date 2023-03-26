@@ -120,7 +120,6 @@
 
 .clubdetail_second_date {
   display: flex;
-  /* margin-left: 10px; */
   font-weight: bold;
 }
 
@@ -130,7 +129,6 @@
 
 .clubdetail_second_view {
   display: flex;
-  /* margin-left: 35px; */
   font-weight: bold;
 }
 
@@ -168,7 +166,6 @@
 .report_button {
   border-radius: 30px;
   border: 1px solid #f23232;
-  /* font-weight: bold; */
   background-color: #f23232;
   color: white;
   text-align: center;
@@ -236,7 +233,6 @@
   margin-left: 60px;
 }
 
-/* The Modal (background) */
 .club_modal {
   position: absolute;
   width: 100%;
