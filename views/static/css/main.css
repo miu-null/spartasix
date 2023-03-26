@@ -14,7 +14,8 @@
 
 .main_body_container {
   display: flex;
-  margin-top: 160px;
+  /* margin-top: 160px; */
+  margin-top: 70px;
   font-family: "Amiko", sans-serif;
 }
 
@@ -55,33 +56,23 @@
 }
 
 /* 레이아웃 테스트 */
-#page {
+#my-grid {
   display: grid;
-  width: 100%;
-  height: 250px;
-  grid-template-areas: "head head"
-                       "side  main"
-                       "foot  foot";
-  grid-template-rows: 50px 1fr 30px;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: auto 850px auto;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+    "box1 box2 box3";
 }
 
-#page > header {
-  grid-area: head;
-  background-color: #ec4330;
+.box1 {
+  grid-area: box1;
 }
 
-#page > sidebar {
-  grid-area: side;
-  background-color: #ffa08c;
-}
-
-#page > main {
-  grid-area: main;
+.box2 {
+  grid-area: box2;
   background-color: #ffffff;
 }
 
-#page > footer {
-  grid-area: foot;
-  background-color: #8cffa0;
+.box3 {
+  grid-area: box3;
 }
