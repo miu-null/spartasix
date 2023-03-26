@@ -119,7 +119,7 @@ export class EventController {
     @Res() res: Response,
   ) {
     const events = await this.eventService.getEvents();   // 게시글 목록 조회
-    const pagingposts = await paginatedResults(page, events)  ///페이지네이션 처리
+    const pagingposts = await paginatedResults(page, events)  //페이지네이션 처리
     const sortPosts = await this.searchService.getPopularEvents()  //인기글 조회
     return res.render("eventMain.ejs", {
        ...pagingposts,
