@@ -11,43 +11,60 @@
 </head>
 
 <body>
-    <div class="container popular_container">
-    <div class="event_table_container">
-        <table class="table table-hover event_table">
-            <thead id="event_thead">
-                <tr>
-                    <th>이벤트 인기글</th>
-                    <th></th>
-                    <th></th>
-                    <th>👀조회</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% if (sortPosts.length) { %>
-                    <% const maxViewCount = Math.max(...sortPosts.map(data => data.viewCount)) %>
-                    <% sortPosts.forEach(data => { %>
-                      <tr id="club_tr">
-                        <% if (data.viewCount === maxViewCount) { %>
-                          <td>🥇</td>
-                        <% } else { %>
-                          <td>🥈</td>
-                        <% } %>
-                  <td id="Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
-                  <td id="Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></a></td>
-                  <td id="View"><%= data.viewCount %></td>
-                  <td id="Likes"><%= data.Likes %></td>
-                  <td id="Date"><%= reformPostDate(data.createdAt) %></td>
-                  <% }) %>
-                  <% } else { %>
-                    <td id="club_Likes"> 인기글이 없습니다.</td>
-                    <% } %>
-                  </tr>    
-              </tbody>
-        </table>
+    <div id="my-grid">
+        <div class="box1"></div>
+        <div class="box2">
+            <div class="container popular_container">
+                <div class="event_table_container">
+                    <table class="table table-hover event_table">
+                        <thead id="event_thead">
+                            <tr>
+                                <th>인기 이벤트</th>
+                                <th></th>
+                                <th>😘</th>
+                                <th>📆</th>
+                                <th>👀</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (sortPosts.length) { %>
+                                <% const maxViewCount=Math.max(...sortPosts.map(data=> data.viewCount)) %>
+                                    <% sortPosts.forEach(data=> { %>
+                                        <tr id="club_tr">
+                                            <% if (data.viewCount===maxViewCount) { %>
+                                                <td>🥇</td>
+                                                <% } else { %>
+                                                    <td>🥈</td>
+                                                    <% } %>
+                                                        <td id="Title"><a class="postLink" href='list/<%= data.id%>'>
+                                                                <%= data.title %>
+                                                            </a></td>
+                                                        <td id="Writer"><a class="postLink"
+                                                                href="/userpage/<%= data.userId %>">
+                                                                <%= data.user.nickName %>
+                                                            </a></td>
+                                                        <td id="Date">
+                                                            <%= reformPostDate(data.createdAt) %>
+                                                        </td>
+                                                        <td id="View">
+                                                            <%= data.viewCount %>
+                                                        </td>
+                                                        <td id="Likes">
+                                                            <%= data.Likes %>
+                                                        </td>
+                                                        <% }) %>
+                                                            <% } else { %>
+                                                                <td id="club_Likes"> 인기글이 없습니다.</td>
+                                                                <% } %>
+                                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="box3"></div>
     </div>
-  </div>
-</div>
+
 
 
 
@@ -110,7 +127,7 @@
                                             </a>
                                         </li>
                                         <% } } } %>
-                                            <% if (unitEnd <=lastPage) { %>
+                                            <% if (unitEnd < lastPage) { %>
                                                 <li class="page-item">
                                                     <a class="page-link" href="list?page=<%= unitEnd +1 %>">다음
                                                     </a>
@@ -123,7 +140,7 @@
     <section id="search" class="search-wrap">
         <form action="/events/search" class="search-form">
             <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시판 검색 : 제목, 내용"
+                <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용"
                     aria-label="Search">
         </form>
     </section>

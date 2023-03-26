@@ -26,9 +26,7 @@ export class SearcherController {
         ...results,
         ...popularPosts,
         popularPosts,
-
       })
-
     } catch (err) {
       console.error(err.message);
     }

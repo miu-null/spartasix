@@ -7,13 +7,13 @@
     <table class="table table-hover club_table">
       <thead id="club_thead">
         <tr>
-          <th>Club</th>
-          <th>Title</th>
-          <th>Writer</th>
-          <th>maxMembers</th>
-          <th>Date</th>
-          <th>View</th>
-          <th>Likes</th>
+            <th>Club</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>팀원구성</th>
+            <th>작성일</th>
+            <th>조회수</th>
+            <th>좋아요</th>
         </tr>
       </thead>
       
@@ -64,7 +64,7 @@
                   <% } %>
                     <% } %>
                       <% } %>
-                        <% if (unitEnd <=lastPage) { %>
+                        <% if (unitEnd < lastPage) { %>
                           <li class="page-item">
                             <a class="page-link" href="search?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
                             </a>
@@ -77,7 +77,7 @@
 <section id="search" class="search-wrap">
   <form action="/club/search" class="search-form">
     <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-    <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)게시판 검색 : 제목, 내용"
+    <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용"
       aria-label="Search">
   </form>
 </section>
