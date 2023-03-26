@@ -25,7 +25,7 @@
                 <td id="Title"><a class="postLink" href='list/<%= data.id%>'><%= data.title %></a></td>
                 <td id="Writer"><a class="postLink" href="/userpage/<%= data.userId %>"><%= data.user.nickName %></a></td>
                 <td id="Date"><%= data.startdate %></td>
-                <td id="Date"><%= data.createdAt %></td>
+                <td id="Date"><%= reformPostDate(data.createdAt) %></td>
                 <td id="View"><%= data.viewCount %></td>
                 <td id="Likes"><%= data.Likes %></td>
                 <% }) %>

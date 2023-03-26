@@ -1,3 +1,22 @@
+.popular_main_container {
+  width: 130%;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+.popular_container{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Alfa Slab One";
+  font-weight: normal;
+  font-size: small;
+  letter-spacing: 0.3px;
+}
+
+
+
 /* 검색창 */
 .search-wrap {
   position: relative;
@@ -22,7 +41,6 @@ input {
   padding: 10px 12px;
   font-size: 14px;
 }
-
 
 .searchCount {
   position: relative;

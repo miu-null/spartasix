@@ -19,9 +19,9 @@ export class SearcherRepository {
   //통합검색
   async findAllPosts(data: any): Promise<any> {
     {
-      const clubs = await (await this.findClubPosts(data)).slice(0, 4)
-      const events = await (await this.findEventPosts(data)).slice(0,4)
-      const users = await (await this.findUsers(data)).slice(0,4)
+      const clubs = await (await this.findClubPosts(data))
+      const events = await (await this.findEventPosts(data))
+      const users = await (await this.findUsers(data))
       const results = {clubs, events, users}
       
       return results
