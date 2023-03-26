@@ -77,6 +77,11 @@ export class AuthController {
   @Post("/new-accessToken")
   async newAccessToken(@Req() req: any, @Res() res) {
     const header = req.headers.cookie;
+
+    if (!header) {
+      throw new UnauthorizedException(`로그인이 필요한 기능입니다.`);
+    }
+
     const newpayload = await this.authService.newAccessToken(header);
 
     if (newpayload) {

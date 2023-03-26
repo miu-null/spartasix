@@ -20,6 +20,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
           let token = null;
           if (req && req.headers.cookie) {
             token = req.headers.cookie;
+
+            if (!token) {
+              throw new UnauthorizedException(`로그인이 필요한 기능입니다.`);
+            }
+
             token = token.split(";")[0].split("=")[1];
           }
           return token;
