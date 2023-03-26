@@ -141,27 +141,8 @@ export class ClubRepository {
     
     const clubMembers = [].concat(clubmembers)
     const clubWaitList = [].concat(clubwaitList)
-
-  
-    console.log("리포지토멤버",  clubMembers, "리포지토리대기자",clubWaitList);
     return {clubMembers, clubWaitList};
-
-      // .createQueryBuilder('members')
-      // .leftJoinAndSelect('members.nickName', 'nickName')
-      // .where('members.clubid = :clubId AND members.isAccepted = true', {clubId})
-      // .getMany()
-
-      // console.log('리포지토리커렌', '리포지토리멤버', ClubMembers)
-      return ClubMembers;
   }
-
-      // const currentClubMember = await this.clubmemberRepository
-      // .find({ // 확정된 멤버들 확인
-      //     where: {
-      //       clubId,
-      //       isAccepted: true,
-      //     },
-      //   });
 
   async deleteClubDto(userId: number, clubId: number) {
     const article = await this.getClubById(clubId);
