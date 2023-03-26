@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 import { CreateCommentDto } from "../dto/createcomment.dto";
 import { EventCommentService } from "./eventcomment.service";
 
@@ -6,15 +7,8 @@ import { EventCommentService } from "./eventcomment.service";
 export class EventCommentController {
   constructor(private eventCommentService: EventCommentService) {}
 
-  @Get("/:id/comments")
-  async showAllComment(@Param("id") eventPostId: number) {
-
-    const comments = await this.eventCommentService.showAllComment(eventPostId);
-
-    return comments
-  }
-
   @Post("/create-comment/:id")
+  @UseGuards(AuthGuard())
   async createComment(
     @Param("id") eventPostId: number,
     @Body() data: CreateCommentDto,
@@ -27,6 +21,7 @@ export class EventCommentController {
   }
 
   @Patch("/update-comment/:id")
+  @UseGuards(AuthGuard())
   async updateComment(
     @Param("id") eventCommentId: number,
     @Body() data: CreateCommentDto,
@@ -39,6 +34,7 @@ export class EventCommentController {
   }
 
   @Delete("/delete-comment/:id")
+  @UseGuards(AuthGuard())
   async deleteComment(
     @Param("id") eventCommentId: number,
     @Req() req,
@@ -50,12 +46,11 @@ export class EventCommentController {
   }
 
   @Post("/update_event_like/:commentId")
+  @UseGuards(AuthGuard())
   async updateLike(
     @Req() req, 
     @Param("commentId") commentId: number,
     ) {
-      console.log("hello")
-      console.log(commentId)
     const userId = req.user;
 
     await this.eventCommentService.updateLike(userId, commentId)

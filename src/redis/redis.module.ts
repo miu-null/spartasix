@@ -2,6 +2,7 @@ import { CacheModule, Module } from "@nestjs/common";
 import { RedisService } from "./redis.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CacheConfigService } from "src/config/redis.config.service";
+import { PassportModule } from "@nestjs/passport";
 
 @Module({
   imports: [
@@ -9,6 +10,9 @@ import { CacheConfigService } from "src/config/redis.config.service";
       imports: [ConfigModule],
       useClass: CacheConfigService,
       inject: [ConfigService],
+    }),
+    PassportModule.register({
+      defaultStrategy: "jwt",
     }),
   ],
   providers: [RedisService],

@@ -9,7 +9,7 @@
   </script> -->
   <script>
     $(document).ready(function(){
-      show_userPosts(<%= myInfo.userId %>, null, null);
+      show_userPosts('<%= myInfo.userId %>', null, null);
     });
     </script>
 
@@ -148,7 +148,7 @@
         <br />
         <div class="box myclubs">
           <div class="box message">
-            <img src= "/img/message.png" onclick="modal_open1(<%#= myInfo.userId %>)">
+            <img src= "/img/message.png" onclick="modal_open1('<%= myInfo.userId %>')">
           </div>
           <br />
           <br />
