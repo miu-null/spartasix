@@ -84,12 +84,16 @@ export class ClubController {
   }
 
   @Get("/clubs/:id")
+  @UseGuards(AuthGuard())
   async updateclub(
     @Param("id") id: number, 
     @Res() res: Response,
     @Req() req,
     ) {
-    const buttonUserId = req.user;
+    let buttonUserId = null;
+    if(req.user) {
+      buttonUserId = req.user
+    }
     const detail = await this.clubService.getClubById(id);
     const nowPost = detail.data.nowPost
     return res.render("clubupdate.ejs", {nowPost, detail, buttonUserId});
@@ -121,7 +125,10 @@ export class ClubController {
     @Param("id") id: number,
     @Req() req
     ) {
-    const buttonUserId = req.user;
+      let buttonUserId = null;
+      if(req.user) {
+        buttonUserId = req.user
+      }
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.data.prevPost
     const nowPost = detail.data.nowPost
