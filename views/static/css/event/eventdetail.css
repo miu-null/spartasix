@@ -325,6 +325,7 @@
   height: 1000px;
   display: flex;
   flex-direction: column;
+
 }
 
 .comment_body {

@@ -177,9 +177,23 @@
 
 .clubdetail_body_text {
   margin: auto;
-  margin-top: 100px;
-  width: 80%;
-  height: 500px;
+  margin-top: 70px;
+  margin-bottom: 100px;
+  width: 90%;
+
+  word-wrap: break-word;
+}
+
+.clubdetail_card_List{
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 100px;
+  flex: auto;
+}
+
+.card_list_body{
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .clubdetail_like_container {
@@ -318,6 +332,7 @@
   height: 1000px;
   display: flex;
   flex-direction: column;
+  word-wrap: break-word;;
 }
 
 .comment_body {

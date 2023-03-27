@@ -98,47 +98,52 @@
 
     <div class="clubdetail_body_text">
       <h6><%= nowPost.content %></h6>
-      <!-- 참가자 이미지 띄우기 테스트 -->
-<div class="card-section">
-  <h3>👩‍💻참가자</h3>
-  <div class="row">
-    <% if (clubMembers.length) { %>
-    <% clubMembers.forEach(data=> { %>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
-            <p class="card-text"><%= reformPostDate2nd(data.members_updatedAt) %></p>
+    </div>
+          <!-- 참가자 이미지 띄우기 테스트 -->
+<div class="clubdetail_card_List">
+  <div class="card_list_body">
+  <div class="card-section">
+    <h3>👩‍💻참가자</h3>
+    <div class="row">
+      <% if (clubMembers.length) { %>
+      <% clubMembers.forEach(data=> { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
+              <p class="card-text"><%= reformPostDate2nd(data.members_updatedAt) %></p>
+            </div>
           </div>
         </div>
-      </div>
-    <% }) %>
-    <% } else { %>
-      <div>아직 참여자가 없습니다.</div>
-      <% } %>
+      <% }) %>
+      <% } else { %>
+        <div>아직 참여자가 없습니다.</div>
+        <% } %>
+    </div>
+  </div>
+</div>
+<div class="card_list_body">
+  <div class="card-section">
+    <h3>⌛대기자</h3>
+    <div class="row">
+      <% if (clubWaitList.length) { %>
+      <% clubWaitList.forEach(data=> { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
+              <p class="card-text"><%= reformPostDate2nd(data.members_createdAt) %></p>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+      <% } else { %>
+        <div>아직 대기자가 없습니다.</div>
+        <% } %>
+    </div>
   </div>
 </div>
 
-<div class="card-section">
-  <h3>⌛대기자</h3>
-  <div class="row">
-    <% if (clubWaitList.length) { %>
-    <% clubWaitList.forEach(data=> { %>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
-            <p class="card-text"><%= reformPostDate2nd(data.members_createdAt) %></p>
-          </div>
-        </div>
-      </div>
-    <% }) %>
-    <% } else { %>
-      <div>아직 대기자가 없습니다.</div>
-      <% } %>
-  </div>
-</div>
-    
 <!-- 테스트 구간 끝 -->
     </div>
 
