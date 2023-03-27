@@ -20,6 +20,7 @@
   </div>
 </div>
 <div class="clubdetail_container">
+  <% if (buttonUserId===nowPost.userId) {%>
   <div class="clubdetail_button">
     <div class="clubdetail_edit">
       <a onclick="location.href='/club/clubs/<%= nowPost.id %>'" class="new_club"
@@ -29,6 +30,8 @@
       <a style="cursor: pointer" onclick="clubdelete()" class="new_club">delete</a>
     </div>
   </div>
+  <% } else { %>
+    <% } %>
   <div class="clubdetail_title">
     <div class="clubdetail_first">
       <div class="clubdetail_first_id">

@@ -112,8 +112,13 @@ export class ClubController {
   }
 
   @Get("/list/:id")
+  @UseGuards(AuthGuard())
   @Render("clubsdetail.ejs")
-  async getClubsById(@Param("id") id: number) {
+  async getClubsById(
+    @Param("id") id: number,
+    @Req() req
+    ) {
+    const buttonUserId = req.user;
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.data.prevPost
     const nowPost = detail.data.nowPost
@@ -121,11 +126,11 @@ export class ClubController {
     const comments = detail.comments
     const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
     const acceptedMember = await this.clubService.getClubMember(id);
-
     return {
       ...postSet,
       ...acceptedMember,
-      reformPostDate2nd
+      reformPostDate2nd,
+      buttonUserId
       }
     };
 
