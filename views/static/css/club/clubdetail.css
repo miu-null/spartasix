@@ -177,11 +177,10 @@
 
 .clubdetail_body_text {
   margin: auto;
-  margin-top: 70px;
-  margin-bottom: 100px;
+  margin-top: 60px;
   width: 90%;
-
   word-wrap: break-word;
+  white-space: pre-line;
 }
 
 .clubdetail_card_List{
