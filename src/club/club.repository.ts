@@ -126,7 +126,7 @@ export class ClubRepository {
     const clubmembers = await this.clubmemberRepository
       .createQueryBuilder("members")
       .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
-      .innerJoin("Users", "u", "u.id = members.userId")
+      .leftJoin("Users", "u", "u.id = members.userId")
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = true")
       .getRawMany();
@@ -134,7 +134,7 @@ export class ClubRepository {
     const clubwaitList = await this.clubmemberRepository
       .createQueryBuilder("members")
       .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
-      .innerJoin("Users", "u", "u.id = members.userId")
+      .leftJoin("Users", "u", "u.id = members.userId")
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = false")
       .getRawMany();  
