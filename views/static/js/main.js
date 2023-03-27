@@ -4,20 +4,20 @@ document.addEventListener("DOMContentLoaded", function () {
   if (obj === null || Date.now() > obj.expire) {
     window.localStorage.removeItem("team_sparta_header");
     let temp_html = `
-    <div class="header_body">
-          <div class="header_title">
-              <a href="/" class="logo">
-                  <img src="/img/로고.png" width="178">
-              </a>
-          </div>
+      <div class="header_body">
+      <div class="header_title">
+      <a href="/" class="logo">
+      <img src="/img/로고.png" width="178">
+      </a>
+      </div>
           <div class="category">
               <ul class="navlist">
                   <li class="list"><a href="/events/list">Events</a></li>
                   <li><a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
                   <li class="list"><a href="/club/list">Clubs</a></li>
               </ul>
-          </div>
-          <div class="header_list">
+              </div>
+              <div class="header_list">
               <section id="search-wrap">
                   <div class="search">
                       <form action="/search/all" class="search-form">
@@ -26,16 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
                       </form>
                   </div>
               </section>  
-          </div>
-          <div class="header_button">
+              </div>
+              <div class="header_button">
               <button onclick="location='/sign'" class="myButton">Log in</button>
-          </div>
-      </div>
-      `;
+              </div>
+              </div>
+              `;
 
     $("#login_header").append(temp_html);
   }
-
+  const userId = obj.value;
   if (obj !== null) {
     let temp_html = `
         <div class="header_body">
@@ -62,7 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
               </section>  
           </div>
           <ul class="navlist1">
-                  <li class="list1"><a href="/">My page</a></li> 
+                  <li class="list1"><a href="/userpage/${userId}">My page</a></li>
+
+
           </ul>
           <div class="header_button">
               <button onclick="logout()" class="myButton">Log out</button>

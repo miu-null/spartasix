@@ -19,6 +19,40 @@ function modal_open2() {
     }
   });
 }
+function userInfo(userId) {
+  $.ajax({
+    type: "GET",
+    url: `/userpage/${userId}`,
+    async: false,
+    success: function (response) {
+      window.location.href = `/userpage/${userId}`;
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "Unauthorized") {
+        alert("로그인 후 이용 가능한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
+      if (request.responseJSON["message"] === "Unauthorized") {
+        {
+          $.ajax({
+            type: "POST",
+            url: "/auth/new-accessToken",
+            success: function (response) {
+              $.ajax({
+                type: "PATCH",
+                url: `/userpage/${userId}`,
+                async: false,
+                success: function (res) {
+                  window.location.replace(`/userpage/${userId}`);
+                },
+              });
+            },
+          });
+        }
+      }
+    },
+  });
+}
 
 function selectApp(userId) {
   $.ajax({
@@ -157,15 +191,14 @@ function delete_accepted(userId, clubMemberId) {
     },
   });
 }
-
-function show_userPosts(userId, prev, next) {
+function show_userPosts(userId, startCursor, endCursor, limit) {
   $.ajax({
     type: "GET",
-    url: `/userpage/${userId}/post`,
-    async: false,
+    url: `/userpage/${userId}/post?startCursor=${startCursor}&endCursor=${endCursor}&limit=${limit}`,
+    async: true,
     success: function (res) {
-      let clubPosts = res.clubPosts;
-      let eventPosts = res.eventPosts;
+      let clubPosts = res.myPosts.clubPosts;
+      let eventPosts = res.myPosts.eventPosts;
       let rows = [];
 
       let full_html = "";
@@ -209,8 +242,175 @@ function show_userPosts(userId, prev, next) {
         full_html += temp_html;
         full_html += `</div>`;
       }
-
+      // add pagination buttons
+      // let pageInfo = res.myPosts.pageInfo;
+      // if (pageInfo.hasPreviousClubPage) {
+      //   full_html += `<button type="button" class="club_previous" onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
+      //     page - 1
+      //   })">Previous Club</button>`;
+      // }
+      // if (pageInfo.hasNextClubPage) {
+      //   full_html += `  <button type="button" class="club_next" onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
+      //     page + 1
+      //   })">Next Club Page</button>`;
+      // }
+      // if (pageInfo.hasPreviousEventPage) {
+      //   full_html += `<button onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
+      //     page - 1
+      //   })">Previous Event Page</button>`;
+      // }
+      // if (pageInfo.hasNextEventPage) {
+      //   full_html += `<button onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
+      //     page + 1
+      //   })">Next Event Page</button>`;
+      // }
       $("#clubPosts").html(full_html);
+
+      let pageInfo = res.pageInfo;
+      let hasNextEventPage = pageInfo.hasNextEventPage;
+      let hasNextClubPage = pageInfo.hasNextClubPage;
+      let hasPreviousEventPage = pageInfo.hasPreviousEventPage;
+      let hasPreviousClubPage = pageInfo.hasPreviousClubPage;
+
+      if (hasPreviousClubPage) {
+        $("#prevClubBtn").show();
+      } else {
+        $("#prevClubBtn").hide();
+      }
+
+      if (hasNextClubPage) {
+        $("#nextClubBtn").show();
+      } else {
+        $("#nextClubBtn").hide();
+      }
+
+      if (hasPreviousEventPage) {
+        $("#prevEventBtn").show();
+      } else {
+        $("#prevEventBtn").hide();
+      }
+
+      if (hasNextEventPage) {
+        $("#nextEventBtn").show();
+      } else {
+        $("#nextEventBtn").hide();
+      }
+
+      $("#nextClubBtn")
+        .off("click")
+        .on("click", function () {
+          let newStartCursor = pageInfo.clubEndCursor;
+          show_userPosts(userId, newStartCursor, endCursor, limit);
+        });
+
+      $("#prevClubBtn")
+        .off("click")
+        .on("click", function () {
+          let newEndCursor = pageInfo.clubStartCursor;
+          show_userPosts(userId, StartCursor, newEndCursor, limit);
+        });
     },
   });
 }
+
+function editInfo(userId) {
+  $.ajax({
+    type: "get",
+    url: `/userpage/${userId}/edit`,
+    async: true,
+    success: function (response) {
+      window.location.replace(`/userpage/${userId}/edit`);
+    },
+
+    error: function (request) {
+      if (request.responseJSON["message"] === "본인만 수정 가능합니다.") {
+        alert("본인만 수정 가능합니다.");
+        $.ajax({
+          type: "GET",
+          url: `/userpage/${userId}`,
+          async: false,
+          success: function (response) {
+            next;
+          },
+        });
+      }
+
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        alert("다시 로그인하세요.");
+        window.location.replace(`/sign`);
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "PATCH",
+              url: `/userpage/${userId}`,
+              async: false,
+              success: function (res) {
+                window.location.replace(`/userpage/${userId}`);
+              },
+            });
+          },
+        });
+      }
+    },
+  });
+}
+
+function checkClubs(userId) {
+  $.ajax({
+    type: "get",
+    url: `/userpage/${userId}/clubs`,
+    async: true,
+    success: function (res) {
+      let myOwnClub = res.myClubs.myOwnClub;
+      let MyClub = res.myClubs.MyClub;
+      let rows = [];
+      console.log(res);
+
+      let full_html = "";
+      rows = myOwnClub;
+      full_html += `
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+      My Clubs
+    </p>
+        <br />
+        `;
+      for (let i = 0; i < rows.length; i++) {
+        full_html += `<div class = "myOwnClub">`;
+        let title = rows[i]["title"];
+        let content = rows[i]["content"];
+        let temp_html = `
+            <font style="color: #ea4e4e; size: 20px">
+             ${title} </font>
+          <br /><br /> `;
+
+        full_html += temp_html;
+        full_html += `</div>`;
+      }
+
+      rows = MyClub;
+      full_html += `
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+      I'm in     </p>
+        <br />
+        `;
+      for (let i = 0; i < rows.length; i++) {
+        full_html += `<div class = "MyClub">`;
+
+        let title = rows[i]["title"];
+        let content = rows[i]["content"];
+        let temp_html = `
+        <font style="color: #ea4e4e; size: 20px">
+        ${title} </font>
+          <br /><br /> `;
+
+        full_html += temp_html;
+        full_html += `</div>`;
+      }
+      $("#myClubAct").html(full_html);
+    },
+  });
+}
+
+// onclick="modal_open1('<%= myInfo.userId %>')
