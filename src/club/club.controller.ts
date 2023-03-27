@@ -86,10 +86,13 @@ export class ClubController {
   @Get("/clubs/:id")
   async updateclub(
     @Param("id") id: number, 
-    @Res() res: Response) {
+    @Res() res: Response,
+    @Req() req,
+    ) {
+    const buttonUserId = req.user;
     const detail = await this.clubService.getClubById(id);
     const nowPost = detail.data.nowPost
-    return res.render("clubupdate.ejs", {nowPost, detail});
+    return res.render("clubupdate.ejs", {nowPost, detail, buttonUserId});
   }
 
   @Put("/clubs/:id")
@@ -126,6 +129,7 @@ export class ClubController {
     const comments = detail.comments
     const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
     const acceptedMember = await this.clubService.getClubMember(id);
+    console.log(comments)
     return {
       ...postSet,
       ...acceptedMember,
