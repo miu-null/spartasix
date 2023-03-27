@@ -287,12 +287,15 @@
               <%= data.clubCommentLikes.length %>
             </div>
           </div>
+          <% if (buttonUserId===data.userId) {%>
           <div id="club_comment_button<%= data.id %>" class="club_comment_button">
             <button id="club_del_button<%= data.id %>" class="comment_button"
               onclick="updateClubComment('<%= data.id %>',' <%= data.content %>')">edit</button>
             <button id="club_del_button1<%= data.id %>" class="comment_button"
               onclick="deleteClubComment('<%= data.id %>')">delete</button>
           </div>
+          <% } else { %>
+            <% } %>
         </div>
         <% }) %>
       </div>

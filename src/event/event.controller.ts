@@ -113,8 +113,14 @@ export class EventController {
   }
 
   @Get("/list/:id")
+  @UseGuards(AuthGuard())
   @Render("eventDetail.ejs")
-  async getEventById(@Res() res: Response, @Param("id") id: number) {
+  async getEventById(
+    @Res() res: Response, 
+    @Param("id") id: number,
+    @Req() req
+    ) {
+    const buttonUserId = req.user;
     let postDetail = await this.eventService.getEventById(id);
     const events = postDetail.data.nowPost;
     let imgUrl = events.postIMG;
@@ -133,6 +139,7 @@ export class EventController {
       prevPost,
       comments,
       reformPostDate,
+      buttonUserId
     };
   }
 
