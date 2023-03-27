@@ -24,6 +24,7 @@
     "@aws-sdk/client-s3": "^3.290.0",
     "@liaoliaots/nestjs-redis": "^9.0.5",
     "@nestjs-modules/mailer": "^1.8.1",
+    "@nestjs/cli": "^9.3.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
@@ -66,7 +67,6 @@
     "typeorm-cursor-pagination": "^0.10.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@types/cache-manager": "^4.0.2",
