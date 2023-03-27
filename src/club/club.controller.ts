@@ -19,6 +19,7 @@ import { CreateClubDto } from "./dto/createclub.dto";
 import { UpdateClubDto } from "./dto/updateclub.dto";
 import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
+import { ReportClubDto } from "./dto/reportclub.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
 import { reformPostDate, paginatedResults, reformPostDate2nd } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
@@ -29,7 +30,7 @@ export class ClubController {
   constructor(
     private readonly clubService: ClubService,
     private readonly searchService: SearcherService,
-  ) {}
+  ) { }
 
   @Get("/list")
   async getClubs(
@@ -104,7 +105,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return update
+    return update;
   }
 
   @Get("/list/:id")
@@ -115,15 +116,15 @@ export class ClubController {
     const nowPost = detail.data.nowPost
     const nextPost = detail.data.nextPost
     const comments = detail.comments
-    const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
+    const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate }
     const acceptedMember = await this.clubService.getClubMember(id);
 
     return {
       ...postSet,
       ...acceptedMember,
       reformPostDate2nd
-      }
-    };
+    }
+  };
 
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
@@ -152,5 +153,21 @@ export class ClubController {
       ...searchData,
       reformPostDate,
     });
+  }
+  @Post("/report/:id")
+  @UseGuards(AuthGuard())
+  async reportClub(
+    @Param("id") id: number,
+    @Body() data: ReportClubDto,
+    @Req() req,
+  ) {
+    const userId = req.user;
+    const createReport = await this.clubService.reportClub(
+      id,
+      userId,
+      data.reportContent,
+      data.reportReason,
+    );
+    return createReport;
   }
 }

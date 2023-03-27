@@ -1,4 +1,16 @@
 function modal_open() {
+  const cardContainer = document.querySelector("#card-container");
+  const cardCount = cardContainer.querySelectorAll(".card").length;
+  console.log(`카드 개수: ${cardCount}`);
+  const maxMembers = document.querySelector("#club_maxMember");
+  const maxMembersCount = maxMembers.textContent;
+  const numberOnly = parseInt(maxMembersCount.match(/\d+/));
+  console.log(numberOnly);
+  if (cardCount === numberOnly) {
+    alert("모집이 마감되었습니다.");
+    return false;
+    window.location.reload();
+  }
   $(`#club_modal`).fadeIn();
 
   $(document).mouseup(function (e) {
@@ -27,13 +39,9 @@ function clubpost() {
   const maxMembers = $("#club_maxMembers").val();
   const content = $("#club_content").val();
   const category = $("#club_category").val();
-
+  // maxMembers = Number(maxMembers);
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
-    return false;
-  }
-  if (maxMembers == String) {
-    alert("최대인원수는 숫자로 입력해주세요");
     return false;
   }
   if (maxMembers < 2) {
@@ -51,6 +59,7 @@ function clubpost() {
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       title: title,
+      // maxMembers: Number(maxMembers),
       maxMembers: maxMembers,
       content: content,
       category: category,
@@ -60,11 +69,13 @@ function clubpost() {
       window.location.replace("/club/list");
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -83,14 +94,6 @@ function clubpost() {
               success: function (response) {
                 alert("작성 완료");
                 window.location.replace("/club/list");
-              },
-              error: function (request) {
-                if (
-                  request.responseJSON["message"] ===
-                  "회원이 존재하지 않습니다."
-                ) {
-                  alert("로그인 후 이용가능한 기능입니다.");
-                }
               },
             });
           },
@@ -124,6 +127,7 @@ function clubupdate() {
     return false;
   }
 
+  console.log(clubId);
   $.ajax({
     type: "PUT",
     url: `/club/clubs/${clubId}`,
@@ -152,11 +156,13 @@ function clubupdate() {
         alert("작성자만 사용할 수 있는 기능입니다.");
         window.location.reload();
       }
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -177,14 +183,6 @@ function clubupdate() {
                 alert("수정 완료");
                 window.location.replace(`/club/list/${clubId}`);
               },
-              error: function (request) {
-                if (
-                  request.responseJSON["message"] ===
-                  "회원이 존재하지 않습니다."
-                ) {
-                  alert("로그인 후 이용가능한 기능입니다.");
-                }
-              },
             });
           },
         });
@@ -195,7 +193,7 @@ function clubupdate() {
 
 function clubdelete() {
   const clubId = location.pathname.split("list/")[1];
-
+  console.log(clubId);
   $.ajax({
     type: "DELETE",
     url: `/club/list/${clubId}`,
@@ -215,11 +213,13 @@ function clubdelete() {
         alert("작성자만 사용할 수 있는 기능입니다.");
         window.location.reload();
       }
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -229,7 +229,7 @@ function clubdelete() {
               url: `/club/list/${clubId}`,
               success: function (response) {
                 alert("삭제 완료");
-                window.location.replace("http://localhost:3000/club/list");
+                window.location.replace("/club/list");
               },
             });
           },
@@ -256,14 +256,30 @@ function clubApp() {
     }),
     success: function (response) {
       alert("신청 완료");
-      window.location.replace("http://localhost:3000/club/list");
+      window.location.replace(`/club/list/${clubId}`);
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (request.responseJSON["message"] === "게시글이 존재하지 않습니다.") {
+        alert("게시글이 존재하지 않습니다.");
+        window.location.reload();
+      }
+      if (request.responseJSON["message"] === "중복 신청은 불가능합니다.") {
+        alert("중복 신청은 불가능합니다.");
+        window.location.reload();
+      }
+      if (
+        request.responseJSON["message"] === "이미 참가하고 있는 모임입니다."
+      ) {
+        alert("이미 참가하고 있는 모임입니다.");
+        window.location.reload();
+      }
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -277,7 +293,7 @@ function clubApp() {
               }),
               success: function (response) {
                 alert("신청 완료");
-                window.location.replace("http://localhost:3000/club/list");
+                window.location.replace(`/club/list/${clubId}`);
               },
             });
           },
@@ -302,11 +318,13 @@ function createClubComment(postId) {
       window.location.reload();
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -322,14 +340,6 @@ function createClubComment(postId) {
               success: function (response) {
                 alert("작성 완료 !");
                 window.location.reload();
-              },
-              error: function (request) {
-                if (
-                  request.responseJSON["message"] ===
-                  "회원이 존재하지 않습니다."
-                ) {
-                  alert("로그인 후 이용가능한 기능입니다.");
-                }
               },
             });
           },
@@ -400,11 +410,14 @@ function updateClubComment(commentId, content) {
           window.location.reload();
         }
 
-        if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-          alert("로그인 후 이용가능한 기능입니다.");
+        if (
+          request.responseJSON["message"] ===
+          "로그인 후 이용 가능한 기능입니다."
+        ) {
+          alert("로그인 후 이용 가능한 기능입니다.");
         }
 
-        if (request.responseJSON["message"] === "Unauthorized") {
+        if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
           $.ajax({
             type: "POST",
             url: "/auth/new-accessToken",
@@ -468,11 +481,13 @@ function deleteClubComment(clubcommentId) {
         window.location.reload();
       }
 
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -523,11 +538,13 @@ function club_updateLike(commentId) {
         window.location.reload();
       }
 
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -545,12 +562,6 @@ function club_updateLike(commentId) {
                   alert("좋아요 취소 !");
                   window.location.reload();
                 }
-                if (
-                  request.responseJSON["message"] ===
-                  "회원이 존재하지 않습니다."
-                ) {
-                  alert("로그인 후 이용가능한 기능입니다.");
-                }
               },
             });
           },
@@ -565,14 +576,14 @@ function report_submit() {
   const reportContent = $("#report_content").val();
   const id = location.pathname.split("list/")[1];
   const clubId = location.pathname.split("list/")[1];
-
+  console.log(reportContent, reportReason);
   if (!reportReason || !reportContent) {
     alert("모든 항목을 작성해 주세요.");
     return false;
   }
   $.ajax({
     type: "POST",
-    url: `/list/report/${id}`,
+    url: `/club/report/${id}`,
     dataType: "json",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
@@ -585,11 +596,13 @@ function report_submit() {
       window.location.replace(`/club/list/${id}`);
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
-        alert("로그인 후 이용가능한 기능입니다.");
+      if (
+        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+      ) {
+        alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "Unauthorized") {
+      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -607,14 +620,6 @@ function report_submit() {
               success: function (response) {
                 alert("신고 완료");
                 window.location.replace(`/club/list/${id}`);
-              },
-              error: function (request) {
-                if (
-                  request.responseJSON["message"] ===
-                  "회원이 존재하지 않습니다."
-                ) {
-                  alert("로그인 후 이용가능한 기능입니다.");
-                }
               },
             });
           },
