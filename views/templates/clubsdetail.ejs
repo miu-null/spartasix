@@ -120,7 +120,7 @@
                   <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
                 <% } %>
                 <%= data.u_nickName %></a></h5>
-              <p class="card-text"><%= reformPostDate2nd(data.members_updatedAt) %></p>
+              <p class="card-text"><%= reformPostDate(data.members_updatedAt) %></p>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@
                   <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
                 <% } %>
                 <%= data.u_nickName %></a></h5>
-              <p class="card-text"><%= reformPostDate2nd(data.members_createdAt) %></p>
+              <p class="card-text"><%= reformPostDateRaw(data.members_createdAt) %></p>
             </div>
           </div>
         </div>
