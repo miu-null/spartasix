@@ -7,10 +7,12 @@ import {
   Post,
   Delete,
   Res,
-  Request,
+  Req,
   UploadedFile,
   UseInterceptors,
   Redirect,
+  UnauthorizedException,
+  Query,
 } from "@nestjs/common";
 import { Response } from "express";
 import { UserpageService } from "./userpage.service";
@@ -20,49 +22,107 @@ import { AuthGuard } from "@nestjs/passport";
 import { Express } from "express";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
-
+import { PaginationDto } from "./dto/pagination.dto";
 @Controller("userpage")
 export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
 
   @Get("/:userId")
-  // @UseGuards(AuthGuard())
-  async getUserInfo(@Param("userId") userId: number, @Res() res: Response) {
-    const myInfo = await this.userPageService.getUserInfo(userId);
+  @UseGuards(AuthGuard())
+  async getUserInfo(
+    @Param("userId") userId: number,
+    @Res() res: Response,
+    @Req() req,
+  ) {
+    console.log(req.user);
+    const currentUserId = req.user;
+    if (!currentUserId) {
+      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    }
+    const myInfo = await this.userPageService.getUserInfo(
+      userId,
+      currentUserId,
+    );
     return res.render("userInfo", { myInfo });
   }
 
   @Get("/:userId/post")
-  // @UseGuards(AuthGuard())
-  async getUserPost(@Param("userId") userId: number) {
-    const myPosts = await this.userPageService.getMyPosts(userId);
-    return myPosts;
+  async getUserPost(
+    @Param("userId") userId: number,
+    @Query() paginationDto: PaginationDto,
+    @Req() req,
+  ) {
+    const currentUserId = req.user;
+    const { startCursor, endCursor, limit } = paginationDto;
+    const myPosts = await this.userPageService.getMyPosts(
+      userId,
+      currentUserId,
+      startCursor,
+      endCursor,
+      limit,
+    );
+    return { myPosts };
   }
 
   @Get("/:userId/clubs")
-  async getUserClubs(@Param("userId") userId: number) {
+  @UseGuards(AuthGuard())
+  async getUserClubs(
+    @Param("userId") userId: number,
+    // , @Res() res: Response
+    @Req() req,
+  ) {
+    const currentUserId = req.user;
+    if (!currentUserId) {
+      throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    }
     const myClubs = await this.userPageService.getMyClubs(userId);
-    return myClubs;
+    return { myClubs };
   }
 
   @Get("/:userId/edit")
-  // @UseGuards(AuthGuard())
-  async editUserInfo(@Param("userId") userId: number, @Res() res: Response) {
-    const myInfo = await this.userPageService.getUserInfo(userId);
+  @UseGuards(AuthGuard())
+  async editUserInfo(
+    @Param("userId") userId: number,
+    @Res() res: Response,
+    @Req() req,
+  ) {
+    const currentUserId = req.user;
+    console.log("유저?", currentUserId);
+    console.log(userId);
+    if (currentUserId !== userId) {
+      throw new UnauthorizedException("본인만 수정 가능합니다.");
+    }
+    const myInfo = await this.userPageService.getUserInfo(
+      userId,
+      currentUserId,
+    );
     const context = { myInfo };
     return res.render("userInfoEdit", context);
   }
 
-  @Post("/:userId/edit")
+  // multipart/form-data 로 submit할때는 method를 patch로 변경시, multer middleware를 수정해야 하는 문제가 있음
+  @Post("/:userId/edit") // 내 정보 수정하기, 본인검증로직 추가할 것
+  @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor("userIMG"))
   @Redirect("", 302)
   async updateUser(
     @Param("userId") userId: number,
-    @Request() req: Request,
+    @Req() req, // @Body() data: UserUpdateDto,
     @Body() data: UserUpdateDto,
     @UploadedFile() uploadedFile: Express.Multer.File,
   ) {
-    const userInfo = await this.userPageService.getUserInfo(userId);
+    console.log("수정");
+    const currentUserId = req.user;
+    console.log(currentUserId);
+
+    if (currentUserId !== userId) {
+      throw new UnauthorizedException("본인만 수정 가능합니다.");
+    }
+
+    const userInfo = await this.userPageService.getUserInfo(
+      userId,
+      currentUserId,
+    );
     let imgUrl = userInfo.userIMG;
 
     if (!!uploadedFile) {
@@ -89,21 +149,33 @@ export class UserpageController {
       data: { url: imgUrl },
     });
 
-    const changedInfo = await this.userPageService.updateUser(userId, {
-      email: data.email,
-      password: data.password,
-      phone: data.phone,
-      nickName: data.nickName,
-      snsUrl: data.snsUrl,
-      userIMG: imgUrl,
-    });
+    const changedInfo = await this.userPageService.updateUser(
+      userId,
+      currentUserId,
+      {
+        email: data.email,
+        password: data.password,
+        phone: data.phone,
+        nickName: data.nickName,
+        snsUrl: data.snsUrl,
+        userIMG: imgUrl,
+      },
+    );
 
     return {
       url: `/userpage/${userId}`,
     };
   }
 
-  @Get("/:userId/clubs/:clubId")
+  // 유저 신청서 조회
+  @Get("/clubs/:userId/app")
+  // @UseGuards(AuthGuard())
+  async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
+    const myApps = await this.userPageService.getClubApps(userId);
+    return res.json(myApps);
+  }
+
+  @Get("/:userId/clubs/:clubId") // TODO 특정 클럽정보 조회
   async getThisClub(
     @Param("userId") userId: number,
     @Param("clubId") clubId: number,
@@ -112,14 +184,7 @@ export class UserpageController {
     return thisClub;
   }
 
-  @Get("/clubs/:userId/app")
-  // @UseGuards(AuthGuard())
-  async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
-    const myApps = await this.userPageService.getClubApps(userId);
-    return res.json(myApps);
-  }
-
-  @Get("/:userId/clubs/app/:clubMemberId")
+  @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
   async getThisApp(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,

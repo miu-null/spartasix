@@ -7,11 +7,24 @@ import { UserUpdateDto } from "./dto/userpage.update.dto";
 export class UserpageService {
   constructor(private userPageRepository: UserPageRepository) {}
 
-  async getMyPosts(userId: number) {
-    const { clubPosts, eventPosts } = await this.userPageRepository.getMyPosts(
-      userId,
-    );
-    return { clubPosts, eventPosts };
+  //TODO 회원이 쓴 글 내림차순 정렬
+  // 작성한 글 조회
+  async getMyPosts(
+    userId: number,
+    currentUserId: number,
+    startCursor: Date,
+    endCursor: Date,
+    limit: number,
+  ) {
+    const { clubPosts, eventPosts, pageInfo } =
+      await this.userPageRepository.getMyPosts(
+        userId,
+        currentUserId,
+        startCursor,
+        endCursor,
+        limit,
+      );
+    return { clubPosts, eventPosts, pageInfo };
   }
 
   async getMyClubs(userId: number) {
@@ -24,8 +37,12 @@ export class UserpageService {
     };
   }
 
-  async getUserInfo(userId: number) {
-    const data = await this.userPageRepository.getUserInfo(userId);
+  // 회원정보 조회
+  async getUserInfo(userId: number, currentUserId: number) {
+    const data = await this.userPageRepository.getUserInfo(
+      userId,
+      currentUserId,
+    );
     const password = data.password.length;
     return {
       userId: data.id,
@@ -37,10 +54,15 @@ export class UserpageService {
       userIMG: data.userIMG,
     };
   }
-
-  async updateUser(userId: number, updateUserInfo: UserUpdateDto) {
+  // 회원정보 수정
+  async updateUser(
+    userId: number,
+    currentUserId: number,
+    updateUserInfo: UserUpdateDto,
+  ) {
     const updatedUser = await this.userPageRepository.updateUser(
       userId,
+      currentUserId,
       updateUserInfo,
     );
     return updatedUser;
