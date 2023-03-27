@@ -84,8 +84,12 @@ export class ClubController {
   }
 
   @Get("/clubs/:id")
-  async updateclub(@Res() res: Response) {
-    return res.render("clubupdate.ejs");
+  async updateclub(
+    @Param("id") id: number, 
+    @Res() res: Response) {
+    const detail = await this.clubService.getClubById(id);
+    const nowPost = detail.data.nowPost
+    return res.render("clubupdate.ejs", {nowPost, detail});
   }
 
   @Put("/clubs/:id")
