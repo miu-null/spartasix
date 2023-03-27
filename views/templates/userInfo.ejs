@@ -48,7 +48,11 @@
 <div class="huge-container">
   <div class="box member-image-box">
     <div class="member-image">
+      <% if (myInfo.userIMG) {%>
       <img src="<%= myInfo.userIMG %>" alt="memberimage" />
+      <% } else {%>
+        <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
+      <% } %>
     </div>
   </div>
   <br />

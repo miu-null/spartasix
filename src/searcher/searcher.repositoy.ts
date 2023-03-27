@@ -84,7 +84,7 @@ export class SearcherRepository {
     const allPosts = await this.getAllPosts();
     const popularPosts = allPosts
       .sort((postA, postB) => postB.viewCount - postA.viewCount)
-      .slice(0, 4);
+      .slice(0, 5);
     return popularPosts;
   }
 
@@ -93,7 +93,7 @@ export class SearcherRepository {
       await this.clubRepository.find({ relations: { user: true } })
     )
       .sort((postA, postB) => postB.viewCount - postA.viewCount)
-      .slice(0, 2);
+      .slice(0, 3);
 
     const sortPosts = [...clubPosts];
     return sortPosts;
@@ -104,7 +104,7 @@ export class SearcherRepository {
       .createQueryBuilder("sort")
       .leftJoinAndSelect("sort.user", "user")
       .orderBy("sort.viewCount", "DESC")
-      .limit(2)
+      .limit(3)
       .getMany();
 
     return sortPosts;
