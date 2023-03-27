@@ -4,6 +4,7 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository, MoreThan, LessThan } from "typeorm";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
+import { concat } from "rxjs";
 
 @Injectable()
 export class ClubRepository {
@@ -118,6 +119,29 @@ export class ClubRepository {
       .where("id = :id", { id: clubId })
       .execute();
     return { prevPost, nowPost, nextPost };
+  }
+
+  // 클럽 멤버 정보 (운영자, 참여인원 보여주기)
+  async getClubMember(clubId: number) {
+    const clubmembers = await this.clubmemberRepository
+      .createQueryBuilder("members")
+      .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
+      .innerJoin("Users", "u", "u.id = members.userId")
+      .where("members.clubId = :clubId", { clubId })
+      .andWhere("members.isAccepted = true")
+      .getRawMany();
+    
+    const clubwaitList = await this.clubmemberRepository
+      .createQueryBuilder("members")
+      .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
+      .innerJoin("Users", "u", "u.id = members.userId")
+      .where("members.clubId = :clubId", { clubId })
+      .andWhere("members.isAccepted = false")
+      .getRawMany();  
+    
+    const clubMembers = [].concat(clubmembers)
+    const clubWaitList = [].concat(clubwaitList)
+    return {clubMembers, clubWaitList};
   }
 
   async deleteClubDto(userId: number, clubId: number) {
