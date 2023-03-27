@@ -21,7 +21,7 @@ import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate, paginatedResults, reformPostDate2nd } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
+import { reformPostDate, paginatedResults, reformPostDateRaw } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
 
 @Controller("club")
@@ -140,7 +140,7 @@ export class ClubController {
     return {
       ...postSet,
       ...acceptedMember,
-      reformPostDate2nd,
+      reformPostDateRaw,
       buttonUserId
       }
     };
