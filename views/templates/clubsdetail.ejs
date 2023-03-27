@@ -47,17 +47,17 @@
           <Writer>
         </div>
         <div class="nickname_text">
-          <%= nowPost.user.nickName %>
+          작성자: <%= nowPost.user.nickName %>
         </div>
       </div>
-      <div class="clubdetail_first_likes">
+      <!-- <div class="clubdetail_first_likes">
         <div class="first_likes">
           Likes
         </div>
         <div class="likes_text">
           개수 (필요)
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="clubdetail_second">
       <div class="clubdetail_second_date">
@@ -108,7 +108,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>"><%= data.u_nickName %></a></h5>
-            <p class="card-text"><%= reformPostDate2nd(data.members_createdAt) %></p>
+            <p class="card-text"><%= reformPostDate2nd(data.members_updatedAt) %></p>
           </div>
         </div>
       </div>
