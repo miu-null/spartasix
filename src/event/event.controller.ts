@@ -120,7 +120,10 @@ export class EventController {
     @Param("id") id: number,
     @Req() req
     ) {
-    const buttonUserId = req.user;
+      let buttonUserId = null;
+      if(req.user) {
+        buttonUserId = req.user
+      }
     let postDetail = await this.eventService.getEventById(id);
     const events = postDetail.data.nowPost;
     let imgUrl = events.postIMG;

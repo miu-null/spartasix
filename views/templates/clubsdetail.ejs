@@ -102,7 +102,7 @@
     <div class="clubdetail_body_text">
       <h6><%= nowPost.content %></h6>
     </div>
-          <!-- 참가자 이미지 띄우기 테스트 -->
+          <!-- 참가자 카드 섹션 -->
 <div class="clubdetail_card_List">
   <div class="card_list_body">
   <div class="card-section">
@@ -114,8 +114,8 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>">
-                <% if (data.userIMG) {%>
-                  <img src="<%= data.userIMG %>"width="20">
+                <% if (data.u_userIMG) {%>
+                  <img src="<%= data.u_userIMG %>"width="20">
                 <% } else {%>
                   <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
                 <% } %>
@@ -141,8 +141,8 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>">
-                <% if (data.userIMG) {%>
-                  <img src="<%= data.userIMG %>"width="20">
+                <% if (data.u_userIMG) {%>
+                  <img src="<%= data.u_userIMG %>"width="20">
                 <% } else {%>
                   <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
                 <% } %>
@@ -158,8 +158,7 @@
     </div>
   </div>
 </div>
-
-<!-- 테스트 구간 끝 -->
+<!-- 카드 섹션 구간 끝 -->
     </div>
 
     <div>
