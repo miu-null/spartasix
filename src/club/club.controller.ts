@@ -20,7 +20,8 @@ import { UpdateClubDto } from "./dto/updateclub.dto";
 import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { SearcherService } from "src/searcher/searcher.service";
-import { reformPostDate, paginatedResults } from "../../views/static/js/filter";
+import { ReportDefinition } from "aws-sdk/clients/cur";
+import { reformPostDate, paginatedResults, reformPostDate2nd } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
 
 @Controller("club")
@@ -103,23 +104,26 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return update;
+    return update
   }
 
   @Get("/list/:id")
   @Render("clubsdetail.ejs")
   async getClubsById(@Param("id") id: number) {
     const detail = await this.clubService.getClubById(id);
-    const prevPost = detail.data.prevPost;
-    const nowPost = detail.data.nowPost;
-    const nextPost = detail.data.nextPost;
-    const comments = detail.comments;
-    const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate };
+    const prevPost = detail.data.prevPost
+    const nowPost = detail.data.nowPost
+    const nextPost = detail.data.nextPost
+    const comments = detail.comments
+    const postSet = {prevPost, nowPost, nextPost, comments, reformPostDate}
+    const acceptedMember = await this.clubService.getClubMember(id);
 
     return {
       ...postSet,
+      ...acceptedMember,
+      reformPostDate2nd
+      }
     };
-  }
 
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
