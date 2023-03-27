@@ -148,16 +148,16 @@
       <img class="clubdetail_like_img" src="/img/likes.png">
     </div>
 
-    <div class="eventdetail_bottom">
-      <div class="eventdetail_bottom_div">
-        <div class="eventdetail_bottom_div_title">
+    <div class="clubdetail_bottom">
+      <div class="clubdetail_bottom_div">
+        <div class="clubdetail_bottom_div_title">
           <% if (nextPost) { %>
             <a class="postLink" href="<%= nextPost.id %>">다음글</a>
             <% } else {%>
               다음글
               <% }%>
         </div>
-        <div class="eventdetail_bottom_div_body">
+        <div class="clubdetail_bottom_div_body">
           <% if (nextPost) { %>
             <a class="postLink" href="<%= nextPost.id %>">
               <%= nextPost.title %>
@@ -167,46 +167,46 @@
               <% }%>
 
         </div>
-        <div class="eventdetail_bottom_div_nickname">
+        <div class="clubdetail_bottom_div_nickname">
           <% if (nextPost) { %>
             <%= nextPost.user.nickName %>
               <% } else {%>
                 <% }%>
         </div>
-        <div class="eventdetail_bottom_div_date">
+        <div class="clubdetail_bottom_div_date">
           <% if (nextPost) { %>
             <%= reformPostDate(nextPost.createdAt) %>
               <% } %>
         </div>
       </div>
-      <div class="eventdetail_bottom_div">
-        <div class="eventdetail_bottom_div_title">
-          현재 글
+      <div class="clubdetail_bottom_div">
+        <div class="clubdetail_bottom_div_title">
+          현재글
         </div>
-        <div class="eventdetail_bottom_div_body">
+        <div class="clubdetail_bottom_div_body">
           <% if (nowPost) { %>
             <%= nowPost.title %>
               <% } %>
         </div>
-        <div class="eventdetail_bottom_div_nickname">
+        <div class="clubdetail_bottom_div_nickname">
           <% if (nowPost) { %>
             <%= nowPost.user.nickName %>
               <% } else {%>
                 <% }%>
         </div>
-        <div class="eventdetail_bottom_div_date">
+        <div class="clubdetail_bottom_div_date">
           <%= reformPostDate(nowPost.createdAt) %>
         </div>
       </div>
-      <div class="eventdetail_bottom_div1">
-        <div class="eventdetail_bottom_div_title">
+      <div class="clubdetail_bottom_div">
+        <div class="clubdetail_bottom_div_title">
           <% if (prevPost) { %>
             <a class="postLink" href="<%= prevPost.id %>">이전글</a>
             <% } else {%>
               이전글
               <% }%>
         </div>
-        <div class="eventdetail_bottom_div_body">
+        <div class="clubdetail_bottom_div_body" >
           <% if (prevPost) { %>
             <a class="postLink" href="<%= prevPost.id %>">
               <%= prevPost.title %>
@@ -215,13 +215,13 @@
               글이 존재하지 않습니다.
               <% }%>
         </div>
-        <div class="eventdetail_bottom_div_nickname">
+        <div class="clubdetail_bottom_div_nickname">
           <% if (prevPost) { %>
             <%= prevPost.user.nickName %>
               <% } else {%>
                 <% }%>
         </div>
-        <div class="eventdetail_bottom_div_date">
+        <div class="clubdetail_bottom_div_date">
           <% if (prevPost) { %>
             <%= reformPostDate(prevPost.createdAt) %>
               <% } %>
@@ -232,7 +232,7 @@
 </div>
 </div>
 
-<div class="eventdetail_comment_container">
+<div class="clubdetail_comment_container">
   <div class="comment_body">
     <div class="comment_input_box">
       <textarea id="club_textarea" class="comment_textarea" placeholder="댓글을 입력해 주세요."></textarea>
@@ -243,6 +243,7 @@
       작성
     </button>
   </div>
+
   <div id="club_show_text" class="club_show_text">
     <% comments.forEach(data=> { %>
       <div class="comment_text_box">
@@ -266,7 +267,7 @@
               <%= data.clubCommentLikes.length %>
             </div>
           </div>
-          <div id="club_comment_button<%= data.id %>" class="event_comment_button">
+          <div id="club_comment_button<%= data.id %>" class="club_comment_button">
             <button id="club_del_button<%= data.id %>" class="comment_button"
               onclick="updateClubComment('<%= data.id %>',' <%= data.content %>')">edit</button>
             <button id="club_del_button1<%= data.id %>" class="comment_button"
@@ -276,6 +277,27 @@
         <% }) %>
       </div>
   </div>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div id="report_modal">
     <div id="report_wrap">
       <div id="report_top">
