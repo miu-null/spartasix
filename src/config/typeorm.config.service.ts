@@ -22,7 +22,7 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
     return {
       type: "mysql",
       host: this.configService.get<string>("DATABASE_HOST"),
-      port: this.configService.get<number>("DATABASE_PORT"),
+      port: parseInt(this.configService.get("DATABASE_PORT"), 10),
       username: this.configService.get<string>("DATABASE_USERNAME"),
       password: this.configService.get<string>("DATABASE_PASSWORD"),
       database: this.configService.get<string>("DATABASE_NAME"),
@@ -41,9 +41,10 @@ export class typeOrmConfigService implements TypeOrmOptionsFactory {
         ClubCommentLikes,
         AbusingEventCounts,
       ],
-      synchronize: this.configService.get<boolean>("DATABASE_SYNCHRONIZE"),
+      synchronize: this.configService.get("DATABASE_SYNCHRONIZE") === "true",
+      logging: this.configService.get("DATABASE_LOG") === "true",
       autoLoadEntities: true,
-      logging: "all",
+      // logging: "all",
       timezone: "Asia/Seoul",
       charset: "utf8mb4",
     };
