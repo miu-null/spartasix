@@ -331,7 +331,7 @@
   height: 1000px;
   display: flex;
   flex-direction: column;
-  word-wrap: break-word;;
+  word-wrap: break-word;
 }
 
 .comment_body {
