@@ -1,7 +1,11 @@
 <div class="container event_container">
+    <div class="event_table_container">
+        <h4><%=term.term %> 에 대한 검색 결과</h4>
+    </div>
         <div>
             <a href="users?term=<%=term.term %>" class="new_club"> <%= users.length%>건 결과 모두보기></a>
         </div>
+
         <div class="event_table_container">
             <table class="table table-hover event_table">
                 <thead id="event_thead">
@@ -43,7 +47,7 @@
                       <th>작성자</th>
                       <th>⏰Date</th>
                       <th>View</th>
-                      <th>Likes</th>
+                      <!-- <th>Likes</th> -->
                   </tr>
               </thead>
               <tbody>
@@ -61,8 +65,8 @@
                           <td id="club_View">
                               <%= data.viewCount %>
                           </td>
-                          <td id="club_Likes">
-                              <%= data.Likes %>
+                          <!-- <td id="club_Likes">
+                              <%# data.Likes %> -->
                           </td>
                           <% }) %>
                           <% } else { %>
@@ -85,7 +89,7 @@
                       <th>작성자</th>
                       <th>⏰Date</th>
                       <th>View</th>
-                      <th>Likes</th>
+                      <!-- <th>Likes</th> -->
                   </tr>
               </thead>
               <tbody>
@@ -102,9 +106,9 @@
                           <td id="club_View">
                               <%= data.viewCount %>
                           </td>
-                          <td id="club_Likes">
-                              <%= data.Likes %>
-                          </td>
+                          <!-- <td id="club_Likes">
+                              <%# data.Likes %>
+                          </td> -->
                           <% }) %>
                           <% } else { %>
                             <td id="club_Likes">검색 결과가 없습니다.</td>
