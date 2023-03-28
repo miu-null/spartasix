@@ -1,4 +1,4 @@
-const { query } = require("express");
+// const { query } = require("express");
 
 function modal_open1(userId) {
   $(`#Appmodal`).fadeIn();
@@ -194,10 +194,16 @@ function delete_accepted(userId, clubMemberId) {
   });
 }
 function show_userPosts(event, userId, startCursor, endCursor, limit) {
-  console.log(event);
+  console.log(event.target.id);
+  let query =
+    event.target.id === "prevClubBtn"
+      ? `startCursor=${startCursor}`
+      : `endCursor=${endCursor}`;
+  limit = 3;
+  console.log(query);
   $.ajax({
     type: "GET",
-    url: `/userpage/${userId}/post?startCursor=${startCursor}&endCursor=${endCursor}&limit=${limit}`,
+    url: `/userpage/${userId}/post?${query}&limit=${limit}`,
     async: true,
     success: function (res) {
       let clubPosts = res.myPosts.clubPosts;
