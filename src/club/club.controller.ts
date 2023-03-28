@@ -88,17 +88,17 @@ export class ClubController {
   @Get("/clubs/:id")
   @UseGuards(AuthGuard())
   async updateclub(
-    @Param("id") id: number, 
+    @Param("id") id: number,
     @Res() res: Response,
     @Req() req,
-    ) {
+  ) {
     let buttonUserId = null;
-    if(req.user) {
+    if (req.user) {
       buttonUserId = req.user
     }
     const detail = await this.clubService.getClubById(id);
     const nowPost = detail.nowPost
-    return res.render("clubupdate.ejs", {nowPost, detail, buttonUserId});
+    return res.render("clubupdate.ejs", { nowPost, detail, buttonUserId });
   }
 
   @Put("/clubs/:id")
@@ -123,28 +123,27 @@ export class ClubController {
   @Get("/list/:id")
   @UseGuards(OptionalAuthGuard)
   @Render("clubsdetail.ejs")
-  async getClubsById(
-    @Param("id") id: number,
-    @Req() req
-    ) {
-      let buttonUserId = null;
-      if(req.user) {
-        buttonUserId = req.user
-      }
+  async getClubsById(@Param("id") id: number, @Req() req) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
+    const userId = req.userId;
     const detail = await this.clubService.getClubById(id);
-    const prevPost = detail.prevPost
-    const nowPost = detail.nowPost
-    const nextPost = detail.nextPost
-    const comments = detail.comments
+    const prevPost = detail.prevPost;
+    const nowPost = detail.nowPost;
+    const nextPost = detail.nextPost;
+    const comments = detail.comments;
     const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate }
     const acceptedMember = await this.clubService.getClubMember(id);
     return {
       ...postSet,
       ...acceptedMember,
       reformPostDateRaw,
-      buttonUserId
-      }
-    };
+      buttonUserId,
+      userId,
+    }
+  };
 
 
   @Delete("/list/:id")
