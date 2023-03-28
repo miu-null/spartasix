@@ -8,7 +8,7 @@ export class ClubService {
   constructor(
     private readonly clubRepository: ClubRepository,
     private readonly clubCommentService: ClubCommentService,
-  ) {}
+  ) { }
 
   async getClubs() {
     const clubs = await this.clubRepository.getClubs();
@@ -83,20 +83,18 @@ export class ClubService {
     return nowClubMember
   }
 
-  // async reportClub(
-  //   id: number,
-  //   userId: number,
-  //   clubId: number,
-  //   reportReason: string,
-  //   reportContent: string,
-  // ) {
-  //   const data = await this.clubRepository.reportClub(
-  //     id,
-  //     userId,
-  //     clubId,
-  //     reportReason,
-  //     reportContent,
-  //   );
-  //   return data;
-  // }
+  async reportClub(
+    userId: number,
+    clubId: number,
+    reportReason: string,
+    reportContent: string,
+  ) {
+    const data = await this.clubRepository.reportClub(
+      userId,
+      clubId,
+      reportReason,
+      reportContent,
+    );
+    return data;
+  }
 }

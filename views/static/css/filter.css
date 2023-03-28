@@ -64,8 +64,7 @@ input {
   display: grid;
   grid-template-columns: auto 1000px auto;
   grid-template-rows: 2fr;
-  grid-template-areas: 
-    "box1 box2 box3";
+  grid-template-areas: "box1 box2 box3";
 }
 
 .box1 {
@@ -79,4 +78,5 @@ input {
 
 .box3 {
   grid-area: box3;
+  /* grid-area: box3; */
 }
