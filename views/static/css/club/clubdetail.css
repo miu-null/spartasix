@@ -177,9 +177,22 @@
 
 .clubdetail_body_text {
   margin: auto;
-  margin-top: 100px;
-  width: 80%;
-  height: 500px;
+  margin-top: 30px;
+  width: 90%;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+
+.clubdetail_card_List{
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  flex: auto;
+}
+
+.card_list_body{
+  margin-top: 70px;
+  margin-bottom: 50px;
 }
 
 .clubdetail_like_container {
@@ -218,19 +231,19 @@
 
 .clubdetail_bottom_div_title {
   margin-left: 30px;
-  width: 70px;
+  flex: 0.3;
 }
 
 .clubdetail_bottom_div_body {
-  margin-left: 200px;
+  flex: 1;
 }
 
 .clubdetail_bottom_div_nickname {
-  margin-left: 300px;
+  flex: 0.3;
 }
 
 .clubdetail_bottom_div_date {
-  margin-left: 60px;
+  flex: 0.3;
 }
 
 .club_modal {
@@ -318,6 +331,7 @@
   height: 1000px;
   display: flex;
   flex-direction: column;
+  word-wrap: break-word;
 }
 
 .comment_body {
@@ -348,7 +362,10 @@
   border-radius: 30px;
   background-color: #ea4e4e;
   font-weight: bold;
-  color: #ffff;
+  width: 60px;
+  height: 30px;
+  font-family: "Amiko";
+  font-size: 12px;
 }
 
 .comment_show_text {
@@ -378,12 +395,12 @@
 
 .comment_content {
   margin-left: 40px;
-  width: 280px;
+  max-width: auto;
 }
 
 .comment_date {
-  margin-left: 220px;
-  width: 140px;
+  margin-left: 100px;
+  width: 100px;
 }
 
 .comment_like {

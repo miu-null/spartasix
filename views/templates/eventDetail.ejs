@@ -27,15 +27,18 @@
   </div>
 </div>
 <div class="eventdetail_container">
+  <% if (buttonUserId===nowPost.userId) {%>
   <div class="eventdetail_button">
     <div class="eventdetail_edit">
-      <a onclick="location.href='<%= events.id %>/updatepage'"
+      <a onclick="location.href='<%= nowPost.id %>/updatepage'"
         class="new_event">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
     </div>
     <div class="eventdetail_delete">
       <a onclick="deleteEvent('<%= nowPost.id %>')" class="new_event">delete</a>
     </div>
   </div>
+  <% } else { %>
+    <% } %>
   <div class="eventdetail_title">
     <div class="eventdetail_first">
       <div class="eventdetail_first_id" id="event_id">
@@ -163,7 +166,7 @@
         </div>
         <div class="eventdetail_bottom_div_body">
           <% if (prevPost) { %>
-            <a class="postLink" href="<%= prevPost.id %>">
+            <a class="postLink"href="<%= prevPost.id %>">
               <%= prevPost.title %>
             </a>
             <% } else {%>
@@ -223,12 +226,15 @@
             </div>
           </div>
         </div>
+        <% if (buttonUserId===data.userId) {%>
         <div id="event_comment_button<%= data.id %>" class="event_comment_button">
           <button id="comment_del_button<%= data.id %>" class="comment_button"
             onclick="updateEventComment('<%= data.id %>',' <%= data.content %>')">edit</button>
           <button id="comment_del_button1<%= data.id %>" class="comment_button"
             onclick="deleteEventComment('<%= data.id %>')">delete</button>
         </div>
+        <% } else { %>
+          <% } %>
       </div>
       <% }) %>
   </div>

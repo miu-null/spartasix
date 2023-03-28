@@ -33,6 +33,7 @@ export class ClubCommentRepository {
           id: true,
         },
         id: true,
+        userId: true,
         clubId: true,
         content: true,
         createdAt: true,

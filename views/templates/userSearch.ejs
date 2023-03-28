@@ -4,35 +4,27 @@
     <table class="table table-hover event_table">
       <thead id="event_thead">
         <tr>
-          <th>유저검색</th>
+          <th>유저</th>
           <th>닉네임</th>
           <th>GITHUB</th>
-          <th>좋아요</th>
           <th>가입일</th>
+          <th>유저페이지</th>
         </tr>
       </thead>
       <tbody>
         <% if (slicedData.length) { %>
-          <% slicedData.forEach(data=> { %>
-            <tr id="club_tr">
-              <td id="club_Id"> 유저 </td>
-              <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>">
-                  <%= data.nickName%><img src="<%= data.userIMG %>" width="40">
-                </a></td>
-              <td id="club_Likes">
-                <%= data.snsURL %>
-              <td id="club_Likes">
-                <%= data.Likes %>
-              </td>
-              <td id="club_Date">
-                <%= data.createdAt %>
-              </td>
-
-              </td>
-              <% }) %>
-                <% } else { %>
-                  <td id="club_Likes">검색 결과가 없습니다.</td>
-                  <% } %>
+          <% slicedData.slice(0, 5).forEach(data=> { %>
+              <tr id="club_tr">
+                  <td id="club_Id"> 유저 </td>
+                  <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.id %>"><%= data.nickName%><img src="<%= data.userIMG %>"width="25"></a></td>
+                  <td id="club_Likes"><a class="postLink" href="http://<%= data.snsURL %>"><%= data.snsURL %>
+                  <td id="club_Date"><%= reformPostDate(data.createdAt) %></td>
+                  <td id="club_Writer"><a class="btn btn-secondary btn-sm" href="/userpage/<%= data.id %>">방문</a></td>
+                  <% }) %>
+                  <% } else { %>
+                    <td id="club_Likes">검색 결과가 없습니다.</td>
+                    <% } %>
+                  </tr>    
             </tr>
       </tbody>
     </table>
@@ -63,7 +55,7 @@
                     <% } %>
                       <% } %>
                         <% } %>
-                          <% if (unitEnd <=lastPage) { %>
+                          <% if (unitEnd < lastPage) { %>
                             <li class="page-item">
                               <a class="page-link" href="users?term=<%=term.term %>&page=<%= unitEnd +1 %>">다음
                               </a>
@@ -77,7 +69,7 @@
 
   <section id="search" class="search-wrap">
     <form action="/search/users" class="search-form">
-      <input type="search" id="term" name="term" class="form-control" placeholder="🔍(테스트)유저 검색 : email, 닉네임"
+      <input type="search" id="term" name="term" class="form-control" placeholder="🔍닉네임"
         aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
     </form>
   </section>

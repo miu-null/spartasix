@@ -29,6 +29,7 @@ export class EventCommentRepository {
           id: true,
         },
         id: true,
+        userId : true,
         eventPostId: true,
         content: true,
         createdAt: true,

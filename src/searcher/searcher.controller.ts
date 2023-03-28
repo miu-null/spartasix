@@ -56,6 +56,7 @@ export class SearcherController {
         term,
         page,
         ...userData,
+        reformPostDate
       };
     } catch (err) {
       console.error(err.message);

@@ -22,7 +22,7 @@ import { CreateAppDto } from "./dto/createApp.dto";
 import { ReportClubDto } from "./dto/reportclub.dto";
 import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate, paginatedResults, reformPostDate2nd } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
+import { reformPostDate, paginatedResults, reformPostDateRaw } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
 
 @Controller("club")
@@ -85,8 +85,19 @@ export class ClubController {
   }
 
   @Get("/clubs/:id")
-  async updateclub(@Res() res: Response) {
-    return res.render("clubupdate.ejs");
+  @UseGuards(AuthGuard())
+  async updateclub(
+    @Param("id") id: number, 
+    @Res() res: Response,
+    @Req() req,
+    ) {
+    let buttonUserId = null;
+    if(req.user) {
+      buttonUserId = req.user
+    }
+    const detail = await this.clubService.getClubById(id);
+    const nowPost = detail.data.nowPost
+    return res.render("clubupdate.ejs", {nowPost, detail, buttonUserId});
   }
 
   @Put("/clubs/:id")
@@ -109,8 +120,16 @@ export class ClubController {
   }
 
   @Get("/list/:id")
+  @UseGuards(AuthGuard())
   @Render("clubsdetail.ejs")
-  async getClubsById(@Param("id") id: number) {
+  async getClubsById(
+    @Param("id") id: number,
+    @Req() req
+    ) {
+      let buttonUserId = null;
+      if(req.user) {
+        buttonUserId = req.user
+      }
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.data.prevPost
     const nowPost = detail.data.nowPost
@@ -118,13 +137,15 @@ export class ClubController {
     const comments = detail.comments
     const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate }
     const acceptedMember = await this.clubService.getClubMember(id);
-
+    console.log(comments)
     return {
       ...postSet,
       ...acceptedMember,
-      reformPostDate2nd
-    }
-  };
+      reformPostDateRaw,
+      buttonUserId
+      }
+    };
+
 
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
