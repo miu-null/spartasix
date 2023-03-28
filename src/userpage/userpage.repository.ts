@@ -170,6 +170,7 @@ export class UserPageRepository {
     userId: number,
     currentUserId,
     updateUserInfo: UserUpdateDto,
+    hashpassword,
   ) {
     if (currentUserId !== userId) {
       throw new UnauthorizedException("본인만 사용할 수 있는 기능입니다.");
@@ -177,7 +178,7 @@ export class UserPageRepository {
 
     const changedInfo = await this.userRepository.update(userId, {
       email: updateUserInfo.email,
-      password: updateUserInfo.password,
+      password: hashpassword,
       phone: updateUserInfo.phone,
       nickName: updateUserInfo.nickName,
       snsURL: updateUserInfo.snsUrl,
