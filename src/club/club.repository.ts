@@ -42,7 +42,7 @@ export class ClubRepository {
     maxMembers: number,
     category: string,
   ) {
-    await this.clubRepository.insert({
+    const clubpost = await this.clubRepository.insert({
       userId,
       title,
       content,
@@ -50,10 +50,10 @@ export class ClubRepository {
       category,
     });
     
-    const club = new Clubs()
-    console.log(club)
+    const clubId = clubpost.identifiers[0].id; 
+    await this.createApp(clubId, userId, '작성자 우선 참여', true);
 
-    return true;
+    return true
   }
 
   async createApp(
@@ -67,7 +67,6 @@ export class ClubRepository {
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = false")
       .getMany();
-    console.log('정보', clubwaitList);
     const userInWaitlist = clubwaitList.find(
       (member) => member.userId === userId,
     );
@@ -79,7 +78,6 @@ export class ClubRepository {
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = true")
       .getMany();
-    console.log("정보2", clubmembers);
     const userInWaitlist2 = clubmembers.find(
       (member) => member.userId === userId,
     );
@@ -170,7 +168,6 @@ export class ClubRepository {
 
     const clubMembers = [].concat(clubmembers)
     const clubWaitList = [].concat(clubwaitList)
-    console.log(clubMembers)
     return { clubMembers, clubWaitList };
   }
 
