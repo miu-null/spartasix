@@ -110,7 +110,7 @@
     <div class="clubdetail_body_text">
       <h6><%= nowPost.content %></h6>
     </div>
-          <!-- 참가자 카드 섹션 -->
+              <!-- 참가자 카드 섹션 -->
 <div class="clubdetail_card_List">
   <div class="card_list_body">
   <div class="card-section">
@@ -136,6 +136,7 @@
       <% } else { %>
         <div>아직 참여자가 없습니다.</div>
         <% } %>
+
     </div>
   </div>
 </div>
@@ -163,13 +164,21 @@
       <% } else { %>
         <div>현재 대기자가 없습니다.</div>
         <% } %>
+
     </div>
   </div>
 </div>
+<% if (nowPost.maxMembers <= clubMembers.length) {%>
+  <h5>==================================================================</h5>
+  <div style="text-align: center;">
+  <h5 > 모집이 마감된 게시물 입니다.</h5>
+  <img src="https://images.unsplash.com/photo-1525847664954-bcd1e64c6ad8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29ycnklMjB3ZSUyMGFyZSUyMGNsb3NlZHxlbnwwfHwwfHw%3D&w=1000&q=80" width="80%"  >
+  <h5>==================================================================</h5>
+</div>
+  <% }else{ %>
+    <% } %>
 <!-- 카드 섹션 구간 끝 -->
-
     </div>
-
     <div>
     </div>
     <div class="clubdetail_like_container">
