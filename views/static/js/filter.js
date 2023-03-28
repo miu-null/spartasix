@@ -1,11 +1,9 @@
-const { isSameDay} = require("date-fns");
+const { isSameDay } = require("date-fns");
 const { format } = require("date-fns-tz");
 
 function reformPostDate(postObjDate) {
   const currentDate = new Date();
   const postDate = new Date(postObjDate.setHours(postObjDate.getHours() +9))
-  // const offset = currentDate.getTimezoneOffset() * 60000;
-  // const postDate = new Date(postObjDate - offset);
 
   if (isSameDay(postDate, currentDate)) {
     return format(postDate, "kk:mm");
@@ -15,11 +13,9 @@ function reformPostDate(postObjDate) {
 }
 
 function reformPostDateRaw(postObjDate) {
-  const dateString = postObjDate;
-  const dateObj = new Date(dateString);
+  const dateObj = new Date(postObjDate);
   const currentDate = new Date();
-  const offset = currentDate.getTimezoneOffset()* 60000;
-  const postDate = new Date(dateObj - offset);
+  const postDate = new Date(dateObj.setHours(dateObj.getHours() +9))
   
   if (isSameDay(postDate, currentDate)) {
     return format(postDate, "kk:mm");
