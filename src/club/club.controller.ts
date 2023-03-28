@@ -78,6 +78,7 @@ export class ClubController {
     @Req() req,
   ) {
     const userId = req.user;
+    // const userinfo = await this.
     const createNew = await this.clubService.createApp(
       id,
       userId,

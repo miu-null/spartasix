@@ -68,6 +68,8 @@ export class SearcherRepository {
     }
   }
 
+
+
   async getAllPosts(): Promise<(Clubs | EventPosts)[]> {
     const clubPosts = await this.clubRepository.find({
       relations: { user: true },
@@ -108,5 +110,32 @@ export class SearcherRepository {
       .getMany();
 
     return sortPosts;
+  }
+  
+  async getUserRank(): Promise<{ user: Users, rank: number }[]> {
+    const allUsers = await this.userSearchRepository.find({relations: ["clubs", "eventPosts", "eventComments", "clubComments", "clubCommentLikes", "eventCommentLikes"]});
+    const usersPostCounts = allUsers.map(user => ({
+      user,
+      point: 
+      user.clubs.filter(club => !club.deletedAt).length 
+      + user.eventPosts.filter(event => !event.deletedAt).length
+      + user.eventComments.filter(eventComments => !eventComments.deletedAt).length
+      + user.eventCommentLikes.filter(eventCommentLikes => !eventCommentLikes.deletedAt).length
+      + user.clubComments.filter(clubComments => !clubComments.deletedAt).length
+      + user.clubCommentLikes.filter(clubCommentLikes => !clubCommentLikes.deletedAt).length
+      + user.eventPosts.reduce((acc, cur) => acc + cur.viewCount/10, 0)
+      + user.clubs.reduce((acc, cur) => acc + cur.viewCount/10, 0)
+    }));
+
+    // 포인트 값에 따른 정렬 로직 구현
+    const sortedUsers = usersPostCounts.sort((a, b) => b.point - a.point);
+    
+    // 정렬된 배열을 기반으로 순위 매기기
+    const usersRank = sortedUsers.map((usersRank, index) => ({
+      user: usersRank.user,
+      rank: index + 1,
+      point : usersRank.point
+    }));
+    return usersRank;
   }
 }
