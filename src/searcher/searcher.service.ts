@@ -92,4 +92,9 @@ export class SearcherService {
     const sortPosts = await this.SearcherRepository.getPopularEvents();
     return sortPosts;
   }
+
+  async getUserRank() {
+    const sortPosts = await this.SearcherRepository.getUserRank();
+    return sortPosts;
+  }
 }

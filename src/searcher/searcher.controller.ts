@@ -65,4 +65,5 @@ export class SearcherController {
       console.error(err.message);
     }
   }
+
 }

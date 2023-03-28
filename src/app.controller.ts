@@ -14,9 +14,12 @@ export class AppController {
   @Render("mainbody")
   async mainpage(@Res() res: Response) {
     const sortPosts = await this.searchService.getPopularPosts();
+    const usersRank = await (await this.searchService.getUserRank()).slice(0, 5)
+    console.log(usersRank)
     return {
       sortPosts,
       reformPostDate,
+      usersRank
     };
   }
 
