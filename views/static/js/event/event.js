@@ -50,17 +50,37 @@ function remindEvent() {
       alert("이벤트 알림 메일을 전송했습니다.");
       window.location.replace("/events/list");
     },
-    errorfunction(request, status, error) {
-      alert(
-        "code:" +
-          request.status +
-          "\n" +
-          "message:" +
-          request.responseText +
-          "\n" +
-          "error:" +
-          error,
-      );
+    error(request) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "Unauthorized") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "POST",
+              url: `/events/remindEvent`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              async: false,
+              data: JSON.stringify({
+                id: id,
+                title: title,
+                email: email,
+                startDate: startDate,
+                endDate: endDate,
+              }),
+              success: function (response) {
+                alert("이벤트 알림 메일을 전송했습니다.");
+                window.location.replace("/events/list");
+              },
+            });
+          },
+        });
+      }
     },
   });
 }

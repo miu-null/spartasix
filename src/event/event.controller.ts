@@ -36,6 +36,7 @@ export class EventController {
   ) {}
 
   @Post("/remindEvent")
+  @UseGuards(AuthGuard())
   async remindEvent(@Body() data: remindEmailDto, @Res() res) {
     const remindEvent = await this.eventService.remindEvent(
       data.email,
