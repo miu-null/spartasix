@@ -49,6 +49,9 @@ export class ClubRepository {
       maxMembers,
       category,
     });
+    
+    const club = new Clubs()
+    console.log(club)
 
     return true;
   }
