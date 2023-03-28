@@ -100,7 +100,11 @@
   <div class="clubdetail_body">
     <div class="clubdetail_body_button">
       <div class="clubdetail_body_button_remind">
-        <button class="remind_button" onclick="modal_open()">Apply</button>
+        <% if (nowPost.maxMembers <= clubMembers.length) {%>
+          <button class="remind_button" onclick=><div>모집마감</div></button>
+          <% }else{ %>
+            <button class="remind_button" onclick="modal_open()">Apply</button>
+            <% } %>
       </div>
       <div class="clubdetail_body_button_report">
         <button onclick="report_modal_open()" class="report_button">report</button>
@@ -110,7 +114,9 @@
     <div class="clubdetail_body_text">
       <h6><%= nowPost.content %></h6>
     </div>
-          <!-- 참가자 카드 섹션 -->
+              <!-- 참가자 카드 섹션 -->
+
+
 <div class="clubdetail_card_List">
   <div class="card_list_body">
   <div class="card-section">
@@ -136,6 +142,7 @@
       <% } else { %>
         <div>아직 참여자가 없습니다.</div>
         <% } %>
+
     </div>
   </div>
 </div>
