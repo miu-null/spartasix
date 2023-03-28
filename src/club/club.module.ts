@@ -15,6 +15,7 @@ import { ClubCommentRepository } from "src/comments/clubcomment/clubcomment.repo
 import { ClubComments } from "src/entities/clubcomments.entity";
 import { ClubCommentLikes } from "src/entities/clubcommentlikes.entity";
 import { PassportModule } from "@nestjs/passport";
+import { MailService} from "src/mail/mail.service"
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { PassportModule } from "@nestjs/passport";
     SearcherRepository,
     ClubCommentService,
     ClubCommentRepository,
+    MailService
   ],
   exports: [
     ClubService,
