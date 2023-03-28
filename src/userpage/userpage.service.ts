@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import _ from "lodash";
+import * as bcrypt from "bcrypt";
 import { UserPageRepository } from "./userpage.repository";
 import { UserUpdateDto } from "./dto/userpage.update.dto";
-
 @Injectable()
 export class UserpageService {
   constructor(private userPageRepository: UserPageRepository) {}
@@ -54,16 +54,23 @@ export class UserpageService {
       userIMG: data.userIMG,
     };
   }
+  async transformPassword(password: string) {
+    const hashpassword = await bcrypt.hash(password, 10);
+    return hashpassword;
+  }
   // 회원정보 수정
   async updateUser(
     userId: number,
     currentUserId: number,
     updateUserInfo: UserUpdateDto,
   ) {
+    console.log(updateUserInfo);
+    const hashpassword = await this.transformPassword(updateUserInfo.password);
     const updatedUser = await this.userPageRepository.updateUser(
       userId,
       currentUserId,
       updateUserInfo,
+      hashpassword,
     );
     return updatedUser;
   }
