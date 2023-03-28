@@ -70,7 +70,7 @@ export class ClubService {
   async getClubById(id: number) {
     const data = await this.clubRepository.getClubById(id);
     const comments = await this.clubCommentService.showAllComment(id);
-    return { data, comments };
+    return { ...data, comments };
   }
 
   async deleteClub(userId: number, id: number) {

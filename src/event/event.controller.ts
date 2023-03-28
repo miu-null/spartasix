@@ -26,6 +26,7 @@ import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { reformPostDate, paginatedResults } from "../../views/static/js/filter";
 import { AuthGuard } from "@nestjs/passport";
+import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 
 @Controller("events")
 export class EventController {
@@ -113,7 +114,7 @@ export class EventController {
   }
 
   @Get("/list/:id")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   @Render("eventDetail.ejs")
   async getEventById(
     @Res() res: Response, 

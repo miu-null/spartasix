@@ -24,6 +24,7 @@ import { SearcherService } from "src/searcher/searcher.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
 import { reformPostDate, paginatedResults, reformPostDateRaw } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
+import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 
 @Controller("club")
 export class ClubController {
@@ -96,7 +97,7 @@ export class ClubController {
       buttonUserId = req.user
     }
     const detail = await this.clubService.getClubById(id);
-    const nowPost = detail.data.nowPost
+    const nowPost = detail.nowPost
     return res.render("clubupdate.ejs", {nowPost, detail, buttonUserId});
   }
 
@@ -120,7 +121,7 @@ export class ClubController {
   }
 
   @Get("/list/:id")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   @Render("clubsdetail.ejs")
   async getClubsById(
     @Param("id") id: number,
@@ -131,13 +132,12 @@ export class ClubController {
         buttonUserId = req.user
       }
     const detail = await this.clubService.getClubById(id);
-    const prevPost = detail.data.prevPost
-    const nowPost = detail.data.nowPost
-    const nextPost = detail.data.nextPost
+    const prevPost = detail.prevPost
+    const nowPost = detail.nowPost
+    const nextPost = detail.nextPost
     const comments = detail.comments
     const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate }
     const acceptedMember = await this.clubService.getClubMember(id);
-    console.log(comments)
     return {
       ...postSet,
       ...acceptedMember,
