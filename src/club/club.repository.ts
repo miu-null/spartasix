@@ -4,7 +4,6 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { Clubs } from "src/entities/clubs.entity";
 import { Repository, MoreThan, LessThan } from "typeorm";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
-import { concat } from "rxjs";
 
 @Injectable()
 export class ClubRepository {
@@ -17,6 +16,7 @@ export class ClubRepository {
     private abusingClubRepository: Repository<AbusingClubCounts>,
   ) { }
 
+  //클럽 게시판 목록 조회
   async getClubs() {
     const data = await this.clubRepository.find({
       where: { deletedAt: null },
@@ -35,6 +35,7 @@ export class ClubRepository {
     return data;
   }
 
+  //클럽 게시글 작성
   async createClub(
     userId: number,
     title: string,
@@ -56,6 +57,7 @@ export class ClubRepository {
     return true
   }
 
+  // 모임참여 신청서 제출
   async createApp(
     clubId: number,
     userId: number,
@@ -97,6 +99,8 @@ export class ClubRepository {
       isAccepted,
     });
 
+
+
     return data;
   }
 
@@ -127,6 +131,7 @@ export class ClubRepository {
     return data;
   }
 
+  // 클럽 게시글 상세 정보
   async getClubById(clubId: number) {
     const nowPost = await this.clubRepository.findOne({
       where: { id: clubId, deletedAt: null },
