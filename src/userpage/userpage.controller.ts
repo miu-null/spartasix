@@ -25,7 +25,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { PaginationDto } from "./dto/pagination.dto";
 @Controller("userpage")
 export class UserpageController {
-  constructor(private readonly userPageService: UserpageService) { }
+  constructor(private readonly userPageService: UserpageService) {}
 
   @Get("/:userId")
   @UseGuards(AuthGuard())
