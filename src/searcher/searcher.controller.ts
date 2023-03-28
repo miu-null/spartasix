@@ -3,9 +3,11 @@ import {
   Get,
   Query,
   Res,
+  Req,
   ParseIntPipe,
   DefaultValuePipe,
   Render,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { SearcherService } from "./searcher.service";
@@ -20,6 +22,7 @@ export class SearcherController {
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term,
     @Res() res: Response,
+    @Req() req
   ): Promise<void> {
     try {
       const terms = await this.searchService.findAllPosts(term);
@@ -27,8 +30,8 @@ export class SearcherController {
       const clubs = terms.clubs;
       const users = terms.users;
       const results = { term, events, clubs, users, reformPostDate };
-
-      const popularPosts = await this.searchService.getPopularPosts();
+      const popularPosts = await this.searchService.getPopularPosts()
+      
       return res.render("searchAll.ejs", {
         ...results,
         ...popularPosts,
