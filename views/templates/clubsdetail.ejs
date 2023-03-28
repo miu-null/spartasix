@@ -79,6 +79,14 @@
           <%= nowPost.category %>
         </div>
       </div>
+      <div class="clubdetail_second_date">
+        <div class="second_date">
+          maxMembers
+        </div>
+        <div class="second_date_text" id="club_maxMember">
+          <%= nowPost.maxMembers %>
+        </div>
+      </div>
       <div class="clubdetail_second_view">
         <div class="view_title">
           View
@@ -159,6 +167,7 @@
   </div>
 </div>
 <!-- 카드 섹션 구간 끝 -->
+
     </div>
 
     <div>
@@ -300,26 +309,6 @@
       </div>
   </div>
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div id="report_modal">
     <div id="report_wrap">
       <div id="report_top">
@@ -335,7 +324,7 @@
         <dl>
           <dt>작성자 닉네임</dt>
           <dt style="color:rgb(45, 40, 40);">
-            <%= nowPost.nickName %>
+            <%= nowPost.user.nickName %>
           </dt>
         </dl>
         <dl>
