@@ -84,12 +84,9 @@ jobs:
             -e AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }} \
             -e AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }} \
             -e AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }} \
-            -e MAILER_HOST=${{ MAILER_HOST }} \
-            -e MAILER_PORT=${{ MAILER_PORT }} \
-            -e MAILER_SECURE=${{ MAILER_SECURE }} \
-            -e MAILER_USER=${{ MAILER_USER }} \
-            -e MAILER_PASS=${{ MAILER_PASS }} \
-
-
-
+            -e MAILER_HOST=${{ secrets.MAILER_HOST }} \
+            -e MAILER_PORT=${{ secrets.MAILER_PORT }} \
+            -e MAILER_SECURE=${{ secrets.MAILER_SECURE }} \
+            -e MAILER_USER=${{ secrets.MAILER_USER }} \
+            -e MAILER_PASS=${{ secrets.MAILER_PASS }} \
             ${{ env.DOCKER_IMAGE }}:latest
