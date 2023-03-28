@@ -70,7 +70,7 @@ function clubpost() {
     },
     error: function (request) {
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -157,7 +157,7 @@ function clubupdate() {
         window.location.reload();
       }
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -214,7 +214,7 @@ function clubdelete() {
         window.location.reload();
       }
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -274,7 +274,7 @@ function clubApp() {
         window.location.reload();
       }
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -319,7 +319,7 @@ function createClubComment(postId) {
     },
     error: function (request) {
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -412,7 +412,7 @@ function updateClubComment(commentId, content) {
 
         if (
           request.responseJSON["message"] ===
-          "로그인 후 이용 가능한 기능입니다."
+          "회원이 존재하지 않습니다."
         ) {
           alert("로그인 후 이용 가능한 기능입니다.");
         }
@@ -482,7 +482,7 @@ function deleteClubComment(clubcommentId) {
       }
 
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -539,7 +539,7 @@ function club_updateLike(commentId) {
       }
 
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
@@ -597,7 +597,7 @@ function report_submit() {
     },
     error: function (request) {
       if (
-        request.responseJSON["message"] === "로그인 후 이용 가능한 기능입니다."
+        request.responseJSON["message"] === "회원이 존재하지 않습니다."
       ) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
