@@ -1,3 +1,5 @@
+const { query } = require("express");
+
 function modal_open1(userId) {
   $(`#Appmodal`).fadeIn();
   selectApp(userId);
@@ -191,7 +193,8 @@ function delete_accepted(userId, clubMemberId) {
     },
   });
 }
-function show_userPosts(userId, startCursor, endCursor, limit) {
+function show_userPosts(event, userId, startCursor, endCursor, limit) {
+  console.log(event);
   $.ajax({
     type: "GET",
     url: `/userpage/${userId}/post?startCursor=${startCursor}&endCursor=${endCursor}&limit=${limit}`,
