@@ -32,7 +32,7 @@ export class SearcherRepository {
       const events = await this.eventRepository
         .createQueryBuilder("search")
         .leftJoinAndSelect("search.user", "user")
-        .where("search.title LIKE :s OR search.content LIKE :s", {
+        .where("search.title LIKE :s OR search.content LIKE :s OR user.nickName LIKE :s ", {
           s: `%${data.term}%`,
         })
         .orderBy("search.id", "DESC")
@@ -47,7 +47,7 @@ export class SearcherRepository {
         .createQueryBuilder("search")
         .leftJoinAndSelect("search.user", "user")
         .where(
-          "search.title LIKE :s OR search.content LIKE :s OR search.maxMembers LIKE :s",
+          "search.title LIKE :s OR search.content LIKE :s OR search.maxMembers LIKE :s OR user.nickName LIKE :s",
           { s: `%${data.term}%` },
         )
         .orderBy("search.id", "DESC")
