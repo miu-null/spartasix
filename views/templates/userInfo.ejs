@@ -108,7 +108,10 @@
 
       <div class="box activities-box">
         <div id="clubPosts">
-          <button id="prevClubBtn" onclick="show_userPosts(event)">
+          <button
+            id="prevClubBtn"
+            onclick="show_userPosts(event, userId, startCursor, endCursor, limit)"
+          >
             Previousss Club
             <button id="nextClubBtn" onclick="show_userPosts(event)">
               next Club
