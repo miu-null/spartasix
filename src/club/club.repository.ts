@@ -150,8 +150,9 @@ export class ClubRepository {
   async getClubMember(clubId: number) {
     const clubmembers = await this.clubmemberRepository
       .createQueryBuilder("members")
-      .select(["members.id", "members.userId", "members.updatedAt", "members.isAccepted", "u.nickName", "u.userIMG"])
+      .select(["members.id", "members.userId", "members.updatedAt", "members.isAccepted", "u.nickName", "u.userIMG", "c.maxMembers"])
       .leftJoin("Users", "u", "u.id = members.userId")
+      .leftJoin("Clubs", "c", "c.id = members.clubId")
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = true")
       .getRawMany();
@@ -164,9 +165,9 @@ export class ClubRepository {
       .andWhere("members.isAccepted = false")
       .getRawMany();  
 
-
     const clubMembers = [].concat(clubmembers)
     const clubWaitList = [].concat(clubwaitList)
+    console.log(clubMembers)
     return { clubMembers, clubWaitList };
   }
 
