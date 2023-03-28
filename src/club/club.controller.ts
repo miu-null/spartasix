@@ -25,12 +25,14 @@ import { ReportDefinition } from "aws-sdk/clients/cur";
 import { reformPostDate, paginatedResults, reformPostDateRaw } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
 import { OptionalAuthGuard } from '../auth/optional-auth.guard';
+import { MailService } from "src/mail/mail.service";
 
 @Controller("club")
 export class ClubController {
   constructor(
     private readonly clubService: ClubService,
     private readonly searchService: SearcherService,
+    private readonly mailService: MailService,
   ) { }
 
   @Get("/list")
@@ -82,6 +84,7 @@ export class ClubController {
       data.application,
       data.isAccepted,
     );
+    // await this.mailService.arrivalApplication(email, title, userId)
     return createNew;
   }
 
