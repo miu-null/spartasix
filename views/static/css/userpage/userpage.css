@@ -1,7 +1,7 @@
 .huge-container {
   display: flex;
   margin: 4px;
-  height: 340vh;
+  height: 280vh;
   align-items: center;
   justify-content: center;
   background-color: white;
@@ -20,11 +20,11 @@
 }
 
 .member-image-box {
-  width: 400px;
-  height: 400px;
+  width: 250px;
+  height: 250px;
   display: flex;
   position: absolute;
-  margin-top: -100px;
+  margin-top: -300px;
 }
 
 .member-image {
@@ -43,8 +43,8 @@
 
 .huge-userbox {
   width: 700px;
-  height: 700px;
-  margin-top: 560px;
+  height: 756px;
+  margin-top: 280px;
   align-items: center;
   text-align: center;
 }
@@ -53,7 +53,7 @@
   width: 700px;
   height: 650px;
   background-color: #fff9f8;
-  margin-top: 90px;
+  margin-top: 60px;
   padding: 30px;
   text-align: center;
 }
@@ -71,7 +71,7 @@
 .huge-activities {
   width: 700px;
   height: 600px;
-  margin-top: 1210px;
+  margin-top: 910px;
   text-align: center;
   align-items: center;
 }
