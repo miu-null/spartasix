@@ -14,6 +14,19 @@ const hypenTel = (target) => {
     .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 };
 
+function start_commue_club() {
+  const objString = window.localStorage.getItem("team_sparta_header");
+  const obj = JSON.parse(objString);
+  if (obj === null || Date.now() > obj.expire) {
+    window.location.href="/sign";
+  }
+
+  if (obj !== null || Date.now() < obj.expire) {
+    alert("이미 로그인한 상태입니다.")
+    return
+  }
+}
+
 function sign_up() {
   const reg = new RegExp(
     /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
