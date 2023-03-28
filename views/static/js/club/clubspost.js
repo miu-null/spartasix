@@ -305,6 +305,8 @@ function clubApp() {
 
 function createClubComment(postId) {
   const content = $("#club_textarea").val();
+
+  
   $.ajax({
     type: "POST",
     url: `/clubcomment/create-comment/${postId}`,
