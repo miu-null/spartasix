@@ -186,6 +186,7 @@
   margin-top: 100px;
   width: 80%;
   height: 500px;
+  word-wrap: break-word;
 }
 
 .eventdetail_like_container {
@@ -224,19 +225,19 @@
 
 .eventdetail_bottom_div_title {
   margin-left: 30px;
-  width: 70px;
+  flex: 0.3;
 }
 
 .eventdetail_bottom_div_body {
-  margin-left: 5px;
+  flex: 1;
 }
 
 .eventdetail_bottom_div_nickname {
-  margin-left: 300px;
+  flex: 0.3;
 }
 
 .eventdetail_bottom_div_date {
-  margin-left: 60px;
+  flex: 0.3;
 }
 
 .event_modal {

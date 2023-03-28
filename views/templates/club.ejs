@@ -8,10 +8,11 @@
             <tr>
               <th>인기 모임</th>
               <th></th>
+              <th></th>
               <th>😘</th>
               <th>📆</th>
               <th>👀</th>
-              <th></th>
+              <!-- <th></th> -->
             </tr>
           </thead>
           <tbody>
@@ -24,6 +25,7 @@
                       <% } else { %>
                         <td>🥈</td>
                         <% } %>
+                        <td><%= data.category %></td>
                           <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
                               <%= data.title %>
                             </a></td>
@@ -36,9 +38,9 @@
                           <td id="club_View">
                             <%= data.viewCount %>
                           </td>
-                          <td id="club_Likes">
-                            <%= data.Likes %>
-                          </td>
+                          <!-- <td id="club_Likes">
+                            <%# data.Likes %>
+                          </td> -->
 
                           <% }) %>
                             <% } else { %>
@@ -63,12 +65,13 @@
       <thead id="club_thead">
         <tr>
           <th>Club</th>
+          <th>카테고리</th>
           <th>제목</th>
           <th>작성자</th>
           <th>팀원구성</th>
           <th>작성일</th>
           <th>조회수</th>
-          <th>좋아요</th>
+          <!-- <th>좋아요</th> -->
         </tr>
       </thead>
       <tbody>
@@ -77,12 +80,14 @@
             <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'>
                 <%= data.id %>
               </a></td>
+              <td><%= data.category %></td>
             <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
                 <%= data.title %>
               </a></td>
             <td id="club_Writer"><a class="postLink" href="/userpage/<%= data.userId %>">
                 <%= data.user.nickName %>
             </td>
+
             <td id="club_maxMember">
               <%= data.maxMembers %>
             </td>
@@ -92,9 +97,9 @@
             <td id="club_View">
               <%= data.viewCount %>
             </td>
-            <td id="club_Likes">
-              <%= data.Likes %>
-            </td>
+            <!-- <td id="club_Likes">
+              <%# data.Likes %>
+            </td> -->
           </tr>
           <% }) %>
       </tbody>
