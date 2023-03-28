@@ -32,7 +32,7 @@ export class SearcherRepository {
       const events = await this.eventRepository
         .createQueryBuilder("search")
         .leftJoinAndSelect("search.user", "user")
-        .where("search.title LIKE :s OR search.content LIKE :s", {
+        .where("search.title LIKE :s OR search.content LIKE :s OR user.nickName LIKE :s ", {
           s: `%${data.term}%`,
         })
         .orderBy("search.id", "DESC")
@@ -47,7 +47,7 @@ export class SearcherRepository {
         .createQueryBuilder("search")
         .leftJoinAndSelect("search.user", "user")
         .where(
-          "search.title LIKE :s OR search.content LIKE :s OR search.maxMembers LIKE :s",
+          "search.title LIKE :s OR search.content LIKE :s OR search.maxMembers LIKE :s OR user.nickName LIKE :s",
           { s: `%${data.term}%` },
         )
         .orderBy("search.id", "DESC")
@@ -67,6 +67,8 @@ export class SearcherRepository {
       return users;
     }
   }
+
+
 
   async getAllPosts(): Promise<(Clubs | EventPosts)[]> {
     const clubPosts = await this.clubRepository.find({
@@ -108,5 +110,32 @@ export class SearcherRepository {
       .getMany();
 
     return sortPosts;
+  }
+  
+  async getUserRank(): Promise<{ user: Users, rank: number }[]> {
+    const allUsers = await this.userSearchRepository.find({relations: ["clubs", "eventPosts", "eventComments", "clubComments", "clubCommentLikes", "eventCommentLikes"]});
+    const usersPostCounts = allUsers.map(user => ({
+      user,
+      point: 
+      user.clubs.filter(club => !club.deletedAt).length 
+      + user.eventPosts.filter(event => !event.deletedAt).length
+      + user.eventComments.filter(eventComments => !eventComments.deletedAt).length
+      + user.eventCommentLikes.filter(eventCommentLikes => !eventCommentLikes.deletedAt).length
+      + user.clubComments.filter(clubComments => !clubComments.deletedAt).length
+      + user.clubCommentLikes.filter(clubCommentLikes => !clubCommentLikes.deletedAt).length
+      + user.eventPosts.reduce((acc, cur) => acc + cur.viewCount/10, 0)
+      + user.clubs.reduce((acc, cur) => acc + cur.viewCount/10, 0)
+    }));
+
+    // 포인트 값에 따른 정렬 로직 구현
+    const sortedUsers = usersPostCounts.sort((a, b) => b.point - a.point);
+    
+    // 정렬된 배열을 기반으로 순위 매기기
+    const usersRank = sortedUsers.map((usersRank, index) => ({
+      user: usersRank.user,
+      rank: index + 1,
+      point : usersRank.point
+    }));
+    return usersRank;
   }
 }

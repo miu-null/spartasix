@@ -1,6 +1,38 @@
-<div id="my-grid">
-    <div class="box1"></div>
+<div id="my-grid-main">
+      <!-- <div class="task-tooltip">
+        게시글:1 + 댓글 :1 + 조회수: 1/10 + 댓글 좋아요:1
+      </div> -->
+    <div class="box1">
+    </div>
     <div class="box2"><div class="container popular_container">
+        <table class="table table-hover event_table">
+            <thead id="event_thead">
+                <tr>
+                    <th></th>
+                    <th>👑활동왕</th>
+                    <th>포인트</th>
+                    <!-- <th>Likes</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% if (usersRank.length) { %>
+                    <% const topRank=Math.min(...usersRank.map(data=> data.rank)) %>
+                        <% usersRank.forEach(data=> { %>
+                            <tr id="club_tr">
+                                <td><%= data.rank %></td>
+                                            <td id="club_Writer"><a class="postLink" onclick="userInfo('<%= data.user.id %>')">
+                                                    <%= data.user.nickName%></a></td>
+                                                    <td><%= data.point %>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <td id="club_Likes">순위 개시 전</td>
+                                                    <% } %>
+                            </tr>
+            </tbody>
+        </table>
+    </div></div>
+    <div class="box3">
+    <div class="container popular_container">
         <table class="table table-hover event_table">
             <thead id="event_thead">
                 <tr>
@@ -37,16 +69,16 @@
                                             <td id="club_Writer"><a class="postLink"
                                                     onclick="userInfo('<%= data.userId %>')">
                                                     <%= data.user.nickName%>
-                                           </a> </td>
+                                                </a> </td>
                                             <td id="club_Date">
                                                 <%= reformPostDate(data.createdAt) %>
                                             </td>
                                             <td id="club_View">
                                                 <%= data.viewCount %>
-                                                <% if (data.viewCount===maxViewCount) { %>
-                                                    🔝
-                                                    <% } else {%>
-                                                        <% } %>
+                                                    <% if (data.viewCount===maxViewCount) { %>
+                                                        🔝
+                                                        <% } else {%>
+                                                            <% } %>
                                             </td>
                                             <!-- <td id="clubz_Likes"></td> -->
                                             <% }) %>
@@ -57,9 +89,8 @@
             </tbody>
         </table>
     </div></div>
-    <div class="box3"></div>
-  </div>
-
+    <div class="box4"></div>
+</div>
 
 <div class="main_body_container">
     <div class="main_left">
@@ -77,8 +108,5 @@
         </div>
     </div>
     <div class="main_image">
-
     </div>
-
 </div>
-
