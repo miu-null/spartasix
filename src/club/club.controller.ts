@@ -78,14 +78,13 @@ export class ClubController {
     @Req() req,
   ) {
     const userId = req.user;
-    const userinfo = await this.
     const createNew = await this.clubService.createApp(
       id,
       userId,
       data.application,
       data.isAccepted,
     );
-    await this.mailService.arrivalApplication(email, title, userId)
+    // await this.mailService.arrivalApplication(email, title, userId)
     return createNew;
   }
 
