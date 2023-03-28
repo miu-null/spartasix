@@ -19,7 +19,6 @@ function modal_open() {
     }
   });
 }
-
 function report_modal_open() {
   $(`#report_modal`).fadeIn();
 
@@ -268,6 +267,12 @@ function clubApp() {
         window.location.reload();
       }
       if (
+        request.responseJSON["message"] === "본인 모임에는 신청할 수 없습니다."
+      ) {
+        alert("본인 모임에는 신청할 수 없습니다.");
+        window.location.reload();
+      }
+      if (
         request.responseJSON["message"] === "이미 참가하고 있는 모임입니다."
       ) {
         alert("이미 참가하고 있는 모임입니다.");
@@ -306,7 +311,7 @@ function clubApp() {
 function createClubComment(postId) {
   const content = $("#club_textarea").val();
 
-  
+
   $.ajax({
     type: "POST",
     url: `/clubcomment/create-comment/${postId}`,
