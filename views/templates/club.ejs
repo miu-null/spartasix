@@ -25,7 +25,9 @@
                       <% } else { %>
                         <td>🥈</td>
                         <% } %>
-                        <td><%= data.category %></td>
+                          <td>
+                            <%= data.category %>
+                          </td>
                           <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
                               <%= data.title %>
                             </a></td>
@@ -68,7 +70,7 @@
           <th>카테고리</th>
           <th>제목</th>
           <th>작성자</th>
-          <th>구성인원</th>
+          <th>인원구성</th>
           <th>작성일</th>
           <th>조회수</th>
           <!-- <th>좋아요</th> -->
@@ -80,7 +82,9 @@
             <td id="club_Id"><a class="postLink" href='list/<%= data.id%>'>
                 <%= data.id %>
               </a></td>
-              <td><%= data.category %></td>
+            <td>
+              <%= data.category %>
+            </td>
             <td id="club_Title"><a class="postLink" href='list/<%= data.id%>'>
                 <%= data.title %>
               </a></td>
