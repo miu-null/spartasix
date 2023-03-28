@@ -31,7 +31,7 @@ function sign_up() {
 
   if (!reg.test(password)) {
     alert(
-      "비밀번호는 최소8글자, 하나이상의 문자 및 숫자, 특수문자가 들어가야 합니다. ",
+      "비밀번호는 최소8글자, 하나이상의 문자 및 숫자, 특수문자가(!@#$%^&+=]) 들어가야 합니다. ",
     );
     return false;
   }
@@ -141,6 +141,11 @@ function find_password() {
       alert("발송된 인증번호를 입력해 주세요.");
       checkpass(response.data);
     },
+    error: function (request) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("이메일 혹은 전화번호가 올바르지 않습니다.");
+      }
+    }
   });
 }
 
@@ -194,6 +199,7 @@ function checkpass(randompassword) {
       newpassinput.setAttribute("class", "sign_input-field1");
       newpassinput.setAttribute("id", "new_input");
       newpassinput.setAttribute("placeholder", "new password");
+      newpassinput.setAttribute("type", "password");
 
       newpassbutton.setAttribute("class", "sign_submit12");
       newpassbutton.setAttribute("id", "new_passbtn");
