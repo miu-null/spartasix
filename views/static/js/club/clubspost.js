@@ -75,7 +75,7 @@ function clubpost() {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -162,7 +162,7 @@ function clubupdate() {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -219,7 +219,7 @@ function clubdelete() {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -279,7 +279,7 @@ function clubApp() {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -324,7 +324,7 @@ function createClubComment(postId) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -417,7 +417,7 @@ function updateClubComment(commentId, content) {
           alert("로그인 후 이용 가능한 기능입니다.");
         }
 
-        if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+        if (request.responseJSON["message"] === "Unauthorized") {
           $.ajax({
             type: "POST",
             url: "/auth/new-accessToken",
@@ -487,7 +487,7 @@ function deleteClubComment(clubcommentId) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -544,7 +544,7 @@ function club_updateLike(commentId) {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
@@ -602,7 +602,7 @@ function report_submit() {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
-      if (request.responseJSON["message"] === "토큰이 만료되었습니다.") {
+      if (request.responseJSON["message"] === "Unauthorized") {
         $.ajax({
           type: "POST",
           url: "/auth/new-accessToken",
