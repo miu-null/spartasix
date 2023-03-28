@@ -1,35 +1,8 @@
-  <script>
-        $(document).ready(function(){
-          checkClubs(`<%= myInfo.userId %>`)
-        });
-        
-        // Function to load the next page of posts
-        const loadNextPage = () => {
-          show_userPosts(`<%= myInfo.userId %>`, startCursor, endCursor, limit);
-          let startCursor = 0;
-          let endCursor = 0;
-          const limit = 3; // or whatever limit you want to use
-        };
-        
-    // Event listener for "next page" button
-    document.getElementById("nextClubBtn").addEventListener("click", () => {
-      startCursor = endCursor;
-      limit = 3;
-      loadNextPage();
-    });
-    console.log(startCursor)
-    console.log("sleepy")
-    // Event listener for "previous page" button
-    document.getElementById("prevClubBtn").addEventListener("click", () => {
-      endCursor = startCursor;
-      startCursor = null;
-      limit = 3;
-      loadNextPage();
-    });
-  
-    // Load the first page of posts
-    loadNextPage();
-    </script>
+<script>
+  $(document).ready(function () {
+    checkClubs(`<%= myInfo.userId %>`);
+  });
+</script>
 
 <div id="Appmodal" class="Appmodal">
   <div class="app_modal">
@@ -51,7 +24,10 @@
       <% if (myInfo.userIMG) {%>
       <img src="<%= myInfo.userIMG %>" alt="memberimage" />
       <% } else {%>
-        <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"
+        width="20"
+      />
       <% } %>
     </div>
   </div>
@@ -61,26 +37,32 @@
       User Info
     </p>
     <br />
-    <p style="
+    <p
+      style="
         font-family: Amiko, sans-serif;
         font-size: 15px;
         font-weight: bold;
         color: #ea4e4e;
         float: right;
-      ", onclick="editInfo('<%= myInfo.userId %>')"">
+      "
+      ,
+      onclick="editInfo('<%= myInfo.userId %>')"
+    >
       + edit
-  </p>
+    </p>
     <div class="box userinfo-box">
       <br />
       <br />
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
         You can call me...
       </p>
-      <p style="
+      <p
+        style="
           font-family: Amiko, sans-serif;
           font-size: 20px;
           font-weight: bold;
-        ">
+        "
+      >
         <%= myInfo.nickName %>
       </p>
       <br />
@@ -90,11 +72,13 @@
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
         Contact
       </p>
-      <p style="
+      <p
+        style="
           font-family: Amiko, sans-serif;
           font-size: 20px;
           font-weight: bold;
-        ">
+        "
+      >
         <%= myInfo.email %>
       </p>
       <br />
@@ -104,11 +88,13 @@
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
         Check my GitHub !
       </p>
-      <p style="
+      <p
+        style="
           font-family: Amiko, sans-serif;
           font-size: 20px;
           font-weight: bold;
-        ">
+        "
+      >
         <%= myInfo.snsURL %>
       </p>
 
@@ -122,15 +108,15 @@
 
       <div class="box activities-box">
         <div id="clubPosts">
-        <button id="nextClubBtn" onclick="show_userPosts('${userId}', '${startCursor}', '${endCursor}', '${limit}' )">next Club</button>
-        <button id="prevClubBtn" onclick="show_userPosts('${userId}', '${startCursor}', '${endCursor}', '${limit}' )">Previousss Club</button>
-        
+          <button id="prevClubBtn" onclick="show_userPosts(event)">
+            Previousss Club
+            <button id="nextClubBtn" onclick="show_userPosts(event)">
+              next Club
+            </button>
+          </button>
+        </div>
       </div>
-      </div>
-      
-  
- 
-      
+
       <div class="box huge-clubs">
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
           Belong to this clubs...
@@ -139,18 +125,17 @@
         <br />
         <div class="box myclubs">
           <div class="box message">
-            <img src="/img/message.png" onclick="modal_open1('<%= myInfo.userId %>')">
+            <img
+              src="/img/message.png"
+              onclick="modal_open1('<%= myInfo.userId %>')"
+            />
           </div>
           <br />
           <br />
-     
 
           <div id="myClubAct">
-            <div id="myOwnClub"> </div>
-              
-  
-                          </div>
-
+            <div id="myOwnClub"></div>
+          </div>
         </div>
       </div>
     </div>
