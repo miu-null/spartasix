@@ -62,8 +62,8 @@ input {
 /* 메인 인기글 레이아웃 위치*/
 #my-grid-main {
   display: grid;
-  grid-template-columns: auto 800px 200px auto;;
-  grid-template-rows: 2fr;
+  grid-template-columns: auto 200px 800px auto;;
+  grid-template-rows: 1fr;
   grid-template-areas: "box1 box2 box3 box4";
 }
 
@@ -87,9 +87,9 @@ input {
 
 #my-grid {
   display: grid;
-  grid-template-columns: auto 1000px auto;;
-  grid-template-rows: 2fr;
-  grid-template-areas: "box1 box2 box3 ";
+  grid-template-columns: auto 200px 1000px auto;;
+  grid-template-rows: 1fr;
+  grid-template-areas: "box1 box2 box3 box4";
 }
 
 .box1 {
@@ -98,9 +98,12 @@ input {
 
 .box2 {
   grid-area: box2;
-  background-color: #ffffff;
 }
 
 .box3 {
   grid-area: box3;
+}
+
+.box4 {
+  grid-area: box4;
 }

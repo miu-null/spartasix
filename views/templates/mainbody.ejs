@@ -4,66 +4,7 @@
       </div> -->
     <div class="box1">
     </div>
-    <div class="box2">
-        <div class="container popular_container">
-            <table class="table table-hover event_table">
-                <thead id="event_thead">
-                    <tr>
-                        <th></th>
-                        <th>🔥인기글🔥</th>
-                        <th></th>
-                        <th>😘작성자</th>
-                        <th>📆작성일</th>
-                        <th>👀조회</th>
-                        <!-- <th>Likes</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if (sortPosts.length) { %>
-                        <% const maxViewCount=Math.max(...sortPosts.map(data=> data.viewCount)) %>
-                            <% sortPosts.forEach(data=> { %>
-                                <tr id="club_tr">
-                                    <td>
-                                        <% if (data.viewCount===maxViewCount) { %>
-                                            🏅
-                                            <% }%>
-                                    </td>
-                                    <% if (data.maxMembers) { %>
-                                        <td id="club_Id">클럽</td>
-                                        <td id="club_Title"><a class="postLink" href='/club/list/<%= data.id%>'>
-                                                <%= data.title %>
-                                            </a></td>
-                                        <% } else { %>
-                                            <td id="club_Id">이벤트</td>
-                                            <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
-                                                    <%= data.title %>
-                                                </a></td>
-                                            <% } %>
-                                                <td id="club_Writer"><a class="postLink"
-                                                        onclick="userInfo('<%= data.userId %>')">
-                                                        <%= data.user.nickName%>
-                                                    </a> </td>
-                                                <td id="club_Date">
-                                                    <%= reformPostDate(data.createdAt) %>
-                                                </td>
-                                                <td id="club_View">
-                                                    <%= data.viewCount %>
-                                                        <% if (data.viewCount===maxViewCount) { %>
-                                                            🔝
-                                                            <% } else {%>
-                                                                <% } %>
-                                                </td>
-                                                <!-- <td id="clubz_Likes"></td> -->
-                                                <% }) %>
-                                                    <% } else { %>
-                                                        <td id="club_Likes">인기글이 없습니다.</td>
-                                                        <% } %>
-                                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="box3"><div class="container popular_container">
+    <div class="box2"><div class="container popular_container">
         <table class="table table-hover event_table">
             <thead id="event_thead">
                 <tr>
@@ -90,9 +31,66 @@
             </tbody>
         </table>
     </div></div>
+    <div class="box3">
+    <div class="container popular_container">
+        <table class="table table-hover event_table">
+            <thead id="event_thead">
+                <tr>
+                    <th></th>
+                    <th>🔥인기글🔥</th>
+                    <th></th>
+                    <th>😘작성자</th>
+                    <th>📆작성일</th>
+                    <th>👀조회</th>
+                    <!-- <th>Likes</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% if (sortPosts.length) { %>
+                    <% const maxViewCount=Math.max(...sortPosts.map(data=> data.viewCount)) %>
+                        <% sortPosts.forEach(data=> { %>
+                            <tr id="club_tr">
+                                <td>
+                                    <% if (data.viewCount===maxViewCount) { %>
+                                        🏅
+                                        <% }%>
+                                </td>
+                                <% if (data.maxMembers) { %>
+                                    <td id="club_Id">클럽</td>
+                                    <td id="club_Title"><a class="postLink" href='/club/list/<%= data.id%>'>
+                                            <%= data.title %>
+                                        </a></td>
+                                    <% } else { %>
+                                        <td id="club_Id">이벤트</td>
+                                        <td id="club_Title"><a class="postLink" href='/events/list/<%= data.id%>'>
+                                                <%= data.title %>
+                                            </a></td>
+                                        <% } %>
+                                            <td id="club_Writer"><a class="postLink"
+                                                    onclick="userInfo('<%= data.userId %>')">
+                                                    <%= data.user.nickName%>
+                                                </a> </td>
+                                            <td id="club_Date">
+                                                <%= reformPostDate(data.createdAt) %>
+                                            </td>
+                                            <td id="club_View">
+                                                <%= data.viewCount %>
+                                                    <% if (data.viewCount===maxViewCount) { %>
+                                                        🔝
+                                                        <% } else {%>
+                                                            <% } %>
+                                            </td>
+                                            <!-- <td id="clubz_Likes"></td> -->
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <td id="club_Likes">인기글이 없습니다.</td>
+                                                    <% } %>
+                            </tr>
+            </tbody>
+        </table>
+    </div></div>
     <div class="box4"></div>
 </div>
-
 
 <div class="main_body_container">
     <div class="main_left">
@@ -110,13 +108,5 @@
         </div>
     </div>
     <div class="main_image">
-
     </div>
-
-</div>
-<div id="my-grid" style="margin-top: 100px;">
-    <div class="box1"></div>
-    <div class="box2"></div>
-    <div class="box3"></div>
-
 </div>
