@@ -15,7 +15,7 @@ export class ClubRepository {
     private clubmemberRepository: Repository<ClubMembers>,
     @InjectRepository(AbusingClubCounts)
     private abusingClubRepository: Repository<AbusingClubCounts>,
-  ) {}
+  ) { }
 
   async getClubs() {
     const data = await this.clubRepository.find({
@@ -59,6 +59,31 @@ export class ClubRepository {
     application: string,
     isAccepted: boolean,
   ) {
+    const clubwaitList = await this.clubmemberRepository
+      .createQueryBuilder("members")
+      .where("members.clubId = :clubId", { clubId })
+      .andWhere("members.isAccepted = false")
+      .getMany();
+    console.log('정보', clubwaitList);
+    const userInWaitlist = clubwaitList.find(
+      (member) => member.userId === userId,
+    );
+    if (userInWaitlist) {
+      throw new BadRequestException("중복 신청은 불가능합니다.");
+    }
+    const clubmembers = await this.clubmemberRepository
+      .createQueryBuilder("members")
+      .where("members.clubId = :clubId", { clubId })
+      .andWhere("members.isAccepted = true")
+      .getMany();
+    console.log("정보2", clubmembers);
+    const userInWaitlist2 = clubmembers.find(
+      (member) => member.userId === userId,
+    );
+    if (userInWaitlist2) {
+      throw new BadRequestException("이미 참가하고 있는 모임입니다.");
+    }
+
     const data = await this.clubmemberRepository.insert({
       clubId,
       userId,
@@ -130,18 +155,18 @@ export class ClubRepository {
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = true")
       .getRawMany();
-    
+
     const clubwaitList = await this.clubmemberRepository
       .createQueryBuilder("members")
       .select(["members.id", "members.userId", "members.createdAt", "members.isAccepted", "u.nickName"])
       .innerJoin("Users", "u", "u.id = members.userId")
       .where("members.clubId = :clubId", { clubId })
       .andWhere("members.isAccepted = false")
-      .getRawMany();  
-    
+      .getRawMany();
+
     const clubMembers = [].concat(clubmembers)
     const clubWaitList = [].concat(clubwaitList)
-    return {clubMembers, clubWaitList};
+    return { clubMembers, clubWaitList };
   }
 
   async deleteClubDto(userId: number, clubId: number) {
@@ -156,5 +181,20 @@ export class ClubRepository {
     }
 
     await this.clubRepository.softDelete(clubId);
+  }
+  async reportClub(
+    clubId: number,
+    userId: number,
+    reportReason: string,
+    reportContent: string,
+  ) {
+    const data = await this.abusingClubRepository.insert({
+      clubId,
+      userId,
+      reportReason,
+      reportContent,
+    });
+
+    return data;
   }
 }
