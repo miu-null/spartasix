@@ -15,7 +15,7 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, "../", "views", "templates"));
   app.setViewEngine("ejs");
 
-  const PORT = process.env.PORT;
+  const PORT = process.env.PORT || 3000;
 
   await app.listen(PORT, function () {
     console.log(`서버가 ${PORT} 포트로 열렸습니다. http://localhost:${PORT}`);
