@@ -7,7 +7,8 @@ import {
   ParseIntPipe,
   DefaultValuePipe,
   Render,
-  UseGuards
+  UseGuards,
+  UnauthorizedException
 } from "@nestjs/common";
 import { Response } from "express";
 import { SearcherService } from "./searcher.service";
@@ -30,8 +31,7 @@ export class SearcherController {
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user
-    }
-    try {
+    } 
       const terms = await this.searchService.findAllPosts(term);
       const events = terms.events;
       const clubs = terms.clubs;
@@ -45,10 +45,6 @@ export class SearcherController {
         popularPosts,
         buttonUserId
       });
-
-    } catch (err) {
-      console.error(err.message);
-    }
   }
 
   // 유저 검색
