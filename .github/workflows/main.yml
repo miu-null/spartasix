@@ -60,7 +60,7 @@ jobs:
       # 3000 -> 80 포트로 수행하도록 지정
       - name: Docker run
         run: |
-          docker run -d -p 80:3000 --name go_cicd --restart always \ 
+          docker run -d -p 80:3000 --name go_cicd --restart always \
             -e REDIS_USERNAME=${{ secrets.REDIS_USERNAME }} \
             -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
             -e REDIS_TTL=${{ secrets.REDIS_TTL }} \
