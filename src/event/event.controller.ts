@@ -110,6 +110,7 @@ export class EventController {
   }
 
   @Get("/list")
+  @UseGuards(OptionalAuthGuard)
   async getEvent(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
