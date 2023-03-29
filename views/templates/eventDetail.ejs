@@ -91,11 +91,14 @@
         <button class="report_button">report</button>
       </div>
     </div>
-    <div class="eventdetail_third">
-      <div class="col-8">
-        <img class="eventImg" src="<%= events.postIMG %>" name="eventPostImg" id="eventPostImg" alt="eventPostImg" />
+      <% if ( events.postIMG ){ %>
+      <div class="eventdetail_third">
+        <div class="col-8">
+          <img class="eventImg" src="<%= events.postIMG %>" name="eventPostImg" id="eventPostImg" alt="eventPostImg" />
+        </div>
       </div>
-    </div>
+      <% } %>
+
     <div class="eventdetail_body_text">
       <%= events.content %>
     </div>
