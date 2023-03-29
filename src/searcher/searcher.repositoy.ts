@@ -134,7 +134,7 @@ export class SearcherRepository {
     const usersRank = sortedUsers.map((usersRank, index) => ({
       user: usersRank.user,
       rank: index + 1,
-      point : usersRank.point
+      point : usersRank.point.toFixed(1)
     }));
     return usersRank;
   }
