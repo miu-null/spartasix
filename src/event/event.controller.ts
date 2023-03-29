@@ -48,6 +48,7 @@ export class EventController {
   }
 
   @Post("/newevent")
+  @UseGuards(OptionalAuthGuard)
   @UseInterceptors(FileInterceptor("file"))
   @UseGuards(AuthGuard())
   async createUser(
@@ -56,68 +57,69 @@ export class EventController {
     @Body() data: CreateEventDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    if(file===undefined){
-      const userId = req.user;
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
+    const key = `${Date.now() + file.originalname}`;
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key,
+        Body: file.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME,
+        ACL: "public-read",
+      })
+      .promise();
 
-      const event = await this.eventService.createEvent(
-        userId,
-        data.title,
-        data.content,
-        data.startDate,
-        data.endDate,
-        undefined)
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
 
-        return res.json(true);
-    }else{
-      AWS.config.update({
-        credentials: {
-          accessKeyId: process.env.AWS_ACCESS_KEY,
-          secretAccessKey: process.env.AWS_SECRET_KEY,
-        },
-      });
-      const key = `${Date.now() + file.originalname}`;
-      const upload = await new AWS.S3()
-        .putObject({
-          Key: key,
-          Body: file.buffer,
-          Bucket: process.env.AWS_BUCKET_NAME,
-          ACL: "public-read",
-        })
-        .promise();
-  
-      const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
-  
-      Object.assign({
-        statusCode: 201,
-        message: `이미지 등록 성공`,
-        data: { url: postIMG },
-      });
-  
-      const userId = req.user;
-  
-      const event = await this.eventService.createEvent(
-        userId,
-        data.title,
-        data.content,
-        data.startDate,
-        data.endDate,
-        postIMG,
-      );
+    Object.assign({
+      statusCode: 201,
+      message: `이미지 등록 성공`,
+      data: { url: postIMG },
+    });
 
-      return res.json(true);
-    }
+    const userId = req.user;
+
+    const event = await this.eventService.createEvent(
+      userId,
+      data.title,
+      data.content,
+      data.startDate,
+      data.endDate,
+      postIMG,
+    );
+    return res.json(true);
   }
 
   @Get("/newevent")
-  async getNewEvent(@Res() res: Response) {
-    return res.render("eventNew.ejs");
+  @UseGuards(OptionalAuthGuard)
+  async getNewEvent(
+    @Res() res: Response,
+    @Req() req
+    ) {
+      let buttonUserId = null;
+      if (req.user) {
+        buttonUserId = req.user;
+      }
+    return res.render("eventNew.ejs", {
+      buttonUserId
+    });
   }
 
   @Get("/list")
+  @UseGuards(OptionalAuthGuard)
   async getEvent(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if(req.user) {
+      buttonUserId = req.user
+    }
     const events = await this.eventService.getEvents();
     const pagingposts = await paginatedResults(page, events);
     const sortPosts = await this.searchService.getPopularEvents();
@@ -126,6 +128,7 @@ export class EventController {
       ...pagingposts,
       sortPosts,
       reformPostDate,
+      buttonUserId
     });
   }
 
@@ -164,12 +167,21 @@ export class EventController {
   }
 
   @Get("/list/:id/updatepage")
-  async getUpdateEvent(@Res() res: Response, @Param("id") id: number) {
+  @UseGuards(OptionalAuthGuard)
+  async getUpdateEvent(
+    @Res() res: Response, 
+    @Param("id") id: number,
+    @Req() req
+    ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const events = await this.eventService.getEventById(id);
     const event = events.data.event;
     let imgUrl = event.postIMG;
 
-    return res.render("eventUpdate.ejs", { events, event });
+    return res.render("eventUpdate.ejs", { events, event, buttonUserId });
   }
 
   @Patch("/list/:id/update")
@@ -181,49 +193,35 @@ export class EventController {
     @Body() data: UpdateEventDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    if(file===undefined){
-      const userId = req.user;
-      const events = await this.eventService.updateEvent(id, {
-        userId,
-        title: data.title,
-        content: data.content,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        postIMG: undefined,
-      });
-      return events;
-    }else{
-      AWS.config.update({
-        credentials: {
-          accessKeyId: process.env.AWS_ACCESS_KEY,
-          secretAccessKey: process.env.AWS_SECRET_KEY,
-        },
-      });
-  
-      const key = `${Date.now() + file.originalname}`;
-      const upload = await new AWS.S3()
-        .putObject({
-          Key: key,
-          Body: file.buffer,
-          Bucket: process.env.AWS_BUCKET_NAME,
-          ACL: "public-read",
-        })
-        .promise();
-      const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
-  
-      const userId = req.user;
-      const events = await this.eventService.updateEvent(id, {
-        userId,
-        title: data.title,
-        content: data.content,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        postIMG: postIMG,
-      });
-  
-      return events;
-    }
+    AWS.config.update({
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+      },
+    });
 
+    const key = `${Date.now() + file.originalname}`;
+    const upload = await new AWS.S3()
+      .putObject({
+        Key: key,
+        Body: file.buffer,
+        Bucket: process.env.AWS_BUCKET_NAME,
+        ACL: "public-read",
+      })
+      .promise();
+    const postIMG = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+
+    const userId = req.user;
+    const events = await this.eventService.updateEvent(id, {
+      userId,
+      title: data.title,
+      content: data.content,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      postIMG: postIMG,
+    });
+
+    return events;
   }
 
   @Delete("/list/:eventPostId")
@@ -233,12 +231,20 @@ export class EventController {
     return true;
   }
 
+
   @Get("/search")
+  @UseGuards(OptionalAuthGuard)
   async searchClubs(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
     @Res() res: Response,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
+
     if (!page) {
       page = 1;
     }
@@ -252,6 +258,7 @@ export class EventController {
       term,
       ...searchData,
       reformPostDate,
+      buttonUserId
     });
   }
 }

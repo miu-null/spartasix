@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   DefaultValuePipe,
   Render,
+  UseGuards
 } from "@nestjs/common";
 import { Response } from "express";
 import { SearcherService } from "./searcher.service";
 import { reformPostDate } from "../../views/static/js/filter";
+import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 
 @Controller("search")
 export class SearcherController {
@@ -18,12 +20,17 @@ export class SearcherController {
 
   // 모든 게시물, 유저 검색
   @Get("all")
+  @UseGuards(OptionalAuthGuard)
   async searchAllPosts(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term,
     @Res() res: Response,
     @Req() req
   ): Promise<void> {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     try {
       const terms = await this.searchService.findAllPosts(term);
       const events = terms.events;
@@ -36,6 +43,7 @@ export class SearcherController {
         ...results,
         ...popularPosts,
         popularPosts,
+        buttonUserId
       });
 
     } catch (err) {
@@ -45,11 +53,17 @@ export class SearcherController {
 
   // 유저 검색
   @Get("users")
+  @UseGuards(OptionalAuthGuard)
   @Render("userSearch.ejs")
   async searchUsers(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
     try {
       const userData = await this.searchService.paginatedResults(
         "users",
@@ -60,7 +74,8 @@ export class SearcherController {
         term,
         page,
         ...userData,
-        reformPostDate
+        reformPostDate,
+        buttonUserId
       };
     } catch (err) {
       console.error(err.message);
