@@ -22,7 +22,6 @@ export class AppController {
       }
     const sortPosts = await this.searchService.getPopularPosts();
     const usersRank = await (await this.searchService.getUserRank()).slice(0, 5)
-    console.log(buttonUserId)
     return {
       sortPosts,
       reformPostDate,
