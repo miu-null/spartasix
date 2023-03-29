@@ -95,7 +95,7 @@ function sign_in() {
 
   $.ajax({
     type: "POST",
-    url: "auth/sign-in",
+    url: "/auth/sign-in",
     dataType: "json",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
@@ -226,7 +226,7 @@ function checkpass(randompassword) {
 
         $.ajax({
           type: "PATCH",
-          url: "auth/new-password",
+          url: "/auth/new-password",
           dataType: "json",
           contentType: "application/json; charset=utf-8",
           async: false,
