@@ -23,6 +23,8 @@ import { Express } from "express";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { PaginationDto } from "./dto/pagination.dto";
+import { OptionalAuthGuard } from '../auth/optional-auth.guard';
+
 @Controller("userpage")
 export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
@@ -43,7 +45,7 @@ export class UserpageController {
       userId,
       currentUserId,
     );
-    return res.render("userInfo", { myInfo });
+    return res.render("userInfo", { myInfo, buttonUserId:currentUserId });
   }
 
   @Get("/:userId/post")
@@ -61,7 +63,7 @@ export class UserpageController {
       endCursor,
       limit,
     );
-    return { myPosts };
+    return { myPosts, buttonUserId:currentUserId };
   }
 
   @Get("/:userId/clubs")
@@ -76,7 +78,10 @@ export class UserpageController {
       throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
     }
     const myClubs = await this.userPageService.getMyClubs(userId);
-    return { myClubs };
+    return { 
+      myClubs, 
+      buttonUserId:currentUserId 
+    };
   }
 
   @Get("/:userId/edit")
@@ -97,7 +102,10 @@ export class UserpageController {
       currentUserId,
     );
     const context = { myInfo };
-    return res.render("userInfoEdit", context);
+    return res.render("userInfoEdit", {
+      ...context, 
+      buttonUserId : currentUserId
+    });
   }
 
   // multipart/form-data 로 submit할때는 method를 patch로 변경시, multer middleware를 수정해야 하는 문제가 있음
@@ -169,28 +177,40 @@ export class UserpageController {
 
   // 유저 신청서 조회
   @Get("/clubs/:userId/app")
-  // @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   async getUserApps(@Param("userId") userId: number, @Res() res: Response) {
     const myApps = await this.userPageService.getClubApps(userId);
     return res.json(myApps);
   }
 
   @Get("/:userId/clubs/:clubId") // TODO 특정 클럽정보 조회
+  @UseGuards(OptionalAuthGuard)
   async getThisClub(
     @Param("userId") userId: number,
     @Param("clubId") clubId: number,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
     const thisClub = await this.userPageService.getThisClub(userId, clubId);
-    return thisClub;
+    return {thisClub, buttonUserId};
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
+  @UseGuards(OptionalAuthGuard)
   async getThisApp(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
     const thisApp = await this.userPageService.getThisApp(userId, clubMemberId);
-    return thisApp;
+    return {thisApp, buttonUserId};
   }
 
   @Patch("/:userId/clubs/app/:clubMemberId")
@@ -198,12 +218,17 @@ export class UserpageController {
   async getThisMember(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const thisMember = await this.userPageService.getThisMember(
       userId,
       clubMemberId,
     );
-    return thisMember;
+    return {thisMember, buttonUserId};
   }
 
   @Delete("/:userId/clubs/app/:clubMemberId")
@@ -211,8 +236,13 @@ export class UserpageController {
   async rejectApps(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const notThisApp = this.userPageService.rejectApp(userId, clubMemberId);
-    return notThisApp;
+    return {notThisApp, buttonUserId};
   }
 }

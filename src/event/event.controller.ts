@@ -48,6 +48,7 @@ export class EventController {
   }
 
   @Post("/newevent")
+  @UseGuards(OptionalAuthGuard)
   @UseInterceptors(FileInterceptor("file"))
   @UseGuards(AuthGuard())
   async createUser(
@@ -56,6 +57,11 @@ export class EventController {
     @Body() data: CreateEventDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
+
     AWS.config.update({
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -94,15 +100,30 @@ export class EventController {
   }
 
   @Get("/newevent")
-  async getNewEvent(@Res() res: Response) {
-    return res.render("eventNew.ejs");
+  @UseGuards(OptionalAuthGuard)
+  async getNewEvent(
+    @Res() res: Response,
+    @Req() req
+    ) {
+      let buttonUserId = null;
+      if (req.user) {
+        buttonUserId = req.user;
+      }
+    return res.render("eventNew.ejs", {
+      buttonUserId
+    });
   }
 
   @Get("/list")
   async getEvent(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if(req.user) {
+      buttonUserId = req.user
+    }
     const events = await this.eventService.getEvents();
     const pagingposts = await paginatedResults(page, events);
     const sortPosts = await this.searchService.getPopularEvents();
@@ -111,6 +132,7 @@ export class EventController {
       ...pagingposts,
       sortPosts,
       reformPostDate,
+      buttonUserId
     });
   }
 
@@ -149,12 +171,21 @@ export class EventController {
   }
 
   @Get("/list/:id/updatepage")
-  async getUpdateEvent(@Res() res: Response, @Param("id") id: number) {
+  @UseGuards(OptionalAuthGuard)
+  async getUpdateEvent(
+    @Res() res: Response, 
+    @Param("id") id: number,
+    @Req() req
+    ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const events = await this.eventService.getEventById(id);
     const event = events.data.event;
     let imgUrl = event.postIMG;
 
-    return res.render("eventUpdate.ejs", { events, event });
+    return res.render("eventUpdate.ejs", { events, event, buttonUserId });
   }
 
   @Patch("/list/:id/update")
@@ -166,6 +197,11 @@ export class EventController {
     @Body() data: UpdateEventDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
+
     AWS.config.update({
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -194,7 +230,7 @@ export class EventController {
       postIMG: postIMG,
     });
 
-    return events;
+    return {events, buttonUserId};
   }
 
   @Delete("/list/:eventPostId")
@@ -205,11 +241,18 @@ export class EventController {
   }
 
   @Get("/search")
+  @UseGuards(OptionalAuthGuard)
   async searchClubs(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
     @Res() res: Response,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
+
     if (!page) {
       page = 1;
     }
@@ -223,6 +266,7 @@ export class EventController {
       term,
       ...searchData,
       reformPostDate,
+      buttonUserId
     });
   }
 }
