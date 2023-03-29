@@ -16,6 +16,7 @@ export class SearcherRepository {
     private readonly eventRepository: Repository<EventPosts>,
   ) {}
 
+  //게시물, 유저 검색
   async findAllPosts(data: any): Promise<any> {
     {
       const clubs = await await this.findClubPosts(data);
@@ -27,6 +28,7 @@ export class SearcherRepository {
     }
   }
 
+  //이벤트 게시물 검색
   async findEventPosts(data?: any): Promise<EventPosts[]> {
     {
       const events = await this.eventRepository
@@ -41,6 +43,7 @@ export class SearcherRepository {
     }
   }
 
+  //클럽 게시물 검색
   async findClubPosts(data?: any): Promise<Clubs[]> {
     {
       const clubs = await this.clubRepository
@@ -56,6 +59,7 @@ export class SearcherRepository {
     }
   }
 
+  //유저 검색
   async findUsers(data?: any): Promise<Users[]> {
     {
       const users = await this.userSearchRepository
@@ -64,12 +68,22 @@ export class SearcherRepository {
           s: `%${data.term}%`,
         })
         .getMany();
+      
+        await this.getUserPosts()
       return users;
     }
   }
 
+  //유저 작성 게시물 솟팅 : 최신순
+  async getUserPosts(): Promise<(Clubs | EventPosts)[]> {
+    const allPosts = await this.getAllPosts();
+    const userPosts = allPosts
+      .sort((postA, postB) => postB.id - postA.id)
+      console.log('작성자',userPosts)
+    return userPosts;
+  }
 
-
+  //모든 게시물 조회
   async getAllPosts(): Promise<(Clubs | EventPosts)[]> {
     const clubPosts = await this.clubRepository.find({
       relations: { user: true },
@@ -82,6 +96,7 @@ export class SearcherRepository {
     return allPosts;
   }
 
+  //모든 게시물 인기순 소팅
   async getPopularPosts(): Promise<(Clubs | EventPosts)[]> {
     const allPosts = await this.getAllPosts();
     const popularPosts = allPosts
@@ -90,6 +105,9 @@ export class SearcherRepository {
     return popularPosts;
   }
 
+
+
+  //클럽 게시물 인기순 정렬
   async getPopularClubs(): Promise<Clubs[]> {
     const clubPosts = await (
       await this.clubRepository.find({ relations: { user: true } })
@@ -101,6 +119,7 @@ export class SearcherRepository {
     return sortPosts;
   }
 
+  //이벤트 게시물 인기순 정렬
   async getPopularEvents(): Promise<EventPosts[]> {
     const sortPosts = await this.eventRepository
       .createQueryBuilder("sort")
@@ -112,6 +131,7 @@ export class SearcherRepository {
     return sortPosts;
   }
   
+  // 유저활동 순위 산정
   async getUserRank(): Promise<{ user: Users, rank: number }[]> {
     const allUsers = await this.userSearchRepository.find({relations: ["clubs", "eventPosts", "eventComments", "clubComments", "clubCommentLikes", "eventCommentLikes"]});
     const usersPostCounts = allUsers.map(user => ({
@@ -127,14 +147,14 @@ export class SearcherRepository {
       + user.clubs.reduce((acc, cur) => acc + cur.viewCount/10, 0)
     }));
 
-    // 포인트 값에 따른 정렬 로직 구현
+    // 포인트 값에 따른 정렬
     const sortedUsers = usersPostCounts.sort((a, b) => b.point - a.point);
     
-    // 정렬된 배열을 기반으로 순위 매기기
+    // 정렬된 배열을 기반으로 순위 산정
     const usersRank = sortedUsers.map((usersRank, index) => ({
       user: usersRank.user,
       rank: index + 1,
-      point : usersRank.point.toFixed(1)
+      point : Math.ceil(usersRank.point*100)/100  //소숫점 1자리까지 표기
     }));
     return usersRank;
   }

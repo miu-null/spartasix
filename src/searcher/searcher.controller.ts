@@ -7,7 +7,6 @@ import {
   ParseIntPipe,
   DefaultValuePipe,
   Render,
-  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { SearcherService } from "./searcher.service";
@@ -17,6 +16,7 @@ import { reformPostDate } from "../../views/static/js/filter";
 export class SearcherController {
   constructor(private searchService: SearcherService) {}
 
+  // 모든 게시물, 유저 검색
   @Get("all")
   async searchAllPosts(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -43,6 +43,7 @@ export class SearcherController {
     }
   }
 
+  // 유저 검색
   @Get("users")
   @Render("userSearch.ejs")
   async searchUsers(
