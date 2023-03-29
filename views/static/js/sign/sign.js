@@ -18,12 +18,12 @@ function start_commue_club() {
   const objString = window.localStorage.getItem("team_sparta_header");
   const obj = JSON.parse(objString);
   if (obj === null || Date.now() > obj.expire) {
-    window.location.href="/sign";
+    window.location.href = "/sign";
   }
 
   if (obj !== null || Date.now() < obj.expire) {
-    alert("이미 로그인한 상태입니다.")
-    return
+    alert("이미 로그인한 상태입니다.");
+    return;
   }
 }
 
@@ -39,7 +39,7 @@ function sign_up() {
   const phone = $("#phone").val();
 
   if (!email || !password || !nickname || !phone || !confirmpassword) {
-    alert("모든 항목을 작성해 주세요.");
+    alert("모든 항목을 작성해 주세요");
   }
 
   if (!reg.test(password)) {
@@ -158,7 +158,7 @@ function find_password() {
       if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("이메일 혹은 전화번호가 올바르지 않습니다.");
       }
-    }
+    },
   });
 }
 
