@@ -40,8 +40,8 @@ export class AuthController {
   async login(@Body() data: loginDto, @Res() res) {
     const user = await this.authService.login(data.email, data.password);
 
-    res.cookie("accessToken", user.accessToken, { httpOnly: true });
-    res.cookie("refreshToken", user.refreshToken, { httpOnly: true });
+    res.cookie("accessToken", user.accessToken);
+    res.cookie("refreshToken", user.refreshToken);
     return res.json(user.user["id"]);
   }
 
