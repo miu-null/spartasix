@@ -235,7 +235,7 @@ function checkpass(randompassword) {
             password: newpassword,
           }),
           success: function (response) {
-            alert("비밀번호 수정 완료");
+            alert("비밀번호 수정 완료 !");
             window.location.reload();
           },
         });
