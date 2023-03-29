@@ -1,17 +1,17 @@
 name: CI/CD Docker
-
+​
 # 트리거를 수행할 브랜치를 지정합니다.
 on:
   pull_request:
     branches: [main]
     types: [closed]
-
+​
 # 환경설정
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/github-auto-deploy
   VERSION: ${{ github.sha }}
   NAME: go_cicd
-
+​
 jobs:
   # 빌드 Job
   build:
@@ -60,18 +60,14 @@ jobs:
       # 3000 -> 80 포트로 수행하도록 지정
       - name: Docker run
         run: |
-          docker stop redis || true
-          docker rm redis || true
           docker stop ${{ env.NAME }} || true
           docker rm ${{ env.NAME }} || true
           docker rmi ${{ env.DOCKER_IMAGE }}:latest || true
-          docker network create app-network || true
-          docker run -d --name redis --network app-network --restart always redis:latest
-          docker run -d -p 80:3000 -p 443:3001 --name go_cicd --network app-network --restart always \
+          docker run -d -p 80:3000 --name go_cicd --network app-network --restart always \
             -e DATABASE_HOST=${{ secrets.DATABASE_HOST }} \
             -e DATABASE_PORT=${{ secrets.DATABASE_PORT }} \
             -e DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            -e DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}" \
+            -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
             -e DATABASE_NAME=${{ secrets.DATABASE_NAME }} \
             -e DATABASE_SYNCHRONIZE=${{ secrets.DATABASE_SYNCHRONIZE }} \
             -e DATABASE_LOG=${{ secrets.DATABASE_LOG }} \
