@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $("#login_header").append(temp_html);
   }
-  const userId = obj.value;
   if (obj !== null) {
     let temp_html = `
         <div class="header_body">
