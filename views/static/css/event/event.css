@@ -67,7 +67,7 @@
   resize: none;
   border: none;
   margin-top: -10px;
-  width: 120px;
+  width: 650px;
 }
 
 .event_title:focus {
@@ -81,4 +81,8 @@
 
 .eventImg {
   width: 600px;
+}
+
+.event_startdate .event_enddate {
+  width: 300px;
 }
