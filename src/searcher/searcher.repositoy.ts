@@ -46,6 +46,7 @@ export class SearcherRepository {
   //클럽 게시물 검색
   async findClubPosts(data?: any): Promise<Clubs[]> {
     {
+      const searchTerms = data.term.split(' ').map(term => `%${term}%`);
       const clubs = await this.clubRepository
         .createQueryBuilder("search")
         .leftJoinAndSelect("search.user", "user")
