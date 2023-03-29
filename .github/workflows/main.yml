@@ -63,7 +63,8 @@ jobs:
           docker stop ${{ env.NAME }} || true
           docker rm ${{ env.NAME }} || true
           docker rmi ${{ env.DOCKER_IMAGE }}:latest || true
-          docker run -d -p 80:3000 --name go_cicd --restart always -e REDIS_HOST=${{ secrets.REDIS_HOST }} -e REDIS_USERNAME=${{ secrets.REDIS_USERNAME }} \
+          docker run -d -p 80:3000 --name go_cicd --restart always \ 
+            -e REDIS_USERNAME=${{ secrets.REDIS_USERNAME }} \
             -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
             -e REDIS_TTL=${{ secrets.REDIS_TTL }} \
             -e DATABASE_HOST=${{ secrets.DATABASE_HOST }} \
