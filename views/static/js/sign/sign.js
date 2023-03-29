@@ -151,7 +151,7 @@ function find_password() {
       phone: phone,
     }),
     success: function (response) {
-      alert("발송된 인증번호를 입력해 주세요.");
+      alert("발송된 인증번호를 입력해 주세요 !");
       checkpass(response.data);
     },
     error: function (request) {
