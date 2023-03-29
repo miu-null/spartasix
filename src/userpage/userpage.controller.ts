@@ -30,23 +30,30 @@ export class UserpageController {
   constructor(private readonly userPageService: UserpageService) {}
 
   @Get("/:userId")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   async getUserInfo(
     @Param("userId") userId: number,
     @Res() res: Response,
     @Req() req,
   ) {
-    console.log(req.user);
-    const currentUserId = req.user;
-    if (!currentUserId) {
-      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+      console.log(req.user);
+      const currentUserId = req.user;
+      if (!currentUserId) {
+        return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+      }
+      const myInfo = await this.userPageService.getUserInfo(
+        userId,
+        currentUserId,
+      );
+      return res.render("userInfo", { myInfo, buttonUserId:currentUserId });
+    } else {
+      res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
     }
-    const myInfo = await this.userPageService.getUserInfo(
-      userId,
-      currentUserId,
-    );
-    return res.render("userInfo", { myInfo, buttonUserId:currentUserId });
-  }
+
+}
 
   @Get("/:userId/post")
   async getUserPost(
