@@ -29,6 +29,7 @@ export class SearcherService {
     return results;
   }
 
+  //검색목록 페이지네이션 준비 : 타입에 따른 리포지토리 선택
   async selectData(pageType: string, page: number, term: any) {
     let getdata;
     if (pageType === "users") {
@@ -42,6 +43,7 @@ export class SearcherService {
     return getdata;
   }
 
+  //검색목록 페이지네이션
   async paginatedResults(pageType: string, page, term: string) {
     const take: number = 5;
     const seletedData = await this.selectData(pageType, page, term);
