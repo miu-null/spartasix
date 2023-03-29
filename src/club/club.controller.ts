@@ -36,10 +36,16 @@ export class ClubController {
   ) { }
 
   @Get("/list")
+  @UseGuards(OptionalAuthGuard)
   async getClubs(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
+    @Req() req
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const clubs = await this.clubService.getClubs();
     const pagingposts = await paginatedResults(page, clubs);
     const sortPosts = await this.searchService.getPopularClubs();
@@ -48,18 +54,31 @@ export class ClubController {
       ...pagingposts,
       sortPosts,
       reformPostDate,
+      buttonUserId,
     });
   }
 
   @Get("/clubspost")
-  postclub(@Res() res: Response) {
-    return res.render("clubspost.ejs");
+  @UseGuards(OptionalAuthGuard)
+  postclub(@Res() res: Response, @Req() req) {
+    let buttonUserId = null; 
+    if (req.user) {
+      buttonUserId = req.user
+    } else {
+      return res.render("clubspost.ejs", {
+        buttonUserId : buttonUserId
+      });
   }
+}
 
   @Post("/clubspost")
   @UseGuards(AuthGuard())
   async createClub(@Body() data: CreateClubDto, @Req() req) {
     const userId = req.user;
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const post = await this.clubService.createClub(
       userId,
       data.title,
@@ -67,30 +86,32 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return post;
+    return {post, buttonUserId};
   }
 
   @Post("/:id")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   async createApp(
     @Param("id") id: number,
     @Body() data: CreateAppDto,
     @Req() req,
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const userId = req.user;
-    // const userinfo = await this.
     const createNew = await this.clubService.createApp(
       id,
       userId,
       data.application,
       data.isAccepted,
     );
-    // await this.mailService.arrivalApplication(email, title, userId)
-    return createNew;
+    return {createNew, buttonUserId};
   }
 
   @Get("/clubs/:id")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   async updateclub(
     @Param("id") id: number,
     @Res() res: Response,
@@ -106,12 +127,16 @@ export class ClubController {
   }
 
   @Put("/clubs/:id")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   async updateClub(
     @Param("id") id: number,
     @Body() data: UpdateClubDto,
     @Req() req,
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const userId = req.user;
     const update = await this.clubService.updateClub(
       id,
@@ -121,7 +146,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return update;
+    return {update, buttonUserId};
   }
 
   @Get("/list/:id")
@@ -153,19 +178,29 @@ export class ClubController {
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
   async delete(@Param("id") id: number, @Req() req) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     const userId = req.user;
     await this.clubService.deleteClub(userId, id);
-    return true;
+    return buttonUserId;
   }
 
   @Get("/search")
+  @UseGuards(OptionalAuthGuard)
   async searchClubs(
     @Query("page") page: number,
     @Query() term: string,
     @Res() res: Response,
+    @Req() req
   ) {
     if (!page) {
       page = 1;
+    }
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
     }
     const searchData = await this.searchService.paginatedResults(
       "clubs",
@@ -176,6 +211,8 @@ export class ClubController {
       term,
       ...searchData,
       reformPostDate,
+      buttonUserId
+
     });
   }
   @Post("/report/:id")
@@ -185,6 +222,10 @@ export class ClubController {
     @Body() data: ReportClubDto,
     @Req() req,
   ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
     const userId = req.user;
     const createReport = await this.clubService.reportClub(
       id,
@@ -192,6 +233,6 @@ export class ClubController {
       data.reportContent,
       data.reportReason,
     );
-    return createReport;
+    return {createReport, buttonUserId};
   }
 }
