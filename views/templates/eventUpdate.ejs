@@ -22,7 +22,6 @@
         </div>
         <div class="title_text">
           <input id="event_title" class="event_title" value="<%= event.title %>">
-
         </div>
       </div>
     </div>
@@ -33,7 +32,7 @@
         </div>
         <div class="col-3">
           <input type="date" id="startDate" class="form-control" value="<%= event.startDate %>"
-            onchange="dateValidate()">
+            onclick="updateDateValidate()">
         </div>
       </div>
       <div class="eventdetail_second_end">
@@ -41,10 +40,11 @@
           Event ended at :
         </div>
         <div class="col-3">
-          <input type="date" id="endDate" class="form-control" value="<%= event.endDate %>" onchange="dateValidate()">
+          <input type="date" id="endDate" class="form-control" value="<%= event.endDate %>" onclick="updateDateValidate()">
         </div>
       </div>
     </div>
+   
     <div class="eventdetail_third">
       <div class="first_file">
         image
@@ -57,7 +57,9 @@
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
+      <% if ( event.postIMG ){ %>
       <img class="eventImg" id="nowimage" src="<%= event.postIMG %>">
+      <% } %>
       <p><textarea id="event_content" class="textarea" value=""><%= event.content %></textarea></p>
     </div>
   </div>
