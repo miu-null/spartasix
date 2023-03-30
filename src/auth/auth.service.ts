@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
@@ -25,15 +24,6 @@ export class AuthService {
     nickName: string,
     phone: string,
   ) {
-    if (!email || !password || !nickName || !phone) {
-      throw new BadRequestException("모든 항목을 작성해 주세요.");
-    }
-
-    if (password !== confirmpassword) {
-      throw new BadRequestException(
-        "비밀번호와 비밀번호 확인란이 일치하지 않습니다.",
-      );
-    }
     const hashpassword = await this.transformPassword(password);
     await this.authRepository.createUser(email, hashpassword, nickName, phone);
   }
@@ -43,7 +33,7 @@ export class AuthService {
     const validatePassword = await bcrypt.compare(password, user.password);
 
     if (validatePassword === false) {
-      throw new UnauthorizedException("비밀번호가 올바르지 않습니다.");
+      throw new BadRequestException("비밀번호가 올바르지 않습니다.");
     }
 
     const accessToken = await this.AccessToken(user.id);
@@ -58,6 +48,10 @@ export class AuthService {
     );
 
     return { user, accessToken, refreshToken };
+  }
+
+  async logout(header: string) {
+    await this.redisService.removeToken(header)
   }
 
   async findPassword(email: string, phone: string) {
