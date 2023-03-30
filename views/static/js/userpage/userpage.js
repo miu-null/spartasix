@@ -193,131 +193,48 @@ function delete_accepted(userId, clubMemberId) {
     },
   });
 }
-function show_userPosts(event, userId, startCursor, endCursor, limit) {
-  console.log(event.target.id);
-  let query =
-    event.target.id === "prevClubBtn"
-      ? `startCursor=${startCursor}`
-      : `endCursor=${endCursor}`;
-  limit = 3;
-  console.log(query);
+function show_userPosts(userId, type) {
+  // cursor
+  let cursor = "";
+  if (type === "next") {
+    cursor = $("#club-post-wrap:last-child").attr("data-index");
+  }
+  if (type === "prev") {
+    cursor = $("#club-post-wrap:first-child").attr("data-index");
+  }
+
   $.ajax({
     type: "GET",
-    url: `/userpage/${userId}/post?${query}&limit=${limit}`,
+    url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
     async: true,
     success: function (res) {
-      let clubPosts = res.myPosts.clubPosts;
-      let eventPosts = res.myPosts.eventPosts;
-      let rows = [];
+      console.log(res);
+      $(".club-posts").empty();
 
-      let full_html = "";
-      rows = clubPosts;
-      full_html += `
-      <p style="font-family: Alfa Slab One; font-size: 17px">Clubs
-      </p>
-      <br />
-      `;
-      for (let i = 0; i < rows.length; i++) {
-        full_html += `<div class = "clubPosts">`;
-        let title = rows[i]["title"];
-        let content = rows[i]["content"];
-        let temp_html = `
-          <font style="color: #ea4e4e; float: left; size: 12px">
-           ${title} </font>
-        <br /> ${content} 
-        <br /><br /> `;
+      const { myPosts } = res;
 
-        full_html += temp_html;
-        full_html += `</div>`;
+      for (const post of myPosts) {
+        let postHtml = `
+          <div id='club-post-wrap' data-index=${post.id}>
+            <div class="post-title">
+              ${post.title}
+            </div>
+            <div class="post-content">
+              ${post.content}
+            </div>
+          </div>
+        `;
+        $(".club-posts").append(postHtml);
       }
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "다음 글이 존재하지 않습니다.") {
+        alert("다음 글이 존재하지 않습니다.");
+        // $.ajax({
+        //   type:"GET",
 
-      rows = eventPosts;
-      full_html += `
-      <p style="font-family: Alfa Slab One; font-size: 17px">Events
-      </p>
-      <br />
-      `;
-      for (let i = 0; i < rows.length; i++) {
-        full_html += `<div class = "eventPosts">`;
-
-        let title = rows[i]["title"];
-        let content = rows[i]["content"];
-        let temp_html = `
-          <font style="color: #ea4e4e; float: left; size: 12px">
-           ${title} </font>
-        <br /> ${content} 
-        <br /><br /> `;
-
-        full_html += temp_html;
-        full_html += `</div>`;
+        // })
       }
-      // add pagination buttons
-      // let pageInfo = res.myPosts.pageInfo;
-      // if (pageInfo.hasPreviousClubPage) {
-      //   full_html += `<button type="button" class="club_previous" onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
-      //     page - 1
-      //   })">Previous Club</button>`;
-      // }
-      // if (pageInfo.hasNextClubPage) {
-      //   full_html += `  <button type="button" class="club_next" onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
-      //     page + 1
-      //   })">Next Club Page</button>`;
-      // }
-      // if (pageInfo.hasPreviousEventPage) {
-      //   full_html += `<button onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
-      //     page - 1
-      //   })">Previous Event Page</button>`;
-      // }
-      // if (pageInfo.hasNextEventPage) {
-      //   full_html += `<button onclick="show_userPosts(${userId}, '${startCursor}', '${endCursor}', ${
-      //     page + 1
-      //   })">Next Event Page</button>`;
-      // }
-      $("#clubPosts").html(full_html);
-
-      let pageInfo = res.pageInfo;
-      let hasNextEventPage = pageInfo.hasNextEventPage;
-      let hasNextClubPage = pageInfo.hasNextClubPage;
-      let hasPreviousEventPage = pageInfo.hasPreviousEventPage;
-      let hasPreviousClubPage = pageInfo.hasPreviousClubPage;
-
-      if (hasPreviousClubPage) {
-        $("#prevClubBtn").show();
-      } else {
-        $("#prevClubBtn").hide();
-      }
-
-      if (hasNextClubPage) {
-        $("#nextClubBtn").show();
-      } else {
-        $("#nextClubBtn").hide();
-      }
-
-      if (hasPreviousEventPage) {
-        $("#prevEventBtn").show();
-      } else {
-        $("#prevEventBtn").hide();
-      }
-
-      if (hasNextEventPage) {
-        $("#nextEventBtn").show();
-      } else {
-        $("#nextEventBtn").hide();
-      }
-
-      $("#nextClubBtn")
-        .off("click")
-        .on("click", function () {
-          let newStartCursor = pageInfo.clubEndCursor;
-          show_userPosts(userId, newStartCursor, endCursor, limit);
-        });
-
-      $("#prevClubBtn")
-        .off("click")
-        .on("click", function () {
-          let newEndCursor = pageInfo.clubStartCursor;
-          show_userPosts(userId, StartCursor, newEndCursor, limit);
-        });
     },
   });
 }

@@ -10,9 +10,18 @@ import { ClubMembers } from "../entities/clubmembers.entity";
 import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/events.entity";
 import { Users } from "../entities/users.entity";
-import { Between, In, LessThan, MoreThan, Raw, Repository } from "typeorm";
+import {
+  Between,
+  In,
+  LessThan,
+  MoreThan,
+  MoreThanOrEqual,
+  Raw,
+  Repository,
+} from "typeorm";
 
 import { UserUpdateDto } from "./dto/userpage.update.dto";
+import { take } from "rxjs";
 
 @Injectable()
 export class UserPageRepository {
@@ -49,66 +58,53 @@ export class UserPageRepository {
   }
 
   // 작성한 글 조회
-  async getMyPosts(
-    userId: number,
-    currentUserId: number,
-    startCursor: Date,
-    endCursor: Date,
-    limit: number,
-  ) {
-    const eventPosts = await this.eventpostRepository.find({
-      where: {
-        userId,
-        createdAt: startCursor
-          ? LessThan(startCursor)
-          : endCursor
-          ? MoreThan(endCursor)
-          : LessThan(new Date()),
-      },
-      select: ["title", "content"],
-      order: { createdAt: "DESC" },
-      take: limit,
-    });
-    const clubPosts = await this.clubRepository.find({
-      where: {
-        userId,
-        createdAt: startCursor
-          ? LessThan(startCursor)
-          : endCursor
-          ? MoreThan(endCursor)
-          : LessThan(new Date()),
-      },
-      select: ["title", "content"],
-      order: { createdAt: "DESC" },
-      take: limit,
-    });
-    console.log("???", eventPosts);
-    console.log("???", clubPosts);
+  async getMyPosts(userId, cursor, type) {
+    // type 에 따라 분기 - init, prev, next
+    if (type === "init") {
+      const myPosts = await this.clubRepository.find({
+        where: { userId },
+        take: 3,
+        order: {
+          id: "DESC",
+        },
+      });
 
-    const hasNextEventPage = eventPosts.length === limit;
-    const hasNextClubPage = clubPosts.length === limit;
-    const eventEndCursor = hasNextEventPage
-      ? eventPosts[eventPosts.length - 1].createdAt?.toISOString() ?? null
-      : null;
-    const clubEndCursor = hasNextClubPage
-      ? clubPosts[clubPosts.length - 1].createdAt?.toISOString() ?? null
-      : null;
+      return myPosts;
+    }
 
-    const hasPreviousEventPage = startCursor != null;
-    const hasPreviousClubPage = startCursor != null;
+    if (type === "prev") {
+      const myPosts = await this.clubRepository.find({
+        where: {
+          userId,
+          id: LessThan(Number(cursor) + 4),
+        },
+        take: 3,
+        order: {
+          id: "DESC",
+        },
+      });
 
-    return {
-      eventPosts,
-      clubPosts,
-      pageInfo: {
-        hasNextEventPage,
-        hasNextClubPage,
-        hasPreviousEventPage,
-        hasPreviousClubPage,
-        eventEndCursor,
-        clubEndCursor,
-      },
-    };
+      return myPosts;
+    }
+
+    if (type === "next") {
+      const myPosts = await this.clubRepository.find({
+        where: {
+          userId,
+          id: LessThan(Number(cursor)),
+        },
+        take: 3,
+        order: {
+          id: "DESC",
+        },
+      });
+      if (!cursor) {
+        console.log("this romance is an error");
+        // throw new BadRequestException("다음 글이 존재하지 않습니다.");
+      }
+
+      return myPosts;
+    }
   }
 
   async getMyClubs(userId: number) {
