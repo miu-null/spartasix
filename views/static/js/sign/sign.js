@@ -40,6 +40,14 @@ function sign_up() {
 
   if (!email || !password || !nickname || !phone || !confirmpassword) {
     alert("모든 항목을 작성해 주세요");
+
+    return false;
+  }
+
+  if (password !== confirmpassword) {
+    alert("비밀번호와 비밀번호 확인란이 일치하지 않습니다.");
+
+    return false;
   }
 
   if (!reg.test(password)) {
@@ -67,15 +75,6 @@ function sign_up() {
       window.location.reload();
     },
     error: function (request, status, error) {
-      alert(request.responseJSON["message"]);
-      if (
-        request.responseJSON["message"] ===
-        "비밀번호와 비밀번호 확인란이 일치하지 않습니다."
-      ) {
-        alert("비밀번호와 비밀번호 확인란이 일치하지 않습니다.");
-        window.location.reload();
-      }
-
       if (request.responseJSON["message"] === "이미 존재하는 닉네임 입니다.") {
         alert("이미 존재하는 닉네임 입니다.");
         window.location.reload();
@@ -103,14 +102,6 @@ function sign_in() {
       password: password,
     }),
     success: function (response) {
-      const obj = {
-        value: response,
-        expire: Date.now() + 432000000,
-      };
-      const objString = JSON.stringify(obj);
-      window.localStorage.setItem("team_sparta_header", objString);
-
-      alert("로그인 성공 !");
       window.location.replace("/");
     },
     error: function (request) {
@@ -130,7 +121,6 @@ function logout() {
     type: "POST",
     url: "/auth/logout",
     success: function (response) {
-      window.localStorage.removeItem("team_sparta_header");
       window.location.reload();
     },
   });

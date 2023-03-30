@@ -51,6 +51,8 @@ export class AuthController {
     const accessToken = header.split(";")[0].split("=")[1];
     const refreshtoken = header.split(";")[1].split("=")[1];
 
+    await this.authService.logout(header)
+
     res.clearCookie("accessToken", accessToken);
     res.clearCookie("refreshToken", refreshtoken);
 
