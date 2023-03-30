@@ -13,6 +13,7 @@ import {
   DefaultValuePipe,
   Render,
   UseGuards,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -59,15 +60,40 @@ export class ClubController {
   }
 
   @Get("/clubspost")
-  @UseGuards(OptionalAuthGuard)
-  postclub(@Res() res: Response, @Req() req) {
-    let buttonUserId = null; 
-    if (req.user) {
-      buttonUserId = req.user
-      res.render("clubspost.ejs", {buttonUserId});
-    } else {
-      res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
+  @UseGuards(AuthGuard())
+  async postclub(@Res() res: Response, @Req() req) {
+    const userId = req.user;
+    if (!userId) {
+      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
     }
+    console.log("유저넘버", userId);
+    return res.render("clubspost.ejs", {
+      userId,
+    });
+  }
+
+  @Get("/list/report")
+  @UseGuards(AuthGuard())
+  async report(@Res() res: Response, @Req() req) {
+    const userId = req.user;
+    console.log("유저넘버", userId);
+    if (!userId) {
+      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    }
+    console.log("유저넘버", userId);
+    return userId;
+  }
+
+  @Get("/list/apply")
+  @UseGuards(AuthGuard())
+  async apply(@Res() res: Response, @Req() req) {
+    const userId = req.user;
+    console.log("유저넘버", userId);
+    if (!userId) {
+      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    }
+    console.log("유저넘버", userId);
+    return userId;
   }
 
   @Post("/clubspost")
@@ -85,7 +111,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return {post, buttonUserId};
+    return { post, buttonUserId };
   }
 
   @Post("/:id")
@@ -106,7 +132,7 @@ export class ClubController {
       data.application,
       data.isAccepted,
     );
-    return {createNew, buttonUserId};
+    return { createNew, buttonUserId };
   }
 
   @Get("/clubs/:id")
@@ -145,7 +171,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return {update, buttonUserId};
+    return { update, buttonUserId };
   }
 
   @Get("/list/:id")
@@ -232,6 +258,6 @@ export class ClubController {
       data.reportContent,
       data.reportReason,
     );
-    return {createReport, buttonUserId};
+    return { createReport, buttonUserId };
   }
 }

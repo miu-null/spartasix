@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { EventPosts } from "src/entities/events.entity";
 import { Users } from "../entities/users.entity";
 import { Repository } from "typeorm";
+import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
 
 @Injectable()
 export class EventRepository {
@@ -11,7 +12,9 @@ export class EventRepository {
     private readonly userRepository: Repository<Users>,
     @InjectRepository(EventPosts)
     private readonly eventRepository: Repository<EventPosts>,
-  ) {}
+    @InjectRepository(AbusingEventCounts)
+    private abusingEventRepository: Repository<AbusingEventCounts>,
+  ) { }
 
   async getEvents() {
     const data = await this.eventRepository.find({
@@ -44,9 +47,9 @@ export class EventRepository {
       .where("eventPost.id < :eventPostId", { eventPostId })
       .orderBy('eventPost.id', 'DESC')
       .getOne();
-      
+
     const nextPost = await this.eventRepository  //다음글 표기 정보
-      .createQueryBuilder("eventPost") 
+      .createQueryBuilder("eventPost")
       .leftJoinAndSelect("eventPost.user", "nickName")
       .where("eventPost.id > :eventPostId", { eventPostId })
       .orderBy("eventPost.id", "ASC")
@@ -101,5 +104,20 @@ export class EventRepository {
   async deleteEvent(eventPostId: number) {
     await this.eventRepository.softDelete(eventPostId);
     return true;
+  }
+  async reportEvent(
+    eventPostId: number,
+    userId: number,
+    reportReason: string,
+    reportContent: string,
+  ) {
+    const data = await this.abusingEventRepository.insert({
+      eventPostId,
+      userId,
+      reportReason,
+      reportContent,
+    });
+
+    return data;
   }
 }

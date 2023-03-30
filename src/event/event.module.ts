@@ -11,12 +11,14 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { SearcherRepository } from "src/searcher/searcher.repository";
 import { ClubRepository } from "src/club/club.repository";
 import { MailService } from "src/mail/mail.service";
-import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
 import { EventComments } from "src/entities/eventcomments.entity";
 import { EventCommentLikes } from "src/entities/eventcommentlikes.entity";
 import { EventCommentService } from "src/comments/eventcomment/eventcomment.service";
 import { EventCommentRepository } from "src/comments/eventcomment/eventcomment.repository";
 import { PassportModule } from "@nestjs/passport";
+import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
+import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
+
 
 @Module({
   imports: [
@@ -25,9 +27,10 @@ import { PassportModule } from "@nestjs/passport";
       Users,
       ClubMembers,
       EventPosts,
-      AbusingClubCounts,
+      AbusingEventCounts,
       EventComments,
       EventCommentLikes,
+      AbusingClubCounts,
     ]),
     PassportModule.register({
       defaultStrategy: "jwt",
@@ -43,6 +46,7 @@ import { PassportModule } from "@nestjs/passport";
     ClubRepository,
     EventCommentService,
     EventCommentRepository,
+    ClubMembers,
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })

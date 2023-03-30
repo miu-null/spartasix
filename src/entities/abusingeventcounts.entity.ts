@@ -19,6 +19,12 @@ export class AbusingEventCounts {
   @Column("int")
   userId: number;
 
+  @Column("varchar")
+  reportReason: string;
+
+  @Column("varchar")
+  reportContent: string;
+
   @Column("int")
   eventPostId: number;
 
