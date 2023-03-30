@@ -9,7 +9,7 @@ export class EventService {
     private EventRepository: EventRepository,
     private readonly mailService: MailService,
     private readonly eventCommentService: EventCommentService,
-  ) {}
+  ) { }
 
   async getEvents() {
     const events = await this.EventRepository.getEvents();
@@ -61,5 +61,19 @@ export class EventService {
   async deleteEvent(id: number) {
     await this.EventRepository.deleteEvent(id);
     return true;
+  }
+  async reportEvent(
+    userId: number,
+    eventPostId: number,
+    reportReason: string,
+    reportContent: string,
+  ) {
+    const data = await this.EventRepository.reportEvent(
+      userId,
+      eventPostId,
+      reportReason,
+      reportContent,
+    );
+    return data;
   }
 }

@@ -21,39 +21,39 @@
 </div>
 <div class="clubdetail_container">
   <% if (buttonUserId===nowPost.userId) {%>
-  <div class="clubdetail_button">
-    <div class="clubdetail_edit">
-      <a onclick="location.href='/club/clubs/<%= nowPost.id %>'" class="new_club"
-        style="cursor: pointer">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+    <div class="clubdetail_button">
+      <div class="clubdetail_edit">
+        <a onclick="location.href='/club/clubs/<%= nowPost.id %>'" class="new_club"
+          style="cursor: pointer">edit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+      </div>
+      <div class="clubdetail_delete">
+        <a style="cursor: pointer" onclick="clubdelete()" class="new_club">delete</a>
+      </div>
     </div>
-    <div class="clubdetail_delete">
-      <a style="cursor: pointer" onclick="clubdelete()" class="new_club">delete</a>
-    </div>
-  </div>
-  <% } else { %>
-    <% } %>
-  <div class="clubdetail_title">
-    <div class="clubdetail_first">
-      <div class="clubdetail_first_id">
-        <%= nowPost.id %>
-      </div>
-      <div class="clubdetail_first_title">
-        <div class="first_title">
-          Title
-        </div>
-        <div class="title_text">
-          <%= nowPost.title %>
-        </div>
-      </div>
-      <div class="clubdetail_first_nickname">
-        <div class="first_nickname">
-          <Writer>
-        </div>
-        <div class="nickname_text">
-          작성자: <%= nowPost.user.nickName %>
-        </div>
-      </div>
-      <!-- <div class="clubdetail_first_likes">
+    <% } else { %>
+      <% } %>
+        <div class="clubdetail_title">
+          <div class="clubdetail_first">
+            <div class="clubdetail_first_id">
+              <%= nowPost.id %>
+            </div>
+            <div class="clubdetail_first_title">
+              <div class="first_title">
+                Title
+              </div>
+              <div class="title_text">
+                <%= nowPost.title %>
+              </div>
+            </div>
+            <div class="clubdetail_first_nickname">
+              <div class="first_nickname">
+                <Writer>
+              </div>
+              <div class="nickname_text">
+                작성자: <%= nowPost.user.nickName %>
+              </div>
+            </div>
+            <!-- <div class="clubdetail_first_likes">
         <div class="first_likes">
           Likes
         </div>
@@ -61,210 +61,219 @@
           개수 (필요)
         </div>
       </div> -->
-    </div>
-    <div class="clubdetail_second">
-      <div class="clubdetail_second_date">
-        <div class="second_date">
-          작성일
-        </div>
-        <div class="second_date_text">
-          <%= reformPostDate(nowPost.createdAt) %>
-        </div>
-      </div>
-      <div class="clubdetail_second_date">
-        <div class="second_date">
-          Category
-        </div>
-        <div class="second_date_text">
-          <%= nowPost.category %>
-        </div>
-      </div>
-      <div class="clubdetail_second_date">
-        <div class="second_date">
-          인원구성
-        </div>
-        <div class="second_date_text" id="club_maxMember">
-          <%= nowPost.maxMembers %>
-        </div>
-      </div>
-      <div class="clubdetail_second_view">
-        <div class="view_title">
-          View
-        </div>
-        <div class="view_text">
-          <%= nowPost.viewCount %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="clubdetail_body">
-    <div class="clubdetail_body_button">
-      <div class="clubdetail_body_button_remind">
-        <button class="remind_button" onclick="modal_open()">Apply</button>
-      </div>
-      <div class="clubdetail_body_button_report">
-        <button onclick="report_modal_open()" class="report_button">report</button>
-      </div>
-    </div>
-
-    <div class="clubdetail_body_text">
-      <h6><%= nowPost.content %></h6>
-    </div>
-              <!-- 참가자 카드 섹션 -->
-<div class="clubdetail_card_List">
-  <div class="card_list_body">
-  <div class="card-section">
-    <h3>👩‍💻참가자</h3>
-    <div class="row" id="card-container">
-      <% if (clubMembers.length) { %>
-      <% clubMembers.forEach(data=> { %>
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>">
-                <% if (data.u_userIMG) {%>
-                  <img src="<%= data.u_userIMG %>"width="20">
-                <% } else {%>
-                  <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
-                <% } %>
-                <%= data.u_nickName %></a></h5>
-              <p class="card-text"><%= reformPostDateRaw(data.members_updatedAt) %></p>
+          </div>
+          <div class="clubdetail_second">
+            <div class="clubdetail_second_date">
+              <div class="second_date">
+                작성일
+              </div>
+              <div class="second_date_text">
+                <%= reformPostDate(nowPost.createdAt) %>
+              </div>
+            </div>
+            <div class="clubdetail_second_date">
+              <div class="second_date">
+                Category
+              </div>
+              <div class="second_date_text">
+                <%= nowPost.category %>
+              </div>
+            </div>
+            <div class="clubdetail_second_date">
+              <div class="second_date">
+                인원구성
+              </div>
+              <div class="second_date_text" id="club_maxMember">
+                <%= nowPost.maxMembers %>
+              </div>
+            </div>
+            <div class="clubdetail_second_view">
+              <div class="view_title">
+                View
+              </div>
+              <div class="view_text">
+                <%= nowPost.viewCount %>
+              </div>
             </div>
           </div>
         </div>
-      <% }) %>
-      <% } else { %>
-        <div>아직 참여자가 없습니다.</div>
-        <% } %>
+        <div class="clubdetail_body">
+          <div class="clubdetail_body_button">
+            <div class="clubdetail_body_button_remind">
+              <button class="remind_button" onclick="modal_open2(); modal_open();">Apply</button>
+            </div>
+            <div class="clubdetail_body_button_report">
+              <button onclick="club_report_modal_open2(); club_report_modal_open(); " class="report_button">report</button>
+            </div>
+          </div>
+          <div class="clubdetail_body_text">
+            <h6>
+              <%= nowPost.content %>
+            </h6>
+          </div>
+          <!-- 참가자 카드 섹션 -->
+          <div class="clubdetail_card_List">
+            <div class="card_list_body">
+              <div class="card-section">
+                <h3>👩‍💻참가자</h3>
+                <div class="row" id="card-container">
+                  <% if (clubMembers.length) { %>
+                    <% clubMembers.forEach(data=> { %>
+                      <div class="col-md-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>">
+                                <% if (data.u_userIMG) {%>
+                                  <img src="<%= data.u_userIMG %>" width="20">
+                                  <% } else {%>
+                                    <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20">
+                                    <% } %>
+                                      <%= data.u_nickName %>
+                              </a></h5>
+                            <p class="card-text">
+                              <%= reformPostDateRaw(data.members_updatedAt) %>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <% }) %>
+                        <% } else { %>
+                          <div>아직 참여자가 없습니다.</div>
+                          <% } %>
 
-    </div>
-  </div>
-</div>
-<div class="card_list_body">
-  <div class="card-section">
-    <h3>⌛대기자</h3>
-    <div class="row">
-      <% if (clubWaitList.length) { %>
-      <% clubWaitList.forEach(data=> { %>
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>">
-                <% if (data.u_userIMG) {%>
-                  <img src="<%= data.u_userIMG %>"width="20">
-                <% } else {%>
-                  <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
+                </div>
+              </div>
+            </div>
+            <div class="card_list_body">
+              <div class="card-section">
+                <h3>⌛대기자</h3>
+                <div class="row">
+                  <% if (clubWaitList.length) { %>
+                    <% clubWaitList.forEach(data=> { %>
+                      <div class="col-md-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title"><a class="postLink" href="/userpage/<%= data.members_userId %>">
+                                <% if (data.u_userIMG) {%>
+                                  <img src="<%= data.u_userIMG %>" width="20">
+                                  <% } else {%>
+                                    <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20">
+                                    <% } %>
+                                      <%= data.u_nickName %>
+                              </a></h5>
+                            <p class="card-text">
+                              <%= reformPostDateRaw(data.members_createdAt) %>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <% }) %>
+                        <% } else { %>
+                          <div>현재 대기자가 없습니다.</div>
+                          <% } %>
+
+                </div>
+              </div>
+            </div>
+            <% if (nowPost.maxMembers <=clubMembers.length) {%>
+              <h5>==================================================================</h5>
+              <div style="text-align: center;">
+                <h5> 모집이 마감되었습니다.</h5>
+                <img
+                  src="https://images.unsplash.com/photo-1525847664954-bcd1e64c6ad8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29ycnklMjB3ZSUyMGFyZSUyMGNsb3NlZHxlbnwwfHwwfHw%3D&w=1000&q=80"
+                  width="80%">
+              </div>
+              <% }else{ %>
                 <% } %>
-                <%= data.u_nickName %></a></h5>
-              <p class="card-text"><%= reformPostDateRaw(data.members_createdAt) %></p>
+                  <!-- 카드 섹션 구간 끝 -->
+          </div>
+          <div>
+          </div>
+          <div class="clubdetail_like_container">
+            <img class="clubdetail_like_img" src="/img/likes.png">
+          </div>
+
+          <div class="clubdetail_bottom">
+            <div class="clubdetail_bottom_div">
+              <div class="clubdetail_bottom_div_title">
+                <% if (nextPost) { %>
+                  <a class="postLink" href="<%= nextPost.id %>">다음글</a>
+                  <% } else {%>
+                    다음글
+                    <% }%>
+              </div>
+              <div class="clubdetail_bottom_div_body">
+                <% if (nextPost) { %>
+                  <a class="postLink" href="<%= nextPost.id %>">
+                    <%= nextPost.title %>
+                  </a>
+                  <% } else {%>
+                    글이 존재하지 않습니다.
+                    <% }%>
+
+              </div>
+              <div class="clubdetail_bottom_div_nickname">
+                <% if (nextPost) { %>
+                  <%= nextPost.user.nickName %>
+                    <% } else {%>
+                      <% }%>
+              </div>
+              <div class="clubdetail_bottom_div_date">
+                <% if (nextPost) { %>
+                  <%= reformPostDate(nextPost.createdAt) %>
+                    <% } %>
+              </div>
+            </div>
+            <div class="clubdetail_bottom_div">
+              <div class="clubdetail_bottom_div_title">
+                현재글
+              </div>
+              <div class="clubdetail_bottom_div_body">
+                <% if (nowPost) { %>
+                  <%= nowPost.title %>
+                    <% } %>
+              </div>
+              <div class="clubdetail_bottom_div_nickname">
+                <% if (nowPost) { %>
+                  <%= nowPost.user.nickName %>
+                    <% } else {%>
+                      <% }%>
+              </div>
+              <div class="clubdetail_bottom_div_date">
+                <%= reformPostDate(nowPost.createdAt) %>
+              </div>
+            </div>
+            <div class="clubdetail_bottom_div">
+              <div class="clubdetail_bottom_div_title">
+                <% if (prevPost) { %>
+                  <a class="postLink" href="<%= prevPost.id %>">이전글</a>
+                  <% } else {%>
+                    이전글
+                    <% }%>
+              </div>
+              <div class="clubdetail_bottom_div_body">
+                <% if (prevPost) { %>
+                  <a class="postLink" href="<%= prevPost.id %>">
+                    <%= prevPost.title %>
+                  </a>
+                  <% } else {%>
+                    글이 존재하지 않습니다.
+                    <% }%>
+              </div>
+              <div class="clubdetail_bottom_div_nickname">
+                <% if (prevPost) { %>
+                  <%= prevPost.user.nickName %>
+                    <% } else {%>
+                      <% }%>
+              </div>
+              <div class="clubdetail_bottom_div_date">
+                <% if (prevPost) { %>
+                  <%= reformPostDate(prevPost.createdAt) %>
+                    <% } %>
+              </div>
             </div>
           </div>
         </div>
-      <% }) %>
-      <% } else { %>
-        <div>현재 대기자가 없습니다.</div>
-        <% } %>
-
-    </div>
-  </div>
-</div>
-<% if (nowPost.maxMembers <= clubMembers.length) {%>
-  <h5>==================================================================</h5>
-  <div style="text-align: center;">
-  <h5 > 모집이 마감되었습니다.</h5>
-  <img src="https://images.unsplash.com/photo-1525847664954-bcd1e64c6ad8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29ycnklMjB3ZSUyMGFyZSUyMGNsb3NlZHxlbnwwfHwwfHw%3D&w=1000&q=80" width="80%"  >
-</div>
-  <% }else{ %>
-    <% } %>
-<!-- 카드 섹션 구간 끝 -->
-    </div>
-    <div>
-    </div>
-    <div class="clubdetail_like_container">
-      <img class="clubdetail_like_img" src="/img/likes.png">
-    </div>
-
-    <div class="clubdetail_bottom">
-      <div class="clubdetail_bottom_div">
-        <div class="clubdetail_bottom_div_title">
-          <% if (nextPost) { %>
-            <a class="postLink" href="<%= nextPost.id %>">다음글</a>
-            <% } else {%>
-              다음글
-              <% }%>
-        </div>
-        <div class="clubdetail_bottom_div_body">
-          <% if (nextPost) { %>
-            <a class="postLink" href="<%= nextPost.id %>">
-              <%= nextPost.title %>
-            </a>
-            <% } else {%>
-              글이 존재하지 않습니다.
-              <% }%>
-
-        </div>
-        <div class="clubdetail_bottom_div_nickname">
-          <% if (nextPost) { %>
-            <%= nextPost.user.nickName %>
-              <% } else {%>
-                <% }%>
-        </div>
-        <div class="clubdetail_bottom_div_date">
-          <% if (nextPost) { %>
-            <%= reformPostDate(nextPost.createdAt) %>
-              <% } %>
-        </div>
-      </div>
-      <div class="clubdetail_bottom_div">
-        <div class="clubdetail_bottom_div_title">
-          현재글
-        </div>
-        <div class="clubdetail_bottom_div_body">
-          <% if (nowPost) { %>
-            <%= nowPost.title %>
-              <% } %>
-        </div>
-        <div class="clubdetail_bottom_div_nickname">
-          <% if (nowPost) { %>
-            <%= nowPost.user.nickName %>
-              <% } else {%>
-                <% }%>
-        </div>
-        <div class="clubdetail_bottom_div_date">
-          <%= reformPostDate(nowPost.createdAt) %>
-        </div>
-      </div>
-      <div class="clubdetail_bottom_div">
-        <div class="clubdetail_bottom_div_title">
-          <% if (prevPost) { %>
-            <a class="postLink" href="<%= prevPost.id %>">이전글</a>
-            <% } else {%>
-              이전글
-              <% }%>
-        </div>
-        <div class="clubdetail_bottom_div_body" >
-          <% if (prevPost) { %>
-            <a class="postLink" href="<%= prevPost.id %>">
-              <%= prevPost.title %>
-            </a>
-            <% } else {%>
-              글이 존재하지 않습니다.
-              <% }%>
-        </div>
-        <div class="clubdetail_bottom_div_nickname">
-          <% if (prevPost) { %>
-            <%= prevPost.user.nickName %>
-              <% } else {%>
-                <% }%>
-        </div>
-        <div class="clubdetail_bottom_div_date">
-          <% if (prevPost) { %>
-            <%= reformPostDate(prevPost.createdAt) %>
-              <% } %>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 
@@ -285,14 +294,14 @@
       <div class="comment_text_box">
         <div id="club_text_container<%= data.id %>" class="comment_text_container">
           <div class="comment_nickname">
-            <%= data.user.nickName %><img src="<%= data.userIMG %>"width="40">
+            <%= data.user.nickName %><img src="<%= data.userIMG %>" width="40">
           </div>
-          <div id="club_content_<%= data.id %>" class="comment_content" >
+          <div id="club_content_<%= data.id %>" class="comment_content">
             <div id="club_content_box_<%= data.id %>" class="comment_content_box">
               <%= data.content %>
             </div>
           </div>
-          <div class="comment_date" >
+          <div class="comment_date">
             <%= reformPostDate(data.createdAt) %>
           </div>
           <div id="club_like<%= data.id %>" class="comment_like">
@@ -304,14 +313,14 @@
             </div>
           </div>
           <% if (buttonUserId===data.userId) {%>
-          <div id="club_comment_button<%= data.id %>" class="club_comment_button">
-            <button id="club_del_button<%= data.id %>" class="comment_button"
-              onclick="updateClubComment('<%= data.id %>',' <%= data.content %>')">edit</button>
-            <button id="club_del_button1<%= data.id %>" class="comment_button"
-              onclick="deleteClubComment('<%= data.id %>')">delete</button>
-          </div>
-          <% } else { %>
-            <% } %>
+            <div id="club_comment_button<%= data.id %>" class="club_comment_button">
+              <button id="club_del_button<%= data.id %>" class="comment_button"
+                onclick="updateClubComment('<%= data.id %>',' <%= data.content %>')">edit</button>
+              <button id="club_del_button1<%= data.id %>" class="comment_button"
+                onclick="deleteClubComment('<%= data.id %>')">delete</button>
+            </div>
+            <% } else { %>
+              <% } %>
         </div>
         <% }) %>
       </div>
