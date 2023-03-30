@@ -6,7 +6,7 @@ import { ClubMembers } from "src/entities/clubmembers.entity";
 import { ClubController } from "./club.controller";
 import { ClubService } from "./club.service";
 import { SearcherService } from "src/searcher/searcher.service";
-import { SearcherRepository } from "src/searcher/searcher.repositoy";
+import { SearcherRepository } from "src/searcher/searcher.repository";
 import { ClubRepository } from "./club.repository";
 import { EventPosts } from "src/entities/events.entity";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
