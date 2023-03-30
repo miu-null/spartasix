@@ -15,6 +15,7 @@ import {
   UseInterceptors,
   Render,
   UseGuards,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { Response } from "express";
 import { EventService } from "./event.service";
@@ -27,13 +28,14 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { reformPostDate, paginatedResults } from "../../views/static/js/filter";
 import { AuthGuard } from "@nestjs/passport";
 import { OptionalAuthGuard } from '../auth/optional-auth.guard';
+import { ReportEventDto } from "./dto/reportevent.dto";
 
 @Controller("events")
 export class EventController {
   constructor(
     private eventService: EventService,
     private searchService: SearcherService,
-  ) {}
+  ) { }
 
   @Post("/remindEvent")
   @UseGuards(AuthGuard())
@@ -99,16 +101,16 @@ export class EventController {
   async getNewEvent(
     @Res() res: Response,
     @Req() req
-    ) {
-      let buttonUserId = null;
-      if (req.user) {
-        buttonUserId = req.user
-        return res.render("eventNew.ejs", {
-          buttonUserId
-        });
-      } else {
-        res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
-      }
+  ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+      return res.render("eventNew.ejs", {
+        buttonUserId
+      });
+    } else {
+      res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
+    }
   }
 
   @Get("/list")
@@ -119,7 +121,7 @@ export class EventController {
     @Req() req
   ) {
     let buttonUserId = null;
-    if(req.user) {
+    if (req.user) {
       buttonUserId = req.user
     }
     const events = await this.eventService.getEvents();
@@ -138,14 +140,14 @@ export class EventController {
   @UseGuards(OptionalAuthGuard)
   @Render("eventDetail.ejs")
   async getEventById(
-    @Res() res: Response, 
+    @Res() res: Response,
     @Param("id") id: number,
     @Req() req
-    ) {
-      let buttonUserId = null;
-      if(req.user) {
-        buttonUserId = req.user
-      }
+  ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user
+    }
     let postDetail = await this.eventService.getEventById(id);
     const events = postDetail.data.nowPost;
     let imgUrl = events.postIMG;
@@ -171,10 +173,10 @@ export class EventController {
   @Get("/list/:id/updatepage")
   @UseGuards(OptionalAuthGuard)
   async getUpdateEvent(
-    @Res() res: Response, 
+    @Res() res: Response,
     @Param("id") id: number,
     @Req() req
-    ) {
+  ) {
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user
@@ -262,5 +264,38 @@ export class EventController {
       reformPostDate,
       buttonUserId
     });
+  }
+
+  @Get("/list/report")
+  @UseGuards(AuthGuard())
+  async report(@Res() res: Response, @Req() req) {
+    const userId = req.user;
+    console.log("유저넘버", userId);
+    if (!userId) {
+      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    }
+    console.log("유저넘버", userId);
+    return userId;
+  }
+
+  @Post("/report/:id")
+  @UseGuards(AuthGuard())
+  async reportEvent(
+    @Param("id") id: number,
+    @Body() data: ReportEventDto,
+    @Req() req,
+  ) {
+    let buttonUserId = null;
+    if (req.user) {
+      buttonUserId = req.user;
+    }
+    const userId = req.user;
+    const createReport = await this.eventService.reportEvent(
+      id,
+      userId,
+      data.reportContent,
+      data.reportReason,
+    );
+    return { createReport, buttonUserId };
   }
 }

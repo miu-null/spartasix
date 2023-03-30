@@ -19,7 +19,44 @@ function modal_open() {
     }
   });
 }
-function report_modal_open() {
+
+function modal_open2() {
+  $.ajax({
+    type: "GET",
+    url: "/club/list/apply",
+    success: function modal_open() {
+      {
+        const cardContainer = document.querySelector("#card-container");
+        const cardCount = cardContainer.querySelectorAll(".card").length;
+        console.log(`카드 개수: ${cardCount}`);
+        const maxMembers = document.querySelector("#club_maxMember");
+        const maxMembersCount = maxMembers.textContent;
+        const numberOnly = parseInt(maxMembersCount.match(/\d+/));
+        console.log(numberOnly);
+        if (cardCount === numberOnly) {
+          alert("모집이 마감되었습니다.");
+          return false;
+          window.location.reload();
+        }
+        $(`#club_modal`).fadeIn();
+
+        $(document).mouseup(function (e) {
+          if ($(`#club_modal`).has(e.target).length === 0) {
+            $(`#club_modal`).hide();
+          }
+        });
+      }
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "Unauthorized") {
+        alert("로그인 후 이용 가능한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
+    },
+  });
+}
+
+function club_report_modal_open() {
   $(`#report_modal`).fadeIn();
 
   $(document).mouseup(function (e) {
@@ -31,6 +68,43 @@ function report_modal_open() {
 
 function report_close() {
   $(`#report_modal`).hide();
+}
+
+function club_report_modal_open2() {
+  $.ajax({
+    type: "GET",
+    url: "/club/list/report",
+    success: function club_report_modal_open() {
+      $(`#report_modal`).fadeIn();
+
+      $(document).mouseup(function (e) {
+        if ($(`#report_modal`).has(e.target).length === 0) {
+          $(`#report_modal`).hide();
+        }
+      });
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "Unauthorized") {
+        alert("로그인 후 이용 가능한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
+    },
+  });
+}
+function newPost() {
+  $.ajax({
+    type: "GET",
+    url: "/club/clubspost",
+    success: function (response) {
+      window.location.href = "/club/clubspost";
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "Unauthorized") {
+        alert("로그인 후 이용 가능한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
+    },
+  });
 }
 
 function clubpost() {
