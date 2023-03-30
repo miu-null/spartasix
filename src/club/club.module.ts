@@ -5,8 +5,8 @@ import { Users } from "src/entities/users.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { ClubController } from "./club.controller";
 import { ClubService } from "./club.service";
-import { SearcherService } from "src/searcher/searcher.service";
-import { SearcherRepository } from "src/searcher/searcher.repository";
+import { FilterService } from "src/filter/filter.service";
+import { FilterRepository } from "src/filter/filter.repository";
 import { ClubRepository } from "./club.repository";
 import { EventPosts } from "src/entities/events.entity";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
@@ -36,8 +36,8 @@ import { MailService} from "src/mail/mail.service"
   providers: [
     ClubService,
     ClubRepository,
-    SearcherService,
-    SearcherRepository,
+    FilterService,
+    FilterRepository,
     ClubCommentService,
     ClubCommentRepository,
     MailService
