@@ -22,7 +22,7 @@ import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
 import { remindEmailDto } from "./dto/remindevent.dto";
-import { SearcherService } from "src/searcher/searcher.service";
+import { FilterService } from "src/filter/filter.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { reformPostDate, paginatedResults } from "../../views/static/js/filter";
@@ -34,8 +34,8 @@ import { ReportEventDto } from "./dto/reportevent.dto";
 export class EventController {
   constructor(
     private eventService: EventService,
-    private searchService: SearcherService,
-  ) { }
+    private filterService: FilterService,
+  ) {}
 
   @Post("/remindEvent")
   @UseGuards(AuthGuard())
@@ -126,7 +126,7 @@ export class EventController {
     }
     const events = await this.eventService.getEvents();
     const pagingposts = await paginatedResults(page, events);
-    const sortPosts = await this.searchService.getPopularEvents();
+    const sortPosts = await this.filterService.getPopularEvents();
 
     return res.render("eventMain.ejs", {
       ...pagingposts,
@@ -252,13 +252,15 @@ export class EventController {
     if (!page) {
       page = 1;
     }
-    const searchData = await this.searchService.paginatedResults(
+    const searchData = await this.filterService.paginatedResults(
       "events",
       page,
       term,
     );
+    console.log(searchData)
 
     return res.render("eventsearch.ejs", {
+      page,
       term,
       ...searchData,
       reformPostDate,

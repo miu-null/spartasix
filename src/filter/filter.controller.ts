@@ -11,7 +11,7 @@ import {
   UnauthorizedException
 } from "@nestjs/common";
 import { Response } from "express";
-import { SearcherService } from "./searcher.service";
+import { FilterService } from "./filter.service";
 import { reformPostDate } from "../../views/static/js/filter";
 import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 
@@ -40,8 +40,8 @@ interface PaginatedResult {
 }
 
 @Controller("search")
-export class SearcherController {
-  constructor(private searchService: SearcherService) {}
+export class FilterController {
+  constructor(private filterService: FilterService) {}
 
   // 모든 게시물, 유저 검색
   @Get("all")
@@ -56,12 +56,12 @@ export class SearcherController {
     if (req.user) {
       buttonUserId = req.user
     } 
-      const terms = await this.searchService.findAllPosts(term);
+      const terms = await this.filterService.findAllPosts(term);
       const events = terms.events;
       const clubs = terms.clubs;
       const users = terms.users;
       const results = { term, events, clubs, users, reformPostDate };
-      const popularPosts = await this.searchService.getPopularPosts()
+      const popularPosts = await this.filterService.getPopularPosts()
       
       return res.render("searchAll.ejs", {
         ...results,
@@ -85,7 +85,7 @@ export class SearcherController {
       buttonUserId = req.user;
     }
     try {
-      const userData: PaginatedResult = await this.searchService.paginatedResults(
+      const userData: PaginatedResult = await this.filterService.paginatedResults(
         "users",
         page,
         term,

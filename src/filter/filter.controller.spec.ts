@@ -10,23 +10,23 @@ interface PaginatedResult {
 }
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { SearcherController } from './searcher.controller';
-import { SearcherService } from './searcher.service';
+import { FilterController } from './filter.controller';
+import { FilterService } from './filter.service';
 
-jest.mock('./searcher.service');
+jest.mock('./filter.service');
 
-describe('SearcherController', () => {
-  let controller: SearcherController;
-  let service: SearcherService;
+describe('FilterController', () => {
+  let controller: FilterController;
+  let service: FilterService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [SearcherController],
-      providers: [SearcherService],
+      controllers: [FilterController],
+      providers: [FilterService],
     }).compile();
 
-    controller = module.get<SearcherController>(SearcherController);
-    service = module.get<SearcherService>(SearcherService);
+    controller = module.get<FilterController>(FilterController);
+    service = module.get<FilterService>(FilterService);
   });
 
   describe('searchAllPosts', () => {
