@@ -123,6 +123,12 @@ function logout() {
     success: function (response) {
       window.location.reload();
     },
+    error: function (request) {
+      if (request.responseJSON["message"] === "이미 로그아웃된 상태입니다.") {
+        alert("이미 로그아웃된 상태입니다.");
+        window.location.reload();
+      }
+    },
   });
 }
 
