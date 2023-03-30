@@ -238,7 +238,6 @@ export class ClubController {
       ...searchData,
       reformPostDate,
       buttonUserId
-
     });
   }
   @Post("/report/:id")

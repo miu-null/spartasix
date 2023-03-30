@@ -238,7 +238,7 @@ export class EventController {
 
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
-  async searchClubs(
+  async searchEvents(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
     @Res() res: Response,
