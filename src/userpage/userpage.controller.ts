@@ -23,7 +23,7 @@ import { Express } from "express";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { PaginationDto } from "./dto/pagination.dto";
-import { OptionalAuthGuard } from '../auth/optional-auth.guard';
+import { OptionalAuthGuard } from "../auth/optional-auth.guard";
 
 @Controller("userpage")
 export class UserpageController {
@@ -38,7 +38,7 @@ export class UserpageController {
   ) {
     let buttonUserId = null;
     if (req.user) {
-      buttonUserId = req.user
+      buttonUserId = req.user;
       console.log(req.user);
       const currentUserId = req.user;
       if (!currentUserId) {
@@ -48,29 +48,25 @@ export class UserpageController {
         userId,
         currentUserId,
       );
-      return res.render("userInfo", { myInfo, buttonUserId:currentUserId });
+      return res.render("userInfo", { myInfo, buttonUserId: currentUserId });
     } else {
-      res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
+      res.send(
+        "<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>",
+      );
     }
-
-}
+  }
 
   @Get("/:userId/post")
   async getUserPost(
     @Param("userId") userId: number,
     @Query() paginationDto: PaginationDto,
-    @Req() req,
   ) {
-    const currentUserId = req.user;
-    const { startCursor, endCursor, limit } = paginationDto;
-    const myPosts = await this.userPageService.getMyPosts(
-      userId,
-      currentUserId,
-      startCursor,
-      endCursor,
-      limit,
-    );
-    return { myPosts, buttonUserId:currentUserId };
+    const { cursor, type } = paginationDto;
+
+    // console.log("controller : ", userId, cursor, type);
+    const myPosts = await this.userPageService.getMyPosts(userId, cursor, type);
+
+    return { myPosts };
   }
 
   @Get("/:userId/clubs")
@@ -85,9 +81,9 @@ export class UserpageController {
       throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
     }
     const myClubs = await this.userPageService.getMyClubs(userId);
-    return { 
-      myClubs, 
-      buttonUserId:currentUserId 
+    return {
+      myClubs,
+      buttonUserId: currentUserId,
     };
   }
 
@@ -110,8 +106,8 @@ export class UserpageController {
     );
     const context = { myInfo };
     return res.render("userInfoEdit", {
-      ...context, 
-      buttonUserId : currentUserId
+      ...context,
+      buttonUserId: currentUserId,
     });
   }
 
@@ -195,14 +191,14 @@ export class UserpageController {
   async getThisClub(
     @Param("userId") userId: number,
     @Param("clubId") clubId: number,
-    @Req() req
+    @Req() req,
   ) {
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user;
     }
     const thisClub = await this.userPageService.getThisClub(userId, clubId);
-    return {thisClub, buttonUserId};
+    return { thisClub, buttonUserId };
   }
 
   @Get("/:userId/clubs/app/:clubMemberId") // 특정 신청서 조회 (완료)
@@ -210,14 +206,14 @@ export class UserpageController {
   async getThisApp(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
-    @Req() req
+    @Req() req,
   ) {
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user;
     }
     const thisApp = await this.userPageService.getThisApp(userId, clubMemberId);
-    return {thisApp, buttonUserId};
+    return { thisApp, buttonUserId };
   }
 
   @Patch("/:userId/clubs/app/:clubMemberId")
@@ -225,17 +221,17 @@ export class UserpageController {
   async getThisMember(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
-    @Req() req
+    @Req() req,
   ) {
     let buttonUserId = null;
     if (req.user) {
-      buttonUserId = req.user
+      buttonUserId = req.user;
     }
     const thisMember = await this.userPageService.getThisMember(
       userId,
       clubMemberId,
     );
-    return {thisMember, buttonUserId};
+    return { thisMember, buttonUserId };
   }
 
   @Delete("/:userId/clubs/app/:clubMemberId")
@@ -243,13 +239,13 @@ export class UserpageController {
   async rejectApps(
     @Param("userId") userId: number,
     @Param("clubMemberId") clubMemberId: number,
-    @Req() req
+    @Req() req,
   ) {
     let buttonUserId = null;
     if (req.user) {
-      buttonUserId = req.user
+      buttonUserId = req.user;
     }
     const notThisApp = this.userPageService.rejectApp(userId, clubMemberId);
-    return {notThisApp, buttonUserId};
+    return { notThisApp, buttonUserId };
   }
 }

@@ -9,22 +9,14 @@ export class UserpageService {
 
   //TODO 회원이 쓴 글 내림차순 정렬
   // 작성한 글 조회
-  async getMyPosts(
-    userId: number,
-    currentUserId: number,
-    startCursor: Date,
-    endCursor: Date,
-    limit: number,
-  ) {
-    const { clubPosts, eventPosts, pageInfo } =
-      await this.userPageRepository.getMyPosts(
-        userId,
-        currentUserId,
-        startCursor,
-        endCursor,
-        limit,
-      );
-    return { clubPosts, eventPosts, pageInfo };
+  async getMyPosts(userId, cursor, type) {
+    const myPosts = await this.userPageRepository.getMyPosts(
+      userId,
+      cursor,
+      type,
+    );
+
+    return myPosts;
   }
 
   async getMyClubs(userId: number) {
@@ -43,11 +35,10 @@ export class UserpageService {
       userId,
       currentUserId,
     );
-    const password = data.password.length;
     return {
       userId: data.id,
       email: data.email,
-      password: password,
+      password: data.password,
       phone: data.phone,
       nickName: data.nickName,
       snsURL: data.snsURL,
