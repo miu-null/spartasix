@@ -43,14 +43,18 @@ export class FilterService {
   //검색목록 페이지네이션 준비 : 타입에 따른 리포지토리 선택
   async selectData(pageType: string, page: number, term: any) {
     let getdata;
-    if (pageType === "users") {
+    if (pageType === "users" ) { 
       getdata = await this.filterRepository.findUsers(term);
-    } else if (pageType === "events") {
+    } else if (pageType === "events" ) {
       getdata = await this.filterRepository.findEventPosts(term);
-    } else if (pageType === "clubs") {
+    } else if (pageType === "events") {
+      getdata = await this.filterRepository.findEventPostsTitle(term);
+    } else if (pageType === "clubsTitleContent" ) {
       getdata = await this.filterRepository.findClubPosts(term);
-    } else {
+    } else if (pageType === "clubsTitle") {
+      getdata = await this.filterRepository.findClubPostsTitle(term);
     }
+    console.log(getdata)
     return getdata;
   }
 

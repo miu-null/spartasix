@@ -235,12 +235,13 @@ export class EventController {
     return true;
   }
 
-
+  // 이벤트 게시글 검색기능
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
   async searchEvents(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
+    @Query("searchOption") searchOption: string,
     @Res() res: Response,
     @Req() req
   ) {
@@ -256,6 +257,7 @@ export class EventController {
       "events",
       page,
       term,
+
     );
     console.log(searchData)
 
@@ -264,7 +266,8 @@ export class EventController {
       term,
       ...searchData,
       reformPostDate,
-      buttonUserId
+      buttonUserId,
+      searchOption
     });
   }
 
