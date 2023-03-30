@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <% if (slicedData.length) { %>
+        <% if (searchCount) { %>
           <% slicedData.forEach(data=> { %>
             <tr id="event_tr">
               <td id="Id"><a class="postLink" href='list/<%= data.id%>'>

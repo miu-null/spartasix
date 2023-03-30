@@ -212,11 +212,13 @@ export class ClubController {
     return buttonUserId;
   }
 
+  // 클럽 게시글 검색기능
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
   async searchClubs(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
+    @Query("searchOption") searchOption: string,
     @Res() res: Response,
     @Req() req
   ) {
@@ -227,8 +229,14 @@ export class ClubController {
     if (req.user) {
       buttonUserId = req.user;
     }
+    let pageType
+    if (searchOption === "titleAndContent") {
+      pageType = "clubsTitleContent";
+    } else if (searchOption === "title") {
+      pageType = "clubsTitle";
+    }
     const searchData = await this.filterService.paginatedResults(
-      "clubs",
+      pageType,
       page,
       term,
     );
@@ -237,9 +245,11 @@ export class ClubController {
       term,
       ...searchData,
       reformPostDate,
-      buttonUserId
+      buttonUserId,
+      searchOption
     });
   }
+
   @Post("/report/:id")
   @UseGuards(AuthGuard())
   async reportClub(
