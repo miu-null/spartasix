@@ -24,7 +24,7 @@
   height: 250px;
   display: flex;
   position: absolute;
-  margin-top: -300px;
+  margin-top: -200px;
 }
 
 .member-image {
@@ -36,15 +36,15 @@
 }
 
 .member-image img {
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 250px;
   object-fit: contain;
 }
 
 .huge-userbox {
   width: 700px;
   height: 756px;
-  margin-top: 280px;
+  margin-top: 350px;
   align-items: center;
   text-align: center;
 }
