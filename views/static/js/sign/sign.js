@@ -1,3 +1,7 @@
+const reg = new RegExp(
+  /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+);
+
 function sign_modal_open() {
   $(`#modal`).fadeIn();
 
@@ -15,23 +19,20 @@ const hypenTel = (target) => {
 };
 
 function start_commue_club() {
-  const objString = window.localStorage.getItem("team_sparta_header");
-  const obj = JSON.parse(objString);
-  if (obj === null || Date.now() > obj.expire) {
-    window.location.href = "/sign";
-  }
-
-  if (obj !== null || Date.now() < obj.expire) {
-    alert("이미 로그인한 상태입니다.");
-    return;
-  }
+  $.ajax({
+    type: "POST",
+    url: "/auth/new-accessToken",
+    data: {},
+    success: function(response) {
+      alert("이미 로그인한 상태입니다.");
+    },
+    error: function(request) {
+      window.location.href="/sign"
+    }
+  })
 }
 
 function sign_up() {
-  const reg = new RegExp(
-    /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
-  );
-
   const email = $("#email").val();
   const nickname = $("#nickname").val();
   const password = $("#password").val();
@@ -219,6 +220,13 @@ function checkpass(randompassword) {
       let newpass = document.querySelector("#new_passbtn");
       newpass.addEventListener("click", function () {
         const newpassword = $("#new_input").val();
+
+        if (!reg.test(newpassword)) {
+          alert(
+            "비밀번호는 최소8글자, 하나이상의 문자 및 숫자, 특수문자가(!@#$%^&+=]) 들어가야 합니다. ",
+          );
+          return false;
+        }
 
         $.ajax({
           type: "PATCH",
