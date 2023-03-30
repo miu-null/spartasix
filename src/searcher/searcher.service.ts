@@ -1,5 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { SearcherRepository } from "./searcher.repositoy";
+import { SearcherRepository } from "./searcher.repository";
+
+interface PaginatedResult {
+  data: any[];
+  count: number;
+  totalPages: number;
+  slicedData: any[]; 
+  searchCount: any; 
+  lastPage: number;
+  unitStart: number;
+  unitEnd: number;
+}
 
 @Injectable()
 export class SearcherService {
@@ -44,35 +55,36 @@ export class SearcherService {
   }
 
   //검색목록 페이지네이션
-  async paginatedResults(pageType: string, page, term: string) {
+  async paginatedResults(pageType: string, page, term: string): Promise<PaginatedResult> {
     const take: number = 5;
     const seletedData = await this.selectData(pageType, page, term);
     const searchCount = seletedData.length;
-
+  
     const totalDataCount = seletedData.length;
     const startIndex = (page - 1) * take;
     const endIndex = page * take;
-
+  
     const slicedData = seletedData.slice(startIndex, endIndex);
     const lastPage = Math.ceil(totalDataCount / take);
-
+  
     const unitSize = 3;
     const numOfUnits = Math.floor((page - 1) / unitSize);
     const unitStart = numOfUnits * unitSize + 1;
     const unitEnd = unitStart + (unitSize - 1);
-    const paginatedDemand = {
-      page,
+    const paginatedDemand: PaginatedResult = {
+      data: slicedData,
+      count: searchCount,
+      totalPages: lastPage,
       slicedData,
       lastPage,
       unitStart,
       unitEnd,
       searchCount,
     };
-
-    return {
-      ...paginatedDemand,
-    };
+  
+    return paginatedDemand;
   }
+  
 
   async getAllPosts() {
     const posts = await this.SearcherRepository.getAllPosts();

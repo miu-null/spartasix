@@ -65,23 +65,12 @@ export class SearcherRepository {
     {
       const users = await this.userSearchRepository
         .createQueryBuilder("search")
-        .where("search.email LIKE :s OR search.nickName LIKE :s", {
+        .where("search.nickName LIKE :s", {
           s: `%${data.term}%`,
         })
         .getMany();
-      
-        await this.getUserPosts()
       return users;
     }
-  }
-
-  //유저 작성 게시물 솟팅 : 최신순
-  async getUserPosts(): Promise<(Clubs | EventPosts)[]> {
-    const allPosts = await this.getAllPosts();
-    const userPosts = allPosts
-      .sort((postA, postB) => postB.id - postA.id)
-      console.log('작성자',userPosts)
-    return userPosts;
   }
 
   //모든 게시물 조회
