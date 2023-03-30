@@ -11,7 +11,7 @@ function event_open() {
 function dateValidate() {
   let startDate = new Date($("#eventStartDate").val());
   let endDate = new Date($("#eventEndDate").val());
-  console.log('날짜 값 확인',startDate,endDate)
+  console.log('날짜 값 확인', startDate, endDate)
   if (startDate > endDate) {
     alert("종료 날짜는 시작 날짜보다 커야 합니다.");
   }
@@ -20,7 +20,7 @@ function dateValidate() {
 function updateDateValidate() {
   let startDate = new Date($("#startDate").val());
   let endDate = new Date($("#endDate").val());
-  console.log('날짜 값 확인',startDate,endDate)
+  console.log('날짜 값 확인', startDate, endDate)
   if (startDate > endDate) {
     alert("종료 날짜는 시작 날짜보다 커야 합니다.");
   }
@@ -92,7 +92,7 @@ function eventNew() {
   formData.append("endDate", $("#eventEndDate").val());
   formData.append("content", $("#eventContent").val());
   formData.append("file", $("#eventPostImg")[0].files[0]);
-  file=$("#eventPostImg")[0].files[0];
+  file = $("#eventPostImg")[0].files[0];
 
   $.ajax({
     type: "POST",
@@ -475,6 +475,97 @@ function updateLike(commentId) {
                   alert("좋아요 취소 !");
                   window.location.reload();
                 }
+              },
+            });
+          },
+        });
+      }
+    },
+  });
+}
+// function event_report_modal_open() {
+//   $(`#report_modal`).fadeIn();
+
+//   $(document).mouseup(function (e) {
+//     if ($(`#report_modal`).has(e.target).length === 0) {
+//       $(`#report_modal`).hide();
+//     }
+//   });
+// }
+
+// function event_report_close() {
+//   $(`#report_modal`).hide();
+// }
+
+function event_report_modal_open2() {
+  $.ajax({
+    type: "GET",
+    url: "/events/list/report",
+    success: function event_report_modal_open() {
+      $(`#report_modal`).fadeIn();
+
+      $(document).mouseup(function (e) {
+        if ($(`#report_modal`).has(e.target).length === 0) {
+          $(`#report_modal`).hide();
+        }
+      });
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "Unauthorized") {
+        alert("로그인 후 이용 가능한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
+    },
+  });
+}
+
+function event_report_submit() {
+  const reportReason = $("#reprot_reason").val();
+  const reportContent = $("#report_content").val();
+  const id = location.pathname.split("list/")[1];
+  const eventPostId = location.pathname.split("list/")[1];
+  console.log(id, reportContent, reportReason);
+  if (!reportReason || !reportContent) {
+    alert("모든 항목을 작성해 주세요.");
+    return false;
+  }
+  $.ajax({
+    type: "POST",
+    url: `/events/report/${id}`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      reportReason: reportReason,
+      reportContent: reportContent,
+      eventPostId: eventPostId,
+    }),
+    success: function (response) {
+      alert("신고 완료");
+      window.location.replace(`/events/list/${id}`);
+    },
+    error: function (request) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
+        alert("로그인 후 이용 가능한 기능입니다.");
+      }
+
+      if (request.responseJSON["message"] === "Unauthorized") {
+        $.ajax({
+          type: "POST",
+          url: "/auth/new-accessToken",
+          success: function (response) {
+            $.ajax({
+              type: "POST",
+              url: `/list/report/${id}`,
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              data: JSON.stringify({
+                reportReason: reportReason,
+                reportContent: reportContent,
+                clubId: clubId,
+              }),
+              success: function (response) {
+                alert("신고 완료");
+                window.location.replace(`/events/list/${id}`);
               },
             });
           },
