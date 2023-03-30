@@ -20,6 +20,7 @@ function modal_open() {
   });
 }
 
+
 function modal_open2() {
   $.ajax({
     type: "GET",
