@@ -15,6 +15,30 @@ import { SearcherService } from "./searcher.service";
 import { reformPostDate } from "../../views/static/js/filter";
 import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 
+interface SearchResults {
+  slicedData: any[];
+  searchCount: number;
+  totalPages: number;
+  term: string;
+  page: number;
+  unitStart,
+  unitEnd,
+  lastPage,
+  reformPostDate,
+  buttonUserId
+}
+
+interface PaginatedResult {
+  data: any[];
+  count: number;
+  totalPages: number;
+  slicedData: any[]; 
+  searchCount: any; 
+  lastPage: number;
+  unitStart: number;
+  unitEnd: number;
+}
+
 @Controller("search")
 export class SearcherController {
   constructor(private searchService: SearcherService) {}
@@ -55,13 +79,13 @@ export class SearcherController {
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term,
     @Req() req
-  ) {
+  ): Promise<SearchResults | void> {
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user;
     }
     try {
-      const userData = await this.searchService.paginatedResults(
+      const userData: PaginatedResult = await this.searchService.paginatedResults(
         "users",
         page,
         term,
@@ -69,13 +93,18 @@ export class SearcherController {
       return {
         term,
         page,
-        ...userData,
+        slicedData: userData.slicedData,
+        searchCount: userData.searchCount,
+        totalPages: userData.lastPage,
+        unitStart : userData.unitStart,
+        unitEnd : userData.unitEnd,
+        lastPage : userData.lastPage,
+        buttonUserId,
         reformPostDate,
-        buttonUserId
+        
       };
     } catch (err) {
       console.error(err.message);
     }
   }
-
 }
