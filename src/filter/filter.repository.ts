@@ -6,7 +6,7 @@ import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/events.entity";
 
 @Injectable()
-export class SearcherRepository {
+export class FilterRepository {
   constructor(
     @InjectRepository(Users)
     private readonly userSearchRepository: Repository<Users>,

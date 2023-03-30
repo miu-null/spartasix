@@ -4,11 +4,11 @@ import { EventService } from "./event.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { EventRepository } from "./event.repository";
 import { EventPosts } from "src/entities/events.entity";
-import { SearcherService } from "src/searcher/searcher.service";
+import { FilterService } from "src/filter/filter.service";
 import { Clubs } from "src/entities/clubs.entity";
 import { Users } from "src/entities/users.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
-import { SearcherRepository } from "src/searcher/searcher.repository";
+import { FilterRepository } from "src/filter/filter.repository";
 import { ClubRepository } from "src/club/club.repository";
 import { MailService } from "src/mail/mail.service";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
@@ -38,8 +38,8 @@ import { PassportModule } from "@nestjs/passport";
     MailService,
     EventService,
     EventRepository,
-    SearcherService,
-    SearcherRepository,
+    FilterService,
+    FilterRepository,
     ClubRepository,
     EventCommentService,
     EventCommentRepository,
