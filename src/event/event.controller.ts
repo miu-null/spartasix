@@ -102,11 +102,13 @@ export class EventController {
     ) {
       let buttonUserId = null;
       if (req.user) {
-        buttonUserId = req.user;
+        buttonUserId = req.user
+        return res.render("eventNew.ejs", {
+          buttonUserId
+        });
+      } else {
+        res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
       }
-    return res.render("eventNew.ejs", {
-      buttonUserId
-    });
   }
 
   @Get("/list")
