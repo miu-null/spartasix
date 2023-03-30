@@ -16,9 +16,16 @@ import { reformPostDate } from "../../views/static/js/filter";
 import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 
 interface SearchResults {
-  data: any[];
-  count: number;
+  slicedData: any[];
+  searchCount: number;
   totalPages: number;
+  term: string;
+  page: number;
+  unitStart,
+  unitEnd,
+  lastPage,
+  reformPostDate,
+  buttonUserId
 }
 
 interface PaginatedResult {
@@ -65,6 +72,9 @@ export class SearcherController {
   }
 
   // 유저 검색
+  @Get("users")
+  @UseGuards(OptionalAuthGuard)
+  @Render("userSearch.ejs")
   async searchUsers(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term,
@@ -81,9 +91,17 @@ export class SearcherController {
         term,
       );
       return {
-        data: userData.slicedData,
-        count: userData.searchCount,
+        term,
+        page,
+        slicedData: userData.slicedData,
+        searchCount: userData.searchCount,
         totalPages: userData.lastPage,
+        unitStart : userData.unitStart,
+        unitEnd : userData.unitEnd,
+        lastPage : userData.lastPage,
+        buttonUserId,
+        reformPostDate,
+        
       };
     } catch (err) {
       console.error(err.message);
