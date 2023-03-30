@@ -1,6 +1,7 @@
 <script>
   $(document).ready(function () {
     checkClubs(`<%= myInfo.userId %>`);
+    show_userPosts(`<%= myInfo.userId %>`, "init");
   });
 </script>
 
@@ -110,14 +111,18 @@
         <div id="clubPosts">
           <button
             id="prevClubBtn"
-            onclick="show_userPosts(event, userId, startCursor, endCursor, limit)"
+            onclick="show_userPosts(`<%- myInfo.userId %>`, 'prev')"
           >
-            Previousss Club
-            <button id="nextClubBtn" onclick="show_userPosts(event)">
-              next Club
-            </button>
+            Previous Articles
+          </button>
+          <button
+            id="nextClubBtn"
+            onclick="show_userPosts(`<%- myInfo.userId %>`, 'next')"
+          >
+            Next Articles
           </button>
         </div>
+        <div class="club-posts"></div>
       </div>
 
       <div class="box huge-clubs">
