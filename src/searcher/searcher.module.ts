@@ -6,7 +6,7 @@ import { ConfigModule } from "@nestjs/config";
 import { ConfigService } from "@nestjs/config";
 import { SearcherController } from "./searcher.controller";
 import { SearcherService } from "./searcher.service";
-import { SearcherRepository } from "./searcher.repositoy";
+import { SearcherRepository } from "./searcher.repository";
 import { Clubs } from "src/entities/clubs.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { ClubRepository } from "src/club/club.repository";

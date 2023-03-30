@@ -17,7 +17,7 @@ import {
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
 import { UpdateClubDto } from "./dto/updateclub.dto";
-import e, { Response } from "express";
+import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { ReportClubDto } from "./dto/reportclub.dto";
 import { SearcherService } from "src/searcher/searcher.service";
@@ -61,7 +61,7 @@ export class ClubController {
   @Get("/clubspost")
   @UseGuards(OptionalAuthGuard)
   postclub(@Res() res: Response, @Req() req) {
-    let buttonUserId = null;
+    let buttonUserId = null; 
     if (req.user) {
       buttonUserId = req.user
       res.render("clubspost.ejs", {buttonUserId});
@@ -73,11 +73,11 @@ export class ClubController {
   @Post("/clubspost")
   @UseGuards(AuthGuard())
   async createClub(@Body() data: CreateClubDto, @Req() req) {
+    const userId = req.user;
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user
     }
-    const userId = req.user;
     const post = await this.clubService.createClub(
       userId,
       data.title,
