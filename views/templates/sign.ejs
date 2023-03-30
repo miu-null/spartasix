@@ -36,9 +36,10 @@
     <form id="sign_register" action="" class="sign_input-group">
       <input type="text" id="email" class="sign_input-field" placeholder="Email" onchage="validEmail(this)">
       <input type="password" id="password" class="sign_input-field" placeholder="password" required>
+      <span class="pw_condition">8자리 이상,문자,숫자,특수문자를 1개이상 포함하여야 합니다.</span>
       <input type="password" id="password_chk" class="sign_input-field" placeholder="confirm Password">
       <input type="text" id="nickname" class="sign_input-field" placeholder="nickname">
-      <input type="text" id="phone" class="sign_input-field" placeholder="phone" oninput="hypenTel(this)"
+      <input type="text" id="phone" class="sign_input-field" placeholder="phone (- 제외)" oninput="hypenTel(this)"
         maxlength="13">
       <button type="button" class="sign_submit" onclick="sign_up()">회원가입</button>
     </form>

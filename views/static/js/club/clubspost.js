@@ -19,6 +19,7 @@ function modal_open() {
     }
   });
 }
+
 function report_modal_open() {
   $(`#report_modal`).fadeIn();
 
