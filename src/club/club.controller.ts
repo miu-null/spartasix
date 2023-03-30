@@ -21,7 +21,7 @@ import { UpdateClubDto } from "./dto/updateclub.dto";
 import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { ReportClubDto } from "./dto/reportclub.dto";
-import { SearcherService } from "src/searcher/searcher.service";
+import { FilterService } from "src/filter/filter.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
 import { reformPostDate, paginatedResults, reformPostDateRaw } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
@@ -32,7 +32,7 @@ import { MailService } from "src/mail/mail.service";
 export class ClubController {
   constructor(
     private readonly clubService: ClubService,
-    private readonly searchService: SearcherService,
+    private readonly filterService: FilterService,
     private readonly mailService: MailService,
   ) { }
 
@@ -49,7 +49,7 @@ export class ClubController {
     }
     const clubs = await this.clubService.getClubs();
     const pagingposts = await paginatedResults(page, clubs);
-    const sortPosts = await this.searchService.getPopularClubs();
+    const sortPosts = await this.filterService.getPopularClubs();
 
     return res.render("club.ejs", {
       ...pagingposts,
@@ -215,7 +215,7 @@ export class ClubController {
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
   async searchClubs(
-    @Query("page") page: number,
+    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
     @Res() res: Response,
     @Req() req
@@ -227,12 +227,13 @@ export class ClubController {
     if (req.user) {
       buttonUserId = req.user;
     }
-    const searchData = await this.searchService.paginatedResults(
+    const searchData = await this.filterService.paginatedResults(
       "clubs",
       page,
       term,
     );
     return res.render("clubsearch.ejs", {
+      page,
       term,
       ...searchData,
       reformPostDate,

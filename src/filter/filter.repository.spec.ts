@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { SearcherRepository } from './searcher.repository';
+import { FilterRepository } from './filter.repository';
 import { Clubs } from '../entities/clubs.entity';
 import { EventPosts } from '../entities/events.entity';
 import { Users } from '../entities/users.entity';
 
-describe('SearcherRepository', () => {
-  let searcherRepository: SearcherRepository;
+describe('filterRepository', () => {
+  let filterRepository: FilterRepository;
   let clubRepository: any;
   let eventRepository: any;
   let userSearchRepository: any;
@@ -14,7 +14,7 @@ describe('SearcherRepository', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
-        SearcherRepository,
+        FilterRepository,
         {
           provide: getRepositoryToken(Users),
           useValue: {
@@ -42,7 +42,7 @@ describe('SearcherRepository', () => {
       ],
     }).compile();
 
-    searcherRepository = moduleRef.get<SearcherRepository>(SearcherRepository);
+    filterRepository = moduleRef.get<FilterRepository>(FilterRepository);
     clubRepository = moduleRef.get(getRepositoryToken(Clubs));
     eventRepository = moduleRef.get(getRepositoryToken(EventPosts));
     userSearchRepository = moduleRef.get(getRepositoryToken(Users));
@@ -59,11 +59,11 @@ describe('SearcherRepository', () => {
       const eventResult = [new EventPosts()];
       const userResult = [new Users()];
 
-      jest.spyOn(searcherRepository, 'findClubPosts').mockResolvedValue(clubResult);
-      jest.spyOn(searcherRepository, 'findEventPosts').mockResolvedValue(eventResult);
-      jest.spyOn(searcherRepository, 'findUsers').mockResolvedValue(userResult);
+      jest.spyOn(filterRepository, 'findClubPosts').mockResolvedValue(clubResult);
+      jest.spyOn(filterRepository, 'findEventPosts').mockResolvedValue(eventResult);
+      jest.spyOn(filterRepository, 'findUsers').mockResolvedValue(userResult);
 
-      const results = await searcherRepository.findAllPosts({ term });
+      const results = await filterRepository.findAllPosts({ term });
 
       expect(results).toEqual({ clubs: clubResult, events: eventResult, users: userResult });
     });

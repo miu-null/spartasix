@@ -4,9 +4,9 @@ import { JwtConfigService } from "src/config/jwt.config.service";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule } from "@nestjs/config";
 import { ConfigService } from "@nestjs/config";
-import { SearcherController } from "./searcher.controller";
-import { SearcherService } from "./searcher.service";
-import { SearcherRepository } from "./searcher.repository";
+import { FilterController } from "./filter.controller";
+import { FilterService } from "./filter.service";
+import { FilterRepository } from "./filter.repository";
 import { Clubs } from "src/entities/clubs.entity";
 import { ClubMembers } from "src/entities/clubmembers.entity";
 import { ClubRepository } from "src/club/club.repository";
@@ -14,7 +14,6 @@ import { EventRepository } from "src/event/event.repository";
 import { Users } from "src/entities/users.entity";
 import { EventPosts } from "src/entities/events.entity";
 import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
-import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
 
 @Module({
   imports: [
@@ -24,7 +23,6 @@ import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
       Clubs,
       ClubMembers,
       AbusingClubCounts,
-      AbusingEventCounts,
     ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -32,13 +30,13 @@ import { AbusingEventCounts } from "src/entities/abusingeventcounts.entity";
       inject: [ConfigService],
     }),
   ],
-  exports: [TypeOrmModule, SearcherService, SearcherRepository],
-  controllers: [SearcherController],
+  exports: [TypeOrmModule, FilterService, FilterRepository],
+  controllers: [FilterController],
   providers: [
-    SearcherService,
-    SearcherRepository,
+    FilterService,
+    FilterRepository,
     ClubRepository,
     EventRepository,
   ],
 })
-export class SearcherModule { }
+export class FilterModule {}
