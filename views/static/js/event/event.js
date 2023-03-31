@@ -483,19 +483,19 @@ function updateLike(commentId) {
     },
   });
 }
-// function event_report_modal_open() {
-//   $(`#report_modal`).fadeIn();
+function event_report_modal_open() {
+  $(`#report_modal`).fadeIn();
 
-//   $(document).mouseup(function (e) {
-//     if ($(`#report_modal`).has(e.target).length === 0) {
-//       $(`#report_modal`).hide();
-//     }
-//   });
-// }
+  $(document).mouseup(function (e) {
+    if ($(`#report_modal`).has(e.target).length === 0) {
+      $(`#report_modal`).hide();
+    }
+  });
+}
 
-// function event_report_close() {
-//   $(`#report_modal`).hide();
-// }
+function event_report_close() {
+  $(`#report_modal`).hide();
+}
 
 function event_report_modal_open2() {
   $.ajax({

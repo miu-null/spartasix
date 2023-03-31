@@ -92,6 +92,7 @@ function club_report_modal_open2() {
     },
   });
 }
+
 function newPost() {
   $.ajax({
     type: "GET",
@@ -183,6 +184,7 @@ function clubupdate() {
   const content = $("#club_content").val();
   const clubId = location.pathname.split("clubs/")[1];
   const category = $("#club_category").val();
+  console.log("인원구성", maxMembers);
 
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
@@ -210,7 +212,7 @@ function clubupdate() {
     data: JSON.stringify({
       clubId: clubId,
       title: title,
-      maxMemberes: maxMembers,
+      maxMembers: maxMembers,
       content: content,
       category: category,
     }),
