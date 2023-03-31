@@ -24,13 +24,13 @@
                 </section>
             </div>
             <ul class="navlist1">
-                <% if (buttonUserId) {%>
+                <% if (global.buttonUserId ) {%>
                     <li class="list1"><a href="/userpage/<%= buttonUserId %>">My page</a></li>
                     <% } else { %>
                         <% } %>
             </ul>
             <div class="header_button">
-                <% if (buttonUserId) {%>
+                <% if (global.buttonUserId ) {%>
                     <button onclick="logout()" class="myButton">Log out</button>
                     <% } else { %>
                         <button onclick="location='/sign'" class="myButton">Log in</button>

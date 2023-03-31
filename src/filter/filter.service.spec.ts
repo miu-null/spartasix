@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SearcherService } from './searcher.service';
-import { SearcherRepository } from './searcher.repository';
+import { FilterService } from './filter.service';
+import { FilterRepository } from './filter.repository';
 
-describe('SearcherService', () => {
-  let service: SearcherService;
-  let repository: SearcherRepository;
+describe('filterService', () => {
+  let service: FilterService;
+  let repository: FilterRepository;
 
   const searchData = {
     events: [{ id: 1, title: 'Event 1' }, { id: 2, title: 'Event 2' }],
@@ -12,23 +12,23 @@ describe('SearcherService', () => {
     users: [{ id: 1, name: 'User 1' }, { id: 2, name: 'User 2' }]
   };
 
-  const mockSearcherRepository = {
+  const mockFilterRepository = {
     findAllPosts: jest.fn().mockResolvedValue(searchData)
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        SearcherService,
+        filterService,
         {
-          provide: SearcherRepository,
-          useValue: mockSearcherRepository
+          provide: FilterRepository,
+          useValue: mockFilterRepository
         }
       ],
     }).compile();
 
-    service = module.get<SearcherService>(SearcherService);
-    repository = module.get<SearcherRepository>(SearcherRepository);
+    service = module.get<filterService>(filterService);
+    repository = module.get<FilterRepository>(FilterRepository);
   });
 
   afterEach(() => {

@@ -1,14 +1,14 @@
 import { Controller, Get, Inject, Res, Render, UseGuards, Req } from "@nestjs/common";
 import { Response } from "express";
-import { SearcherService } from "./searcher/searcher.service";
+import { FilterService } from "./filter/filter.service";
 import { reformPostDate } from "../views/static/js/filter";
 import { OptionalAuthGuard } from './auth/optional-auth.guard';
 
 @Controller()
 export class AppController {
   constructor(
-    @Inject(SearcherService)
-    private readonly searchService: SearcherService,
+    @Inject(FilterService)
+    private readonly filterService: FilterService,
   ) {}
 
   @Get("/")
@@ -20,8 +20,8 @@ export class AppController {
       if (req.user) {
         buttonUserId = req.user;
       }
-    const sortPosts = await this.searchService.getPopularPosts();
-    const usersRank = await (await this.searchService.getUserRank()).slice(0, 5)
+    const sortPosts = await this.filterService.getPopularPosts();
+    const usersRank = await (await this.filterService.getUserRank()).slice(0, 5)
     return {
       sortPosts,
       reformPostDate,

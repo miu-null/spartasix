@@ -6,7 +6,7 @@ import { Clubs } from "../entities/clubs.entity";
 import { EventPosts } from "../entities/events.entity";
 
 @Injectable()
-export class SearcherRepository {
+export class FilterRepository {
   constructor(
     @InjectRepository(Users)
     private readonly userSearchRepository: Repository<Users>,
@@ -43,6 +43,20 @@ export class SearcherRepository {
     }
   }
 
+  //이벤트 게시물 제목 검색
+async findEventPostsTitle(data?: any): Promise<EventPosts[]> {
+  const events = await this.eventRepository
+    .createQueryBuilder("search")
+    .leftJoinAndSelect("search.user", "user")
+    .where(
+      "search.title LIKE :s",
+      { s: `%${data.term}%` },
+    )
+    .orderBy("search.id", "DESC")
+    .getMany();
+  return events;
+}
+
   //클럽 게시물 검색
   async findClubPosts(data?: any): Promise<Clubs[]> {
     {
@@ -59,6 +73,20 @@ export class SearcherRepository {
       return clubs;
     }
   }
+
+  //클럽 게시물 제목 검색
+async findClubPostsTitle(data?: any): Promise<Clubs[]> {
+  const clubs = await this.clubRepository
+    .createQueryBuilder("search")
+    .leftJoinAndSelect("search.user", "user")
+    .where(
+      "search.title LIKE :s",
+      { s: `%${data.term}%` },
+    )
+    .orderBy("search.id", "DESC")
+    .getMany();
+  return clubs;
+}
 
   //유저 검색
   async findUsers(data?: any): Promise<Users[]> {
