@@ -15,7 +15,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;제목:
         </div>
         <div class="title_text" style="margin: auto;">
-          <input id="club_title" class="event_title" style="width: 350px;" type="text" value="<%= nowPost.title %>" >
+          <input id="club_title" class="event_title" style="width: 350px;" type="text" value="<%= nowPost.title %>">
         </div>
       </div>
     </div>
@@ -26,22 +26,26 @@
         </div>
         <div class="col-3">
           <select id="club_maxMembers" class="form-select" style="width: 150px;" aria-label="Default select example">
-            <option selected><%= nowPost.maxMembers %></option>
-            <option value="1" disabled>1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
+            <option selected>
+              <%= nowPost.maxMembers %>
+            </option>
+            <option id="club_maxMembers" value="1" disabled>1</option>
+            <option id="club_maxMembers" value="2">2</option>
+            <option id="club_maxMembers" value="3">3</option>
+            <option id="club_maxMembers" value="4">4</option>
+            <option id="club_maxMembers" value="5">5</option>
+            <option id="club_maxMembers" value="6">6</option>
+            <option id="club_maxMembers" value="7">7</option>
+            <option id="club_maxMembers" value="8">8</option>
           </select>
         </div>
       </div>
       <div class="club_category" style="margin: auto;">
         카테고리 :
         <select id="club_category" class="form-select" style="width: 150px;" aria-label="Default select example">
-          <option selected><%= nowPost.category %></option>
+          <option selected>
+            <%= nowPost.category %>
+          </option>
           <option value="공부">공부</option>
           <option value="프로젝트">프로젝트</option>
           <option value="기타">기타</option>
@@ -51,6 +55,6 @@
   </div>
   <div class="eventdetail_body">
     <div class="eventdetail_body_text">
-      <textarea id="club_content" class="textarea" ><%= nowPost.content %></textarea>
+      <textarea id="club_content" class="textarea"><%= nowPost.content %></textarea>
     </div>
   </div>

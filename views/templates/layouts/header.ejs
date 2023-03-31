@@ -21,22 +21,22 @@
                                 aria-label="Search" pattern=".{1}|.{1,10}" required title="최소 1자 이상 입력해야 합니다">
                         </form>
                     </div>
-                </section>  
+                </section>
             </div>
             <ul class="navlist1">
                 <% if (buttonUserId ) {%>
                     <li class="list1"><a href="/userpage/<%= buttonUserId %>">My page</a></li>
-                <% } else { %>
-                    <% } %>
+                    <% } else { %>
+                        <% } %>
             </ul>
             <div class="header_button">
                 <% if (buttonUserId ) {%>
                     <button onclick="logout()" class="myButton">Log out</button>
-                <% } else { %>
-                    <button onclick="location='/sign'" class="myButton">Log in</button>
-                    <% } %>
+                    <% } else { %>
+                        <button onclick="location='/sign'" class="myButton">Log in</button>
+                        <% } %>
             </div>
-          </div>
+        </div>
 
     </div>
 </header>
