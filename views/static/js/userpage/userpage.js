@@ -228,8 +228,10 @@ function show_userPosts(userId, type) {
       }
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "다음 글이 존재하지 않습니다.") {
+      console.log(request);
+      if (request.status === 404) {
         alert("다음 글이 존재하지 않습니다.");
+        window.location.reload();
         // $.ajax({
         //   type:"GET",
 

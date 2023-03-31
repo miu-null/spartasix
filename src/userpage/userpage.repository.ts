@@ -59,7 +59,8 @@ export class UserPageRepository {
 
   // 작성한 글 조회
   async getMyPosts(userId, cursor, type) {
-    // type 에 따라 분기 - init, prev, next
+    // type 에 따라 분기 - init, prev,
+
     if (type === "init") {
       const myPosts = await this.clubRepository.find({
         where: { userId },
@@ -71,7 +72,6 @@ export class UserPageRepository {
 
       return myPosts;
     }
-
     if (type === "prev") {
       const myPosts = await this.clubRepository.find({
         where: {
@@ -84,6 +84,9 @@ export class UserPageRepository {
         },
       });
 
+      if (myPosts.length === 0) {
+        throw new BadRequestException("이전 글이 존재하지 않습니다.");
+      }
       return myPosts;
     }
 
@@ -98,11 +101,9 @@ export class UserPageRepository {
           id: "DESC",
         },
       });
-      if (!cursor) {
-        console.log("this romance is an error");
-        // throw new BadRequestException("다음 글이 존재하지 않습니다.");
+      if (myPosts.length === 0) {
+        throw new NotFoundException("다음 글이 존재하지 않습니다.");
       }
-
       return myPosts;
     }
   }
