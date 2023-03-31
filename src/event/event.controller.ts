@@ -35,7 +35,7 @@ export class EventController {
   constructor(
     private eventService: EventService,
     private filterService: FilterService,
-  ) {}
+  ) { }
 
   @Post("/remindEvent")
   @UseGuards(AuthGuard())
@@ -271,17 +271,17 @@ export class EventController {
     });
   }
 
-  @Get("/list/report")
-  @UseGuards(AuthGuard())
-  async report(@Res() res: Response, @Req() req) {
-    const userId = req.user;
-    console.log("유저넘버", userId);
-    if (!userId) {
-      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
-    }
-    console.log("유저넘버", userId);
-    return userId;
-  }
+  // @Get("/list/report")
+  // @UseGuards(AuthGuard())
+  // async report(@Res() res: Response, @Req() req) {
+  //   const userId = req.user;
+  //   console.log("유저넘버", userId);
+  //   if (!userId) {
+  //     return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+  //   }
+  //   console.log("유저넘버", userId);
+  //   return userId;
+  // }
 
   @Post("/report/:id")
   @UseGuards(AuthGuard())

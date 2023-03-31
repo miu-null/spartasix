@@ -5,7 +5,6 @@ function modal_open() {
   const maxMembers = document.querySelector("#club_maxMember");
   const maxMembersCount = maxMembers.textContent;
   const numberOnly = parseInt(maxMembersCount.match(/\d+/));
-  console.log(numberOnly);
   if (cardCount === numberOnly) {
     alert("모집이 마감되었습니다.");
     return false;
@@ -22,34 +21,15 @@ function modal_open() {
 
 function modal_open2() {
   $.ajax({
-    type: "GET",
-    url: "/club/list/apply",
-    success: function modal_open() {
-      {
-        const cardContainer = document.querySelector("#card-container");
-        const cardCount = cardContainer.querySelectorAll(".card").length;
-        console.log(`카드 개수: ${cardCount}`);
-        const maxMembers = document.querySelector("#club_maxMember");
-        const maxMembersCount = maxMembers.textContent;
-        const numberOnly = parseInt(maxMembersCount.match(/\d+/));
-        console.log(numberOnly);
-        if (cardCount === numberOnly) {
-          alert("모집이 마감되었습니다.");
-          return false;
-          window.location.reload();
-        }
-        $(`#club_modal`).fadeIn();
-
-        $(document).mouseup(function (e) {
-          if ($(`#club_modal`).has(e.target).length === 0) {
-            $(`#club_modal`).hide();
-          }
-        });
-      }
+    type: "POST",
+    url: "/auth/new-accessToken",
+    success: function (response) {
+      modal_open();
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "Unauthorized") {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      console.log(request);
+      if (request.statusText === "Unauthorized") {
+        alert("로그인이 필요한 기능입니다.");
         window.location.replace(`/sign`);
       }
     },
@@ -72,36 +52,31 @@ function report_close() {
 
 function club_report_modal_open2() {
   $.ajax({
-    type: "GET",
-    url: "/club/list/report",
-    success: function club_report_modal_open() {
-      $(`#report_modal`).fadeIn();
-
-      $(document).mouseup(function (e) {
-        if ($(`#report_modal`).has(e.target).length === 0) {
-          $(`#report_modal`).hide();
-        }
-      });
+    type: "POST",
+    url: "/auth/new-accessToken",
+    success: function (response) {
+      club_report_modal_open();
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "Unauthorized") {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      console.log(request);
+      if (request.statusText === "Unauthorized") {
+        alert("로그인이 필요한 기능입니다.");
         window.location.replace(`/sign`);
       }
     },
   });
 }
-
 function newPost() {
   $.ajax({
-    type: "GET",
-    url: "/club/clubspost",
+    type: "POST",
+    url: "/auth/new-accessToken",
     success: function (response) {
       window.location.href = "/club/clubspost";
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "Unauthorized") {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      console.log(request);
+      if (request.statusText === "Unauthorized") {
+        alert("로그인이 필요한 기능입니다.");
         window.location.replace(`/sign`);
       }
     },
@@ -179,7 +154,6 @@ function clubupdate() {
   const content = $("#club_content").val();
   const clubId = location.pathname.split("clubs/")[1];
   const category = $("#club_category").val();
-  console.log("인원구성", maxMembers);
 
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
