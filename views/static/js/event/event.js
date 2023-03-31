@@ -508,20 +508,15 @@ function event_report_close() {
 
 function event_report_modal_open2() {
   $.ajax({
-    type: "GET",
-    url: "/events/list/report",
-    success: function event_report_modal_open() {
-      $(`#report_modal`).fadeIn();
-
-      $(document).mouseup(function (e) {
-        if ($(`#report_modal`).has(e.target).length === 0) {
-          $(`#report_modal`).hide();
-        }
-      });
+    type: "POST",
+    url: "/auth/new-accessToken",
+    success: function (response) {
+      event_report_modal_open()
     },
     error: function (request) {
-      if (request.responseJSON["message"] === "Unauthorized") {
-        alert("로그인 후 이용 가능한 기능입니다.");
+      console.log(request);
+      if (request.statusText === "Unauthorized") {
+        alert("로그인이 필요한 기능입니다.");
         window.location.replace(`/sign`);
       }
     },
