@@ -24,6 +24,9 @@ import { EventCommentModule } from "./comments/eventcomment/eventcomment.module"
 import { CacheConfigService } from "./config/redis.config.service";
 import { FilterService } from "./filter/filter.service";
 import { PassportModule } from "@nestjs/passport";
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ButtonUserIdInterceptor } from './buttonUserId.interceptor';
+
 
 const ejsMiddleware = require("express-ejs-layouts");
 
@@ -64,10 +67,18 @@ const ejsMiddleware = require("express-ejs-layouts");
     EventCommentModule,
   ],
   controllers: [AppController],
-  providers: [FilterService],
+  providers: [FilterService,     {
+    provide: APP_INTERCEPTOR,
+    useClass: ButtonUserIdInterceptor,
+  },],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(ejsMiddleware).forRoutes("/");
+    // consumer.apply((req, res, next) => {
+    //   res.locals.buttonUserId = req.user ? req.user : null;
+    //   next();
+    // });
+
   }
 }
