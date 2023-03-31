@@ -50,4 +50,4 @@ import { AbusingClubCounts } from "src/entities/abusingclubcounts.entity";
   ],
   exports: [MailService, EventCommentService, EventCommentRepository],
 })
-export class EventModule {}
+export class EventModule { }
