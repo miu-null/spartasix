@@ -114,7 +114,6 @@ function clubpost() {
   const maxMembers = $("#club_maxMembers").val();
   const content = $("#club_content").val();
   const category = $("#club_category").val();
-  // maxMembers = Number(maxMembers);
   if (!title || !maxMembers || !content) {
     alert("모든 항목을 작성해 주세요.");
     return false;
@@ -134,7 +133,6 @@ function clubpost() {
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       title: title,
-      // maxMembers: Number(maxMembers),
       maxMembers: maxMembers,
       content: content,
       category: category,
