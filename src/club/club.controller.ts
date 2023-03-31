@@ -13,7 +13,6 @@ import {
   DefaultValuePipe,
   Render,
   UseGuards,
-  UnauthorizedException,
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -55,46 +54,19 @@ export class ClubController {
       ...pagingposts,
       sortPosts,
       reformPostDate,
-      buttonUserId,
     });
   }
 
   @Get("/clubspost")
-  @UseGuards(AuthGuard())
+  @UseGuards(OptionalAuthGuard)
   async postclub(@Res() res: Response, @Req() req) {
-    const userId = req.user;
-    if (!userId) {
-      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
+    let buttonUserId = null; 
+    if (req.user) {
+      buttonUserId = req.user
+      res.render("clubspost.ejs", {buttonUserId});
+    } else {
+      res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
     }
-    console.log("유저넘버", userId);
-    return res.render("clubspost.ejs", {
-      userId,
-      buttonUserId:userId
-    });
-  }
-
-  @Get("/list/report")
-  @UseGuards(AuthGuard())
-  async report(@Res() res: Response, @Req() req) {
-    const userId = req.user;
-    console.log("유저넘버", userId);
-    if (!userId) {
-      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
-    }
-    console.log("유저넘버", userId);
-    return userId;
-  }
-
-  @Get("/list/apply")
-  @UseGuards(AuthGuard())
-  async apply(@Res() res: Response, @Req() req) {
-    const userId = req.user;
-    console.log("유저넘버", userId);
-    if (!userId) {
-      return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
-    }
-    console.log("유저넘버", userId);
-    return userId;
   }
 
   @Post("/clubspost")
@@ -112,7 +84,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return { post, buttonUserId };
+    return {post, buttonUserId};
   }
 
   @Post("/:id")
@@ -133,7 +105,7 @@ export class ClubController {
       data.application,
       data.isAccepted,
     );
-    return { createNew, buttonUserId };
+    return {createNew, buttonUserId};
   }
 
   @Get("/clubs/:id")
@@ -172,7 +144,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return { update, buttonUserId };
+    return {update, buttonUserId};
   }
 
   @Get("/list/:id")
@@ -213,11 +185,13 @@ export class ClubController {
     return buttonUserId;
   }
 
+  // 클럽 게시글 검색기능
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
   async searchClubs(
-    @Query("page") page: number,
+    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
+    @Query("searchOption") searchOption: string,
     @Res() res: Response,
     @Req() req
   ) {
@@ -228,19 +202,27 @@ export class ClubController {
     if (req.user) {
       buttonUserId = req.user;
     }
+    let pageType
+    if (searchOption === "titleAndContent") {
+      pageType = "clubsTitleContent";
+    } else if (searchOption === "title") {
+      pageType = "clubsTitle";
+    }
     const searchData = await this.filterService.paginatedResults(
-      "clubs",
+      pageType,
       page,
       term,
     );
     return res.render("clubsearch.ejs", {
+      page,
       term,
       ...searchData,
       reformPostDate,
-      buttonUserId
-
+      buttonUserId,
+      searchOption
     });
   }
+
   @Post("/report/:id")
   @UseGuards(AuthGuard())
   async reportClub(
@@ -259,6 +241,6 @@ export class ClubController {
       data.reportContent,
       data.reportReason,
     );
-    return { createReport, buttonUserId };
+    return {createReport, buttonUserId};
   }
 }
