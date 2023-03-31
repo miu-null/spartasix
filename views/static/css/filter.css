@@ -17,8 +17,9 @@
 
 .search-wrap {
   position: relative;
-  width: 250px;
+  width: 280px;
   margin: auto;
+  margin-bottom: 70px;
 }
 
 .searcher_body {

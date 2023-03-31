@@ -45,9 +45,9 @@ export class FilterService {
     let getdata;
     if (pageType === "users" ) { 
       getdata = await this.filterRepository.findUsers(term);
-    } else if (pageType === "events" ) {
+    } else if (pageType === "eventsTitleContent" ) {
       getdata = await this.filterRepository.findEventPosts(term);
-    } else if (pageType === "events") {
+    } else if (pageType === "eventsTitle") {
       getdata = await this.filterRepository.findEventPostsTitle(term);
     } else if (pageType === "clubsTitleContent" ) {
       getdata = await this.filterRepository.findClubPosts(term);
