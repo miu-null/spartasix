@@ -50,7 +50,9 @@
                 <Writer>
               </div>
               <div class="nickname_text">
-                작성자: <%= nowPost.user.nickName %>
+                작성자: <span id="post_nick_name">
+                  <%= nowPost.user.nickName %>
+                </span>
               </div>
             </div>
           </div>
@@ -92,10 +94,10 @@
         <div class="clubdetail_body">
           <div class="clubdetail_body_button">
             <div class="clubdetail_body_button_remind">
-              <button class="remind_button" onclick="modal_open2(); modal_open();">Apply</button>
+              <button class="remind_button" onclick="modal_open2()">Apply</button>
             </div>
             <div class="clubdetail_body_button_report">
-              <button onclick="club_report_modal_open2(); club_report_modal_open(); " class="report_button">report</button>
+              <button onclick="club_report_modal_open2()" class="report_button">report</button>
             </div>
           </div>
           <div class="clubdetail_body_text">
@@ -120,7 +122,9 @@
                                   <% } else {%>
                                     <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20">
                                     <% } %>
-                                      <%= data.u_nickName %>
+                                      <span id="user_nickname">
+                                        <%= data.u_nickName %>
+                                      </span>
                               </a></h5>
                             <p class="card-text">
                               <%= reformPostDateRaw(data.members_updatedAt) %>
@@ -132,7 +136,6 @@
                         <% } else { %>
                           <div>아직 참여자가 없습니다.</div>
                           <% } %>
-
                 </div>
               </div>
             </div>
