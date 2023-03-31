@@ -20,7 +20,6 @@ function modal_open() {
   });
 }
 
-
 function modal_open2() {
   $.ajax({
     type: "GET",
@@ -142,9 +141,7 @@ function clubpost() {
       window.location.replace("/club/list");
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -230,9 +227,7 @@ function clubupdate() {
         alert("작성자만 사용할 수 있는 기능입니다.");
         window.location.reload();
       }
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -287,9 +282,7 @@ function clubdelete() {
         alert("작성자만 사용할 수 있는 기능입니다.");
         window.location.reload();
       }
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -353,9 +346,7 @@ function clubApp() {
         alert("이미 참가하고 있는 모임입니다.");
         window.location.reload();
       }
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -386,7 +377,6 @@ function clubApp() {
 function createClubComment(postId) {
   const content = $("#club_textarea").val();
 
-
   $.ajax({
     type: "POST",
     url: `/clubcomment/create-comment/${postId}`,
@@ -400,9 +390,7 @@ function createClubComment(postId) {
       window.location.reload();
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -492,10 +480,7 @@ function updateClubComment(commentId, content) {
           window.location.reload();
         }
 
-        if (
-          request.responseJSON["message"] ===
-          "회원이 존재하지 않습니다."
-        ) {
+        if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
           alert("로그인 후 이용 가능한 기능입니다.");
         }
 
@@ -563,9 +548,7 @@ function deleteClubComment(clubcommentId) {
         window.location.reload();
       }
 
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -620,9 +603,7 @@ function club_updateLike(commentId) {
         window.location.reload();
       }
 
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
@@ -678,9 +659,7 @@ function report_submit() {
       window.location.replace(`/club/list/${id}`);
     },
     error: function (request) {
-      if (
-        request.responseJSON["message"] === "회원이 존재하지 않습니다."
-      ) {
+      if (request.responseJSON["message"] === "회원이 존재하지 않습니다.") {
         alert("로그인 후 이용 가능한 기능입니다.");
       }
 
