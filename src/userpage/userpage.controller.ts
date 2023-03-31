@@ -50,11 +50,10 @@ export class UserpageController {
       );
       return res.render("userInfo", { myInfo, buttonUserId: currentUserId });
     } else {
-      res.send(
-        "<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>",
-      );
-    }
+      return res.redirect("/");
   }
+
+}
 
   @Get("/:userId/post")
   async getUserPost(

@@ -10,7 +10,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { JwtConfigService } from "./config/jwt.config.service";
 import { typeOrmConfigService } from "./config/typeorm.config.service";
-import { SearcherModule } from "./searcher/searcher.module";
+import { FilterModule } from "./filter/filter.module";
 import { ClubModule } from "./club/club.module";
 import { EventModule } from "./event/event.module";
 import { UserpageModule } from "./userpage/userpage.module";
@@ -22,8 +22,11 @@ import { MailModule } from "./mail/mail.module";
 import { ClubCommentModule } from "./comments/clubcomment/clubcomment.module";
 import { EventCommentModule } from "./comments/eventcomment/eventcomment.module";
 import { CacheConfigService } from "./config/redis.config.service";
-import { SearcherService } from "./searcher/searcher.service";
+import { FilterService } from "./filter/filter.service";
 import { PassportModule } from "@nestjs/passport";
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ButtonUserIdInterceptor } from './buttonUserId.interceptor';
+
 
 const ejsMiddleware = require("express-ejs-layouts");
 
@@ -54,7 +57,7 @@ const ejsMiddleware = require("express-ejs-layouts");
       inject: [ConfigService],
     }),
     EventModule,
-    SearcherModule,
+    FilterModule,
     ClubModule,
     UserpageModule,
     AuthModule,
@@ -64,10 +67,18 @@ const ejsMiddleware = require("express-ejs-layouts");
     EventCommentModule,
   ],
   controllers: [AppController],
-  providers: [SearcherService],
+  providers: [FilterService,     {
+    provide: APP_INTERCEPTOR,
+    useClass: ButtonUserIdInterceptor,
+  },],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(ejsMiddleware).forRoutes("/");
+    // consumer.apply((req, res, next) => {
+    //   res.locals.buttonUserId = req.user ? req.user : null;
+    //   next();
+    // });
+
   }
 }

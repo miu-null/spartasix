@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { SearcherRepository } from "./searcher.repository";
+import { FilterRepository } from "./filter.repository";
 
 interface PaginatedResult {
   data: any[];
@@ -13,29 +13,29 @@ interface PaginatedResult {
 }
 
 @Injectable()
-export class SearcherService {
-  constructor(private SearcherRepository: SearcherRepository) {}
+export class FilterService {
+  constructor(private filterRepository: FilterRepository) {}
 
   async findAllPosts(term: any) {
-    const results = await this.SearcherRepository.findAllPosts(term);
+    const results = await this.filterRepository.findAllPosts(term);
 
     return results;
   }
 
   async findEventPosts(term: any) {
-    const results = await this.SearcherRepository.findEventPosts(term);
+    const results = await this.filterRepository.findEventPosts(term);
 
     return results;
   }
 
   async findClubPosts(term: any) {
-    const results = await this.SearcherRepository.findClubPosts(term);
+    const results = await this.filterRepository.findClubPosts(term);
 
     return results;
   }
 
   async findUsers(term: any) {
-    const results = await this.SearcherRepository.findUsers(term);
+    const results = await this.filterRepository.findUsers(term);
 
     return results;
   }
@@ -43,14 +43,18 @@ export class SearcherService {
   //검색목록 페이지네이션 준비 : 타입에 따른 리포지토리 선택
   async selectData(pageType: string, page: number, term: any) {
     let getdata;
-    if (pageType === "users") {
-      getdata = await this.SearcherRepository.findUsers(term);
+    if (pageType === "users" ) { 
+      getdata = await this.filterRepository.findUsers(term);
+    } else if (pageType === "events" ) {
+      getdata = await this.filterRepository.findEventPosts(term);
     } else if (pageType === "events") {
-      getdata = await this.SearcherRepository.findEventPosts(term);
-    } else if (pageType === "clubs") {
-      getdata = await this.SearcherRepository.findClubPosts(term);
-    } else {
+      getdata = await this.filterRepository.findEventPostsTitle(term);
+    } else if (pageType === "clubsTitleContent" ) {
+      getdata = await this.filterRepository.findClubPosts(term);
+    } else if (pageType === "clubsTitle") {
+      getdata = await this.filterRepository.findClubPostsTitle(term);
     }
+    console.log(getdata)
     return getdata;
   }
 
@@ -87,28 +91,28 @@ export class SearcherService {
   
 
   async getAllPosts() {
-    const posts = await this.SearcherRepository.getAllPosts();
+    const posts = await this.filterRepository.getAllPosts();
     return posts;
   }
 
   async getPopularPosts() {
-    const sortPosts = await this.SearcherRepository.getPopularPosts();
+    const sortPosts = await this.filterRepository.getPopularPosts();
 
     return sortPosts;
   }
 
   async getPopularClubs() {
-    const sortPosts = await this.SearcherRepository.getPopularClubs();
+    const sortPosts = await this.filterRepository.getPopularClubs();
     return sortPosts;
   }
 
   async getPopularEvents() {
-    const sortPosts = await this.SearcherRepository.getPopularEvents();
+    const sortPosts = await this.filterRepository.getPopularEvents();
     return sortPosts;
   }
 
   async getUserRank() {
-    const sortPosts = await this.SearcherRepository.getUserRank();
+    const sortPosts = await this.filterRepository.getUserRank();
     return sortPosts;
   }
 }
