@@ -8,14 +8,6 @@ function event_open() {
   });
 }
 
-function dateValidate() {
-  let startDate = new Date($("#eventStartDate").val());
-  let endDate = new Date($("#eventEndDate").val());
-  console.log('날짜 값 확인', startDate, endDate)
-  if (startDate > endDate) {
-    alert("종료 날짜는 시작 날짜보다 커야 합니다.");
-  }
-}
 
 function updateDateValidate() {
   let startDate = new Date($("#startDate").val());
@@ -87,12 +79,20 @@ function remindEvent() {
 
 function eventNew() {
   const formData = new FormData();
+  let startDate = new Date($("#eventStartDate").val());
+  let endDate = new Date($("#eventEndDate").val());
+
   formData.append("title", $("#eventTitle").val());
   formData.append("startDate", $("#eventStartDate").val());
   formData.append("endDate", $("#eventEndDate").val());
   formData.append("content", $("#eventContent").val());
   formData.append("file", $("#eventPostImg")[0].files[0]);
   file = $("#eventPostImg")[0].files[0];
+
+  if (startDate > endDate) {
+    alert("종료 날짜는 시작 날짜보다 커야 합니다.");
+    return false
+  }
 
   $.ajax({
     type: "POST",
@@ -136,11 +136,20 @@ function eventNew() {
 
 function updateEvent(eventPostId) {
   const formData = new FormData();
+  let startDate = new Date($("#eventStartDate").val());
+  let endDate = new Date($("#eventEndDate").val());
+
   formData.append("title", $("#event_title").val());
   formData.append("startDate", $("#startDate").val());
   formData.append("endDate", $("#endDate").val());
   formData.append("content", $("#event_content").val());
   formData.append("file", $("#eventPostImg")[0].files[0]);
+
+  if (startDate > endDate) {
+    alert("종료 날짜는 시작 날짜보다 커야 합니다.");
+    return false
+  }
+
 
   $.ajax({
     type: "PATCH",

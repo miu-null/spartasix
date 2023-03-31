@@ -27,7 +27,7 @@ export class Clubs {
   @Column("varchar", { length: 50 })
   title: string;
 
-  @Column("varchar")
+  @Column("longtext")
   content: string;
 
   @Column("int")

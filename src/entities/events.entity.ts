@@ -26,7 +26,7 @@ export class EventPosts {
   @Column("varchar", { length: 50 })
   title: string;
 
-  @Column("varchar")
+  @Column("longtext")
   content: string;
 
   @Column("date")
