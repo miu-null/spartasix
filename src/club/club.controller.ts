@@ -13,6 +13,7 @@ import {
   DefaultValuePipe,
   Render,
   UseGuards,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { ClubService } from "./club.service";
 import { CreateClubDto } from "./dto/createclub.dto";
@@ -22,16 +23,20 @@ import { CreateAppDto } from "./dto/createApp.dto";
 import { ReportClubDto } from "./dto/reportclub.dto";
 import { FilterService } from "src/filter/filter.service";
 import { ReportDefinition } from "aws-sdk/clients/cur";
-import { reformPostDate, paginatedResults, reformPostDateRaw } from "../../views/static/js/filter"; //날짜처리, 페이지네이션
+import {
+  reformPostDate,
+  paginatedResults,
+  reformPostDateRaw,
+} from "../../views/static/js/filter"; //날짜처리, 페이지네이션
 import { AuthGuard } from "@nestjs/passport";
-import { OptionalAuthGuard } from '../auth/optional-auth.guard';
+import { OptionalAuthGuard } from "../auth/optional-auth.guard";
 import { MailService } from "src/mail/mail.service";
 
 @Controller("club")
 export class ClubController {
   constructor(
     private readonly clubService: ClubService,
-    private readonly filterService: FilterService,
+    private readonly searchService: FilterService,
     private readonly mailService: MailService,
   ) { }
 
@@ -48,25 +53,24 @@ export class ClubController {
     }
     const clubs = await this.clubService.getClubs();
     const pagingposts = await paginatedResults(page, clubs);
-    const sortPosts = await this.filterService.getPopularClubs();
+    const sortPosts = await this.searchService.getPopularClubs();
 
     return res.render("club.ejs", {
       ...pagingposts,
       sortPosts,
       reformPostDate,
+      buttonUserId,
     });
   }
 
   @Get("/clubspost")
-  @UseGuards(OptionalAuthGuard)
+  @UseGuards(AuthGuard())
   async postclub(@Res() res: Response, @Req() req) {
-    let buttonUserId = null; 
-    if (req.user) {
-      buttonUserId = req.user
-      res.render("clubspost.ejs", {buttonUserId});
-    } else {
-      res.send("<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>");
-    }
+    const userId = req.user;
+    console.log("유저넘버", userId);
+    return res.render("clubspost.ejs", {
+      userId,
+    });
   }
 
   @Post("/clubspost")
@@ -84,7 +88,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return {post, buttonUserId};
+    return { post, buttonUserId };
   }
 
   @Post("/:id")
@@ -105,7 +109,7 @@ export class ClubController {
       data.application,
       data.isAccepted,
     );
-    return {createNew, buttonUserId};
+    return { createNew, buttonUserId };
   }
 
   @Get("/clubs/:id")
@@ -144,7 +148,7 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return {update, buttonUserId};
+    return { update, buttonUserId };
   }
 
   @Get("/list/:id")
@@ -185,13 +189,11 @@ export class ClubController {
     return buttonUserId;
   }
 
-  // 클럽 게시글 검색기능
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
   async searchClubs(
-    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query("page") page: number,
     @Query() term: string,
-    @Query("searchOption") searchOption: string,
     @Res() res: Response,
     @Req() req
   ) {
@@ -202,27 +204,19 @@ export class ClubController {
     if (req.user) {
       buttonUserId = req.user;
     }
-    let pageType
-    if (searchOption === "titleAndContent") {
-      pageType = "clubsTitleContent";
-    } else if (searchOption === "title") {
-      pageType = "clubsTitle";
-    }
-    const searchData = await this.filterService.paginatedResults(
-      pageType,
+    const searchData = await this.searchService.paginatedResults(
+      "clubs",
       page,
       term,
     );
     return res.render("clubsearch.ejs", {
-      page,
       term,
       ...searchData,
       reformPostDate,
-      buttonUserId,
-      searchOption
+      buttonUserId
+
     });
   }
-
   @Post("/report/:id")
   @UseGuards(AuthGuard())
   async reportClub(
@@ -241,6 +235,6 @@ export class ClubController {
       data.reportContent,
       data.reportReason,
     );
-    return {createReport, buttonUserId};
+    return { createReport, buttonUserId };
   }
 }
