@@ -50,10 +50,11 @@ export class UserpageController {
       );
       return res.render("userInfo", { myInfo, buttonUserId: currentUserId });
     } else {
-      return res.redirect("/");
+      res.send(
+        "<script>alert('로그인이 필요한 기능입니다.');history.back();;</script>",
+      );
+    }
   }
-
-}
 
   @Get("/:userId/post")
   async getUserPost(
@@ -72,7 +73,6 @@ export class UserpageController {
   @UseGuards(AuthGuard())
   async getUserClubs(
     @Param("userId") userId: number,
-    // , @Res() res: Response
     @Req() req,
   ) {
     const currentUserId = req.user;
@@ -80,10 +80,7 @@ export class UserpageController {
       throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
     }
     const myClubs = await this.userPageService.getMyClubs(userId);
-    return {
-      myClubs,
-      buttonUserId: currentUserId,
-    };
+    return myClubs
   }
 
   @Get("/:userId/edit")

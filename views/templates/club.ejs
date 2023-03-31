@@ -151,11 +151,11 @@
       <div class="input-group">
         <div class="input-group-append" >
           <select class="form-select" name="searchOption" id="searchOption" >
-            <option value="title"  selected>제목</option>
-            <option value="titleAndContent">제목+내용</option>
+            <option value="title">제목</option>
+            <option value="titleAndContent" selected>제목+내용</option>
           </select>
         </div>
-        <input type="search" id="term" name="term" class="form-control w-90" placeholder="🔍검색"
+        <input type="search" id="term" name="term" class="form-control" placeholder="🔍검색"
           aria-label="Search">
       </div>
     </div>
@@ -163,14 +163,14 @@
 </section>
 
 <script>
-  // 이전에 선택된 드롭다운 옵션을 불러옴
-  var selectedOption = localStorage.getItem('selectedOption');
+  // 검색:이전에 선택된 드롭다운 옵션을 불러옴
+  const selectedOption = localStorage.getItem('selectedOption');
   if (selectedOption) {
     document.getElementById('searchOption').value = selectedOption;
   }
   
-  // 드롭다운 옵션이 변경될 때마다 localStorage에 저장함
+  // 검색:드롭다운 옵션이 변경될 때마다 localStorage에 저장함
   document.getElementById('searchOption').addEventListener('change', function() {
     localStorage.setItem('selectedOption', this.value);
   });
-  </script>
+</script>

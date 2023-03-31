@@ -8,7 +8,6 @@ import {
   DefaultValuePipe,
   Render,
   UseGuards,
-  UnauthorizedException
 } from "@nestjs/common";
 import { Response } from "express";
 import { FilterService } from "./filter.service";
