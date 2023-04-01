@@ -1,156 +1,117 @@
-.huge-inner-container {
-  margin-top: 120px;
-  gap: 32px;
+.container {
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  gap: 250px;
+  margin-top: 64px;
+  margin-bottom: 64px;
 }
 
 .box {
-  border: 1px solid salmon;
+  height: fit-content;
   width: 700px;
-  height: 800px;
+  align-self: center;
 }
 
-.member-image-box {
-  width: 250px;
-  height: 250px;
+.memberImg {
   display: flex;
-  margin-top: 0px;
+  justify-content: center;
 }
 
-.member-image {
-  align-items: center;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  overflow: hidden;
+.memberImg > img {
+  height: 200px;
+  width: 200px;
+  margin-bottom: 64px;
 }
 
-.member-image img {
-  width: 250px;
-  height: 250px;
-  object-fit: contain;
+.subtitle {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-family: Alfa Slab One, sans-serif;
+  margin-bottom: 36px;
 }
 
-.huge-userbox {
-  width: 700px;
-  height: 756px;
-  align-items: center;
-  text-align: center;
-}
-
-.userinfo-box {
-  width: 700px;
-  height: 650px;
-  background-color: #fff9f8;
-  margin-top: 60px;
-  padding: 30px;
-  text-align: center;
-}
-
-.additional-info {
-  background-color: #fff9f8;
-  align-items: center;
-  text-align: center;
-  padding: 30px;
-  width: 700px;
-  height: 435px;
-  margin-top: 680px;
-}
-
-.huge-activities {
+.huge-card {
+  display: flex;
+  justify-content: center;
   width: 700px;
   height: 600px;
-  text-align: center;
-  align-items: center;
+  background: #fff9f8;
 }
 
-.activities-box {
-  width: 700px;
-  height: 800px;
-  background-color: #fff9f8;
-  margin-top: 180px;
-  padding: 38px;
-  letter-spacing: 0.5px;
-  line-height: auto;
-  font-size: 16px;
-  text-align: left;
-  font-family: "Amiko";
-}
-
-.huge-clubs {
-  text-align: center;
-  width: 700px;
-  height: 400px;
-}
-
-.myclubs {
-  width: 700px;
-  height: 1000px;
-  background-color: #fff9f8;
-  margin-top: 400px;
-}
-
-.message img {
-  width: 8%;
-  position: absolute;
-  left: 90%;
-  top: -170px;
-}
-
-.userBio_container {
-  font-family: "JejuGothic";
-  font-style: normal;
-  font-size: 15px;
-  color: #625858;
+.icon-container {
   display: flex;
-  width: 280px;
-  padding: 28px;
-  background-color: #f8f8f8;
-  justify-content: center;
-  margin-top: 10%;
-  border-radius: 17px;
+  justify-content: flex-end;
+  margin-bottom: 12px;
 }
-.post-column {
+
+.user-edit-icon {
+  fill: #ea4e4e;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.envelope-icon {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.envelope-icon:hover {
+  fill: #ea4e4e;
+}
+
+.card-content-container {
+  margin-top: 80px;
   display: flex;
   flex-direction: column;
+  gap: 120px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24px;
+  font-family: Alfa Slab One, sans-serif;
   gap: 12px;
 }
 
-.edit-box {
-  width: 45px;
-  font-size: 11pt;
-  position: relative;
-  left: 51%;
-  background: #e79292;
+.button-container {
+  display: flex;
+  gap: 8px;
+}
+
+.article-button {
+  height: 28px;
+  background: #ffffff;
+  border: 1px solid #ea4e4e;
   border-radius: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
-.post-box {
-  background-color: #efe8df;
-  border-radius: 5px;
-  padding: 30px;
-  height: 758px;
+.card-content-text {
+  font-family: "Amiko";
 }
 
-.member-photo {
-  align-items: center;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
+.huge-userbox {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
 }
 
-.member-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.edit-user-info-box-container {
+  display: flex;
+  justify-content: center;
 }
 
-.myOwnClub {
-  font-size: 20px;
+.edit-container {
+  margin-top: 64px;
+}
+
+.member-edit {
+  margin-bottom: -24px;
 }

@@ -1,0 +1,169 @@
+.huge-inner-container {
+  margin-top: 120px;
+  gap: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.member-image-box {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  margin-top: 0px;
+}
+
+.member-image {
+  align-items: center;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.member-image img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}
+
+.huge-userbox {
+  width: 700px;
+  height: 756px;
+  align-items: center;
+  text-align: center;
+}
+
+.userinfo-box {
+  width: 700px;
+  height: 650px;
+  background-color: #fff9f8;
+  margin-top: 60px;
+  padding: 30px;
+  text-align: center;
+}
+
+.additional-info {
+  background-color: #fff9f8;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+  width: 700px;
+  height: 435px;
+  margin-top: 680px;
+}
+
+.huge-activities {
+  width: 700px;
+  height: 600px;
+  text-align: center;
+  align-items: center;
+}
+
+.activities-box {
+  width: 700px;
+  height: 800px;
+  background-color: #fff9f8;
+  margin-top: 180px;
+  padding: 38px;
+  letter-spacing: 0.5px;
+  line-height: auto;
+  font-size: 16px;
+  text-align: left;
+  font-family: "Amiko";
+}
+
+.huge-clubs {
+  text-align: center;
+  width: 700px;
+}
+
+.subtitle {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 80px;
+  margin-bottom: 40px;
+}
+
+.subtitle-text {
+  grid-row: 1 / 3;
+  grid-column: 1 / 3;
+  justify-self: center;
+  align-self: center;
+  margin: 0;
+}
+
+.envelope {
+  width: 56px;
+  height: 56px;
+  grid-column: 2/ 2;
+  grid-row: 2 / 2;
+  justify-self: end;
+  cursor: pointer;
+}
+
+.envelope:hover {
+  fill: red;
+}
+
+.myclubs {
+  width: 700px;
+  height: 1000px;
+  background-color: #fff9f8;
+}
+
+.userBio_container {
+  font-family: "JejuGothic";
+  font-style: normal;
+  font-size: 15px;
+  color: #625858;
+  display: flex;
+  width: 280px;
+  padding: 28px;
+  background-color: #f8f8f8;
+  justify-content: center;
+  margin-top: 10%;
+  border-radius: 17px;
+}
+.post-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-box {
+  width: 45px;
+  font-size: 11pt;
+  position: relative;
+  left: 51%;
+  background: #e79292;
+  border-radius: 10px;
+}
+
+.post-box {
+  background-color: #efe8df;
+  border-radius: 5px;
+  padding: 30px;
+  height: 758px;
+}
+
+.member-photo {
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.myOwnClub {
+  font-size: 20px;
+}

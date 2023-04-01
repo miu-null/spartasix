@@ -4,16 +4,16 @@
       document.getElementById('memberImage').src = imageUrl;
     }
     </script>
-    
-    <div class="huge-container">
+    <div class="edit-container">
+    <div class="huge-container-edit">
       <form action="/userpage/<%= myInfo.userId %>/edit" method="POST" enctype="multipart/form-data">
-        <div class="box member-image-box">
+        <div class="memberImg">
           <label for="userIMG" style="cursor: pointer;">
-            <div class="member-image">
+            <div class="memberImg member-edit">
               <% if (myInfo.userIMG) {%>
               <img src="<%= myInfo.userIMG %>" alt="memberimage" />
               <% } else {%>
-                <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
+                <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"> 
               <% } %>
             </div>
           </label>
@@ -23,12 +23,12 @@
       <input id="userIMG" style="display: none;" type="file" name="userIMG" onchange="onUpload(this)" />
     </div>
     <br />
-    <div class="box huge-userbox">
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+      <p class="subtitle" style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
         User Info
       </p>
       <br />
-      <div class="box userinfo-box">
+      <div class="edit-user-info-box-container">
+      <div class="box edit-user-info-box">
         <br />
         <br />
         <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
@@ -116,9 +116,9 @@
         </div>
     
       </form>
-    </div>
-
+      </div>
   </form>
+</div>
 </div>
 
 </div>

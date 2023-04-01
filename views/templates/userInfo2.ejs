@@ -1,0 +1,163 @@
+<script>
+  $(document).ready(function () {
+    checkClubs(`<%= myInfo.userId %>`);
+    show_userPosts(`<%= myInfo.userId %>`, "init");
+  });
+</script>
+
+<div id="Appmodal" class="Appmodal">
+  <div class="app_modal">
+    <div class="application">
+      <div class="app_title">
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Applications
+        </p>
+      </div>
+      <div class="app_body"></div>
+      <div class="app_action"></div>
+    </div>
+  </div>
+</div>
+<div class="huge-container">
+  <div class="huge-inner-container">
+    <div class="box member-image-box">
+      <div class="member-image">
+        <% if (myInfo.userIMG) {%>
+        <img src="<%= myInfo.userIMG %>" alt="memberimage" />
+        <% } else {%>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"
+          width="20"
+        />
+        <% } %>
+      </div>
+    </div>
+    <div class="box huge-userbox">
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+        User Info
+      </p>
+      <br />
+      <p
+        style="
+          font-family: Amiko, sans-serif;
+          font-size: 15px;
+          font-weight: bold;
+          color: #ea4e4e;
+          float: right;
+        "
+        ,
+        onclick="editInfo('<%= myInfo.userId %>')"
+      >
+        + edit
+      </p>
+      <div class="box userinfo-box">
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          You can call me...
+        </p>
+        <p
+          style="
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+          "
+        >
+          <%= myInfo.nickName %>
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Contact
+        </p>
+        <p
+          style="
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+          "
+        >
+          <%= myInfo.email %>
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Check my GitHub !
+        </p>
+        <p
+          style="
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+          "
+        >
+          <%= myInfo.snsURL %>
+        </p>
+
+        <br />
+      </div>
+
+      <div class="box huge-clubs">
+        <div class="subtitle">
+          <div
+            class="subtitle-text"
+            style="font-family: Alfa Slab One, sans-serif; font-size: 30px"
+          >
+            Latest Activities
+          </div>
+
+          <div class="box activities-box">
+            <div id="clubPosts">
+              <button
+                id="prevClubBtn"
+                onclick="show_userPosts(`<%- myInfo.userId %>`, 'prev')"
+              >
+                Previous Articles
+              </button>
+              <button
+                id="nextClubBtn"
+                onclick="show_userPosts(`<%- myInfo.userId %>`, 'next')"
+              >
+                Next Articles
+              </button>
+            </div>
+            <div class="club-posts"></div>
+          </div>
+        </div>
+
+        <div class="box huge-clubs">
+          <div class="subtitle">
+            <div
+              class="subtitle-text"
+              style="font-family: Alfa Slab One, sans-serif; font-size: 30px"
+            >
+              Belong to this clubs...
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              class="envelope"
+              onclick="modal_open1('<%= myInfo.userId %>')"
+            >
+              <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                d="M255.4 48.2c.2-.1 .4-.2 .6-.2s.4 .1 .6 .2L460.6 194c2.1 1.5 3.4 3.9 3.4 6.5v13.6L291.5 355.7c-20.7 17-50.4 17-71.1 0L48 214.1V200.5c0-2.6 1.2-5 3.4-6.5L255.4 48.2zM48 276.2L190 392.8c38.4 31.5 93.7 31.5 132 0L464 276.2V456c0 4.4-3.6 8-8 8H56c-4.4 0-8-3.6-8-8V276.2zM256 0c-10.2 0-20.2 3.2-28.5 9.1L23.5 154.9C8.7 165.4 0 182.4 0 200.5V456c0 30.9 25.1 56 56 56H456c30.9 0 56-25.1 56-56V200.5c0-18.1-8.7-35.1-23.4-45.6L284.5 9.1C276.2 3.2 266.2 0 256 0z"
+              />
+            </svg>
+          </div>
+
+          <div class="box myclubs">
+            <div class="box message"></div>
+            <div id="myClubAct">
+              <div id="myOwnClub"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
