@@ -145,17 +145,31 @@
         </nav>
     </div>
 
-    <section id="search" class="search-wrap">
-        <form action="/events/search" class="search-form">
-            <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" id="term" name="term" class="form-control" placeholder="🔍제목, 내용"
-                    aria-label="Search">
-        </form>
+<section id="search" class="search-wrap" >
+    <form action="/events/search" class="search-form">
+        <div class="input-group">
+            <div class="input-group-append" >
+            <select class="form-select" name="searchOption" id="searchOption" >
+                <option value="title">제목</option>
+                <option value="titleAndContent" selected>제목+내용</option>
+            </select>
+            </div>
+            <input type="search" id="term" name="term" class="form-control" placeholder="🔍검색"
+            aria-label="Search">
+        </div>
+        </div>
+    </form>
     </section>
-</body>
-
-
-<script type="application/javascript">
-</script>
-
-</html>
+    
+    <script>
+    // 검색:이전에 선택된 드롭다운 옵션을 불러옴
+    const selectedOption = localStorage.getItem('selectedOption');
+    if (selectedOption) {
+        document.getElementById('searchOption').value = selectedOption;
+    }
+    
+    // 검색:드롭다운 옵션이 변경될 때마다 localStorage에 저장함
+    document.getElementById('searchOption').addEventListener('change', function() {
+        localStorage.setItem('selectedOption', this.value);
+    });
+    </script>
