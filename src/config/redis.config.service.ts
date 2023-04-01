@@ -8,7 +8,7 @@ import * as redisStore from "cache-manager-ioredis";
 
 @Injectable()
 export class CacheConfigService implements CacheOptionsFactory {
-  constructor(private configService: ConfigService) { }
+  constructor(private configService: ConfigService) {}
   createCacheOptions(): CacheModuleOptions<Record<string, any>> {
     return {
       store: redisStore,

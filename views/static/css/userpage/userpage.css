@@ -1,29 +1,24 @@
-.huge-container {
+.huge-inner-container {
+  margin-top: 120px;
+  gap: 32px;
   display: flex;
-  margin: 4px;
-  height: 280vh;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  height: 100%;
 }
+
 .box {
+  border: 1px solid salmon;
   width: 700px;
   height: 800px;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .member-image-box {
   width: 250px;
   height: 250px;
   display: flex;
-  /* position: absolute; */
   margin-top: 0px;
 }
 
@@ -44,7 +39,6 @@
 .huge-userbox {
   width: 700px;
   height: 756px;
-  margin-top: 600px;
   align-items: center;
   text-align: center;
 }
@@ -71,7 +65,6 @@
 .huge-activities {
   width: 700px;
   height: 600px;
-  margin-top: 910px;
   text-align: center;
   align-items: center;
 }
@@ -91,7 +84,6 @@
 
 .huge-clubs {
   text-align: center;
-  margin-top: 945px;
   width: 700px;
   height: 400px;
 }
