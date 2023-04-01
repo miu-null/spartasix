@@ -140,7 +140,6 @@ export class EventController {
   @UseGuards(OptionalAuthGuard)
   @Render("eventDetail.ejs")
   async getEventById(
-    @Res() res: Response,
     @Param("id") id: number,
     @Req() req
   ) {
@@ -156,7 +155,6 @@ export class EventController {
     const nowPost = postDetail.data.nowPost;
     const nextPost = postDetail.data.nextPost;
     const comments = postDetail.comments;
-    const postSet = { prevPost, nowPost, nextPost, comments, reformPostDate };
 
     return {
       events,
@@ -243,30 +241,27 @@ export class EventController {
     @Query() term: string,
     @Query("searchOption") searchOption: string,
     @Res() res: Response,
-    @Req() req
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
-
     if (!page) {
       page = 1;
     }
+    let pageType
+    if (searchOption === "titleAndContent") {
+      pageType = "eventsTitleContent";
+    } else if (searchOption === "title") {
+      pageType = "eventsTitle";
+    }
     const searchData = await this.filterService.paginatedResults(
-      "events",
+      pageType,
       page,
       term,
-
     );
-    console.log(searchData)
 
     return res.render("eventsearch.ejs", {
       page,
       term,
       ...searchData,
       reformPostDate,
-      buttonUserId,
       searchOption
     });
   }

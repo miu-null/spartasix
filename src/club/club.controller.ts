@@ -36,7 +36,7 @@ import { MailService } from "src/mail/mail.service";
 export class ClubController {
   constructor(
     private readonly clubService: ClubService,
-    private readonly searchService: FilterService,
+    private readonly filterService: FilterService,
     private readonly mailService: MailService,
   ) { }
 
@@ -47,19 +47,14 @@ export class ClubController {
     @Res() res: Response,
     @Req() req
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     const clubs = await this.clubService.getClubs();
     const pagingposts = await paginatedResults(page, clubs);
-    const sortPosts = await this.searchService.getPopularClubs();
+    const sortPosts = await this.filterService.getPopularClubs();
 
     return res.render("club.ejs", {
       ...pagingposts,
       sortPosts,
       reformPostDate,
-      buttonUserId,
     });
   }
 
@@ -77,10 +72,6 @@ export class ClubController {
   @UseGuards(AuthGuard())
   async createClub(@Body() data: CreateClubDto, @Req() req) {
     const userId = req.user;
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     const post = await this.clubService.createClub(
       userId,
       data.title,
@@ -88,44 +79,40 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return { post, buttonUserId };
+    return post
   }
 
   @Post("/:id")
-  @UseGuards(OptionalAuthGuard)
+  @UseGuards(AuthGuard('local'))
   async createApp(
     @Param("id") id: number,
     @Body() data: CreateAppDto,
     @Req() req,
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
+    if (!req.user) {
+      throw new UnauthorizedException('로그인 후 이용 가능한 기능입니다.');
     }
-    const userId = req.user;
+    
+    const userId = req.user.userId;
     const createNew = await this.clubService.createApp(
       id,
       userId,
       data.application,
       data.isAccepted,
     );
-    return { createNew, buttonUserId };
+    
+    return createNew;
   }
 
   @Get("/clubs/:id")
   @UseGuards(OptionalAuthGuard)
   async updateclub(
     @Param("id") id: number,
-    @Res() res: Response,
-    @Req() req,
+    @Res() res: Response
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     const detail = await this.clubService.getClubById(id);
     const nowPost = detail.nowPost
-    return res.render("clubupdate.ejs", { nowPost, detail, buttonUserId });
+    return res.render("clubupdate.ejs", { nowPost, detail});
   }
 
   @Put("/clubs/:id")
@@ -135,10 +122,6 @@ export class ClubController {
     @Body() data: UpdateClubDto,
     @Req() req,
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     const userId = req.user;
     const update = await this.clubService.updateClub(
       id,
@@ -148,17 +131,14 @@ export class ClubController {
       data.maxMembers,
       data.category,
     );
-    return { update, buttonUserId };
+    return update;
   }
 
   @Get("/list/:id")
   @UseGuards(OptionalAuthGuard)
   @Render("clubsdetail.ejs")
   async getClubsById(@Param("id") id: number, @Req() req) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user;
-    }
+    
     const userId = req.userId;
     const detail = await this.clubService.getClubById(id);
     const prevPost = detail.prevPost;
@@ -171,7 +151,6 @@ export class ClubController {
       ...postSet,
       ...acceptedMember,
       reformPostDateRaw,
-      buttonUserId,
       userId,
     }
   };
@@ -180,32 +159,30 @@ export class ClubController {
   @Delete("/list/:id")
   @UseGuards(AuthGuard())
   async delete(@Param("id") id: number, @Req() req) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     const userId = req.user;
     await this.clubService.deleteClub(userId, id);
-    return buttonUserId;
+    return true
   }
 
   @Get("/search")
   @UseGuards(OptionalAuthGuard)
   async searchClubs(
-    @Query("page") page: number,
+    @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
+    @Query("searchOption") searchOption: string,
     @Res() res: Response,
-    @Req() req
   ) {
     if (!page) {
       page = 1;
     }
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user;
+    let pageType
+    if (searchOption === "titleAndContent") {
+      pageType = "clubsTitleContent";
+    } else if (searchOption === "title") {
+      pageType = "clubsTitle";
     }
-    const searchData = await this.searchService.paginatedResults(
-      "clubs",
+    const searchData = await this.filterService.paginatedResults(
+      pageType,
       page,
       term,
     );
@@ -213,8 +190,7 @@ export class ClubController {
       term,
       ...searchData,
       reformPostDate,
-      buttonUserId
-
+      searchOption
     });
   }
   @Post("/report/:id")
@@ -224,10 +200,7 @@ export class ClubController {
     @Body() data: ReportClubDto,
     @Req() req,
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user;
-    }
+
     const userId = req.user;
     const createReport = await this.clubService.reportClub(
       id,
@@ -235,6 +208,6 @@ export class ClubController {
       data.reportContent,
       data.reportReason,
     );
-    return { createReport, buttonUserId };
+    return createReport;
   }
 }
