@@ -48,5 +48,5 @@ async function paginatedResults(page, selectedData) {
 module.exports = {
   reformPostDate,
   paginatedResults,
-  reformPostDateRaw
+  reformPostDateRaw,
 };
