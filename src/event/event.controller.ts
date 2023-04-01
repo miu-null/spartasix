@@ -22,13 +22,14 @@ import { EventService } from "./event.service";
 import { CreateEventDto } from "./dto/createevent.dto";
 import { UpdateEventDto } from "./dto/updateevent.dto";
 import { remindEmailDto } from "./dto/remindevent.dto";
-import { FilterService } from "src/filter/filter.service";
+import { FilterService } from "../filter/filter.service";
 import * as AWS from "aws-sdk";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { reformPostDate, paginatedResults } from "../../views/static/js/filter";
 import { AuthGuard } from "@nestjs/passport";
 import { OptionalAuthGuard } from '../auth/optional-auth.guard';
 import { ReportEventDto } from "./dto/reportevent.dto";
+import { searchType} from "../filter/searchFilter"
 
 @Controller("events")
 export class EventController {
@@ -118,12 +119,8 @@ export class EventController {
   async getEvent(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
-    @Req() req
+
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     const events = await this.eventService.getEvents();
     const pagingposts = await paginatedResults(page, events);
     const sortPosts = await this.filterService.getPopularEvents();
@@ -132,7 +129,6 @@ export class EventController {
       ...pagingposts,
       sortPosts,
       reformPostDate,
-      buttonUserId
     });
   }
 
@@ -143,10 +139,6 @@ export class EventController {
     @Param("id") id: number,
     @Req() req
   ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user
-    }
     let postDetail = await this.eventService.getEventById(id);
     const events = postDetail.data.nowPost;
     let imgUrl = events.postIMG;
@@ -164,7 +156,6 @@ export class EventController {
       prevPost,
       comments,
       reformPostDate,
-      buttonUserId
     };
   }
 
@@ -245,11 +236,11 @@ export class EventController {
     if (!page) {
       page = 1;
     }
-    let pageType
+    let pageType : searchType
     if (searchOption === "titleAndContent") {
-      pageType = "eventsTitleContent";
+      pageType = searchType.eventsTitleContent;
     } else if (searchOption === "title") {
-      pageType = "eventsTitle";
+      pageType = searchType.eventsTitle
     }
     const searchData = await this.filterService.paginatedResults(
       pageType,

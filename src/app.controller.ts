@@ -14,19 +14,13 @@ export class AppController {
   @Get("/")
   @UseGuards(OptionalAuthGuard)
   @Render("mainbody")
-  async mainpage(
-    @Req() req) {
-      let buttonUserId = null;
-      if (req.user) {
-        buttonUserId = req.user;
-      }
+  async mainpage() {
     const sortPosts = await this.filterService.getPopularPosts();
     const usersRank = await (await this.filterService.getUserRank()).slice(0, 5)
     return {
       sortPosts,
       reformPostDate,
       usersRank,
-      buttonUserId
     };
   }
 
@@ -47,12 +41,7 @@ export class AppController {
   @UseGuards(OptionalAuthGuard)
   findpassword(
     @Res() res: Response,
-    @Req() req
     ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user;
-    }
     return res.render("findpassword");
   }
 
@@ -65,12 +54,7 @@ export class AppController {
   @UseGuards(OptionalAuthGuard)
   mypage(
     @Res() res: Response,
-    @Req() req
     ) {
-    let buttonUserId = null;
-    if (req.user) {
-      buttonUserId = req.user;
-    }
     return res.render("userinfo");
   }
 }

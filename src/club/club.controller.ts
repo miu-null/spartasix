@@ -31,6 +31,7 @@ import {
 import { AuthGuard } from "@nestjs/passport";
 import { OptionalAuthGuard } from "../auth/optional-auth.guard";
 import { MailService } from "src/mail/mail.service";
+import { searchType, SearchResults } from "src/filter/searchFilter";
 
 @Controller("club")
 export class ClubController {
@@ -164,34 +165,36 @@ export class ClubController {
     return true
   }
 
-  @Get("/search")
+  @Get("/search") 
   @UseGuards(OptionalAuthGuard)
+  @Render("clubsearch")
   async searchClubs(
     @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query() term: string,
     @Query("searchOption") searchOption: string,
     @Res() res: Response,
-  ) {
+  ) : Promise<SearchResults> {
     if (!page) {
       page = 1;
     }
     let pageType
     if (searchOption === "titleAndContent") {
-      pageType = "clubsTitleContent";
+      pageType = searchType.clubsTitleContent
     } else if (searchOption === "title") {
-      pageType = "clubsTitle";
+      pageType = searchType.clubsTitle
     }
     const searchData = await this.filterService.paginatedResults(
       pageType,
       page,
       term,
     );
-    return res.render("clubsearch.ejs", {
+    return {
+      page,
       term,
       ...searchData,
       reformPostDate,
       searchOption
-    });
+    };
   }
   @Post("/report/:id")
   @UseGuards(AuthGuard())
