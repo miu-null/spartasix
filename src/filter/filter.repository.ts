@@ -123,8 +123,6 @@ async findClubPostsTitle(data?: any): Promise<Clubs[]> {
     return popularPosts;
   }
 
-
-
   //클럽 게시물 인기순 정렬
   async getPopularClubs(): Promise<Clubs[]> {
     const clubPosts = await (
