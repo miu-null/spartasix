@@ -8,6 +8,22 @@ function event_open() {
   });
 }
 
+function event_remind_modal_open() {
+  $.ajax({
+    type: "POST",
+    url: "/auth/new-accessToken",
+    success: function (response) {
+      event_open()
+    },
+    error: function (request) {
+      if (request.statusText === "Unauthorized") {
+        alert("로그인이 필요한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
+    },
+  });
+}
+
 
 function updateDateValidate() {
   let startDate = new Date($("#startDate").val());
