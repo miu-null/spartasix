@@ -1,124 +1,124 @@
 <script>
-    function onUpload(e) {
-      var imageUrl = URL.createObjectURL(e.files[0])
-      document.getElementById('memberImage').src = imageUrl;
-    }
-    </script>
-    
-    <div class="huge-container">
-      <form action="/userpage/<%= myInfo.userId %>/edit" method="POST" enctype="multipart/form-data">
-        <div class="box member-image-box">
-          <label for="userIMG" style="cursor: pointer;">
-            <div class="member-image">
-              <% if (myInfo.userIMG) {%>
-              <img src="<%= myInfo.userIMG %>" alt="memberimage" />
-              <% } else {%>
-                <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" width="20"> 
-              <% } %>
-            </div>
-          </label>
-          <input id="userIMG" style="display: none;"  type="file" name="userIMG" onchange="onUpload(this)" />
-        </div>
-      </label>
-      <input id="userIMG" style="display: none;" type="file" name="userIMG" onchange="onUpload(this)" />
-    </div>
+  function onUpload(e) {
+    var imageUrl = URL.createObjectURL(e.files[0])
+    document.getElementById('memberImage').src = imageUrl;
+  }
+  </script>
+  <div class="edit-container">
+  <div class="huge-container-edit">
+    <form action="/userpage/<%= myInfo.userId %>/edit" method="POST" enctype="multipart/form-data">
+      <div class="memberImg">
+        <label for="userIMG" style="cursor: pointer;">
+          <div class="memberImg member-edit">
+            <% if (myInfo.userIMG) {%>
+            <img src="<%= myInfo.userIMG %>" alt="memberimage" />
+            <% } else {%>
+              <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"> 
+            <% } %>
+          </div>
+        </label>
+        <input id="userIMG" style="display: none;"  type="file" name="userIMG" onchange="onUpload(this)" />
+      </div>
+    </label>
+    <input id="userIMG" style="display: none;" type="file" name="userIMG" onchange="onUpload(this)" />
+  </div>
+  <br />
+    <p class="subtitle" style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+      User Info
+    </p>
     <br />
-    <div class="box huge-userbox">
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-        User Info
+    <div class="edit-user-info-box-container">
+    <div class="box edit-user-info-box">
+      <br />
+      <br />
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+        You can call me...
+      </p>
+      <p style="
+              font-family: Amiko, sans-serif;
+              font-size: 20px;
+              font-weight: bold;
+            ">
+        <input name="nickName" placeholder="닉네임 입력" value="<%= myInfo.nickName %>" />
       </p>
       <br />
-      <div class="box userinfo-box">
-        <br />
-        <br />
-        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-          You can call me...
-        </p>
-        <p style="
+      <br />
+      <br />
+      <br />
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+        Contact
+      </p>
+      <p style="
+              font-family: Amiko, sans-serif;
+              font-size: 20px;
+              font-weight: bold;
+            ">
+        <input name="email" placeholder="이메일 입력" value="<%= myInfo.email %>" />
+      </p>
+      <br />
+      <br />
+      <br />
+      <br />
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+        Check my GitHub !
+      </p>
+      <p style="
+              font-family: Amiko, sans-serif;
+              font-size: 20px;
+              font-weight: bold;
+            "
+          >
+            <input name="snsUrl" placeholder="깃헙 URL 입력" value="<%= myInfo.snsURL %>" />
+          </p>
+
+          <div class="box additional-info">
+            <br />
+            <br />
+            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+              P*word <br />
+            </p>
+      
+            <p style="
                 font-family: Amiko, sans-serif;
                 font-size: 20px;
                 font-weight: bold;
               ">
-          <input name="nickName" placeholder="닉네임 입력" value="<%= myInfo.nickName %>" />
-        </p>
-        <br />
-        <br />
-        <br />
-        <br />
-        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-          Contact
-        </p>
-        <p style="
-                font-family: Amiko, sans-serif;
-                font-size: 20px;
-                font-weight: bold;
-              ">
-          <input name="email" placeholder="이메일 입력" value="<%= myInfo.email %>" />
-        </p>
-        <br />
-        <br />
-        <br />
-        <br />
-        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-          Check my GitHub !
-        </p>
-        <p style="
-                font-family: Amiko, sans-serif;
-                font-size: 20px;
-                font-weight: bold;
-              "
-            >
-              <input name="snsUrl" placeholder="깃헙 URL 입력" value="<%= myInfo.snsURL %>" />
+            
+              <input type="password" name="password" placeholder="password" value="<%= myInfo.snsURL %>" />
+
+            </p>
+            <br />
+            <br />
+            <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+              Cell-phone Number <br />
+            </p>
+            <input name="phone" placeholder="휴대폰번호 입력" value="<%= myInfo.phone %>" />
             </p>
 
-            <div class="box additional-info">
-              <br />
-              <br />
-              <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-                P*word <br />
-              </p>
-        
-              <p style="
-                  font-family: Amiko, sans-serif;
-                  font-size: 20px;
-                  font-weight: bold;
-                ">
-              
-                <input type="password" name="password" placeholder="password" value="<%= myInfo.snsURL %>" />
-
-              </p>
-              <br />
-              <br />
-              <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-                Cell-phone Number <br />
-              </p>
-              <input name="phone" placeholder="휴대폰번호 입력" value="<%= myInfo.phone %>" />
-              </p>
-
-              <br>
-            
-              <button type="submit" style="
-              border: 1px solid #ea4e4e;
-              padding: 0.5rem 1rem;
-              border-radius:10px;
-              background-color: white;
-              color: #ea4e4e;
-              ">
-              수정
-            </button>
+            <br>
+          
+            <button type="submit" style="
+            border: 1px solid #ea4e4e;
+            padding: 0.5rem 1rem;
+            border-radius:10px;
+            background-color: white;
+            color: #ea4e4e;
+            ">
+            수정
+          </button>
 
 
-            </div>
-
-
-            <br />
           </div>
-        </div>
-    
-      </form>
-    </div>
 
-  </form>
+
+          <br />
+        </div>
+      </div>
+  
+    </form>
+    </div>
+</form>
+</div>
 </div>
 
 </div>
