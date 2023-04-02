@@ -22,6 +22,7 @@ import {
 
 import { UserUpdateDto } from "./dto/userpage.update.dto";
 import { take } from "rxjs";
+import { title } from "process";
 
 @Injectable()
 export class UserPageRepository {
@@ -57,12 +58,12 @@ export class UserPageRepository {
     });
   }
 
-  // 작성한 글 조회
-  async getMyPosts(userId, cursor, type) {
+  // 작성한 클럽 글 조회
+  async clubPosts(userId, cursor, type) {
     // type 에 따라 분기 - init, prev,
 
     if (type === "init") {
-      const myPosts = await this.clubRepository.find({
+      const myclubPosts = await this.clubRepository.find({
         where: { userId },
         take: 3,
         order: {
@@ -70,10 +71,10 @@ export class UserPageRepository {
         },
       });
 
-      return myPosts;
+      return myclubPosts;
     }
-    if (type === "prev") {
-      const myPosts = await this.clubRepository.find({
+    if (type === "clubPrev") {
+      const myclubPosts = await this.clubRepository.find({
         where: {
           userId,
           id: LessThan(Number(cursor) + 4),
@@ -84,14 +85,14 @@ export class UserPageRepository {
         },
       });
 
-      if (myPosts.length === 0) {
-        throw new BadRequestException("이전 글이 존재하지 않습니다.");
+      if (myclubPosts.length === 0) {
+        throw new NotFoundException("이전 글이 존재하지 않습니다.");
       }
-      return myPosts;
+      return myclubPosts;
     }
 
-    if (type === "next") {
-      const myPosts = await this.clubRepository.find({
+    if (type === "clubNext") {
+      const myclubPosts = await this.clubRepository.find({
         where: {
           userId,
           id: LessThan(Number(cursor)),
@@ -101,10 +102,59 @@ export class UserPageRepository {
           id: "DESC",
         },
       });
-      if (myPosts.length === 0) {
+      if (myclubPosts.length === 0) {
         throw new NotFoundException("다음 글이 존재하지 않습니다.");
       }
-      return myPosts;
+      return myclubPosts;
+    }
+  }
+
+  // 작성한 이벤트 글 조회
+  async eventPosts(userId, cursor, type) {
+    if (type === "init") {
+      const myeventPosts = await this.eventpostRepository.find({
+        where: { userId },
+        take: 3,
+        order: {
+          id: "DESC",
+        },
+      });
+
+      return myeventPosts;
+    }
+    if (type === "eventPrev") {
+      const myeventPosts = await this.eventpostRepository.find({
+        where: {
+          userId,
+          id: LessThan(Number(cursor) + 4),
+        },
+        take: 3,
+        order: {
+          id: "DESC",
+        },
+      });
+
+      if (myeventPosts.length === 0) {
+        throw new NotFoundException("이전 글이 존재하지 않습니다.");
+      }
+      return myeventPosts;
+    }
+
+    if (type === "eventNext") {
+      const myeventPosts = await this.eventpostRepository.find({
+        where: {
+          userId,
+          id: LessThan(Number(cursor)),
+        },
+        take: 3,
+        order: {
+          id: "DESC",
+        },
+      });
+      if (myeventPosts.length === 0) {
+        throw new NotFoundException("다음 글이 존재하지 않습니다.");
+      }
+      return myeventPosts;
     }
   }
 

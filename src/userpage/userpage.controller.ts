@@ -39,7 +39,6 @@ export class UserpageController {
     let buttonUserId = null;
     if (req.user) {
       buttonUserId = req.user;
-      console.log(req.user);
       const currentUserId = req.user;
       if (!currentUserId) {
         return new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
@@ -71,16 +70,14 @@ export class UserpageController {
 
   @Get("/:userId/clubs")
   @UseGuards(AuthGuard())
-  async getUserClubs(
-    @Param("userId") userId: number,
-    @Req() req,
-  ) {
+  async getUserClubs(@Param("userId") userId: number, @Req() req) {
     const currentUserId = req.user;
     if (!currentUserId) {
       throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
     }
     const myClubs = await this.userPageService.getMyClubs(userId);
-    return myClubs
+    console.log(myClubs);
+    return myClubs;
   }
 
   @Get("/:userId/edit")
@@ -92,7 +89,6 @@ export class UserpageController {
   ) {
     const currentUserId = req.user;
     console.log("유저?", currentUserId);
-    console.log(userId);
     if (currentUserId !== userId) {
       throw new UnauthorizedException("본인만 수정 가능합니다.");
     }
@@ -120,8 +116,6 @@ export class UserpageController {
   ) {
     console.log("수정");
     const currentUserId = req.user;
-    console.log(currentUserId);
-
     if (currentUserId !== userId) {
       throw new UnauthorizedException("본인만 수정 가능합니다.");
     }

@@ -1,7 +1,8 @@
 <script>
   $(document).ready(function () {
     checkClubs(`<%= myInfo.userId %>`);
-    show_userPosts(`<%= myInfo.userId %>`, "init");
+    show_clubPosts(`<%= myInfo.userId %>`, "init");
+    show_eventPosts(`<%= myInfo.userId %>`, "init");
   });
 </script>
 
@@ -18,134 +19,124 @@
     </div>
   </div>
 </div>
+<div class="container">
+  <div class="huge-inner-container">
+    <div class="box">
+      <div class="memberImg">
+        <% if (myInfo.userIMG) {%>
+        <img src="<%= myInfo.userIMG %>" alt="memberimage" />
+        <% } else {%>
+        <img src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png" />
+        <% } %>
+      </div>
+      <div class="subtitle">User Info</div>
+      <div class="icon-container">
+        <svg
+          onclick="editInfo('<%= myInfo.userId %>')"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 640 512"
+          class="user-edit-icon"
+        >
+          <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+          <path
+            d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H322.8c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1H178.3zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"
+          />
+        </svg>
+      </div>
+      <div class="huge-card">
+        <div class="card-content-container">
+          <div class="card-content">
+            <div>You can call me...</div>
+            <div><%= myInfo.nickName %></div>
+            <br />
+          </div>
+          <div class="card-content">
+            <div>Contact</div>
+            <div class="card-content-text"><%= myInfo.email %></div>
+            <br />
+          </div>
+          <div class="card-content">
+            <div>Check my GitHub!</div>
+            <div><%= myInfo.snsURL %></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="huge-container">
-  <div class="box member-image-box">
-    <div class="member-image">
-      <% if (myInfo.userIMG) {%>
-      <img src="<%= myInfo.userIMG %>" alt="memberimage" />
-      <% } else {%>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"
-        width="20"
-      />
-      <% } %>
+    <div class="box">
+      <div class="subtitle">Lastest Activities</div>
+      <div class="huge-card">
+        <div id="clubPosts">
+          <br />
+          <br />
+          <div class="card-content">Clubs</div>
+          <br />
+          <div class="club-posts"></div>
+          <br />
+          <div class="button-container">
+            <button
+              id="prevClubBtn"
+              onclick="show_clubPosts(`<%- myInfo.userId %>`, 'clubPrev')"
+              class="article-button"
+            >
+              Previous Articles
+            </button>
+            <button
+              id="nextClubBtn"
+              onclick="show_clubPosts(`<%- myInfo.userId %>`, 'clubNext')"
+              class="article-button"
+            >
+              Next Articles
+            </button>
+            <br /><br />
+          </div>
+          <div id="eventPosts">
+            <br />
+            <br />
+            <div class="card-content">Events</div>
+            <br />
+            <div class="event-posts"></div>
+            <br />
+            <div class="button-container">
+              <button
+                id="prevEventBtn"
+                onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventPrev')"
+                class="article-button"
+              >
+                Previous Articles
+              </button>
+              <button
+                id="nextEventBtn"
+                onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventNext')"
+                class="article-button"
+              >
+                Next Articles
+              </button>
+            </div>
+            <br /><br />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <br />
-  <div class="box huge-userbox">
-    <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-      User Info
-    </p>
-    <br />
-    <p
-      style="
-        font-family: Amiko, sans-serif;
-        font-size: 15px;
-        font-weight: bold;
-        color: #ea4e4e;
-        float: right;
-      "
-      ,
-      onclick="editInfo('<%= myInfo.userId %>')"
-    >
-      + edit
-    </p>
-    <div class="box userinfo-box">
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        You can call me...
-      </p>
-      <p
-        style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        "
-      >
-        <%= myInfo.nickName %>
-      </p>
-      <br />
-      <br />
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Contact
-      </p>
-      <p
-        style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        "
-      >
-        <%= myInfo.email %>
-      </p>
-      <br />
-      <br />
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Check my GitHub !
-      </p>
-      <p
-        style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        "
-      >
-        <%= myInfo.snsURL %>
-      </p>
 
-      <br />
+  <div class="box">
+    <div class="subtitle">Belong to this clubs...</div>
+    <div class="icon-container">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        class="envelope-icon"
+        onclick="modal_open1('<%= myInfo.userId %>')"
+      >
+        <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <path
+          d="M255.4 48.2c.2-.1 .4-.2 .6-.2s.4 .1 .6 .2L460.6 194c2.1 1.5 3.4 3.9 3.4 6.5v13.6L291.5 355.7c-20.7 17-50.4 17-71.1 0L48 214.1V200.5c0-2.6 1.2-5 3.4-6.5L255.4 48.2zM48 276.2L190 392.8c38.4 31.5 93.7 31.5 132 0L464 276.2V456c0 4.4-3.6 8-8 8H56c-4.4 0-8-3.6-8-8V276.2zM256 0c-10.2 0-20.2 3.2-28.5 9.1L23.5 154.9C8.7 165.4 0 182.4 0 200.5V456c0 30.9 25.1 56 56 56H456c30.9 0 56-25.1 56-56V200.5c0-18.1-8.7-35.1-23.4-45.6L284.5 9.1C276.2 3.2 266.2 0 256 0z"
+        />
+      </svg>
     </div>
-
-    <div class="box huge-activities">
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-        Latest Activities
-      </p>
-
-      <div class="box activities-box">
-        <div id="clubPosts">
-          <button
-            id="prevClubBtn"
-            onclick="show_userPosts(`<%- myInfo.userId %>`, 'prev')"
-          >
-            Previous Articles
-          </button>
-          <button
-            id="nextClubBtn"
-            onclick="show_userPosts(`<%- myInfo.userId %>`, 'next')"
-          >
-            Next Articles
-          </button>
-        </div>
-        <div class="club-posts"></div>
-      </div>
-
-      <div class="box huge-clubs">
-        <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-          Belong to this clubs...
-        </p>
-
-        <br />
-        <div class="box myclubs">
-          <div class="box message">
-            <img
-              src="/img/message.png"
-              onclick="modal_open1('<%= myInfo.userId %>')"
-            />
-          </div>
-          <br />
-          <br />
-
-          <div id="myClubAct">
-            <div id="myOwnClub"></div>
-          </div>
-        </div>
-      </div>
+    <div class="huge-card">
+      <div class="myClubAct"></div>
     </div>
   </div>
 </div>
