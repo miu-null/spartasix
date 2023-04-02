@@ -22,7 +22,6 @@ import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { ReportClubDto } from "./dto/reportclub.dto";
 import { FilterService } from "src/filter/filter.service";
-import { ReportDefinition } from "aws-sdk/clients/cur";
 import {
   reformPostDate,
   paginatedResults,
