@@ -1,164 +1,144 @@
-.huge-container {
+.container {
+  width: 100vw;
   display: flex;
-  margin: 4px;
-  height: 280vh;
+  flex-direction: column;
+  gap: 250px;
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.huge-inner-container {
+  margin-top: 120px;
+  gap: 32px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
+
 .box {
+  height: fit-content;
   width: 700px;
-  height: 800px;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  align-self: center;
+  /* gap: 40px; */
+  /* border: 1px solid salmon; */
 }
 
-.member-image-box {
-  width: 250px;
-  height: 250px;
+.memberImg {
   display: flex;
-  /* position: absolute; */
-  margin-top: 0px;
+  justify-content: center;
 }
 
-.member-image {
+.memberImg > img {
+  height: 200px;
+  width: 200px;
+  margin-bottom: 64px;
+}
+
+.subtitle {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-family: Alfa Slab One, sans-serif;
+  margin-bottom: 36px;
+}
+.huge-card {
+  display: flex;
+  justify-content: center;
+  width: 700px;
+  height: 600px;
+  background: #fff9f8;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.user-edit-icon {
+  fill: #ea4e4e;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.envelope-icon {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.envelope-icon:hover {
+  fill: #ea4e4e;
+}
+
+.article-button {
+  height: 28px;
+  background: #ffffff;
+  border: 1px solid #ea4e4e;
+  border-radius: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.card-content-container {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  overflow: hidden;
+  font-size: 24px;
+  font-family: Alfa Slab One, sans-serif;
+  gap: 12px;
 }
 
-.member-image img {
-  width: 250px;
-  height: 250px;
-  object-fit: contain;
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.article-button {
+  height: 28px;
+  background: #ffffff;
+  border: 1px solid #ea4e4e;
+  border-radius: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.card-content-text {
+  font-family: "Amiko";
 }
 
 .huge-userbox {
   width: 700px;
   height: 756px;
-  margin-top: 600px;
   align-items: center;
   text-align: center;
 }
 
-.userinfo-box {
-  width: 700px;
-  height: 650px;
-  background-color: #fff9f8;
-  margin-top: 60px;
-  padding: 30px;
-  text-align: center;
+.post-title {
+  font-size: 22px;
+  color: #ea4e4e;
 }
 
-.additional-info {
-  background-color: #fff9f8;
-  align-items: center;
-  text-align: center;
-  padding: 30px;
-  width: 700px;
-  height: 435px;
-  margin-top: 680px;
-}
-
-.huge-activities {
-  width: 700px;
-  height: 600px;
-  margin-top: 910px;
-  text-align: center;
-  align-items: center;
-}
-
-.activities-box {
-  width: 700px;
-  height: 800px;
-  background-color: #fff9f8;
-  margin-top: 180px;
-  padding: 38px;
-  letter-spacing: 0.5px;
-  line-height: auto;
-  font-size: 16px;
-  text-align: left;
-  font-family: "Amiko";
-}
-
-.huge-clubs {
-  text-align: center;
-  margin-top: 945px;
-  width: 700px;
-  height: 400px;
-}
-
-.myclubs {
-  width: 700px;
-  height: 1000px;
-  background-color: #fff9f8;
-  margin-top: 400px;
-}
-
-.message img {
-  width: 8%;
-  position: absolute;
-  left: 90%;
-  top: -170px;
-}
-
-.userBio_container {
-  font-family: "JejuGothic";
-  font-style: normal;
-  font-size: 15px;
-  color: #625858;
+.edit-user-info-box-container {
   display: flex;
-  width: 280px;
-  padding: 28px;
-  background-color: #f8f8f8;
   justify-content: center;
-  margin-top: 10%;
-  border-radius: 17px;
-}
-.post-column {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
-.edit-box {
-  width: 45px;
-  font-size: 11pt;
-  position: relative;
-  left: 51%;
-  background: #e79292;
-  border-radius: 10px;
+.edit-container {
+  margin-top: 184px;
 }
 
-.post-box {
-  background-color: #efe8df;
-  border-radius: 5px;
-  padding: 30px;
-  height: 758px;
-}
-
-.member-photo {
-  align-items: center;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.member-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.myOwnClub {
-  font-size: 20px;
+.member-edit {
+  margin-bottom: -24px;
 }

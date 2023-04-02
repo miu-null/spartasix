@@ -193,14 +193,58 @@ function delete_accepted(userId, clubMemberId) {
     },
   });
 }
-function show_userPosts(userId, type) {
+function show_clubPosts(userId, type) {
   // cursor
   let cursor = "";
-  if (type === "next") {
+  if (type === "clubNext") {
     cursor = $("#club-post-wrap:last-child").attr("data-index");
   }
-  if (type === "prev") {
+  if (type === "clubPrev") {
     cursor = $("#club-post-wrap:first-child").attr("data-index");
+  }
+  $.ajax({
+    type: "GET",
+    url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
+    async: true,
+    success: function (res) {
+      $(".club-posts").empty();
+
+      const { myClubPosts } = res.myPosts;
+      let full_html = "";
+      for (const clubPost of myClubPosts) {
+        console.log(clubPost);
+        let postHtml = `
+          <div id='club-post-wrap' data-index=${clubPost.id}>
+            <div class="post-title">
+              ${clubPost.title}
+            </div>
+            <div class="post-content">
+              ${clubPost.content}
+        
+            </div>
+          </div>`;
+
+        full_html += postHtml;
+        full_html += `</div>`;
+      }
+      $(".club-posts").append(full_html);
+    },
+    error: function (request) {
+      console.log(request);
+      if (request.status === 404) {
+        alert("다음 글이 존재하지 않습니다.");
+      }
+    },
+  });
+}
+
+function show_eventPosts(userId, type) {
+  let cursor = "";
+  if (type === "eventNext") {
+    cursor = $("#event-post-wrap:last-child").attr("data-index");
+  }
+  if (type === "eventPrev") {
+    cursor = $("#event-post-wrap:first-child").attr("data-index");
   }
 
   $.ajax({
@@ -208,34 +252,27 @@ function show_userPosts(userId, type) {
     url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
     async: true,
     success: function (res) {
-      console.log(res);
-      $(".club-posts").empty();
-
-      const { myPosts } = res;
-
-      for (const post of myPosts) {
+      $(".event-posts").empty();
+      const { myEventPosts } = res.myPosts;
+      let full_html = "";
+      for (const eventPost of myEventPosts) {
         let postHtml = `
-          <div id='club-post-wrap' data-index=${post.id}>
-            <div class="post-title">
-              ${post.title}
-            </div>
-            <div class="post-content">
-              ${post.content}
-            </div>
+        <div id='event-post-wrap' data-index=${eventPost.id}>
+          <div class="post-title">
+            ${eventPost.title}
           </div>
-        `;
-        $(".club-posts").append(postHtml);
+        </div>`;
+
+        full_html += postHtml;
+        full_html += `</div>`;
       }
+
+      $(".event-posts").append(full_html);
     },
     error: function (request) {
       console.log(request);
       if (request.status === 404) {
         alert("다음 글이 존재하지 않습니다.");
-        window.location.reload();
-        // $.ajax({
-        //   type:"GET",
-
-        // })
       }
     },
   });
@@ -291,27 +328,24 @@ function checkClubs(userId) {
     url: `/userpage/${userId}/clubs`,
     async: true,
     success: function (res) {
-      let myOwnClub = res.myClubs.myOwnClub;
-      let MyClub = res.myClubs.MyClub;
+      let { myOwnClub, MyClub } = res;
       let rows = [];
-      console.log(res);
-
+      console.log(myOwnClub);
       let full_html = "";
       rows = myOwnClub;
       full_html += `
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-      My Clubs
+      <br /> My Clubs
     </p>
-        <br />
+     
         `;
       for (let i = 0; i < rows.length; i++) {
         full_html += `<div class = "myOwnClub">`;
         let title = rows[i]["title"];
-        let content = rows[i]["content"];
         let temp_html = `
             <font style="color: #ea4e4e; size: 20px">
              ${title} </font>
-          <br /><br /> `;
+       <br /> `;
 
         full_html += temp_html;
         full_html += `</div>`;
@@ -320,25 +354,22 @@ function checkClubs(userId) {
       rows = MyClub;
       full_html += `
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-      I'm in     </p>
-        <br />
-        `;
+      <br /> I'm in     </p>
+       `;
       for (let i = 0; i < rows.length; i++) {
         full_html += `<div class = "MyClub">`;
 
         let title = rows[i]["title"];
-        let content = rows[i]["content"];
         let temp_html = `
         <font style="color: #ea4e4e; size: 20px">
         ${title} </font>
-          <br /><br /> `;
+       <br /> `;
 
         full_html += temp_html;
         full_html += `</div>`;
       }
-      $("#myClubAct").html(full_html);
+      // $("#myClubAct").html(full_html);
+      $(".myClubAct").append(full_html);
     },
   });
 }
-
-// onclick="modal_open1('<%= myInfo.userId %>')
