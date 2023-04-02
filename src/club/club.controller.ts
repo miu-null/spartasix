@@ -22,7 +22,6 @@ import { Response } from "express";
 import { CreateAppDto } from "./dto/createApp.dto";
 import { ReportClubDto } from "./dto/reportclub.dto";
 import { FilterService } from "src/filter/filter.service";
-import { ReportDefinition } from "aws-sdk/clients/cur";
 import {
   reformPostDate,
   paginatedResults,
@@ -84,7 +83,7 @@ export class ClubController {
   }
 
   @Post("/:id")
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(AuthGuard())
   async createApp(
     @Param("id") id: number,
     @Body() data: CreateAppDto,
@@ -93,13 +92,13 @@ export class ClubController {
     if (!req.user) {
       throw new UnauthorizedException('로그인 후 이용 가능한 기능입니다.');
     }
-    
-    const userId = req.user.userId;
+    console.log("모임신청 컨트롤러")
+    const userId = req.user;
     const createNew = await this.clubService.createApp(
       id,
       userId,
       data.application,
-      data.isAccepted,
+      false,
     );
     
     return createNew;

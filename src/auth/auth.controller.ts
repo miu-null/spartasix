@@ -82,7 +82,7 @@ export class AuthController {
     const header = req.headers.cookie;
 
     if (!header) {
-      throw new UnauthorizedException(`로그인이 필요한 기능입니다.`);
+      throw new UnauthorizedException("로그인이 필요한 기능입니다.");
     }
 
     const newpayload = await this.authService.newAccessToken(header);
