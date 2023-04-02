@@ -193,13 +193,13 @@ function delete_accepted(userId, clubMemberId) {
     },
   });
 }
-function show_userPosts(userId, type) {
+function show_clubPosts(userId, type) {
   // cursor
   let cursor = "";
-  if (type === "next") {
+  if (type === "clubNext") {
     cursor = $("#club-post-wrap:last-child").attr("data-index");
   }
-  if (type === "prev") {
+  if (type === "clubPrev") {
     cursor = $("#club-post-wrap:first-child").attr("data-index");
   }
 
@@ -208,38 +208,90 @@ function show_userPosts(userId, type) {
     url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
     async: true,
     success: function (res) {
-      console.log(res);
       $(".club-posts").empty();
 
-      const { myPosts } = res;
+      const myClubPosts = res.myPosts.myClubPosts;
+      // let myClubPosts = res.myPosts.myClubPosts;
+      console.log("리스폰스 데이터", myClubPosts);
+      console.log(cursor);
 
-      for (const post of myPosts) {
+      let full_html = "";
+      for (const clubpost of myClubPosts) {
         let postHtml = `
-          <div id='club-post-wrap' data-index=${post.id}>
+          <div id='club-post-wrap' data-index=${clubpost.id}>
             <div class="post-title">
-              ${post.title}
+              ${clubpost.title}
             </div>
             <div class="post-content">
-              ${post.content}
+              ${clubpost.content}
             </div>
-          </div>
-        `;
-        $(".club-posts").append(postHtml);
+          </div>`;
+
+        full_html += postHtml;
+        full_html += `</div>`;
       }
+      $(".club-posts").append(full_html);
     },
     error: function (request) {
       console.log(request);
       if (request.status === 404) {
         alert("다음 글이 존재하지 않습니다.");
-        window.location.reload();
-        // $.ajax({
-        //   type:"GET",
-
-        // })
       }
     },
   });
 }
+
+// function show_eventPosts(userId, type) {
+//   // cursor
+//   console.log(type);
+//   let cursor = "";
+//   if (type === "eventnext") {
+//     cursor = $("#event-post-wrap:last-child").attr("data-index");
+//   }
+//   if (type === "eventprev") {
+//     cursor = $("#event-post-wrap:first-child").attr("data-index");
+//   }
+
+//   $.ajax({
+//     type: "GET",
+//     url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
+//     async: true,
+//     success: function (res) {
+//       console.log(res);
+//       $(".club-posts").empty();
+
+//       let myEvent = res.myPosts.myEventPosts;
+
+//       // const { myPosts } = res;
+//       let full_html = "";
+//       for (const eventpost of myEvent) {
+//         let postHtml = `
+//             <div id='event-post-wrap' data-index=${eventpost.id}>
+//               <div class="event-title">
+//                 ${eventpost.title}
+//               </div>
+
+//               </div>
+//             </div>
+//            `;
+//         full_html += postHtml;
+//         full_html += `</div>`;
+//       }
+//       // <div class="event-content">
+//       // ${eventpost.content}
+
+//       $(".event-posts").append(full_html);
+//     },
+//     error: function (request) {
+//       console.log(request);
+//       if (request.status === 404) {
+//         alert("다음 글이 존재하지 않습니다.");
+//         window.location.reload();
+//       }
+//     },
+//   });
+//   console.log(type);
+// }
 
 function editInfo(userId) {
   $.ajax({
