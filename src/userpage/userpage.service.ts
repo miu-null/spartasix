@@ -21,7 +21,7 @@ export class UserpageService {
       cursor,
       type,
     );
-
+    console.log(myClubPosts, myEventPosts);
     return {
       myClubPosts,
       myEventPosts,

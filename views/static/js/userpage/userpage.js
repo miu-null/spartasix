@@ -212,6 +212,7 @@ function show_clubPosts(userId, type) {
       const { myClubPosts } = res.myPosts;
       let full_html = "";
       for (const clubPost of myClubPosts) {
+        console.log(clubPost);
         let postHtml = `
           <div id='club-post-wrap' data-index=${clubPost.id}>
             <div class="post-title">
@@ -219,6 +220,7 @@ function show_clubPosts(userId, type) {
             </div>
             <div class="post-content">
               ${clubPost.content}
+        
             </div>
           </div>`;
 
@@ -276,58 +278,6 @@ function show_eventPosts(userId, type) {
   });
 }
 
-// function show_eventPosts(userId, type) {
-//   // cursor
-//   console.log(type);
-//   let cursor = "";
-//   if (type === "eventnext") {
-//     cursor = $("#event-post-wrap:last-child").attr("data-index");
-//   }
-//   if (type === "eventprev") {
-//     cursor = $("#event-post-wrap:first-child").attr("data-index");
-//   }
-
-//   $.ajax({
-//     type: "GET",
-//     url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
-//     async: true,
-//     success: function (res) {
-//       console.log(res);
-//       $(".club-posts").empty();
-
-//       let myEvent = res.myPosts.myEventPosts;
-
-//       // const { myPosts } = res;
-//       let full_html = "";
-//       for (const eventpost of myEvent) {
-//         let postHtml = `
-//             <div id='event-post-wrap' data-index=${eventpost.id}>
-//               <div class="event-title">
-//                 ${eventpost.title}
-//               </div>
-
-//               </div>
-//             </div>
-//            `;
-//         full_html += postHtml;
-//         full_html += `</div>`;
-//       }
-//       // <div class="event-content">
-//       // ${eventpost.content}
-
-//       $(".event-posts").append(full_html);
-//     },
-//     error: function (request) {
-//       console.log(request);
-//       if (request.status === 404) {
-//         alert("다음 글이 존재하지 않습니다.");
-//         window.location.reload();
-//       }
-//     },
-//   });
-//   console.log(type);
-// }
-
 function editInfo(userId) {
   $.ajax({
     type: "get",
@@ -378,27 +328,24 @@ function checkClubs(userId) {
     url: `/userpage/${userId}/clubs`,
     async: true,
     success: function (res) {
-      let myOwnClub = res.myClubs.myOwnClub;
-      let MyClub = res.myClubs.MyClub;
+      let { myOwnClub, MyClub } = res;
       let rows = [];
-      console.log(res);
-
+      console.log(myOwnClub);
       let full_html = "";
       rows = myOwnClub;
       full_html += `
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-      My Clubs
+      <br /> My Clubs
     </p>
-        <br />
+     
         `;
       for (let i = 0; i < rows.length; i++) {
         full_html += `<div class = "myOwnClub">`;
         let title = rows[i]["title"];
-        let content = rows[i]["content"];
         let temp_html = `
             <font style="color: #ea4e4e; size: 20px">
              ${title} </font>
-          <br /><br /> `;
+       <br /> `;
 
         full_html += temp_html;
         full_html += `</div>`;
@@ -407,25 +354,22 @@ function checkClubs(userId) {
       rows = MyClub;
       full_html += `
       <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-      I'm in     </p>
-        <br />
-        `;
+      <br /> I'm in     </p>
+       `;
       for (let i = 0; i < rows.length; i++) {
         full_html += `<div class = "MyClub">`;
 
         let title = rows[i]["title"];
-        let content = rows[i]["content"];
         let temp_html = `
         <font style="color: #ea4e4e; size: 20px">
         ${title} </font>
-          <br /><br /> `;
+       <br /> `;
 
         full_html += temp_html;
         full_html += `</div>`;
       }
-      $("#myClubAct").html(full_html);
+      // $("#myClubAct").html(full_html);
+      $(".myClubAct").append(full_html);
     },
   });
 }
-
-// onclick="modal_open1('<%= myInfo.userId %>')

@@ -76,6 +76,7 @@ export class UserpageController {
       throw new UnauthorizedException("로그인 후 이용 가능한 기능입니다.");
     }
     const myClubs = await this.userPageService.getMyClubs(userId);
+    console.log(myClubs);
     return myClubs;
   }
 
