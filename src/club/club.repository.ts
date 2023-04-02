@@ -64,6 +64,7 @@ export class ClubRepository {
     application: string,
     isAccepted: boolean,
   ) {
+    console.log()
     const clubwaitList = await this.clubmemberRepository
       .createQueryBuilder("members")
       .where("members.clubId = :clubId", { clubId })
