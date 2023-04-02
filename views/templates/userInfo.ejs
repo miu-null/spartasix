@@ -1,7 +1,8 @@
 <script>
   $(document).ready(function () {
     checkClubs(`<%= myInfo.userId %>`);
-    show_userPosts(`<%= myInfo.userId %>`, "init");
+    show_clubPosts(`<%= myInfo.userId %>`, "init");
+    show_eventPosts(`<%= myInfo.userId %>`, "init");
   });
 </script>
 
@@ -18,131 +19,146 @@
     </div>
   </div>
 </div>
-
 <div class="huge-container">
-  <div class="box member-image-box">
-    <div class="member-image">
-      <% if (myInfo.userIMG) {%>
-      <img src="<%= myInfo.userIMG %>" alt="memberimage" />
-      <% } else {%>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"
-        width="20"
-      />
-      <% } %>
-    </div>
-  </div>
-  <br />
-  <div class="box huge-userbox">
-    <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-      User Info
-    </p>
-    <br />
-    <p
-      style="
-        font-family: Amiko, sans-serif;
-        font-size: 15px;
-        font-weight: bold;
-        color: #ea4e4e;
-        float: right;
-      "
-      ,
-      onclick="editInfo('<%= myInfo.userId %>')"
-    >
-      + edit
-    </p>
-    <div class="box userinfo-box">
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        You can call me...
-      </p>
-      <p
-        style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        "
-      >
-        <%= myInfo.nickName %>
-      </p>
-      <br />
-      <br />
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Contact
-      </p>
-      <p
-        style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        "
-      >
-        <%= myInfo.email %>
-      </p>
-      <br />
-      <br />
-      <br />
-      <br />
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
-        Check my GitHub !
-      </p>
-      <p
-        style="
-          font-family: Amiko, sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-        "
-      >
-        <%= myInfo.snsURL %>
-      </p>
-
-      <br />
-    </div>
-
-    <div class="box huge-activities">
-      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-        Latest Activities
-      </p>
-
-      <div class="box activities-box">
-        <div id="clubPosts">
-          <button
-            id="prevClubBtn"
-            onclick="show_userPosts(`<%- myInfo.userId %>`, 'prev')"
-          >
-            Previous Articles
-          </button>
-          <button
-            id="nextClubBtn"
-            onclick="show_userPosts(`<%- myInfo.userId %>`, 'next')"
-          >
-            Next Articles
-          </button>
-        </div>
-        <div class="club-posts"></div>
+  <div class="huge-inner-container">
+    <div class="box member-image-box">
+      <div class="member-image">
+        <% if (myInfo.userIMG) {%>
+        <img src="<%= myInfo.userIMG %>" alt="memberimage" />
+        <% } else {%>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5393/5393061.png"
+          width="20"
+        />
+        <% } %>
       </div>
-
-      <div class="box huge-clubs">
-        <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
-          Belong to this clubs...
+    </div>
+    <div class="box huge-userbox">
+      <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+        User Info
+      </p>
+      <br />
+      <p
+        style="
+          font-family: Amiko, sans-serif;
+          font-size: 15px;
+          font-weight: bold;
+          color: #ea4e4e;
+          float: right;
+        "
+        ,
+        onclick="editInfo('<%= myInfo.userId %>')"
+      >
+        + edit
+      </p>
+      <div class="box userinfo-box">
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          You can call me...
+        </p>
+        <p
+          style="
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+          "
+        >
+          <%= myInfo.nickName %>
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Contact
+        </p>
+        <p
+          style="
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+          "
+        >
+          <%= myInfo.email %>
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 26px">
+          Check my GitHub !
+        </p>
+        <p
+          style="
+            font-family: Amiko, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+          "
+        >
+          <%= myInfo.snsURL %>
         </p>
 
         <br />
-        <div class="box myclubs">
-          <div class="box message">
-            <img
-              src="/img/message.png"
-              onclick="modal_open1('<%= myInfo.userId %>')"
-            />
-          </div>
-          <br />
-          <br />
+      </div>
 
-          <div id="myClubAct">
-            <div id="myOwnClub"></div>
+      <div class="box huge-activities">
+        <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+          Latest Activities
+        </p>
+
+        <div class="box activities-box">
+          <div id="clubPosts">
+            <button
+              id="prevClubBtn"
+              onclick="show_clubPosts(`<%- myInfo.userId %>`, 'clubPrev')"
+            >
+              Previous Articles
+            </button>
+            <button
+              id="nextClubBtn"
+              onclick="show_clubPosts(`<%- myInfo.userId %>`, 'clubNext')"
+            >
+              Next Articles
+            </button>
+          </div>
+          <div class="club-posts"></div>
+
+          <div id="eventPosts">
+            <button
+              id="prevEventBtn"
+              onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventprev')"
+            >
+              Previous Articles
+            </button>
+            <button
+              id="nextEventBtn"
+              onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventnext')"
+            >
+              Next Articles
+            </button>
+          </div>
+          <div class="event-posts"></div>
+          <div class="box huge-clubs">
+            <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
+              Belong to this clubs...
+            </p>
+
+            <br />
+            <div class="box myclubs">
+              <div class="box message">
+                <img
+                  src="/img/message.png"
+                  onclick="modal_open1('<%= myInfo.userId %>')"
+                />
+              </div>
+              <br />
+              <br />
+
+              <div id="myClubAct">
+                <div id="myOwnClub"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
