@@ -388,6 +388,11 @@ function createClubComment(postId) {
               },
             });
           },
+          error: function (request) {
+            if (request.responseJSON["message"] === "로그인이 필요한 기능입니다.") {
+              alert("로그인 후 이용 가능한 기능입니다.");
+            }
+          }
         });
       }
     },

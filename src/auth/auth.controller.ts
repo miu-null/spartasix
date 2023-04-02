@@ -80,11 +80,11 @@ export class AuthController {
   @Post("/new-accessToken")
   async newAccessToken(@Req() req: any, @Res() res) {
     const header = req.headers.cookie;
-
+    console.log("재발급")
     if (!header) {
-      throw new UnauthorizedException(`로그인이 필요한 기능입니다.`);
+      throw new UnauthorizedException("로그인이 필요한 기능입니다.");
     }
-
+    console.log("123")
     const newpayload = await this.authService.newAccessToken(header);
 
     if (newpayload) {
