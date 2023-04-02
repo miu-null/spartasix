@@ -88,10 +88,6 @@ export class ClubRepository {
     }
     const article = await this.getClubById(clubId);
 
-    if (userId === article.nowPost.userId) {
-      throw new BadRequestException("본인 모임에는 신청할 수 없습니다.");
-    }
-
     const data = await this.clubmemberRepository.insert({
       clubId,
       userId,

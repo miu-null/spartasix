@@ -75,7 +75,7 @@ function sign_up() {
       alert("회원가입 성공 !");
       window.location.reload();
     },
-    error: function (request, status, error) {
+    error: function (request) {
       if (request.responseJSON["message"] === "이미 존재하는 닉네임 입니다.") {
         alert("이미 존재하는 닉네임 입니다.");
         window.location.reload();
