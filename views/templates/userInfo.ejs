@@ -127,18 +127,20 @@
           <div id="eventPosts">
             <button
               id="prevEventBtn"
-              onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventprev')"
+              onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventPrev')"
             >
               Previous Articles
             </button>
             <button
               id="nextEventBtn"
-              onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventnext')"
+              onclick="show_eventPosts(`<%- myInfo.userId %>`, 'eventNext')"
             >
               Next Articles
             </button>
+
+            <div class="event-posts"></div>
           </div>
-          <div class="event-posts"></div>
+
           <div class="box huge-clubs">
             <p style="font-family: Alfa Slab One, sans-serif; font-size: 30px">
               Belong to this clubs...

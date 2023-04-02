@@ -202,7 +202,6 @@ function show_clubPosts(userId, type) {
   if (type === "clubPrev") {
     cursor = $("#club-post-wrap:first-child").attr("data-index");
   }
-
   $.ajax({
     type: "GET",
     url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
@@ -210,20 +209,16 @@ function show_clubPosts(userId, type) {
     success: function (res) {
       $(".club-posts").empty();
 
-      const myClubPosts = res.myPosts.myClubPosts;
-      // let myClubPosts = res.myPosts.myClubPosts;
-      console.log("리스폰스 데이터", myClubPosts);
-      console.log(cursor);
-
+      const { myClubPosts } = res.myPosts;
       let full_html = "";
-      for (const clubpost of myClubPosts) {
+      for (const clubPost of myClubPosts) {
         let postHtml = `
-          <div id='club-post-wrap' data-index=${clubpost.id}>
+          <div id='club-post-wrap' data-index=${clubPost.id}>
             <div class="post-title">
-              ${clubpost.title}
+              ${clubPost.title}
             </div>
             <div class="post-content">
-              ${clubpost.content}
+              ${clubPost.content}
             </div>
           </div>`;
 
@@ -231,6 +226,46 @@ function show_clubPosts(userId, type) {
         full_html += `</div>`;
       }
       $(".club-posts").append(full_html);
+    },
+    error: function (request) {
+      console.log(request);
+      if (request.status === 404) {
+        alert("다음 글이 존재하지 않습니다.");
+      }
+    },
+  });
+}
+
+function show_eventPosts(userId, type) {
+  let cursor = "";
+  if (type === "eventNext") {
+    cursor = $("#event-post-wrap:last-child").attr("data-index");
+  }
+  if (type === "eventPrev") {
+    cursor = $("#event-post-wrap:first-child").attr("data-index");
+  }
+
+  $.ajax({
+    type: "GET",
+    url: `/userpage/${userId}/post?cursor=${cursor}&type=${type}`,
+    async: true,
+    success: function (res) {
+      $(".event-posts").empty();
+      const { myEventPosts } = res.myPosts;
+      let full_html = "";
+      for (const eventPost of myEventPosts) {
+        let postHtml = `
+        <div id='event-post-wrap' data-index=${eventPost.id}>
+          <div class="post-title">
+            ${eventPost.title}
+          </div>
+        </div>`;
+
+        full_html += postHtml;
+        full_html += `</div>`;
+      }
+
+      $(".event-posts").append(full_html);
     },
     error: function (request) {
       console.log(request);

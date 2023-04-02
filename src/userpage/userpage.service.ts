@@ -16,15 +16,15 @@ export class UserpageService {
       type,
     );
 
-    // const myEventPosts = await this.userPageRepository.eventPosts(
-    //   userId,
-    //   cursor,
-    //   type,
-    // );
+    const myEventPosts = await this.userPageRepository.eventPosts(
+      userId,
+      cursor,
+      type,
+    );
 
     return {
       myClubPosts,
-      //  myEventPosts
+      myEventPosts,
     };
   }
 
