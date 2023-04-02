@@ -103,13 +103,13 @@
 </section>
 
 <script>
-  // 이전에 선택된 드롭다운 옵션을 불러옴
-  var selectedOption = localStorage.getItem('selectedOption');
+  // 이전에 선택한 드롭다운 옵션을 저장
+  const selectedOption = localStorage.getItem('selectedOption');
   if (selectedOption) {
     document.getElementById('searchOption').value = selectedOption;
   }
   
-  // 드롭다운 옵션이 변경될 때마다 localStorage에 저장함
+  // 드롭다운 옵션이 변경될 때마다 localStorage에 저장
   document.getElementById('searchOption').addEventListener('change', function() {
     localStorage.setItem('selectedOption', this.value);
   });

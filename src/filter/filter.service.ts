@@ -1,16 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { FilterRepository } from "./filter.repository";
-
-interface PaginatedResult {
-  data: any[];
-  count: number;
-  totalPages: number;
-  slicedData: any[]; 
-  searchCount: any; 
-  lastPage: number;
-  unitStart: number;
-  unitEnd: number;
-}
+import { searchType, PaginatedResult } from "./searchFilter";
 
 @Injectable()
 export class FilterService {
@@ -41,25 +31,24 @@ export class FilterService {
   }
 
   //검색목록 페이지네이션 준비 : 타입에 따른 리포지토리 선택
-  async selectData(pageType: string, page: number, term: any) {
+  async selectData(pageType: searchType, page: number, term: any) {
     let getdata;
-    if (pageType === "users" ) { 
+    if (pageType === searchType.users ) { 
       getdata = await this.filterRepository.findUsers(term);
-    } else if (pageType === "eventsTitleContent" ) {
+    } else if (pageType === searchType.eventsTitleContent ) {
       getdata = await this.filterRepository.findEventPosts(term);
-    } else if (pageType === "eventsTitle") {
+    } else if (pageType === searchType.eventsTitle) {
       getdata = await this.filterRepository.findEventPostsTitle(term);
-    } else if (pageType === "clubsTitleContent" ) {
+    } else if (pageType === searchType.clubsTitleContent ) {
       getdata = await this.filterRepository.findClubPosts(term);
-    } else if (pageType === "clubsTitle") {
+    } else if (pageType === searchType.clubsTitle) {
       getdata = await this.filterRepository.findClubPostsTitle(term);
     }
-    console.log(getdata)
     return getdata;
   }
 
   //검색목록 페이지네이션
-  async paginatedResults(pageType: string, page, term: string): Promise<PaginatedResult> {
+  async paginatedResults(pageType: searchType, page, term: string): Promise<PaginatedResult> {
     const take: number = 5;
     const seletedData = await this.selectData(pageType, page, term);
     const searchCount = seletedData.length;
