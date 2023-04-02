@@ -13,6 +13,7 @@
   float: right;
   text-decoration: none;
   color: #ea4e4e;
+  cursor: pointer;
 }
 
 .event_table_container {
@@ -77,6 +78,7 @@
 .postLink {
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .eventImg {

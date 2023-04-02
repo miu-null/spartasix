@@ -64,6 +64,7 @@ export class ClubRepository {
     application: string,
     isAccepted: boolean,
   ) {
+    console.log()
     const clubwaitList = await this.clubmemberRepository
       .createQueryBuilder("members")
       .where("members.clubId = :clubId", { clubId })
@@ -87,10 +88,6 @@ export class ClubRepository {
       throw new BadRequestException("이미 참가하고 있는 모임입니다.");
     }
     const article = await this.getClubById(clubId);
-
-    if (userId === article.nowPost.userId) {
-      throw new BadRequestException("본인 모임에는 신청할 수 없습니다.");
-    }
 
     const data = await this.clubmemberRepository.insert({
       clubId,
