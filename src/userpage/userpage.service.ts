@@ -10,13 +10,22 @@ export class UserpageService {
   //TODO 회원이 쓴 글 내림차순 정렬
   // 작성한 글 조회
   async getMyPosts(userId, cursor, type) {
-    const myPosts = await this.userPageRepository.getMyPosts(
+    const myClubPosts = await this.userPageRepository.clubPosts(
       userId,
       cursor,
       type,
     );
 
-    return myPosts;
+    // const myEventPosts = await this.userPageRepository.eventPosts(
+    //   userId,
+    //   cursor,
+    //   type,
+    // );
+
+    return {
+      myClubPosts,
+      //  myEventPosts
+    };
   }
 
   async getMyClubs(userId: number) {
@@ -55,7 +64,6 @@ export class UserpageService {
     currentUserId: number,
     updateUserInfo: UserUpdateDto,
   ) {
-    console.log(updateUserInfo);
     const hashpassword = await this.transformPassword(updateUserInfo.password);
     const updatedUser = await this.userPageRepository.updateUser(
       userId,
