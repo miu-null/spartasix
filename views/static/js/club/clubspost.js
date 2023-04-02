@@ -27,11 +27,10 @@ function modal_open2() {
       modal_open();
     },
     error: function (request) {
-      console.log(request);
-      // if (request.statusText === "Unauthorized") {
-      //   alert("로그인이 필요한 기능입니다.");
-      //   window.location.replace(`/sign`);
-      // }
+      if (request.responseJSON["message"] === "로그인이 필요한 기능입니다.") {
+        alert("로그인이 필요한 기능입니다.");
+        window.location.replace(`/sign`);
+      }
     },
   });
 }
