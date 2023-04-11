@@ -40,3 +40,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Docker
+docker-compose.yml
+dockerfile
